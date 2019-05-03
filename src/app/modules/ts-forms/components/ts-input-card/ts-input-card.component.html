@@ -1,0 +1,4 @@
+<mat-form-field [floatLabel]="floatLabel" [hideRequiredMarker]="!required" [formGroup]="form">
+  <input matInput type="tel" autocomplete="cc-number" ccNumber [placeholder]="placeholder" [required]="required"
+         [name]="name" (blur)="onBlur()" formControlName="creditCard" (change)="onChange()">
+</mat-form-field>
