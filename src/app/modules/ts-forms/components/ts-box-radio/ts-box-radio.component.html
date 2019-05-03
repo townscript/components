@@ -1,9 +1,0 @@
-<div class="box-radio shadow" [ngClass]="{'disabled': disabled, 'active': selectedValue == value}"
-     (click)="!disabled && (selectedValue = value)" matRipple [matRippleDisabled]="disabled">
-
-  <img [src]="imageSource" [alt]="text" class="box-radio__image">
-  <div class="box-radio__text" [style.color]="color">{{text}}</div>
-  <div class="box-radio__check">
-    <div class="circle" [style.backgroundColor]="color"></div>
-  </div>
-</div>

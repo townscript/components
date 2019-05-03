@@ -1,0 +1,9 @@
+@keyframes tsFadeIn {
+  0%   {opacity: 0}
+  100% {opacity: 1}
+}
+.ts-enter {
+  animation-name: tsFadeIn;
+  animation-duration: .5s;
+  display: block;
+}

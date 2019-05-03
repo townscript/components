@@ -1,19 +1,18 @@
 {
-  "name": "@townscript/elements",
+  "name": "@townscript/components",
   "version": "1.0.26",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run packagr",
-    "postbuild": "scss-bundle -c scss-bundle.config.json && npm run currencyCss",
-    "currencyCss": "node_modules/.bin/node-sass src/assets/scss/_currency-symbol.scss dist/currency-symbol.min.css  --output-style compressed",
+    "postbuild": "scss-bundle -c scss-bundle.config.json",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "packagr": "ng-packagr -p ng-package.json",
     "publish": "npm publish dist"
   },
-  "private": false,
+  "private": true,
   "dependencies": {
     "@angular/animations": "^6.1.0",
     "@angular/cdk": "^6.2.0",
@@ -22,14 +21,14 @@
     "@angular/core": "^6.1.0",
     "@angular/forms": "^6.1.0",
     "@angular/http": "^6.1.0",
-    "@angular/material": "^6.4.7",
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
-    "angular-cc-library": "^1.2.5",
     "core-js": "^2.5.4",
     "rxjs": "~6.2.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "@mdi/font": "^3.4.93",
+    "@townscript/elements": "^1.0.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
@@ -52,25 +51,26 @@
     "scss-bundle": "^2.5.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~2.9.2"
+    "typescript": "~2.9.2",
+    "skeleton-sass-official": "^3.1.6"
   },
-  "description": "Townscript material html angular elements",
+  "description": "Townscript angular components",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/townscript/elements.git"
+    "url": "git+https://github.com/townscript/components.git"
   },
   "keywords": [
     "form",
-    "elements",
+    "componets",
     "inputs",
     "material",
     "townscript"
   ],
-  "author": "“Sushant <“sushant@townscript.com”>",
+  "author": "“Sidharth <“sidharth.kumar@townscript.com”>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/townscript/elements/issues"
+    "url": "https://github.com/townscript/components/issues"
   },
-  "homepage": "https://github.com/townscript/elements#readme"
+  "homepage": "https://github.com/townscript/components#readme"
 }

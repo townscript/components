@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
-@import "assets/scss/mat-theme";
+//@import "~normalize-scss/sass/normalize"; // import normalize-scss
+@import "~skeleton-sass-official/skeleton/core/config"; // Skeleton Sass core loader
+// import default theme variables
+@import "~skeleton-sass-official/skeleton/themes/original/vars"; // theme variable
+@import "~skeleton-sass-official/skeleton/themes/original/grid"; // theme grid styles
+
+//$mdi-font-path: "~@mdi/font/fonts";
+//@import "~@mdi/font/scss/materialdesignicons";
+
+$mat-form-field-width: 100%;
+@import "~@townscript/elements/elements-theme";
+
+@import "~skeleton-sass-official/skeleton/themes/original/components/base";
+@import "~skeleton-sass-official/skeleton/themes/original/components/links";
+@import "~skeleton-sass-official/skeleton/themes/original/components/lists";
+@import "~skeleton-sass-official/skeleton/themes/original/components/typography";
+
+@import "assets/scss/fonts";
+@import "assets/scss/variables";
+@import "assets/scss/mixins/responsive-visibility";
+@import "assets/scss/responsive-utilities";
+@import "assets/scss/type";
+@import "assets/scss/base";
+@import "assets/scss/offsets";
+@import "assets/scss/flex";
+@import "assets/scss/animations";
 html, body { height: 100%; }
 body { margin: 0; font-family: sans-serif; }
+*{
+    box-sizing: border-box
+}

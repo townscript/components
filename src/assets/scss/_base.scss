@@ -1,0 +1,27 @@
+.bg-primary-lightest{
+  background-color: $ts-primary-color--lightest;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.position-relative{
+  position: relative;
+}
+.container{
+  padding: 0 4%;
+}
+.absolute{
+  position: absolute;
+  &-in-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
+  &-left {
+    left: 0%;
+  }
+  &-right {
+    left: 100%;
+  }
+}

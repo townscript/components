@@ -1,4 +1,4 @@
 {
   "entry": "./src/styles.scss",
-  "dest": "dist/elements-theme.scss"
+  "dest": "dist/components-theme.scss"
 }

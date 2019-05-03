@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('Townscript Elements App', () => {
+describe('Townscript Components App', () => {
   let page: AppPage;
 
   beforeEach(() => {

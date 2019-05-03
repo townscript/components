@@ -1,0 +1,31 @@
+.ts-header{
+    min-height: 85px;
+    background-color: #fff;
+    width: 100%;
+    position: fixed;
+    box-shadow: 0 15px 40px -20px rgba(40,44,63,0.2);
+    .container{
+        display: flex;
+        width: 100%;
+        padding:0 10%;
+        .navbar-header{
+            .navbar-brand
+            {
+                img{
+                    width: 165px;
+                }
+            }
+        }
+        .nav-right{
+            margin-left: auto;
+            ul,li{
+                margin-bottom: 0; 
+            }
+               
+        }
+    }
+}
+:host ::ng-deep .mat-button-wrapper{
+                font-size: 16px!important;
+}
+

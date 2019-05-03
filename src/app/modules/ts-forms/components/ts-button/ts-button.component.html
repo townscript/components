@@ -1,7 +1,0 @@
-<button mat-raised-button [color]="state" [disabled]="(showProgress && clicked) || disabled" (click)="onClick($event)"
-    [ngStyle]="{width: width}">
-    <span class="hidden" [ngClass]="{'visible': !showProgress || !clicked}">{{text}}</span>
-    <mat-progress-spinner class="hidden" mode="determinate" diameter="20" [value]="value"
-        [ngClass]="{'visible': clicked}" *ngIf="showProgress">
-    </mat-progress-spinner>
-</button>

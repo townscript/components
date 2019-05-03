@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {TsFormsModule} from './modules/ts-forms/ts-forms.module';
-import {FormsModule} from '@angular/forms';
+import { LayoutModule } from './modules/layout/layout.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import {FormsModule} from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    TsFormsModule
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

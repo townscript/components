@@ -1,5 +1,4 @@
-import {Component, OnInit} from '@angular/core';
-import {Option} from './modules/ts-forms/components';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,28 +6,14 @@ import {Option} from './modules/ts-forms/components';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'elements';
-  myName = '';
-  myGender: Option;
-  options: Array<Option> = [];
-  myCard = '';
-  myExpiry = '';
-  myCVC = '';
-  myRadio = '';
-  showError = false;
+  title = 'components';
 
-  constructor () {
-    let option: Option = {text: 'Male', value: 'Male'};
-    this.options.push(option);
-    option = {text: 'Female', value: 'Female'};
-    this.options.push(option);
-    this.myGender = option;
+
+  constructor() {
+
   }
 
   ngOnInit() {
   }
 
-  onSubmit = () => {
-    alert('Form submitted!');
-  }
 }
