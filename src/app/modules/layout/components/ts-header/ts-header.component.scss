@@ -4,6 +4,7 @@
     width: 100%;
     position: fixed;
     top:0;
+    z-index: 1000;
     box-shadow: 0 15px 40px -20px rgba(40,44,63,0.2);
     .container{
         display: flex;
