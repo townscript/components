@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run packagr",
+    "deploy": "git subtree push --prefix dist origin library",
     "postbuild": "scss-bundle -c scss-bundle.config.json",
     "test": "ng test",
     "lint": "ng lint",
