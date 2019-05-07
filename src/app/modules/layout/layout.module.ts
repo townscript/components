@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TsFormsModule } from '@townscript/elements';
 import {
-  TsHeaderComponent
+  TsHeaderComponent,
+  TsFooterComponent
 } from './components/index';
 
 @NgModule({
@@ -11,10 +12,12 @@ import {
     TsFormsModule
   ],
   declarations: [
-    TsHeaderComponent
+    TsHeaderComponent,
+    TsFooterComponent
   ],
   exports: [
-    TsHeaderComponent
+    TsHeaderComponent,
+    TsFooterComponent
   ]
 })
 export class LayoutModule { }

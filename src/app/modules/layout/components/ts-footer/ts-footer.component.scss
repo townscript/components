@@ -1,0 +1,202 @@
+@import "../../../../../assets/scss/variables";
+footer{
+  background-color: #ebebeb;  
+  text-align: center;
+  padding-top:20px;
+  padding-bottom: 10px;
+  h5{
+      font-size: 14px!important;
+      font-weight: 600;
+  }
+  li,ul{margin-bottom: 0}
+  .container{
+      width: 85%;
+  }
+  .content-footer{
+    padding-bottom: 20px;
+  }
+  .m-l-8per{
+      margin-left: 8%;
+  }
+  .brand-footer{
+    //max-width: 1140px;
+    border-top: 1px solid lighten($ts-primary-color, 50%);
+    padding-top: 30px;
+  }
+  img {
+    width: 165px;
+  }
+  .bookmyshow-logo{
+      width: 140px;  
+  }
+  .mixpanel-button{
+    padding: 0;position: relative;left: -71px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    a,span{
+        white-space: nowrap;
+        display: block;
+    }
+    img{
+      width: 100px !important;
+    }
+    text-align: center;
+  }
+  .mail-to{
+    font-weight: 600;
+  }
+  h5, a {
+    color: $ts-primary-color;
+    text-decoration: none;
+  }
+  a {
+    letter-spacing: 0.4px;
+    font: {
+      size: 13px;
+      weight: 400;
+    }
+  }  
+  ul {
+    &.social-list{
+      list-style-type: none;
+      padding: 0;
+      li{
+        display: inline-block;
+        //float: left;
+        margin-right: 10px;
+        i{
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
+.ts {
+  &-footer {
+    &__copyright {
+      display: block;
+      //text-align: left;
+      text-indent: 50px;
+    }
+  }
+}
+@media (min-width: $screen-sm-min){
+.ts {
+  
+  &-footer {
+
+    &__copyright {
+      //display: block;
+      text-align: left;
+      //text-indent: 50px;
+    }
+    &__mail {
+      display: block;
+      text-align: left;
+      text-indent: 50px;
+      font-weight: bold;
+      line-height: 36px;
+    }
+    .container-fluid{
+      .row{
+        > div{
+          &:first-child{
+            padding-left: 0;
+          }
+          &:nth-child(2){
+            padding: 0;
+          }
+          &:last-child{
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+footer {
+  margin-top: 100px;
+  text-align: left;
+  background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/footer-skyline.png');
+  background-repeat: repeat-x;
+  background-position: left top;
+  padding-top:120px;
+  padding-bottom:45px;
+  .brand-footer{
+    .linear-footer{
+      h5, ul{
+        display: inline-block;
+        margin: 2px 0px;
+        vertical-align: middle;
+        margin-right: 25px;
+      }
+      .list-linear{
+        // @include .clearfix;
+        list-style-type: none;
+        padding: 0;
+        li{
+          float: left;
+          margin-right: 35px;
+        }
+      }
+    }
+  }
+  ul {
+    &.social-list{
+      list-style-type: none;
+      padding: 0;
+      li{
+        display: block;
+        float: left;
+        margin-right: 10px;
+      }
+    }
+    &.list-apps{
+      list-style-type: none;
+      padding: 0;
+      li{
+        line-height: 50px;
+        margin: 10px 0px;
+        .store-icon{
+        -webkit-background-size: auto 45px;
+             -o-background-size: auto 45px;
+                background-size: auto 45px;
+        background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/store.png');
+        background-repeat: no-repeat;
+        display:block;      
+        width:150px;
+        text-indent:-9999px;
+        &.google-play-icon{
+          background-position: 0 0;
+        }
+        &.app-store-icon{
+          background-position: -172px 0;
+        }
+        }
+      }
+    }
+    li {
+      line-height: 31px;
+      > a{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+      }
+    }
+  }
+}
+}
+
+.blog-links{
+  li{
+    line-height: 1.5;
+    margin-bottom: 18px;
+    a{
+      white-space: normal;
+    }
+  }
+}
+

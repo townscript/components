@@ -1,0 +1,176 @@
+<footer class="ts-footer">
+    <div class="container-fluid content-footer">
+        <div class="row">
+            <div class="two columns hidden-xs m-l-8per">
+                <h5>ORGANISE EVENTS</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/i/conference-registration">Conferences</a></li>
+                    <li><a href="/i/workshops-and-trainings">Workshops and Trainings</a></li>
+                    <li><a href="/i/college-fest-payment-portal">College Festivals</a></li>
+                    <li><a href="/i/marathon-cycling-trips-treks-registration">Sports and Fitness Events</a></li>
+                    <li><a href="/i/entertainment-events-ticketing">Entertainment Events</a></li>
+                    <li><a href="/i/meetup-registration">Meetups and Reunions</a></li>
+                    <li><a href="/i/treks-trips-registration">Treks and Trips</a></li>
+                    <!-- <li><a href="/i/fundraising-crowdfunding">Fundraisings</a></li> -->
+                </ul>
+            </div>
+            <div class="two columns hidden-xs">
+                <h5>POPULAR SEARCHES</h5>
+                <ul class="list-unstyled">
+                    <!--<li><a href="/pune/new-year-party">New Year Parties In Pune</a></li>
+				<li><a href="/mumbai/new-year-party">New Year Parties In Mumbai</a></li>
+				<li><a href="/delhi/new-year-party">New Year Parties In Delhi</a></li>
+				<li><a href="/bangalore/new-year-party">New Year Parties In Bangalore</a></li>-->
+                    <li><a
+                            href="http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-">
+                            List of Countries supported by Townscript</a></li>
+                    <li><a href="/i/sell-event-tickets-online">Sell Event Tickets Online</a></li>
+                    <li><a href="/i/event-management-software">Event Management Software</a></li>
+                    <li><a href="/i/event-registration-software">Event Registration Software</a></li>
+                    <li><a href="/i/conference-management-system">Conference management System</a></li>
+                    <li><a href="/i/event-planning-software">Event Planning Software</a></li>
+                    <li><a href="/i/online-event-ticketing">Online Event Ticketing</a></li>
+                    <li><a href="/i/corporate-event-management">Corporate Event Management</a></li>
+                </ul>
+            </div>
+            <div class="two columns hidden-xs">
+                <h5>POPULAR EVENTS</h5>
+                <ul class="list-unstyled">
+                    <li><a *ngFor="let event of popularEventsData" href="/e/{{event.shortName}}?prS=listing&seS=footer"
+                            (click)="setFromTownscript(true)">{{event.name}}</a></li>
+                </ul>
+            </div>
+            <div class="two columns hidden-xs">
+                <h5>LATEST UPDATES</h5>
+                <ul class="list-unstyled blog-links">
+                    <li><a href="http://blog.townscript.com/how-to-organize-a-tedx-event/" target="_blank">How to
+                            Organize a Tedx
+                            Event?</a></li>
+                    <li><a href="http://blog.townscript.com/now-sell-event-ticket-internationally-in-27-countries-with-townscript/"
+                            target="_blank">Sell event tickets in 27+ countries with Townscript</a></li>
+                    <li><a href="http://blog.townscript.com/how-to-sell-event-tickets-online/" target="_blank">How to
+                            Sell Event
+                            Tickets Online</a></li>
+                    <li><a href="http://blog.townscript.com/how-to-sell-out-your-event-tickets-wthin-minutes/"
+                            target="_blank">How
+                            to Sell Out Your Event Tickets within Minutes?</a></li>
+                    <li><a href="http://blog.townscript.com/5-reasons-you-need-more-than-a-payment-gateway-for-your-event/"
+                            target="_blank">5 Reasons You Need more than a Payment Gateway</a></li>
+                </ul>
+            </div>
+            <div class="two columns hidden-xs">
+                <h5>BOOKINGS</h5>
+                <ul class="list-unstyled">
+                    <li>
+                        <a href (click)="openMyBooking()">My Bookings</a>
+                    </li>
+                </ul>
+                <h5 (click)="openContactUs()">GET IN TOUCH</h5>
+                <!--<h5><a href="mailto:service@townscript.com" target="_blank" class="mail-to visible-xs">service@townscript.com</a></h5>-->
+                <ul class="list-unstyled">
+                    <!-- 				<li class="hidden-xs">
+					<a href="#">Contact us</a>
+				</li> -->
+                    <li class="social-list-item">
+                        <ul class="social-list clearfix">
+                            <li>
+                                <a href="https://www.facebook.com/townscript" target="_blank"><i
+                                        class="ion-social-facebook"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/townscript" target="_blank"><i
+                                        class="ion-social-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://plus.google.com/+Townscript" target="_blank"><i
+                                        class="ion-social-googleplus"></i></a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/company/townscript" target="_blank"><i
+                                        class="ion-social-linkedin-outline"></i></a>
+                            </li>
+                            <!--<li>
+							<a href="mailto:service@townscript.com" target="_blank"><i class="ion-email"></i></a>
+						</li>-->
+                        </ul>
+                    </li>
+                </ul>
+                <h5 class="hidden-xs">ORGANIZER APP</h5>
+                <ul class="list-apps hidden-xs">
+                    <li>
+                        <a href="//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN"
+                            title="Download on Google play" class="store-icon google-play-icon" target="_blank">Download
+                            on Google
+                            play</a>
+                    </li>
+                    <li>
+                        <a href="//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8"
+                            title="Download on App Store" target="_blank" class="store-icon app-store-icon">Download on
+                            App Store</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="brand-footer">
+            <div class="row">
+                <div class="three columns">
+                    <img src="assets/images/ts-logoBMS.png" alt="Townscript Event Ticketing Logo"
+                        title="Townscript Event Ticketing Logo" />
+                    <a class="ts-footer__copyright">Copyright@2019</a>
+                    <!--<a href="mailto:service@townscript.com" target="_blank" class="ts-footer__mail hidden-xs">service@townscript.com</a>-->
+                </div>
+                <div class="eight columns linear-footer hidden-xs">
+                    <h5>LEARN MORE</h5>
+                    <br>
+                    <ul class="list-linear">
+                        <!-- <li><a href="#">Features</a></li> -->
+                        <li><a href="/pricing">Pricing</a></li>
+                        <li><a href="/how-it-works" ts-data-analytics prop-event="click" eventLabel="How It Works"
+                                prop-clicked-location="Footer">How it works</a></li>
+                        <!-- <li><a href="#">Mobile Apps</a></li> -->
+                        <li><a href="//townscript-api.readme.io/" target="_blank">APIs for Developers</a></li>
+                        <li><a href="/terms-and-conditions">Policies</a></li>
+                        <li><a href="/privacy-policy">Privacy</a></li>
+                        <li><a href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a></li>
+                    </ul>
+                    <div class="linear-footer hidden-xs">
+                        <h5>POPULAR CITIES</h5>
+                        <br>
+                        <ul class="list-linear">
+                            <li *ngFor="let city of countryCityMap">
+                                <div (click)="onChangeCity(city)"><a href="/{{city | lowercase}}">{{city}}</a></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="linear-footer hidden-xs">
+                        <h5>ABOUT</h5>
+                        <br>
+                        <ul class="list-linear">
+                            <li><a href="/about-us">About us</a></li>
+                            <li><a href="/contact-us">Contact us</a></li>
+                            <!-- <li><a href="#">Career</a></li> -->
+                            <!-- <li><a href="#">Media</a></li> -->
+                            <li><a href="http://blog.townscript.com" target="_blank">Blog</a></li>
+                            <li><a href="http://eventmagazine.townscript.com/" target="_blank">Event Magazine</a></li>
+                            <li><a href="https://productblog.townscript.com/" target="_blank">Product Diary</a></li>
+                            <li><a href="/sitemap" target="_blank">Sitemap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="one columns mixpanel-button align-text hidden-xs">
+                    <a href="https://mixpanel.com/f/partner" target="_blank"><img
+                            src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
+                            width="100"></a>
+                    <a href="https://www.g2crowd.com/products/townscript/reviews" target="_blank">
+                        <img src="https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png"
+                            alt="G2Crowd Townscript Reviews" width="100">
+                        <span>30 Reviews</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</footer>
