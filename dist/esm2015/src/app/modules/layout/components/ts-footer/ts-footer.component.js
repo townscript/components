@@ -1,89 +1,9 @@
-import { Component, Input, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TsFormsModule } from '@townscript/elements';
-
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
-/** @type {?} */
-const config = {
-    floatLabelOptions: ['auto', 'always', 'never'],
-    floatLabel: ''
-};
-config.floatLabel = config.floatLabelOptions[0];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-/**
- * @abstract
- */
-class TsControlValueAccessor {
-    constructor() {
-        this.onChangePropagation = () => { };
-        this.onTouchedPropagation = () => { };
-    }
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    registerOnChange(fn) {
-        this.onChangePropagation = fn;
-    }
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    registerOnTouched(fn) {
-        this.onTouchedPropagation = fn;
-    }
-    /**
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    setDisabledState(isDisabled) {
-    }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-class TsHeaderComponent {
-    constructor() {
-        this.Components = ["createEventBtn"];
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-    }
-}
-TsHeaderComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ts-header',
-                template: "<nav class=\"ts-header flex align-items-center\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.png\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <ts-button text=\"Create Event\"></ts-button>\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>",
-                styles: [".ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
-            }] }
-];
-/** @nocollapse */
-TsHeaderComponent.ctorParameters = () => [];
-TsHeaderComponent.propDecorators = {
-    Components: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-class TsFooterComponent {
+import { Component } from '@angular/core';
+export class TsFooterComponent {
     constructor() {
         this.setFromTownscript = (value) => {
         };
@@ -111,45 +31,23 @@ TsFooterComponent.decorators = [
 ];
 /** @nocollapse */
 TsFooterComponent.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-class LayoutModule {
+if (false) {
+    /** @type {?} */
+    TsFooterComponent.prototype.placeId;
+    /** @type {?} */
+    TsFooterComponent.prototype.city;
+    /** @type {?} */
+    TsFooterComponent.prototype.popularEventsData;
+    /** @type {?} */
+    TsFooterComponent.prototype.countryCityMap;
+    /** @type {?} */
+    TsFooterComponent.prototype.setFromTownscript;
+    /** @type {?} */
+    TsFooterComponent.prototype.onChangeCity;
+    /** @type {?} */
+    TsFooterComponent.prototype.openContactUs;
+    /** @type {?} */
+    TsFooterComponent.prototype.openMyBooking;
 }
-LayoutModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule,
-                    TsFormsModule
-                ],
-                declarations: [
-                    TsHeaderComponent,
-                    TsFooterComponent
-                ],
-                exports: [
-                    TsHeaderComponent,
-                    TsFooterComponent
-                ]
-            },] }
-];
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
- */
-
-export { config, TsControlValueAccessor, TsHeaderComponent, TsFooterComponent, LayoutModule };
-
-//# sourceMappingURL=townscript-components.js.map
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHMtZm9vdGVyLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0B0b3duc2NyaXB0L2NvbXBvbmVudHMvIiwic291cmNlcyI6WyJzcmMvYXBwL21vZHVsZXMvbGF5b3V0L2NvbXBvbmVudHMvdHMtZm9vdGVyL3RzLWZvb3Rlci5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQWlCLE1BQU0sZUFBZSxDQUFDO0FBT3pELE1BQU07SUFRSjtpQ0FHb0IsQ0FBQyxLQUFLLEVBQUUsRUFBRTtTQUU3Qjs0QkFDYyxDQUFDLElBQUksRUFBRSxFQUFFO1NBRXZCOzZCQUNlLEdBQUcsRUFBRTtZQUNuQixNQUFNLENBQUMsSUFBSSxDQUFDLGFBQWEsQ0FBQyxDQUFDO1NBQzVCOzZCQUVlLEdBQUcsRUFBRTtZQUNuQixNQUFNLENBQUMsSUFBSSxDQUFDLHFDQUFxQyxFQUFFLE9BQU8sQ0FBQyxDQUFDO1NBQzdEO0tBYkE7Ozs7SUFrQkQsUUFBUTtLQUNQOzs7WUFsQ0YsU0FBUyxTQUFDO2dCQUNULFFBQVEsRUFBRSxXQUFXO2dCQUNyQiw4M1ZBQXlDOzthQUUxQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQsIE9uSW5pdCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICd0cy1mb290ZXInLFxuICB0ZW1wbGF0ZVVybDogJy4vdHMtZm9vdGVyLmNvbXBvbmVudC5odG1sJyxcbiAgc3R5bGVVcmxzOiBbJy4vdHMtZm9vdGVyLmNvbXBvbmVudC5zY3NzJ11cbn0pXG5leHBvcnQgY2xhc3MgVHNGb290ZXJDb21wb25lbnQgaW1wbGVtZW50cyBPbkluaXQge1xuXG4gIHBsYWNlSWQ6IGFueTtcbiAgLy9jb3VudHJ5Q29kZSA9IGxvY2FsU3RvcmFnZS5nZXRJdGVtKFwiY291bnRyeUNvZGVcIik7XG4gIGNpdHk6IGFueTtcbiAgcG9wdWxhckV2ZW50c0RhdGE6IGFueTtcbiAgY291bnRyeUNpdHlNYXA6IGFueTtcblxuICBjb25zdHJ1Y3RvcigpIHtcblxuICB9XG4gIHNldEZyb21Ub3duc2NyaXB0ID0gKHZhbHVlKSA9PiB7XG5cbiAgfVxuICBvbkNoYW5nZUNpdHkgPSAoY2l0eSkgPT4ge1xuXG4gIH1cbiAgb3BlbkNvbnRhY3RVcyA9ICgpID0+IHtcbiAgICB3aW5kb3cub3BlbignL2NvbnRhY3QtdXMnKTtcbiAgfTtcblxuICBvcGVuTXlCb29raW5nID0gKCkgPT4ge1xuICAgIHdpbmRvdy5vcGVuKCcvc2lnbmluP3JkdXJsPS9kYXNoYm9hcmQvbXlib29raW5ncycsICdfc2VsZicpO1xuICB9O1xuXG5cblxuXG4gIG5nT25Jbml0KCkge1xuICB9XG5cbn1cbiJdfQ==
