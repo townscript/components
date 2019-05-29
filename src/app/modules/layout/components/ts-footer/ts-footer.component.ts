@@ -7,21 +7,21 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TsFooterComponent implements OnInit {
 
-  placeId: any;
-  //countryCode = localStorage.getItem("countryCode");
   city: any;
+  placeId: any;
+
+  @Input("source") source: any = "landingPages";
+
+  @Input("recentBlogs") recentBlogs: any = [];
+
+  @Input("popularReads") popularReads: any = [];
+
   popularEventsData: any;
   countryCityMap: any;
 
   constructor() {
-
   }
-  setFromTownscript = (value) => {
 
-  }
-  onChangeCity = (city) => {
-
-  }
   openContactUs = () => {
     window.open('/contact-us');
   };
@@ -30,10 +30,10 @@ export class TsFooterComponent implements OnInit {
     window.open('/signin?rdurl=/dashboard/mybookings', '_self');
   };
 
-
-
-
   ngOnInit() {
+    if (this.source == "landingPages") {
+
+    }
   }
 
 }

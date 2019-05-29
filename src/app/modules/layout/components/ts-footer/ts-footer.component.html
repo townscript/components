@@ -33,29 +33,22 @@
                     <li><a href="/i/corporate-event-management">Corporate Event Management</a></li>
                 </ul>
             </div>
-            <div class="two columns hidden-xs">
+            <div class="two columns hidden-xs" *ngIf="source=='landingPages'">
+                <h5>RECENT BLOGS</h5>
+                <ul class="list-unstyled blog-links">
+                    <li *ngFor="let blog of recentBlogs"><a [href]="blog.url">{{blog.title}}</a></li>
+                </ul>
+            </div>
+            <div class="two columns hidden-xs" *ngIf="source=='marketplace'">
                 <h5>POPULAR EVENTS</h5>
-                <ul class="list-unstyled">
-                    <li><a *ngFor="let event of popularEventsData" href="/e/{{event.shortName}}?prS=listing&seS=footer"
-                            (click)="setFromTownscript(true)">{{event.name}}</a></li>
+                <ul class="list-unstyled blog-links">
+                    <li *ngFor="let event of popularEvents"><a [href]="event.url">{{event.title}}</a></li>
                 </ul>
             </div>
             <div class="two columns hidden-xs">
-                <h5>LATEST UPDATES</h5>
+                <h5>POPULAR READS</h5>
                 <ul class="list-unstyled blog-links">
-                    <li><a href="http://blog.townscript.com/how-to-organize-a-tedx-event/" target="_blank">How to
-                            Organize a Tedx
-                            Event?</a></li>
-                    <li><a href="http://blog.townscript.com/now-sell-event-ticket-internationally-in-27-countries-with-townscript/"
-                            target="_blank">Sell event tickets in 27+ countries with Townscript</a></li>
-                    <li><a href="http://blog.townscript.com/how-to-sell-event-tickets-online/" target="_blank">How to
-                            Sell Event
-                            Tickets Online</a></li>
-                    <li><a href="http://blog.townscript.com/how-to-sell-out-your-event-tickets-wthin-minutes/"
-                            target="_blank">How
-                            to Sell Out Your Event Tickets within Minutes?</a></li>
-                    <li><a href="http://blog.townscript.com/5-reasons-you-need-more-than-a-payment-gateway-for-your-event/"
-                            target="_blank">5 Reasons You Need more than a Payment Gateway</a></li>
+                    <li *ngFor="let read of popularReads"><a [href]="read.url" target="_blank">{{read.title}}</a></li>
                 </ul>
             </div>
             <div class="two columns hidden-xs">
@@ -135,7 +128,7 @@
                         <li><a href="/privacy-policy">Privacy</a></li>
                         <li><a href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a></li>
                     </ul>
-                    <div class="linear-footer hidden-xs">
+                    <div class="linear-footer hidden-xs" *ngIf="source=='marketplace'">
                         <h5>POPULAR CITIES</h5>
                         <br>
                         <ul class="list-linear">
