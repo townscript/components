@@ -10,7 +10,10 @@ export class TsFooterComponent implements OnInit {
   city: any;
   placeId: any;
 
+
   @Input("source") source: any = "landingPages";
+
+  @Input("popularEvents") popularEvents: any = [];
 
   @Input("recentBlogs") recentBlogs: any = [];
 
