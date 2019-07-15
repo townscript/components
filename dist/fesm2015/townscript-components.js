@@ -104,6 +104,7 @@ LayoutModule = __decorate([
             TsFooterComponent
         ],
         exports: [
+            TsFormsModule,
             TsHeaderComponent,
             TsFooterComponent
         ]

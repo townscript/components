@@ -135,6 +135,7 @@
                     TsFooterComponent
                 ],
                 exports: [
+                    elements.TsFormsModule,
                     TsHeaderComponent,
                     TsFooterComponent
                 ]

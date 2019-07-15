@@ -108,6 +108,7 @@ var LayoutModule = /** @class */ (function () {
                 TsFooterComponent
             ],
             exports: [
+                TsFormsModule,
                 TsHeaderComponent,
                 TsFooterComponent
             ]
