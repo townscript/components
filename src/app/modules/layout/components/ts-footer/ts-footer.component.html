@@ -1,7 +1,7 @@
-<footer class="ts-footer">
-    <div class="container-fluid content-footer">
-        <div class="row">
-            <div class="two columns hidden-xs m-l-8per">
+<footer class="ts-footer text-center pt-32 pb-24">
+    <div class="ts-container content-footer">
+        <div class="flex mb-4">
+            <div class="w-1/5 hidden-xs px-4">
                 <h5>ORGANISE EVENTS</h5>
                 <ul class="list-unstyled">
                     <li><a href="/i/conference-registration">Conferences</a></li>
@@ -14,7 +14,7 @@
                     <!-- <li><a href="/i/fundraising-crowdfunding">Fundraisings</a></li> -->
                 </ul>
             </div>
-            <div class="two columns hidden-xs">
+            <div class="w-1/5 px-4 hidden-xs">
                 <h5>POPULAR SEARCHES</h5>
                 <ul class="list-unstyled">
                     <!--<li><a href="/pune/new-year-party">New Year Parties In Pune</a></li>
@@ -33,25 +33,25 @@
                     <li><a href="/i/corporate-event-management">Corporate Event Management</a></li>
                 </ul>
             </div>
-            <div class="two columns hidden-xs" *ngIf="source=='landingPages'">
+            <div class="w-1/5 px-4 hidden-xs" *ngIf="source=='landingPages'">
                 <h5>RECENT BLOGS</h5>
                 <ul class="list-unstyled blog-links">
                     <li *ngFor="let blog of recentBlogs"><a [href]="blog.url">{{blog.title}}</a></li>
                 </ul>
             </div>
-            <div class="two columns hidden-xs" *ngIf="source=='marketplace'">
+            <div class="w-1/5 px-4 hidden-xs" *ngIf="source=='marketplace'">
                 <h5>POPULAR EVENTS</h5>
                 <ul class="list-unstyled blog-links">
                     <li *ngFor="let event of popularEvents"><a [href]="event.url">{{event.title}}</a></li>
                 </ul>
             </div>
-            <div class="two columns hidden-xs">
+            <div class="w-1/5 px-4 hidden-xs">
                 <h5>POPULAR READS</h5>
                 <ul class="list-unstyled blog-links">
                     <li *ngFor="let read of popularReads"><a [href]="read.url" target="_blank">{{read.title}}</a></li>
                 </ul>
             </div>
-            <div class="two columns hidden-xs">
+            <div class="w-1/5 hidden-xs pl-12">
                 <h5>BOOKINGS</h5>
                 <ul class="list-unstyled">
                     <li>
@@ -105,16 +105,16 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="ts-container">
         <div class="brand-footer">
-            <div class="row">
-                <div class="three columns">
+            <div class="flex mb-4">
+                <div class="w-1/4">
                     <img src="assets/images/ts-logoBMS.png" alt="Townscript Event Ticketing Logo"
                         title="Townscript Event Ticketing Logo" />
                     <a class="ts-footer__copyright">Copyright@2019</a>
                     <!--<a href="mailto:service@townscript.com" target="_blank" class="ts-footer__mail hidden-xs">service@townscript.com</a>-->
                 </div>
-                <div class="eight columns linear-footer hidden-xs">
+                <div class="w-2/3 linear-footer hidden-xs">
                     <h5>LEARN MORE</h5>
                     <br>
                     <ul class="list-linear">
@@ -152,7 +152,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="one columns mixpanel-button align-text hidden-xs">
+                <div class="w-1/12 mixpanel-button align-text hidden-xs">
                     <a href="https://mixpanel.com/f/partner" target="_blank"><img
                             src="//cdn.mxpnl.com/site_media/images/partner/badge_blue.png" alt="Mobile Analytics"
                             width="100"></a>

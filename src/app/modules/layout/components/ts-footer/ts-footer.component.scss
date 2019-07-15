@@ -1,17 +1,12 @@
 @import "../../../../../assets/scss/variables";
 footer{
   background-color: #ebebeb;  
-  text-align: center;
-  padding-top:20px;
-  padding-bottom: 10px;
   h5{
       font-size: 14px!important;
       font-weight: 600;
   }
   li,ul{margin-bottom: 0}
-  .container{
-      width: 85%;
-  }
+  
   .content-footer{
     padding-bottom: 20px;
   }
@@ -124,8 +119,6 @@ footer {
   background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/footer-skyline.png');
   background-repeat: repeat-x;
   background-position: left top;
-  padding-top:120px;
-  padding-bottom:45px;
   .brand-footer{
     .linear-footer{
       h5, ul{

@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TsHeaderComponent implements OnInit {
 
   @Input() Components: Array<String> = ["createEventBtn"];
+  @Input() source: string = "";
   constructor() { }
   ngOnInit() {
   }

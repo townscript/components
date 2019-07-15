@@ -1,20 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-//@import "~normalize-scss/sass/normalize"; // import normalize-scss
-@import "~skeleton-sass-official/skeleton/core/config"; // Skeleton Sass core loader
-// import default theme variables
-@import "~skeleton-sass-official/skeleton/themes/fresh/vars"; // theme variable
-@import "~skeleton-sass-official/skeleton/themes/fresh/grid"; // theme grid styles
+@import "tailwindcss/dist/base.css";
+@import "tailwindcss/dist/components.css";
+@import "tailwindcss/dist/utilities.css";
 
-//$mdi-font-path: "~@mdi/font/fonts";
-//@import "~@mdi/font/scss/materialdesignicons";
+$mdi-font-path: "~@mdi/font/fonts";
+@import "~@mdi/font/scss/materialdesignicons";
+
 
 $mat-form-field-width: 100%;
 @import "~@townscript/elements/elements-theme";
 
-@import "~skeleton-sass-official/skeleton/themes/original/components/base";
-@import "~skeleton-sass-official/skeleton/themes/original/components/links";
-@import "~skeleton-sass-official/skeleton/themes/original/components/lists";
-@import "~skeleton-sass-official/skeleton/themes/original/components/typography";
 
 @import "assets/scss/fonts";
 @import "assets/scss/variables";
@@ -32,4 +27,15 @@ body { margin: 0; font-family: 'Open Sans', sans-serif; }
 }
 .container{
   max-width: none!important;
+}
+.ts-container{
+  padding: 0 10px!important;
+}
+input:focus{
+  outline:none!important;
+}
+@media (min-width: $screen-sm-max){
+  .ts-container{
+    padding: 0 80px!important;
+  }
 }

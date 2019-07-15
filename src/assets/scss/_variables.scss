@@ -3,6 +3,15 @@ $ts-primary-color--light       : #884fb8;
 $ts-primary-color--lighter     : #cbabe6;
 $ts-primary-color--lightest    : #f6f1fb;
 
+$ts-primary-blue    : #3782C4;
+
+.color-blue{
+    color:$ts-primary-blue;
+}
+.background-blue{
+    background:$ts-primary-blue;
+}
+
 $ts-secondary-color        : #d01c68;
 $ts-secondary-color--light : #fc94c0;
 
