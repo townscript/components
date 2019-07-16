@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TsFormsModule } from '@townscript/elements';
+
 import {
   TsHeaderComponent,
   TsFooterComponent
@@ -8,8 +8,7 @@ import {
 
 @NgModule({
   imports: [
-    CommonModule,
-    TsFormsModule
+    CommonModule
   ],
   declarations: [
     TsHeaderComponent,
