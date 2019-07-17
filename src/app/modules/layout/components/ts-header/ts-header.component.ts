@@ -1,4 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TimeService } from '../../../../shared/services/time.service';
+import { DatePipe } from '@angular/common'
+
 
 @Component({
   selector: 'ts-header',
@@ -8,8 +11,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TsHeaderComponent implements OnInit {
 
   @Input() Components: Array<String> = ["createEventBtn"];
-  @Input() source: string = "";
-  constructor() { }
+  @Input() source: string = "marketplace";
+  @Input() algoliaIndexName: string = "tsTesting";
+  constructor(public datepipe: DatePipe) {
+  }
+
   ngOnInit() {
   }
 

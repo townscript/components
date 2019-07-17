@@ -7,3 +7,25 @@
   animation-duration: .5s;
   display: block;
 }
+
+@keyframes tsSlideBottom {
+  0%   {transform: scaleY(0)}
+  100% {transform: scaleY(1)}
+}
+.enter-slide-bottom{
+  transform-origin: top;
+  animation-name: tsSlideBottom;
+  animation-duration: .3s;
+  animation-iteration-count: 1;
+}
+
+@keyframes tsSlideRight {
+  0%   {transform: scaleX(0)}
+  100% {transform: scaleX(1)}
+}
+.enter-slide-right{
+  transform-origin: left;
+  animation-name: tsSlideRight;
+  animation-duration: .3s;
+  animation-iteration-count: 1;
+}

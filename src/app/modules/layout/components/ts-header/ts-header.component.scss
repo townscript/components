@@ -25,57 +25,50 @@
             ul,li{
                 margin-bottom: 0; 
             }
-               
         }
     }
 }
 .ts-header-new{
     min-height:75px;
     background-color: #F7F7F7;
-    width: 100%;
-    position: fixed;
     top:0;
     z-index: 1000;
-    .search-container{
-        height: 44px;
-        border-radius: 2px;
-        background-color: #EDEDED;
-        .left-section{
-            border-right: 1px solid rgba(151, 151, 151, 0.3);
-        }
-    }
     .ts-logo{
-        width:136px;
-        min-width:136px;
+        width:146px;
+        min-width:146px;
         min-height: 31px;
-    }
-    .view-type{
-        i{
-            opacity: 0.8;
-            padding: 3px 9px;
-            &.active{
-               opacity: 1;
-               background: $ts-primary-blue;
-               border-radius: 50%;
-               color: white;
-               box-shadow: 0 0 5px 0 #8EC0EC;
-            }
-        }
-    }
-    .create-btn {
-        width: 100%;
-        border-radius: 20.5px;
-        color: white;
-        white-space: nowrap;
-        background: linear-gradient(138.55deg, #A165C4 0%, #4D2370 100%);
-        box-shadow: 0 2px 4px 0 #D4B1F0;
     }
 }
 @media (min-width: $screen-sm-max){
   .ts-container{
     padding: 0 80px!important;
   }
+  .ts-header-new{
+      .view-type{
+            i{
+                opacity: 0.8;
+                padding: 3px 9px;
+                &.active{
+                    opacity: 1;
+                    background: $ts-primary-blue;
+                    border-radius: 50%;
+                    color: white;
+                    box-shadow: 0 0 5px 0 #8EC0EC;
+                }
+            }
+        }
+        .create-btn {
+            width: 100%;
+            min-width:200px;
+            border-radius: 20.5px;
+            color: white;
+            white-space: nowrap;
+            background: linear-gradient(138.55deg, #A165C4 0%, #4D2370 100%);
+            box-shadow: 0 2px 4px 0 #D4B1F0;
+        }
+  }
 }
+
 :host ::ng-deep .mat-button-wrapper{
                 font-size: 16px!important;
 }

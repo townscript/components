@@ -1,24 +1,30 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import {
   TsHeaderComponent,
-  TsFooterComponent
+  TsFooterComponent,
+  SearchComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
+import { TimeService } from '../../shared/index';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     TsFormsModule
   ],
   declarations: [
     TsHeaderComponent,
-    TsFooterComponent
+    TsFooterComponent,
+    SearchComponent
   ],
   exports: [
     TsHeaderComponent,
     TsFooterComponent
-  ]
+  ],
+  providers: [TimeService, DatePipe]
 })
 export class LayoutModule { }
