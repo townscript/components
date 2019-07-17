@@ -5,10 +5,12 @@ import {
   TsHeaderComponent,
   TsFooterComponent
 } from './components/index';
+import { TsFormsModule } from '@townscript/elements';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    TsFormsModule
   ],
   declarations: [
     TsHeaderComponent,
