@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './modules/layout/layout.module';
 import { FormsModule } from '@angular/forms';
-
+import { AngularMaterialModule } from './AngularMaterial.module';
 @NgModule({
   declarations: [
     AppComponent
@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    LayoutModule
+    LayoutModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]
