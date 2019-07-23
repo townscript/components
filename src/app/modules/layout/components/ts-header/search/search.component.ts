@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import * as algoliasearch from "algoliasearch";
+import * as algoliaSearchImported from "algoliasearch";
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 
+const algoliasearch = algoliaSearchImported;
 
 @Component({
     selector: 'app-search',
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit {
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive: boolean = false;
     citySearchActive: boolean = false;
-    searchResults: object;
+    searchResults: any;
     activeCity: string = "Pune";
     activeCityBackup: string;
     client: any;
