@@ -2,3 +2,7 @@
 ts-box-radio + ts-box-radio {
   margin-left: 10px;
 }
+::ng-deep .mat-dialog-bkg-container {
+  background: #f8f8f8;
+  opacity: .8 !important;
+}

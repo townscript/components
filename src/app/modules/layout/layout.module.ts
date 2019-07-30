@@ -1,30 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaModule } from 'ng-recaptcha';
 
 import {
   TsHeaderComponent,
   TsFooterComponent,
-  SearchComponent
+  SearchComponent,
+  TsLoginSignupComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
-import { TimeService } from '../../shared/index';
+import { TimeService, ApiService } from '../../shared/index';
+import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    TsFormsModule
+    TsFormsModule,
+    ReactiveFormsModule,
+    RecaptchaModule
   ],
   declarations: [
     TsHeaderComponent,
     TsFooterComponent,
-    SearchComponent
+    SearchComponent,
+    TsLoginSignupComponent,
+    LoginTopContentComponent
   ],
   exports: [
     TsHeaderComponent,
-    TsFooterComponent
+    TsFooterComponent,
+    TsLoginSignupComponent
   ],
-  providers: [TimeService, DatePipe]
+  providers: [TimeService, DatePipe, ApiService]
+
 })
 export class LayoutModule { }

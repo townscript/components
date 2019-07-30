@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TimeService } from './services/time.service';
+import { ApiService } from './services/api-service';
 
 
 @NgModule({
@@ -10,6 +11,6 @@ import { TimeService } from './services/time.service';
     imports: [
         BrowserModule,
     ],
-    providers: [TimeService]
+    providers: [TimeService, ApiService]
 })
 export class SharedModule { }
