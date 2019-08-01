@@ -7,6 +7,7 @@ import {
   TsFooterComponent,
   SearchComponent
 } from './components/index';
+// TODO do not need to write /index here and in shared/index
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService } from '../../shared/index';
 

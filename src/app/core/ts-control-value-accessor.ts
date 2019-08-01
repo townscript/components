@@ -1,4 +1,4 @@
-import {ControlValueAccessor} from '@angular/forms';
+import { ControlValueAccessor } from '@angular/forms';
 
 export abstract class TsControlValueAccessor implements ControlValueAccessor {
 
@@ -17,3 +17,4 @@ export abstract class TsControlValueAccessor implements ControlValueAccessor {
 
   abstract writeValue(obj: any): void;
 }
+// TODO remove this file it is already present in elements library

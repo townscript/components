@@ -3,3 +3,5 @@
   "ignoredImports": "scss/functions",
   "dest": "dist/components-theme.scss"
 }
+// TODO do not import styles.scss because it is styles of this app instead we should
+// create one _app.scss and import it in styles.scss and here

@@ -20,3 +20,4 @@ export class TsHeaderComponent implements OnInit {
   }
 
 }
+// TODO solve lint errors and remove unused imports

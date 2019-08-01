@@ -29,6 +29,7 @@ export class SearchComponent implements OnInit {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch("AT5UB8FMSR", "c7e946f5b740ef035bd824f69dcc1612");
+        // TODO use environment variables
         this.index = this.client.initIndex(this.algoliaIndexName);
 
     }
@@ -58,6 +59,7 @@ export class SearchComponent implements OnInit {
         });
 
         organizers.map(organizer => {
+            // TODO use environment variables
             if (!organizer.imageUrl) {
                 organizer.imageUrl = "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-organizer.png";
             }
@@ -67,6 +69,7 @@ export class SearchComponent implements OnInit {
         });
 
         events.map(event => {
+            // TODO use environment variables
             if (!event.imageUrl) {
                 event.imageUrl = "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-event.png";
             }
@@ -109,3 +112,5 @@ export class SearchComponent implements OnInit {
     }
 
 }
+
+// TODO Solve lint errors

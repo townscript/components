@@ -35,3 +35,4 @@ export class TimeService {
             + pad(tzo % 60);
     }
 }
+// TODO instead of var, let or const should be used and resolve tslint and sonar lint errors

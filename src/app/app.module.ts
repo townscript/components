@@ -21,3 +21,5 @@ import { AngularMaterialModule } from './AngularMaterial.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// TODO add sonar scanner

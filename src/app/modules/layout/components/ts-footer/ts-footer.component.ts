@@ -40,3 +40,4 @@ export class TsFooterComponent implements OnInit {
   }
 
 }
+// TODO solve lint errors
