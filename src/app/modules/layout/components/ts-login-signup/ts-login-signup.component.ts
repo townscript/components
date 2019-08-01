@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment-timezone';
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { CookieService} from './cookie.service';
 
 const headers = new  HttpHeaders().set('Authorization' , 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 
@@ -37,10 +38,13 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     });
     captchaResponse = '';
     currScreen: string;
+    correctPhoneNumber = null;
+    phoneError: boolean = false;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
         private fb: FormBuilder,
+        private cookieService: CookieService
         ) {}
 
     ngOnInit() {
@@ -124,9 +128,12 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         alert('you have signed in');
         this.postSignInCredentials().subscribe(
             (retData: any) => {
-                const tokenData = (retData.data);
-                const userData = (retData.userDetails);
-                console.log(userData);
+                const tokenData = {
+                    token: (retData.data)
+                };
+
+                const userData = {...retData.userDetails, ...tokenData};
+                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90 , '/');
                 this.redirectToListings();
             },
             (error) => {
@@ -236,7 +243,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
             password: this.loginForm.value.password,
             name: this.loginForm.value.firstName,
             username: this.randomString(10, ''),
-            phone: this.loginForm.value.phoneNumber,
+            phone: this.correctPhoneNumber,
             usertimezone: this.userTimezone,
             reCaptcha: this.captchaResponse
         };
@@ -245,11 +252,10 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         formData.append('name', this.loginForm.value.firstName);
         formData.append('emailid', this.loginForm.value.email);
         formData.append('password', this.loginForm.value.password);
-        formData.append('phone', this.loginForm.value.phoneNumber);
+        formData.append('phone', this.correctPhoneNumber);
         formData.append('usertimezone', this.userTimezone);
         formData.append('reCaptcha', this.captchaResponse);
         formData.append('username', this.randomString(10, ''));
-
         return this.http.post(this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha',
         formData, {headers: headers, responseType: 'text'});
     }
@@ -281,4 +287,23 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
         emailObj, {headers: headers}).pipe(map(data => (data)));
     }
+
+    hasError = (event) => {
+        console.log(event);
+        this.phoneError = !event;
+    }
+
+    telInputObject = (event) => {
+        console.log(event);
+    }
+
+    onCountryChange = (event) => {
+        console.log(event);
+    }
+
+    getNumber = (event) => {
+        console.log(event);
+        this.correctPhoneNumber = event;
+    }
+
 }

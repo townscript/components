@@ -13,6 +13,8 @@ import {
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService } from '../../shared/index';
 import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
+import {Ng2TelInputModule} from 'ng2-tel-input';
+import { CookieService } from './components/ts-login-signup/cookie.service';
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import { LoginTopContentComponent } from './components/ts-login-signup/login-top
     FormsModule,
     TsFormsModule,
     ReactiveFormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    Ng2TelInputModule
   ],
   declarations: [
     TsHeaderComponent,
@@ -34,7 +37,7 @@ import { LoginTopContentComponent } from './components/ts-login-signup/login-top
     TsFooterComponent,
     TsLoginSignupComponent
   ],
-  providers: [TimeService, DatePipe, ApiService]
+  providers: [TimeService, DatePipe, ApiService, CookieService]
 
 })
 export class LayoutModule { }

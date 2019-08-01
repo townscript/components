@@ -21,7 +21,20 @@
             </div>
             <div *ngIf= "ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <ts-input-text  formControlName="phoneNumber" class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone"></ts-input-text>
+                    <input
+                    ng2TelInput
+                    [ng2TelInputOptions]="{
+                        initialCountry: 'in',
+                        separateDialCode: true,
+                        utilsScript: '../../../../../../../node_modules/intl-tel-input/build/js/utils.js'
+                    }"
+                    (hasError)="hasError($event)"
+                    (ng2TelOutput)="getNumber($event)"
+                    (intlTelInputObject)="telInputObject($event)"
+                    (countryChange)="onCountryChange($event)"
+                    formControlName="phoneNumber"
+                    class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone">
+                    <p class="text-sm text-red-500" *ngIf="phoneError">Please enter a valid Phone no.</p>
                 </div>
             </div>
             <div *ngIf="showVerifyEmail" class="text-center">
@@ -30,35 +43,29 @@
             </div>
             <div class="">
                 <div *ngIf= "ifUnverified" class="w-full text-center">
-                    <button [disabled]="!loginForm.valid" (click) = "verifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
-                        Continue
-                    </button>
+                    <ts-button text="Continue" [disabled]="!loginForm.valid && phoneError" (click) = "verifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button"></ts-button>
                 </div>
                 <div *ngIf= "ifSignIn" class="w-full text-center">
-                    <button [disabled]="!loginForm.valid" (click) = "signIn()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
-                        Signin
-                    </button>
+                    <ts-button text="Signin" [disabled]="!loginForm.valid" (click) = "signIn()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
+                    </ts-button>
                     <a (click) = "forgotPassword()" class=" text-sm text-center verify-email py-2 px-2">
                         Forgot Password?
                     </a>
                 </div>
                 <div *ngIf= "ifSignUp" class="w-full text-center">
-                    <button [disabled]="!loginForm.valid" (click) = "recaptchaRef.execute()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
-                        Create your account
-                    </button>
+                    <ts-button text="Create your account" [disabled]="!loginForm.valid" (click) = "recaptchaRef.execute()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
+                    </ts-button>
                 </div>
                 <div *ngIf="showResetPassword" class="md:w-full text-center">
-                    <button [disabled]="!loginForm.valid" (click) = "resetPassword()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded" type="button">
-                        Send Reset Password Link
-                    </button>
+                    <ts-button text="Send Reset Password Link" [disabled]="!loginForm.valid" (click) = "resetPassword()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded" type="button">
+                    </ts-button>
                     <a (click) = "resetPassword()" class=" text-sm text-center resend-email py-2 px-2">
                             Resend Email
                     </a>
                 </div>
                 <div *ngIf="showVerifyEmail" class="md:w-full text-center py-2 my-2 ">
-                    <button  [disabled]="!loginForm.valid" (click) = "resendVerifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded" type="button">
-                        Resend Verification Email
-                    </button>
+                    <ts-button text="Resend Verification Email" [disabled]="!loginForm.valid" (click) = "resendVerifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2 rounded" type="button">
+                    </ts-button>
                     <a  class=" text-sm text-center resend-email py-2 px-2">
                         Why verify?
                     </a>
