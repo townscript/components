@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
 import {
   TsHeaderComponent,
   TsFooterComponent,
+  TsListingCardComponent,
   SearchComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService } from '../../shared/index';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -19,11 +20,14 @@ import { TimeService } from '../../shared/index';
   declarations: [
     TsHeaderComponent,
     TsFooterComponent,
+    TsListingCardComponent,
+    RangeDatePipe,
     SearchComponent
   ],
   exports: [
     TsHeaderComponent,
-    TsFooterComponent
+    TsFooterComponent,
+    TsListingCardComponent
   ],
   providers: [TimeService, DatePipe]
 })
