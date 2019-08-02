@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
 import {
   TsHeaderComponent,
-  TsFooterComponent
+  TsFooterComponent,
+  TsListingCardComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 
@@ -14,11 +15,14 @@ import { TsFormsModule } from '@townscript/elements';
   ],
   declarations: [
     TsHeaderComponent,
-    TsFooterComponent
+    TsFooterComponent,
+    TsListingCardComponent,
+    RangeDatePipe
   ],
   exports: [
     TsHeaderComponent,
-    TsFooterComponent
+    TsFooterComponent,
+    TsListingCardComponent
   ]
 })
 export class LayoutModule { }
