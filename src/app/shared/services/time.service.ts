@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import * as moment from 'moment-timezone';
+import * as momentImported from 'moment-timezone';
+
+const moment = momentImported;
 
 @Injectable()
 export class TimeService {
