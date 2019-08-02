@@ -65,6 +65,11 @@
             white-space: nowrap;
             background: linear-gradient(138.55deg, #A165C4 0%, #4D2370 100%);
             box-shadow: 0 2px 4px 0 #D4B1F0;
+            transition: all ease 0.1s;
+            &:hover{
+                box-shadow: 0 4px 6px 0 #D4B1F0;
+                transform:translateY(-2px);
+            }
         }
   }
 }

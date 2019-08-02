@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as algoliaSearchImported from "algoliasearch";
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
+import { HeaderService } from '../ts-header.service';
+import { Router } from "@angular/router";
 
 const algoliasearch = algoliaSearchImported;
 
@@ -15,22 +17,37 @@ const algoliasearch = algoliaSearchImported;
 export class SearchComponent implements OnInit {
 
     @Input() algoliaIndexName: string = "tsTesting";
+    @Input() router: Router;
+    @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
+    @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     searchText: string;
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive: boolean = false;
     citySearchActive: boolean = false;
+    cityPopupActive: boolean = false;
+    placeSearchResults: any;
     searchResults: any;
     activeCity: string = "Pune";
+    cityQuery: string;
+    cityQueryChanged: Subject<string> = new Subject<string>();
     activeCityBackup: string;
     client: any;
     index: any;
 
-    constructor(private timeService: TimeService, public datepipe: DatePipe) {
+    popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
+
+    constructor(private headerService: HeaderService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch("AT5UB8FMSR", "c7e946f5b740ef035bd824f69dcc1612");
         this.index = this.client.initIndex(this.algoliaIndexName);
+        this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
 
+    }
+    callSearchCity = (query) => {
+        this.headerService.getplaceSearchResults(query).subscribe(res => {
+            this.placeSearchResults = res['data'];
+        });
     }
     callAlgolia = (text) => {
         this.index.search({
@@ -41,7 +58,17 @@ export class SearchComponent implements OnInit {
             this.filterDataForSearchResult(data);
         })
     }
-
+    placeChanged = (place) => {
+        if (place.type == "country") {
+            this.router.navigate(["/" + place.twoDigitCode])
+        }
+        if (place.type == "city") {
+            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode])
+        }
+        if (place.type == "locality") {
+            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode + "/" + place.localityCode])
+        }
+    }
     filterDataForSearchResult = (data) => {
         let results = data.hits;
         let interests = results.filter(ele => {
@@ -83,27 +110,27 @@ export class SearchComponent implements OnInit {
         this.searchResults = { "interests": interests, "organizers": organizers, "events": events }
     }
 
-    toggleCityPopup = () => {
-        let cityInputElement = document.getElementById("cityInput");
-        if (document.activeElement == cityInputElement) {
-            this.citySearchActive = true;
-            this.activeCityBackup = this.activeCity;
-            this.activeCity = '';
-            this.searchActive = false;
-        } else {
-            this.citySearchActive = false;
-            this.setCityOnEmpty();
-        }
+    openCityPopup = () => {
+        this.cityPopupActive = true;
+        setTimeout(() => { (this.cityInput.nativeElement).focus() }, 500);
     }
-    setCityOnEmpty = () => {
-        console.log("Changed")
-        if (this.activeCity.trim() == "" || this.activeCity == undefined) {
-            this.activeCity = this.activeCityBackup;
+
+    @HostListener('document:click', ['$event'])
+    clickout(event) {
+        if (!this.citySuggestions.nativeElement.contains(event.target)) {
+            this.cityPopupActive = false;
         }
     }
     search = (text) => {
         if (text != undefined && text.length > 0)
             this.searchTextChanged.next(text);
+    }
+    searchCity = (text) => {
+        if (!text || text.length == 0) {
+            this.placeSearchResults = [];
+        }
+        if (text != undefined && text.length > 0)
+            this.cityQueryChanged.next(text);
     }
     ngOnInit() {
     }

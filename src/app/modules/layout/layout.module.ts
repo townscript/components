@@ -10,12 +10,15 @@ import {
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService } from '../../shared/index';
 import { FormsModule } from '@angular/forms';
+import { HeaderService } from './components/ts-header/ts-header.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    TsFormsModule
+    TsFormsModule,
+    HttpClientModule
   ],
   declarations: [
     TsHeaderComponent,
@@ -29,6 +32,6 @@ import { FormsModule } from '@angular/forms';
     TsFooterComponent,
     TsListingCardComponent
   ],
-  providers: [TimeService, DatePipe]
+  providers: [TimeService, DatePipe, HeaderService]
 })
 export class LayoutModule { }
