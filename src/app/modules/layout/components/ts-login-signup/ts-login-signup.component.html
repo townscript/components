@@ -1,6 +1,6 @@
 <section  class="container-background flex flex-row bg-white">
     <div id="login-signup-container" class="z-10 bg-white border border-gray-400 shadow w-1/2 p-6 m-auto">
-        <i (click)="takeMeBack()" class="cursor-pointer icon-left material-icons">arrow_right_alt</i>
+        <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>
         
         <app-login-top-content [condition] = "currScreen"></app-login-top-content>
         <form [formGroup]="loginForm" class="w-full max-w-sm ">
@@ -10,9 +10,10 @@
                 </div>
             </div>
             <div *ngIf= "!showVerifyEmail" class="form-group md:flex md:items-center mb-1">
-                <div class="md:w-full">   
+                <div class="md:w-full">
                     <ts-input-text formControlName="email" class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="user-email" type="email" name="email" placeholder="Email" autocomplete="user-email" required></ts-input-text>
                 </div>
+                <p class="text-sm text-red-500" *ngIf="socialLoginMsg">It seems you have signed up using Social Login.</p>
             </div>
             <div *ngIf= "ifSignIn || ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
@@ -41,9 +42,9 @@
                 <img class="m-auto" src="../../../../../assets/images/verify-email.png">
                 <span class="text-sm">Tap the link in the email we sent you at {{this.loginForm.value.email || 'someEMail'}}</span>
             </div>
-            <div class="">
+            <div class="mt-5">
                 <div *ngIf= "ifUnverified" class="w-full text-center">
-                    <ts-button text="Continue" [disabled]="!loginForm.valid && phoneError" (click) = "verifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button"></ts-button>
+                    <ts-button text="Continue" [disabled]="!loginForm.valid" (click) = "verifyEmail()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button"></ts-button>
                 </div>
                 <div *ngIf= "ifSignIn" class="w-full text-center">
                     <ts-button text="Signin" [disabled]="!loginForm.valid" (click) = "signIn()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
@@ -53,7 +54,7 @@
                     </a>
                 </div>
                 <div *ngIf= "ifSignUp" class="w-full text-center">
-                    <ts-button text="Create your account" [disabled]="!loginForm.valid" (click) = "recaptchaRef.execute()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
+                    <ts-button text="Create your account" [disabled]="!loginForm.valid || phoneError" (click) = "recaptchaRef.execute()" class="w-full verify-email shadow bg-blue-500 hover:bg-blue-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-2" type="button">
                     </ts-button>
                 </div>
                 <div *ngIf="showResetPassword" class="md:w-full text-center">
@@ -70,12 +71,12 @@
                         Why verify?
                     </a>
                 </div>
-                <p class="text-sm">
+                <!-- <p class="text-sm">
                     Form Value: {{ loginForm.value | json }}
                 </p>
                 <p class="text-sm">
                     Form Status: {{ loginForm.status }}
-                </p>
+                </p> -->
 
             </div>
             <div class="form-group">

@@ -39,7 +39,8 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     captchaResponse = '';
     currScreen: string;
     correctPhoneNumber = null;
-    phoneError: boolean = false;
+    phoneError = false;
+    socialLoginMsg = false;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
@@ -59,10 +60,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     }
 
     public resolveAndProceed(captchaResponse: string) {
-        const newResponse = captchaResponse
-        ? `${captchaResponse.substr(0, 7)}...${captchaResponse.substr(-7)}`
-        : captchaResponse;
-
         this.captchaResponse = captchaResponse;
         console.log(this.captchaResponse);
         this.signup();
@@ -96,13 +93,17 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         this.getEmailVerifyResponse().subscribe(
             (retData: any) => {
                 const newData = JSON.parse(retData.data);
-                if (newData && newData.isExistingUser === true) {
+                if (newData && newData.isExistingUser && newData.isManualSignup) {
                     this.loginForm.get('password').enable();
                     this.ifSignIn = true;
                     this.ifUnverified = false;
                     this.ifSignUp = false;
-                    this.showSocial = true;
+                    this.showSocial = false;
                     this.currScreen = 'ifSignIn';
+                    this.socialLoginMsg = false;
+                } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
+                    console.log(newData.isManualSignup);
+                    this.socialLoginMsg = true;
                 } else {
                     this.ifSignIn = false;
                     this.ifUnverified = false;
@@ -112,7 +113,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                     this.loginForm.get('firstName').enable();
                     this.loginForm.get('password').enable();
                     this.loginForm.get('phoneNumber').enable();
-
+                    this.socialLoginMsg = false;
                 }
             },
             (error) => {
@@ -121,7 +122,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
           );
           console.log('done');
 
-        }
+    }
 
 
     signIn = () => {
@@ -180,6 +181,9 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
             this.ifSignUp = false;
             this.showSocial = true;
             this.currScreen = 'ifUnverified';
+            this.loginForm.get('firstName').disable();
+            this.loginForm.get('password').disable();
+            this.loginForm.get('phoneNumber').disable();
         } else if (this.showVerifyEmail) {
             this.showVerifyEmail = false;
             this.ifUnverified = true;
