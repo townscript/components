@@ -1,5 +1,3 @@
 export const config: any = {
-  floatLabelOptions : ['auto', 'always', 'never'],
-  floatLabel: ''
+  baseUrl: ""
 };
-config.floatLabel = config.floatLabelOptions[0];

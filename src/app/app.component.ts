@@ -12,6 +12,8 @@ export class AppComponent implements OnInit {
 
 
   constructor(private dialog: MatDialog) {}
+  eventData = '';
+
 
   openDialog(type) {
       let data;

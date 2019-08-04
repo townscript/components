@@ -59,19 +59,19 @@
                 background: $gray--lighter;
                 border-top: 3px solid $ts-primary-blue;
                 box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
-                li:hover{
+                li:hover, li.active{
                     background: $gray--light;
                 }
                 &:before{
                     content: " ";
                     width: 10px;
                     position: absolute;
-                    top: -3%;
+                    top: -7px;
                     left: 88%;
                     height: 10px;
                     -webkit-filter: drop-shadow(0 -5px 10px rgba(0, 0, 0, 0.15));
                     filter: drop-shadow(0 -5px 10px rgba(0, 0, 0, 0.15));
-                    background: $gray--lighter;
+                    background: $gray--light;
                     transform: rotate(45deg);
                     border-top: 3px solid $ts-primary-blue;
                     border-left: 3px solid $ts-primary-blue;

@@ -26,22 +26,3 @@ $mat-form-field-width: 100%;
 @import "assets/scss/offsets";
 @import "assets/scss/flex";
 @import "assets/scss/animations";
-html, body { height: 100%; }
-body { margin: 0; font-family: 'Open Sans', sans-serif; }
-*{
-    box-sizing: border-box
-}
-.container{
-  max-width: none!important;
-}
-.ts-container{
-  padding: 0 10px!important;
-}
-input:focus{
-  outline:none!important;
-}
-@media (min-width: $screen-sm-max){
-  .ts-container{
-    padding: 0 80px!important;
-  }
-}

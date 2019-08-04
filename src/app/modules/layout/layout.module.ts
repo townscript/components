@@ -8,13 +8,17 @@ import {
   TsHeaderComponent,
   TsFooterComponent,
   SearchComponent,
-  TsLoginSignupComponent
+  TsLoginSignupComponent,
+  TsListingCardComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService } from '../../shared/index';
 import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { CookieService } from './components/ts-login-signup/cookie.service';
+import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
+import { HeaderService } from './components/ts-header/ts-header.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -23,21 +27,26 @@ import { CookieService } from './components/ts-login-signup/cookie.service';
     TsFormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    Ng2TelInputModule
+    Ng2TelInputModule,
+    HttpClientModule
   ],
   declarations: [
     TsHeaderComponent,
     TsFooterComponent,
     SearchComponent,
     TsLoginSignupComponent,
-    LoginTopContentComponent
+    LoginTopContentComponent,
+    TsListingCardComponent,
+    RangeDatePipe,
+    SearchComponent
   ],
   exports: [
     TsHeaderComponent,
     TsFooterComponent,
-    TsLoginSignupComponent
+    TsLoginSignupComponent,
+    TsListingCardComponent
   ],
-  providers: [TimeService, DatePipe, ApiService, CookieService]
+  providers: [TimeService, DatePipe, ApiService, CookieService, HeaderService]
 
 })
 export class LayoutModule { }
