@@ -5,7 +5,8 @@ import {
   TsHeaderComponent,
   TsFooterComponent,
   TsListingCardComponent,
-  SearchComponent
+  SearchComponent,
+  CitySearchPopupComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService } from '../../shared/index';
@@ -25,7 +26,8 @@ import { HttpClientModule } from '@angular/common/http';
     TsFooterComponent,
     TsListingCardComponent,
     RangeDatePipe,
-    SearchComponent
+    SearchComponent,
+    CitySearchPopupComponent
   ],
   exports: [
     TsHeaderComponent,
