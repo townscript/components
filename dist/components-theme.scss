@@ -44474,22 +44474,6 @@ p{
   margin-right: 20px;
 }
 
-.flex{
-  display: flex;
-  &.wrap{
-    flex-wrap: wrap;
-  }
-  &.align-items-center{
-    align-items: center;
-  }
-  &.justify-content-center{
-    justify-content: center;
-  }
-  &.justify-content-sp-around{
-    justify-content: space-around;
-  }
-}
-
 @keyframes tsFadeIn {
   0%   {opacity: 0}
   100% {opacity: 1}

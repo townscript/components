@@ -2,7 +2,7 @@
     <div class="container flex align-items-center">
         <div class="navbar-header">
             <a class="navbar-brand flex align-items-center" href="/">
-                <img src="assets/images/ts-logo.png" alt="Townscript Event Ticketing Logo"
+                <img src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                     title="Townscript Event Ticketing Logo" />
             </a>
         </div>
@@ -21,9 +21,20 @@
 
 <nav class="ts-header-new w-full fixed flex items-center" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
-        <div class="sm:w-1/4 lg:w-1/6">
-            <img class="ts-logo" src="assets/images/ts-logo.png" alt="Townscript Event Ticketing Logo"
+        <div class="hidden md:block lg:w-1/6">
+            <img class="ts-logo" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
+        </div>
+        <div class="sm:w-1/4 flex md:hidden lg:hidden items-center">
+            <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i>
+            <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
+                title="Townscript Event Ticketing Logo" />
+            <div #citySuggestions class="city-selection text-lg cursor-pointer" (click)="cityPopupActive=true">
+                <span class="mr-1 text-gray-700">Pune</span>
+                <i class="mdi mdi-menu-down color-blue"></i>
+                <app-city-search-popup [showArrow]="false" class="popup" *ngIf="cityPopupActive">
+                </app-city-search-popup>
+            </div>
         </div>
         <div class="lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex">
             <app-search [router]="router" class="w-full" [algoliaIndexName]="algoliaIndexName"></app-search>

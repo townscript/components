@@ -15,11 +15,19 @@ export declare class SearchComponent implements OnInit {
     activeCityBackup: string;
     client: any;
     index: any;
+<<<<<<< HEAD
     constructor(timeService: TimeService, datepipe: DatePipe);
     callAlgolia: (text: any) => void;
     filterDataForSearchResult: (data: any) => void;
     toggleCityPopup: () => void;
     setCityOnEmpty: () => void;
+=======
+    popularPlaces: string[];
+    constructor(headerService: HeaderService, timeService: TimeService, datepipe: DatePipe);
+    callAlgolia: (text: any) => void;
+    filterDataForSearchResult: (data: any) => void;
+    clickout(event: any): void;
+>>>>>>> 07f57e85b8effbe501dcbd4b75bd1760319195d6
     search: (text: any) => void;
     ngOnInit(): void;
 }

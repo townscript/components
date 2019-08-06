@@ -9,7 +9,8 @@ import {
   TsFooterComponent,
   SearchComponent,
   TsLoginSignupComponent,
-  TsListingCardComponent
+  TsListingCardComponent,
+  CitySearchPopupComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService } from '../../shared/index';
@@ -38,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginTopContentComponent,
     TsListingCardComponent,
     RangeDatePipe,
-    SearchComponent
+    SearchComponent,
+    CitySearchPopupComponent
   ],
   exports: [
     TsHeaderComponent,

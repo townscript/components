@@ -41,13 +41,6 @@ export class SearchComponent implements OnInit {
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch("AT5UB8FMSR", "c7e946f5b740ef035bd824f69dcc1612");
         this.index = this.client.initIndex(this.algoliaIndexName);
-        this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
-
-    }
-    callSearchCity = (query) => {
-        this.headerService.getplaceSearchResults(query).subscribe(res => {
-            this.placeSearchResults = res['data'];
-        });
     }
     callAlgolia = (text) => {
         this.index.search({
@@ -57,17 +50,6 @@ export class SearchComponent implements OnInit {
             console.log(data);
             this.filterDataForSearchResult(data);
         })
-    }
-    placeChanged = (place) => {
-        if (place.type == "country") {
-            this.router.navigate(["/" + place.twoDigitCode])
-        }
-        if (place.type == "city") {
-            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode])
-        }
-        if (place.type == "locality") {
-            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode + "/" + place.localityCode])
-        }
     }
     filterDataForSearchResult = (data) => {
         let results = data.hits;
@@ -110,11 +92,6 @@ export class SearchComponent implements OnInit {
         this.searchResults = { "interests": interests, "organizers": organizers, "events": events }
     }
 
-    openCityPopup = () => {
-        this.cityPopupActive = true;
-        setTimeout(() => { (this.cityInput.nativeElement).focus() }, 500);
-    }
-
     @HostListener('document:click', ['$event'])
     clickout(event) {
         if (!this.citySuggestions.nativeElement.contains(event.target)) {
@@ -124,13 +101,6 @@ export class SearchComponent implements OnInit {
     search = (text) => {
         if (text != undefined && text.length > 0)
             this.searchTextChanged.next(text);
-    }
-    searchCity = (text) => {
-        if (!text || text.length == 0) {
-            this.placeSearchResults = [];
-        }
-        if (text != undefined && text.length > 0)
-            this.cityQueryChanged.next(text);
     }
     ngOnInit() {
     }
