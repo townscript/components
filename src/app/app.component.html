@@ -1,13 +1,14 @@
 <section class="">
     <ts-header source='marketplace'></ts-header>
 
-    <br><br><br><br><br><br>
-    <div>
-        <a id="login">login</a><br>
-        <a id="sign-up">sign up</a>
-    </div>
-    <br><br><br><br><br><br><br>
-
-    <ts-listing-card [eventData]="eventData"></ts-listing-card>
-    <ts-footer source='marketplace'></ts-footer>
+<br><br><br><br><br><br>
+<div>
+    <a id="login" (click)="openDialog('login')">login</a>
+    <br>
+    <a id="sign-up" (click)="openDialog('signup')">sign up</a>
+     <br>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<ts-listing-card [eventData]="eventData"></ts-listing-card>
+<ts-footer source='marketplace'></ts-footer>
 </section>

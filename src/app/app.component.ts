@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material';
+import { TsLoginSignupComponent } from './modules/layout/components';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'components';
-  eventData = '';
-  constructor() {
 
+
+  constructor(private dialog: MatDialog) {}
+  eventData = '';
+
+
+  openDialog(type) {
+      let data;
+      if (type === 'login') {
+          data = type;
+      } else {
+          data = 'signup';
+      }
+      const dialogConfig = new MatDialogConfig();
+
+      dialogConfig.disableClose = false;
+      dialogConfig.autoFocus = true;
+      dialogConfig.minWidth = '900px';
+      dialogConfig.minHeight = '530px';
+      dialogConfig.height = 'auto';
+      dialogConfig.data = data;
+      dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+      this.dialog.open(TsLoginSignupComponent, dialogConfig);
   }
 
   ngOnInit() {

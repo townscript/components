@@ -1,17 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaModule } from 'ng-recaptcha';
+
 import {
   TsHeaderComponent,
   TsFooterComponent,
-  TsListingCardComponent,
   SearchComponent,
+  TsLoginSignupComponent,
+  TsListingCardComponent,
   CitySearchPopupComponent,
   HamburgerMenuComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
-import { TimeService } from '../../shared/index';
-import { FormsModule } from '@angular/forms';
+import { TimeService, ApiService } from '../../shared/index';
+import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { CookieService } from './components/ts-login-signup/cookie.service';
+import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
 import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
@@ -21,12 +28,18 @@ import { MatRippleModule } from '@angular/material/core';
     CommonModule,
     FormsModule,
     TsFormsModule,
+    ReactiveFormsModule,
+    RecaptchaModule,
+    Ng2TelInputModule,
     HttpClientModule,
     MatRippleModule
   ],
   declarations: [
     TsHeaderComponent,
     TsFooterComponent,
+    SearchComponent,
+    TsLoginSignupComponent,
+    LoginTopContentComponent,
     TsListingCardComponent,
     RangeDatePipe,
     SearchComponent,
@@ -36,8 +49,10 @@ import { MatRippleModule } from '@angular/material/core';
   exports: [
     TsHeaderComponent,
     TsFooterComponent,
+    TsLoginSignupComponent,
     TsListingCardComponent
   ],
-  providers: [TimeService, DatePipe, HeaderService]
+  providers: [TimeService, DatePipe, ApiService, CookieService, HeaderService]
+
 })
 export class LayoutModule { }

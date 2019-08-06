@@ -1,15 +1,16 @@
 import { OnInit, ElementRef } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 export declare class TsHeaderComponent implements OnInit {
-    datepipe: DatePipe;
+    private dialog;
     Components: Array<String>;
     source: string;
     algoliaIndexName: string;
     router: Router;
     citySuggestions: ElementRef;
     cityPopupActive: boolean;
-    constructor(datepipe: DatePipe);
+    constructor(dialog: MatDialog);
     clickout(event: any): void;
+    openLogin(type: any): void;
     ngOnInit(): void;
 }
