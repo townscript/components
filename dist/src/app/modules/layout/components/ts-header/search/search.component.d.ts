@@ -3,13 +3,11 @@ import { Subject } from 'rxjs';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common';
 import { HeaderService } from '../ts-header.service';
-import { Router } from "@angular/router";
 export declare class SearchComponent implements OnInit {
     private headerService;
     private timeService;
     datepipe: DatePipe;
     algoliaIndexName: string;
-    router: Router;
     cityInput: ElementRef;
     citySuggestions: ElementRef;
     searchText: string;
