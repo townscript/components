@@ -1,33 +1,35 @@
-import { OnInit } from '@angular/core';
+import { OnInit, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common';
+import { HeaderService } from '../ts-header.service';
+import { Router } from "@angular/router";
 export declare class SearchComponent implements OnInit {
+    private headerService;
     private timeService;
     datepipe: DatePipe;
     algoliaIndexName: string;
+    router: Router;
+    cityInput: ElementRef;
+    citySuggestions: ElementRef;
     searchText: string;
     searchTextChanged: Subject<string>;
     searchActive: boolean;
     citySearchActive: boolean;
+    cityPopupActive: boolean;
+    placeSearchResults: any;
     searchResults: any;
     activeCity: string;
+    cityQuery: string;
+    cityQueryChanged: Subject<string>;
     activeCityBackup: string;
     client: any;
     index: any;
-<<<<<<< HEAD
-    constructor(timeService: TimeService, datepipe: DatePipe);
-    callAlgolia: (text: any) => void;
-    filterDataForSearchResult: (data: any) => void;
-    toggleCityPopup: () => void;
-    setCityOnEmpty: () => void;
-=======
     popularPlaces: string[];
     constructor(headerService: HeaderService, timeService: TimeService, datepipe: DatePipe);
     callAlgolia: (text: any) => void;
     filterDataForSearchResult: (data: any) => void;
     clickout(event: any): void;
->>>>>>> 07f57e85b8effbe501dcbd4b75bd1760319195d6
     search: (text: any) => void;
     ngOnInit(): void;
 }

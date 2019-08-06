@@ -1,0 +1,25 @@
+import * as tslib_1 from "tslib";
+import { Component, Input } from '@angular/core';
+let TsListingCardComponent = class TsListingCardComponent {
+    constructor() {
+        this.urgencyMessage = false;
+        this.goingCounter = false;
+    }
+    ngOnInit() {
+        console.log('render card');
+    }
+};
+tslib_1.__decorate([
+    Input(),
+    tslib_1.__metadata("design:type", Object)
+], TsListingCardComponent.prototype, "eventData", void 0);
+TsListingCardComponent = tslib_1.__decorate([
+    Component({
+        selector: 'ts-listing-card',
+        template: "<div class=\"listing-container border-gray-400 shadow rounded  my-4 m-auto lg:w-3/5 sm:w-1/2 md:w-1/2 lg:flex\">\n    <div class=\"h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-center rounded text-center overflow-hidden\" [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\" title=\"Woman holding a mug\">\n    </div>\n    <div class=\"flex flex-col justify-between leading-normal w-full\">\n      <div class=\"pl-4 pt-6 mb-8\">\n        <div *ngIf=\"urgencyMessage\" class=\"flex flex-row justify-between align-items-center\">\n            <span class=\"text-sm bg-orange-500 rounded text-sm px-2\">In High Demand</span>\n            <span class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n            <span class=\"bg-white rounded-l-full px-2\">\n                <i class=\"text-purple-900 material-icons align-bottom pr-1\">remove_red_eye</i>\n                <strong class=\"text-xs\">12 Viewing right now</strong>\n            </span>\n        </div>\n        <div class=\"text-gray-500 text-xl my-2\">{{eventData.name}}</div>\n        <div class=\"text-gray flex \">\n            <div class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">calendar_today</i>\n                <span class=\" text-sm\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n            </div>\n            <div class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">location_on</i>\n                <span class=\"text-sm\">{{eventData.city}}</span>\n            </div>\n            <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                <span class=\"text-sm\">700</span>\n            </div>\n        </div>\n        <div  class=\"py-2 pr-2 flex justify-end\">\n            <div class=\"pr-2\" *ngFor=\"let key of eventData.keywords\">#{{key.keyCode}}</div>\n        </div>\n      </div>\n      <div class=\"h-10 bottom-purple-bar flex flex-row justify-between text-white pt-2 pl-4 sm:rounded-b-lg lg:rounded-none\">\n        <div class=\"text-sm\">\n            <i class=\"material-icons\">favorite_border</i>\n            <i class=\"material-icons px-2\">share</i>\n        </div>\n        <div class=\"\">\n            <span class=\"align-text-bottom text-lg\">{{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}-{{eventData.minimumTicketPrice}}</span>\n            <span><i class=\"material-icons px-2\">arrow_forward</i></span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n",
+        styles: [".listing-container{background:#f7f7f7}.listing-container .bottom-purple-bar{background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0}"]
+    }),
+    tslib_1.__metadata("design:paramtypes", [])
+], TsListingCardComponent);
+export { TsListingCardComponent };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHMtbGlzdGluZy1jYXJkLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0B0b3duc2NyaXB0L2NvbXBvbmVudHMvIiwic291cmNlcyI6WyJzcmMvYXBwL21vZHVsZXMvbGF5b3V0L2NvbXBvbmVudHMvdHMtbGlzdGluZy1jYXJkL3RzLWxpc3RpbmctY2FyZC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQVUsS0FBSyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBT3pELElBQWEsc0JBQXNCLEdBQW5DLE1BQWEsc0JBQXNCO0lBSWpDO1FBRkEsbUJBQWMsR0FBRyxLQUFLLENBQUM7UUFDdkIsaUJBQVksR0FBRyxLQUFLLENBQUM7SUFDTCxDQUFDO0lBRWpCLFFBQVE7UUFDTixPQUFPLENBQUMsR0FBRyxDQUFDLGFBQWEsQ0FBQyxDQUFDO0lBQzdCLENBQUM7Q0FFRixDQUFBO0FBVFU7SUFBUixLQUFLLEVBQUU7O3lEQUFXO0FBRFIsc0JBQXNCO0lBTGxDLFNBQVMsQ0FBQztRQUNULFFBQVEsRUFBRSxpQkFBaUI7UUFDM0IsNG1GQUErQzs7S0FFaEQsQ0FBQzs7R0FDVyxzQkFBc0IsQ0FVbEM7U0FWWSxzQkFBc0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIE9uSW5pdCwgSW5wdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQENvbXBvbmVudCh7XG4gIHNlbGVjdG9yOiAndHMtbGlzdGluZy1jYXJkJyxcbiAgdGVtcGxhdGVVcmw6ICcuL3RzLWxpc3RpbmctY2FyZC5jb21wb25lbnQuaHRtbCcsXG4gIHN0eWxlVXJsczogWycuL3RzLWxpc3RpbmctY2FyZC5jb21wb25lbnQuc2NzcyddXG59KVxuZXhwb3J0IGNsYXNzIFRzTGlzdGluZ0NhcmRDb21wb25lbnQgaW1wbGVtZW50cyBPbkluaXQge1xuICBASW5wdXQoKSBldmVudERhdGE7XG4gIHVyZ2VuY3lNZXNzYWdlID0gZmFsc2U7XG4gIGdvaW5nQ291bnRlciA9IGZhbHNlO1xuICBjb25zdHJ1Y3RvcigpIHsgfVxuXG4gIG5nT25Jbml0KCkge1xuICAgIGNvbnNvbGUubG9nKCdyZW5kZXIgY2FyZCcpO1xuICB9XG5cbn1cbiJdfQ==
