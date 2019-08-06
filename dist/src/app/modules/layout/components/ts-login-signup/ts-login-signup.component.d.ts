@@ -4,11 +4,15 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
+import { UserService } from '../../../../shared/services/user-service';
+import { MatDialogRef } from '@angular/material/dialog';
 export declare class TsLoginSignupComponent implements OnInit, AfterViewInit {
     apiService: ApiService;
     private http;
     private fb;
     private cookieService;
+    private userService;
+    dialogRef: MatDialogRef<TsLoginSignupComponent>;
     recaptchaRef: RecaptchaComponent;
     showSocial: boolean;
     show: boolean;
@@ -28,9 +32,10 @@ export declare class TsLoginSignupComponent implements OnInit, AfterViewInit {
     correctPhoneNumber: any;
     phoneError: boolean;
     socialLoginMsg: boolean;
-    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService);
+    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, dialogRef: MatDialogRef<TsLoginSignupComponent>);
     ngOnInit(): void;
     ngAfterViewInit(): void;
+    close(): void;
     resolveAndProceed(captchaResponse: string): void;
     password: () => void;
     onLoginWithFB: () => void;

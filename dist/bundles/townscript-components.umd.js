@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('@angular/common/http'), require('rxjs/operators'), require('@angular/forms'), require('moment-timezone'), require('ng-recaptcha'), require('algoliasearch'), require('rxjs'), require('@angular/common'), require('@townscript/elements'), require('ng2-tel-input'), require('moment'), require('@angular/material/core')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', '@angular/common/http', 'rxjs/operators', '@angular/forms', 'moment-timezone', 'ng-recaptcha', 'algoliasearch', 'rxjs', '@angular/common', '@townscript/elements', 'ng2-tel-input', 'moment', '@angular/material/core'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.ng.common.http, global.rxjs.operators, global.ng.forms, global.moment$2, global.ngRecaptcha, global.algoliaSearchImported, global.rxjs, global.ng.common, global.elements, global.ng2TelInput, global.moment_, global.ng.material.core));
-}(this, function (exports, core, material, http, operators, forms, moment$2, ngRecaptcha, algoliaSearchImported, rxjs, common, elements, ng2TelInput, moment_, core$1) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('@angular/common/http'), require('rxjs/operators'), require('@angular/forms'), require('moment-timezone'), require('ng-recaptcha'), require('rxjs'), require('@angular/material/dialog'), require('algoliasearch'), require('@angular/common'), require('@townscript/elements'), require('ng2-tel-input'), require('moment'), require('@angular/material/core')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', '@angular/common/http', 'rxjs/operators', '@angular/forms', 'moment-timezone', 'ng-recaptcha', 'rxjs', '@angular/material/dialog', 'algoliasearch', '@angular/common', '@townscript/elements', 'ng2-tel-input', 'moment', '@angular/material/core'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.ng.common.http, global.rxjs.operators, global.ng.forms, global.moment$2, global.ngRecaptcha, global.rxjs, global.ng.material.dialog, global.algoliaSearchImported, global.ng.common, global.elements, global.ng2TelInput, global.moment_, global.ng.material.core));
+}(this, function (exports, core, material, http, operators, forms, moment$2, ngRecaptcha, rxjs, dialog, algoliaSearchImported, common, elements, ng2TelInput, moment_, core$1) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -114,14 +114,31 @@
         return CookieService;
     }());
 
+    var UserService = /** @class */ (function () {
+        function UserService() {
+            this.user$ = new rxjs.BehaviorSubject({});
+            this.user = this.user$.asObservable();
+        }
+        UserService.prototype.updateUser = function (data) {
+            this.user$.next(data);
+        };
+        UserService = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [])
+        ], UserService);
+        return UserService;
+    }());
+
     var headers = new http.HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
     var TsLoginSignupComponent = /** @class */ (function () {
-        function TsLoginSignupComponent(apiService, http$1, fb, cookieService) {
+        function TsLoginSignupComponent(apiService, http$1, fb, cookieService, userService, dialogRef) {
             var _this = this;
             this.apiService = apiService;
             this.http = http$1;
             this.fb = fb;
             this.cookieService = cookieService;
+            this.userService = userService;
+            this.dialogRef = dialogRef;
             this.showSocial = true;
             this.show = false;
             this.showPassword = false;
@@ -195,7 +212,10 @@
                     };
                     var userData = __assign({}, retData.userDetails, tokenData);
                     _this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                    _this.redirectToListings();
+                    console.log(userData);
+                    _this.userService.updateUser(userData);
+                    _this.close();
+                    // this.redirectToListings();
                 }, function (error) {
                 });
             };
@@ -347,6 +367,9 @@
         };
         TsLoginSignupComponent.prototype.ngAfterViewInit = function () {
         };
+        TsLoginSignupComponent.prototype.close = function () {
+            this.dialogRef.close();
+        };
         TsLoginSignupComponent.prototype.resolveAndProceed = function (captchaResponse) {
             this.captchaResponse = captchaResponse;
             this.signup();
@@ -364,18 +387,24 @@
             __metadata("design:paramtypes", [ApiService,
                 http.HttpClient,
                 forms.FormBuilder,
-                CookieService])
+                CookieService,
+                UserService,
+                dialog.MatDialogRef])
         ], TsLoginSignupComponent);
         return TsLoginSignupComponent;
     }());
 
     var TsHeaderComponent = /** @class */ (function () {
-        function TsHeaderComponent(dialog) {
+        function TsHeaderComponent(dialog, userService) {
             this.dialog = dialog;
+            this.userService = userService;
             this.Components = ["createEventBtn"];
             this.source = "marketplace";
             this.algoliaIndexName = "tsTesting";
             this.cityPopupActive = false;
+            this.openMyProfileComponent = function () {
+                // this.router.navigate(["/profile"])
+            };
         }
         TsHeaderComponent.prototype.clickout = function (event) {
             console.log('clickout called');
@@ -395,6 +424,11 @@
             this.dialog.open(TsLoginSignupComponent, dialogConfig);
         };
         TsHeaderComponent.prototype.ngOnInit = function () {
+            var _this = this;
+            this.userService.user.subscribe(function (data) {
+                console.log(data);
+                _this.user = data;
+            });
         };
         __decorate([
             core.Input(),
@@ -421,10 +455,10 @@
         TsHeaderComponent = __decorate([
             core.Component({
                 selector: 'ts-header',
-                template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu>\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div class=\"sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <i (click)=\"openLogin()\" class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n            <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button>\n        </div>\n        <div class=\"sm:w-1/1 ml-auto mr-2  sm:flex md:flex lg:hidden items-center\">\n            <i class=\"mdi mdi-magnify text-2xl ml-2 color-blue\"></i>\n        </div>\n    </div>\n</nav>",
-                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:75px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
+                template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div class=\"sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer\" (click)=\"openLogin()\" *ngIf=\"!user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>{{user.user}}</span>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n        <div class=\"sm:w-1/1 ml-auto mr-2  sm:flex md:flex lg:hidden items-center\">\n            <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            <i class=\"mdi mdi-account text-2xl ml-2 color-blue\" (click)=\"openMyProfileComponent()\"></i>\n        </div>\n    </div>\n</nav>",
+                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:58px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new{min-height:75px}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
             }),
-            __metadata("design:paramtypes", [material.MatDialog])
+            __metadata("design:paramtypes", [material.MatDialog, UserService])
         ], TsHeaderComponent);
         return TsHeaderComponent;
     }());
@@ -791,6 +825,23 @@
         return RangeDatePipe;
     }());
 
+    var UserMenuComponent = /** @class */ (function () {
+        function UserMenuComponent() {
+        }
+        UserMenuComponent.prototype.ngAfterViewInit = function () {
+        };
+        UserMenuComponent.prototype.ngOnInit = function () { };
+        UserMenuComponent = __decorate([
+            core.Component({
+                selector: 'app-user-menu',
+                template: "<div class=\"user-menu\">\n\n</div>",
+                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.city-suggestions{width:100%;background:#fafafa;position:absolute;box-shadow:0 5px 10px 0 rgba(0,0,0,.15)}.city-suggestions li.active,.city-suggestions li:hover{background:#ededed}.city-suggestions.arrow{border-top:3px solid #3782c4}.city-suggestions.arrow:before{content:\" \";width:10px;position:absolute;top:-7px;left:88%;height:10px;-webkit-filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));background:#ededed;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-top:3px solid #3782c4;border-left:3px solid #3782c4}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], UserMenuComponent);
+        return UserMenuComponent;
+    }());
+
     var LayoutModule = /** @class */ (function () {
         function LayoutModule() {
         }
@@ -817,6 +868,7 @@
                     SearchComponent,
                     CitySearchPopupComponent,
                     HamburgerMenuComponent,
+                    UserMenuComponent
                 ],
                 exports: [
                     TsHeaderComponent,
@@ -824,7 +876,7 @@
                     TsLoginSignupComponent,
                     TsListingCardComponent
                 ],
-                providers: [TimeService, common.DatePipe, ApiService, CookieService, HeaderService]
+                providers: [TimeService, UserService, common.DatePipe, ApiService, CookieService, HeaderService]
             })
         ], LayoutModule);
         return LayoutModule;
@@ -842,10 +894,12 @@
     exports.TsListingCardComponent = TsListingCardComponent;
     exports.TsLoginSignupComponent = TsLoginSignupComponent;
     exports.config = config;
-    exports.ɵa = HeaderService;
-    exports.ɵb = CookieService;
-    exports.ɵc = LoginTopContentComponent;
-    exports.ɵd = RangeDatePipe;
+    exports.ɵa = UserService;
+    exports.ɵb = HeaderService;
+    exports.ɵc = CookieService;
+    exports.ɵd = LoginTopContentComponent;
+    exports.ɵe = RangeDatePipe;
+    exports.ɵf = UserMenuComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -7,8 +7,9 @@ import { Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angu
 import * as moment$2 from 'moment-timezone';
 import { tz } from 'moment-timezone';
 import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
-import { Subject } from 'rxjs';
 import { DatePipe, CommonModule } from '@angular/common';
 import { TsFormsModule } from '@townscript/elements';
 import { Ng2TelInputModule } from 'ng2-tel-input';
@@ -83,13 +84,29 @@ CookieService = __decorate([
     __metadata("design:paramtypes", [])
 ], CookieService);
 
+let UserService = class UserService {
+    constructor() {
+        this.user$ = new BehaviorSubject({});
+        this.user = this.user$.asObservable();
+    }
+    updateUser(data) {
+        this.user$.next(data);
+    }
+};
+UserService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [])
+], UserService);
+
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 let TsLoginSignupComponent = class TsLoginSignupComponent {
-    constructor(apiService, http, fb, cookieService) {
+    constructor(apiService, http, fb, cookieService, userService, dialogRef) {
         this.apiService = apiService;
         this.http = http;
         this.fb = fb;
         this.cookieService = cookieService;
+        this.userService = userService;
+        this.dialogRef = dialogRef;
         this.showSocial = true;
         this.show = false;
         this.showPassword = false;
@@ -163,7 +180,10 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
                 };
                 const userData = Object.assign({}, retData.userDetails, tokenData);
                 this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                this.redirectToListings();
+                console.log(userData);
+                this.userService.updateUser(userData);
+                this.close();
+                // this.redirectToListings();
             }, (error) => {
             });
         };
@@ -315,6 +335,9 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
     }
     ngAfterViewInit() {
     }
+    close() {
+        this.dialogRef.close();
+    }
     resolveAndProceed(captchaResponse) {
         this.captchaResponse = captchaResponse;
         this.signup();
@@ -333,16 +356,22 @@ TsLoginSignupComponent = __decorate([
     __metadata("design:paramtypes", [ApiService,
         HttpClient,
         FormBuilder,
-        CookieService])
+        CookieService,
+        UserService,
+        MatDialogRef])
 ], TsLoginSignupComponent);
 
 let TsHeaderComponent = class TsHeaderComponent {
-    constructor(dialog) {
+    constructor(dialog, userService) {
         this.dialog = dialog;
+        this.userService = userService;
         this.Components = ["createEventBtn"];
         this.source = "marketplace";
         this.algoliaIndexName = "tsTesting";
         this.cityPopupActive = false;
+        this.openMyProfileComponent = () => {
+            // this.router.navigate(["/profile"])
+        };
     }
     clickout(event) {
         console.log('clickout called');
@@ -362,6 +391,10 @@ let TsHeaderComponent = class TsHeaderComponent {
         this.dialog.open(TsLoginSignupComponent, dialogConfig);
     }
     ngOnInit() {
+        this.userService.user.subscribe(data => {
+            console.log(data);
+            this.user = data;
+        });
     }
 };
 __decorate([
@@ -389,10 +422,10 @@ __decorate([
 TsHeaderComponent = __decorate([
     Component({
         selector: 'ts-header',
-        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu>\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div class=\"sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <i (click)=\"openLogin()\" class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n            <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button>\n        </div>\n        <div class=\"sm:w-1/1 ml-auto mr-2  sm:flex md:flex lg:hidden items-center\">\n            <i class=\"mdi mdi-magnify text-2xl ml-2 color-blue\"></i>\n        </div>\n    </div>\n</nav>",
-        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:75px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
+        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div class=\"sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer\" (click)=\"openLogin()\" *ngIf=\"!user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>{{user.user}}</span>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n        <div class=\"sm:w-1/1 ml-auto mr-2  sm:flex md:flex lg:hidden items-center\">\n            <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            <i class=\"mdi mdi-account text-2xl ml-2 color-blue\" (click)=\"openMyProfileComponent()\"></i>\n        </div>\n    </div>\n</nav>",
+        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:58px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new{min-height:75px}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
     }),
-    __metadata("design:paramtypes", [MatDialog])
+    __metadata("design:paramtypes", [MatDialog, UserService])
 ], TsHeaderComponent);
 
 let TsFooterComponent = class TsFooterComponent {
@@ -740,6 +773,22 @@ RangeDatePipe = __decorate([
     })
 ], RangeDatePipe);
 
+let UserMenuComponent = class UserMenuComponent {
+    constructor() {
+    }
+    ngAfterViewInit() {
+    }
+    ngOnInit() { }
+};
+UserMenuComponent = __decorate([
+    Component({
+        selector: 'app-user-menu',
+        template: "<div class=\"user-menu\">\n\n</div>",
+        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.city-suggestions{width:100%;background:#fafafa;position:absolute;box-shadow:0 5px 10px 0 rgba(0,0,0,.15)}.city-suggestions li.active,.city-suggestions li:hover{background:#ededed}.city-suggestions.arrow{border-top:3px solid #3782c4}.city-suggestions.arrow:before{content:\" \";width:10px;position:absolute;top:-7px;left:88%;height:10px;-webkit-filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));background:#ededed;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-top:3px solid #3782c4;border-left:3px solid #3782c4}"]
+    }),
+    __metadata("design:paramtypes", [])
+], UserMenuComponent);
+
 let LayoutModule = class LayoutModule {
 };
 LayoutModule = __decorate([
@@ -765,6 +814,7 @@ LayoutModule = __decorate([
             SearchComponent,
             CitySearchPopupComponent,
             HamburgerMenuComponent,
+            UserMenuComponent
         ],
         exports: [
             TsHeaderComponent,
@@ -772,9 +822,9 @@ LayoutModule = __decorate([
             TsLoginSignupComponent,
             TsListingCardComponent
         ],
-        providers: [TimeService, DatePipe, ApiService, CookieService, HeaderService]
+        providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
     })
 ], LayoutModule);
 
-export { ApiService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, config, HeaderService as ɵa, CookieService as ɵb, LoginTopContentComponent as ɵc, RangeDatePipe as ɵd };
+export { ApiService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, config, UserService as ɵa, HeaderService as ɵb, CookieService as ɵc, LoginTopContentComponent as ɵd, RangeDatePipe as ɵe, UserMenuComponent as ɵf };
 //# sourceMappingURL=townscript-components.js.map
