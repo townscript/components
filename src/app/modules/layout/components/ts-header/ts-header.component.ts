@@ -28,7 +28,7 @@ export class TsHeaderComponent implements OnInit {
     }
   }
 
-  openLogin(type) {
+  openLogin() {
     const dialogConfig = new MatDialogConfig();
     console.log('in Login');
     dialogConfig.disableClose = false;

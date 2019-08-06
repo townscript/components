@@ -23,7 +23,7 @@ export class CitySearchPopupComponent implements OnInit {
     cityPopupActive: boolean = false;
     placeSearchResults: any;
     activeCity: string = "Pune";
-    router: Router = config.Router;
+    router: Router = config.router;
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
     client: any;
