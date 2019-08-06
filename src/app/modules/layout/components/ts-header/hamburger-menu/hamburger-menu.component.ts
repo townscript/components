@@ -1,11 +1,4 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import * as algoliaSearchImported from "algoliasearch";
-import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { TimeService } from '../../../../../shared/services/time.service';
-import { DatePipe } from '@angular/common'
-import { HeaderService } from '../ts-header.service';
-import { Router } from "@angular/router";
 
 
 @Component({
@@ -15,7 +8,10 @@ import { Router } from "@angular/router";
 })
 export class HamburgerMenuComponent implements OnInit {
 
-    constructor(private headerService: HeaderService, private timeService: TimeService, public datepipe: DatePipe) {
+    panelOpen: any;
+    panelOpen2: any;
+    active: any;
+    constructor() {
 
     }
 
@@ -23,8 +19,6 @@ export class HamburgerMenuComponent implements OnInit {
 
     }
     ngOnInit() {
-        console.log("init");
-
     }
 
 }

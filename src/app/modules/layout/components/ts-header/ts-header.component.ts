@@ -1,7 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import { TimeService } from '../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,7 +12,6 @@ export class TsHeaderComponent implements OnInit {
   @Input() Components: Array<String> = ["createEventBtn"];
   @Input() source: string = "marketplace";
   @Input() algoliaIndexName: string = "tsTesting";
-  @Input() router: Router;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
 
   cityPopupActive: boolean = false;

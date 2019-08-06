@@ -5,7 +5,8 @@ import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
+import { config } from '../../../../../core';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { Router } from "@angular/router";
 })
 export class CitySearchPopupComponent implements OnInit {
 
-    @Input() router: Router;
     @ViewChild('cityInput', { static: true }) cityInput: ElementRef;
     @Input() showArrow: boolean = true;
 
@@ -23,6 +23,7 @@ export class CitySearchPopupComponent implements OnInit {
     cityPopupActive: boolean = false;
     placeSearchResults: any;
     activeCity: string = "Pune";
+    router: Router = config.Router;
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
     client: any;

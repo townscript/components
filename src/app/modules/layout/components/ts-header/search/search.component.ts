@@ -5,7 +5,6 @@ import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
-import { Router } from "@angular/router";
 
 const algoliasearch = algoliaSearchImported;
 
@@ -17,7 +16,6 @@ const algoliasearch = algoliaSearchImported;
 export class SearchComponent implements OnInit {
 
     @Input() algoliaIndexName: string = "tsTesting";
-    @Input() router: Router;
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     searchText: string;
