@@ -26,13 +26,16 @@
                 title="Townscript Event Ticketing Logo" />
         </div>
         <div class="sm:w-1/4 flex md:hidden lg:hidden items-center">
-            <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i>
+            <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
+            <app-hamburger-menu class="mr-3"></app-hamburger-menu>
             <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
             <div #citySuggestions class="city-selection text-lg cursor-pointer" (click)="cityPopupActive=true">
-                <span class="mr-1 text-gray-700">Pune</span>
-                <i class="mdi mdi-menu-down color-blue"></i>
-                <app-city-search-popup [showArrow]="false" class="popup" *ngIf="cityPopupActive">
+                <div class="flex items-center" matRipple>
+                    <span class="mr-1 text-gray-700">Pune</span>
+                    <i class="mdi mdi-menu-down color-blue"></i>
+                </div>
+                <app-city-search-popup [router]="router" [showArrow]="false" class="popup" *ngIf="cityPopupActive">
                 </app-city-search-popup>
             </div>
         </div>

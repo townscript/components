@@ -55,7 +55,8 @@ export class CitySearchPopupComponent implements OnInit {
 
     openCityPopup = () => {
         this.cityPopupActive = true;
-        setTimeout(() => { (this.cityInput.nativeElement).focus() }, 500);
+        this.cityInput.nativeElement.focus()
+        // setTimeout(() => { ( }, 500);
     }
 
     searchCity = (text) => {

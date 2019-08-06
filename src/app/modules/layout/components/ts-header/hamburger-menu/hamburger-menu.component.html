@@ -1,0 +1,46 @@
+<nav role="navigation">
+    <div class="ham-container position-relative cursor-pointer">
+        <div class="hamburger position-relative">
+            <!-- <input type="checkbox" /> -->
+            <div class="spans" (click)="active=!active">
+                <span class="block background-blue" [class.active]="active"></span>
+                <span class="block background-blue" [class.active]="active"></span>
+                <span class="block background-blue" [class.active]="active"></span>
+            </div>
+            <div class="overlay fixed bg-black w-full h-full" *ngIf="active"></div>
+            <ul class="menu fixed h-full px-4" [class.active]="active">
+                <img class="mb-10" src="assets/images/ts-logo.svg" class="logo" />
+                <ts-panel [disable]="false">
+                    <ts-panel-header (click)="panelOpen=!panelOpen">
+                        <div>Organizing Events</div>
+                    </ts-panel-header>
+                    <ts-panel-body [open]="panelOpen">
+                        <div>
+                            <div>Manage Event</div>
+                            <div>Billings</div>
+                            <div>Reports</div>
+                            <div>Promotions</div>
+                        </div>
+                    </ts-panel-body>
+                </ts-panel>
+                <ts-panel [disable]="false">
+                    <ts-panel-header (click)="panelOpen2=!panelOpen2">
+                        <div>Attending Events</div>
+                    </ts-panel-header>
+                    <ts-panel-body [open]="panelOpen2">
+                        <div>
+                            <div>My Bookings</div>
+                            <div>Following</div>
+                        </div>
+                    </ts-panel-body>
+                </ts-panel>
+                <a href="#">
+                    <li>My Profile</li>
+                </a>
+                <a href="#">
+                    <li>Logout</li>
+                </a>
+            </ul>
+        </div>
+    </div>
+</nav>

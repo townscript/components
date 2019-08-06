@@ -6,20 +6,23 @@ import {
   TsFooterComponent,
   TsListingCardComponent,
   SearchComponent,
-  CitySearchPopupComponent
+  CitySearchPopupComponent,
+  HamburgerMenuComponent
 } from './components/index';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService } from '../../shared/index';
 import { FormsModule } from '@angular/forms';
 import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     TsFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatRippleModule
   ],
   declarations: [
     TsHeaderComponent,
@@ -27,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     TsListingCardComponent,
     RangeDatePipe,
     SearchComponent,
-    CitySearchPopupComponent
+    CitySearchPopupComponent,
+    HamburgerMenuComponent,
   ],
   exports: [
     TsHeaderComponent,
