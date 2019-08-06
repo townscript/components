@@ -61,12 +61,10 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
 
     public resolveAndProceed(captchaResponse: string) {
         this.captchaResponse = captchaResponse;
-        console.log(this.captchaResponse);
         this.signup();
     }
 
     password = () => {
-        console.log('adsfadsf');
         this.show = !this.show;
     }
 
@@ -76,7 +74,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     }
 
     onLoginWithGoogle = () => {
-        console.log(this.apiService.hostName);
         window.open('https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
         (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
     }
@@ -88,8 +85,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     }
 
     verifyEmail = () => {
-        console.log('verifying Email');
-
         this.getEmailVerifyResponse().subscribe(
             (retData: any) => {
                 const newData = JSON.parse(retData.data);
@@ -102,7 +97,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                     this.currScreen = 'ifSignIn';
                     this.socialLoginMsg = false;
                 } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
-                    console.log(newData.isManualSignup);
                     this.socialLoginMsg = true;
                 } else {
                     this.ifSignIn = false;
@@ -117,10 +111,8 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                 }
             },
             (error) => {
-              console.log('adfadf');
             }
           );
-          console.log('done');
 
     }
 
@@ -138,14 +130,11 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                 this.redirectToListings();
             },
             (error) => {
-                console.log('error');
             }
           );
     }
 
     signup = () => {
-        console.log('to email verification screen');
-        alert('signup and show verify screen');
         const self = this;
         this.postSignupCredentials().toPromise().then(function(data) {
             self.showVerifyEmail = true;
@@ -230,7 +219,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         this.resetPasswordCredentials().subscribe(
             (resp: any) => {
                 console.log(resp);
-                alert('success');
             },
             (error: any) => {
                 console.log(error);
