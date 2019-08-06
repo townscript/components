@@ -595,7 +595,7 @@ let CitySearchPopupComponent = class CitySearchPopupComponent {
         this.citySearchActive = false;
         this.cityPopupActive = false;
         this.activeCity = "Pune";
-        this.router = config.Router;
+        this.router = config.router;
         this.cityQueryChanged = new Subject();
         this.popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
         this.callSearchCity = (query) => {
