@@ -22,6 +22,8 @@ import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-rang
 import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
+import { UserService } from 'src/app/shared/services/user-service';
+import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 
 @NgModule({
   imports: [
@@ -45,6 +47,7 @@ import { MatRippleModule } from '@angular/material/core';
     SearchComponent,
     CitySearchPopupComponent,
     HamburgerMenuComponent,
+    UserMenuComponent
   ],
   exports: [
     TsHeaderComponent,
@@ -52,7 +55,7 @@ import { MatRippleModule } from '@angular/material/core';
     TsLoginSignupComponent,
     TsListingCardComponent
   ],
-  providers: [TimeService, DatePipe, ApiService, CookieService, HeaderService]
+  providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
 
 })
 export class LayoutModule { }

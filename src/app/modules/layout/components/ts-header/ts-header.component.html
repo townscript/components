@@ -27,7 +27,7 @@
         </div>
         <div class="sm:w-1/4 flex md:hidden lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
-            <app-hamburger-menu class="mr-3"></app-hamburger-menu>
+            <!-- <app-hamburger-menu class="mr-3"></app-hamburger-menu> -->
             <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
             <div #citySuggestions class="city-selection text-lg cursor-pointer" (click)="cityPopupActive=true">
@@ -54,11 +54,19 @@
             </div>
         </div>
         <div class="sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
-            <i (click)="openLogin()" class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
-            <ts-button text="Login | Signup" class="text-base"></ts-button>
+            <div class="flex items-center cursor-pointer" (click)="openLogin()" *ngIf="!user.userId" matRipple>
+                <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
+                <span>Login | Signup</span>
+            </div>
+            <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user.userId" matRipple>
+                <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
+                <span>{{user.user}}</span>
+            </div>
+            <!-- <ts-button text="Login | Signup" class="text-base"></ts-button> -->
         </div>
         <div class="sm:w-1/1 ml-auto mr-2  sm:flex md:flex lg:hidden items-center">
-            <i class="mdi mdi-magnify text-2xl ml-2 color-blue"></i>
+            <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
+            <i class="mdi mdi-account text-2xl ml-2 color-blue" (click)="openMyProfileComponent()"></i>
         </div>
     </div>
 </nav>

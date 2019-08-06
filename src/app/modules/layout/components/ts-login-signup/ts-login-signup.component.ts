@@ -5,14 +5,16 @@ import { map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment-timezone';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import { CookieService} from './cookie.service';
+import { CookieService } from './cookie.service';
+import { UserService } from '../../../../shared/services/user-service';
+import { MatDialogRef } from '@angular/material/dialog';
 
-const headers = new  HttpHeaders().set('Authorization' , 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
+const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 
 @Component({
-  selector: 'app-ts-login-signup',
-  templateUrl: './ts-login-signup.component.html',
-  styleUrls: ['./ts-login-signup.component.scss']
+    selector: 'app-ts-login-signup',
+    templateUrl: './ts-login-signup.component.html',
+    styleUrls: ['./ts-login-signup.component.scss']
 })
 export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     // @ViewChild(RecaptchaComponent, { read: true, static: true }) recaptcha: RecaptchaComponent;
@@ -45,8 +47,10 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     constructor(public apiService: ApiService,
         private http: HttpClient,
         private fb: FormBuilder,
-        private cookieService: CookieService
-        ) {}
+        private cookieService: CookieService,
+        private userService: UserService,
+        public dialogRef: MatDialogRef<TsLoginSignupComponent>
+    ) { }
 
     ngOnInit() {
         this.loginForm.get('firstName').disable();
@@ -55,10 +59,13 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         this.currScreen = 'ifUnverified';
     }
 
-    ngAfterViewInit () {
+    ngAfterViewInit() {
 
     }
 
+    close() {
+        this.dialogRef.close();
+    }
     public resolveAndProceed(captchaResponse: string) {
         this.captchaResponse = captchaResponse;
         this.signup();
@@ -70,18 +77,18 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
 
     onLoginWithFB = () => {
         window.open('https://' + this.apiService.hostName + '/api/user/signinwithfacebook' +
-        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
+            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
     }
 
     onLoginWithGoogle = () => {
         window.open('https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
-        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
+            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
     }
 
     getEmailVerifyResponse = () => {
-        const params = new  HttpParams({fromString:  `email=` + this.loginForm.value.email});
+        const params = new HttpParams({ fromString: `email=` + this.loginForm.value.email });
         return this.http.get(this.apiService.API_SERVER + 'user/getusersignupdetails',
-                    {params: params, headers: headers}).pipe(map(data => (data)));
+            { params: params, headers: headers }).pipe(map(data => (data)));
     }
 
     verifyEmail = () => {
@@ -112,7 +119,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
             },
             (error) => {
             }
-          );
+        );
 
     }
 
@@ -125,18 +132,21 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                     token: (retData.data)
                 };
 
-                const userData = {...retData.userDetails, ...tokenData};
-                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90 , '/');
-                this.redirectToListings();
+                const userData = { ...retData.userDetails, ...tokenData };
+                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
+                console.log(userData);
+                this.userService.updateUser(userData);
+                this.close();
+                // this.redirectToListings();
             },
             (error) => {
             }
-          );
+        );
     }
 
     signup = () => {
         const self = this;
-        this.postSignupCredentials().toPromise().then(function(data) {
+        this.postSignupCredentials().toPromise().then(function (data) {
             self.showVerifyEmail = true;
             self.showSocial = false;
             self.ifSignUp = false;
@@ -194,12 +204,12 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
             emailId: this.loginForm.value.email,
             password: this.loginForm.value.password
         };
-        const params = new  HttpParams({
+        const params = new HttpParams({
             fromString: `emailId=` + this.loginForm.value.email + `&password=` + this.loginForm.value.password
         });
 
         return this.http.post(this.apiService.API_SERVER + 'user/loginwithtownscript',
-            loginObj, {params: params, headers: headers}).pipe(map(data => (data)));
+            loginObj, { params: params, headers: headers }).pipe(map(data => (data)));
     }
 
     resetPasswordCredentials = () => {
@@ -208,7 +218,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         };
 
         return this.http.post(this.apiService.API_SERVER + 'verify/sendforgotpwdemail',
-        forgotPassword, { headers: headers}).pipe(map(data => (data)));
+            forgotPassword, { headers: headers }).pipe(map(data => (data)));
     }
 
     redirectToListings = () => {
@@ -249,7 +259,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         formData.append('reCaptcha', this.captchaResponse);
         formData.append('username', this.randomString(10, ''));
         return this.http.post(this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha',
-        formData, {headers: headers, responseType: 'text'});
+            formData, { headers: headers, responseType: 'text' });
     }
 
     randomString = (len, an) => {
@@ -277,7 +287,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
             emailId: this.loginForm.value.email
         };
         return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
-        emailObj, {headers: headers}).pipe(map(data => (data)));
+            emailObj, { headers: headers }).pipe(map(data => (data)));
     }
 
     hasError = (event) => {
