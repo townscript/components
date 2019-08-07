@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import {
     MatDialogModule,
     MatButtonModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -12,7 +13,8 @@ import {
         CommonModule,
         MatDialogModule,
         MatButtonModule,
-        MatRippleModule
+        MatRippleModule,
+        MatSnackBarModule
     ],
     exports: [
         MatDialogModule,

@@ -22,6 +22,8 @@ import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificationService } from '../../shared/services/notification.service';
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.co
     RecaptchaModule,
     HttpClientModule,
     MatRippleModule,
+    MatSnackBarModule
   ],
   declarations: [
     TsHeaderComponent,
@@ -53,7 +56,7 @@ import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.co
     TsListingCardComponent,
     UserMenuComponent
   ],
-  providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
+  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService]
 
 })
 export class LayoutModule { }

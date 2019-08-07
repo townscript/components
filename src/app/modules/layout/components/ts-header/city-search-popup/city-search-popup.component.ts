@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import * as algoliaSearchImported from "algoliasearch";
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
@@ -40,7 +39,6 @@ export class CitySearchPopupComponent implements OnInit {
             this.placeSearchResults = res['data'];
         });
     }
-
     placeChanged = (place) => {
         if (place.type == "country") {
             this.router.navigate(["/" + place.twoDigitCode])
@@ -52,12 +50,9 @@ export class CitySearchPopupComponent implements OnInit {
             this.router.navigate(["/" + place.countryCode + "/" + place.cityCode + "/" + place.localityCode])
         }
     }
-
-
     openCityPopup = () => {
         this.cityPopupActive = true;
         this.cityInput.nativeElement.focus()
-        // setTimeout(() => { ( }, 500);
     }
 
     searchCity = (text) => {
@@ -68,12 +63,9 @@ export class CitySearchPopupComponent implements OnInit {
             this.cityQueryChanged.next(text);
     }
     ngAfterViewInit() {
-        console.log("init");
-        setTimeout(() => { (this.cityInput.nativeElement).focus() }, 500);
+        this.cityInput.nativeElement.focus()
     }
-    ngOnInit() {
-        console.log("init");
-
-    }
-
+    ngOnInit() { }
 }
+
+

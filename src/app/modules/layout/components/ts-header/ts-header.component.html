@@ -53,20 +53,24 @@
                 <i class="mdi mdi-ticket text-2xl"></i>
             </div>
         </div>
-        <div class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
-            <div class="flex items-center cursor-pointer" (click)="openLogin()" *ngIf="!user.userId" matRipple>
+        <div #userMenuEle
+            class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
+            <div class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
                 <span>Login | Signup</span>
             </div>
-            <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user.userId" matRipple>
-                <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
+            <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user" matRipple>
+                <img class="rounded-full mr-2" width="36"
+                    [src]="'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename" />
                 <!-- <span>{{user.user}}</span> -->
             </div>
             <div class="user-menu position-absolute shadow-md px-2 enter-slide-bottom" *ngIf="userMenu">
-                <app-user-menu></app-user-menu>
+                <app-user-menu [user]="user" (close)="userMenu=!userMenu"></app-user-menu>
             </div>
             <!-- <ts-button text="Login | Signup" class="text-base"></ts-button> -->
         </div>
+
+        <!-- Mobile Menu -->
         <div class="sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center">
             <div class="rounded-full" matRipple>
                 <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>

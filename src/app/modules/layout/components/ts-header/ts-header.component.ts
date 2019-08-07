@@ -16,6 +16,7 @@ export class TsHeaderComponent implements OnInit {
   @Input() source: string = "marketplace";
   @Input() algoliaIndexName: string = "tsTesting";
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
+  @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
   user: any;
   router = config.router;
   userMenu: any;
@@ -25,23 +26,23 @@ export class TsHeaderComponent implements OnInit {
   }
 
   @HostListener('document:click', ['$event'])
-
   clickout(event) {
-    console.log('clickout called');
     if (!this.citySuggestions.nativeElement.contains(event.target)) {
       this.cityPopupActive = false;
+    }
+    if (!this.userMenuEle.nativeElement.contains(event.target)) {
+      this.userMenu = false;
     }
   }
 
   openLogin() {
     const dialogConfig = new MatDialogConfig();
-    console.log('in Login');
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.minWidth = '900px';
     dialogConfig.minHeight = '530px';
     dialogConfig.height = 'auto';
-    dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+    // dialogConfig.backdropClass = 'mat-dialog-bkg-container';
     this.dialog.open(TsLoginSignupComponent, dialogConfig);
   }
 

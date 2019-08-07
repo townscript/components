@@ -1,11 +1,12 @@
 <div class="user-menu  px-2 cursor-pointer">
     <div class="flex items-center border-b py-2 border-gray-300">
         <div class="mr-1 leading-none">
-            <i class="mdi mdi-account-circle text-5xl mr-2 color-blue"></i>
+            <img class="rounded-full mr-2" width="45"
+                [src]="'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename" />
         </div>
         <div class="leading-tight">
-            <span class="block text-lg text-gray-800">Robb Stark</span>
-            <span class="text-xs text-gray-600">View and edit profile</span>
+            <span class="block text-lg text-gray-800">{{user?.user}}</span>
+            <span class="text-xs text-gray-600 whitespace-nowrap">View and edit profile</span>
         </div>
     </div>
     <div class="menu mt-2 px-1">
@@ -63,11 +64,11 @@
                 </div>
             </ts-panel-body>
         </ts-panel>
-        <div class="px-1 py-2 flex items-center justify-between" matRipple>
+        <div class="px-1 py-2 flex items-center justify-between" (click)="logout()" matRipple>
             <span class="text-gray-700">
                 Logout
             </span>
-            <i class="mdi mdi-logout-variant text-2xl color-blue" [class.rotate-180]="panelOpen2"></i>
+            <i class="mdi mdi-logout-variant text-2xl color-blue"></i>
         </div>
     </div>
 </div>

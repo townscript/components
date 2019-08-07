@@ -8,6 +8,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 
@@ -43,14 +44,15 @@ export class TsLoginSignupComponent implements OnInit {
     correctPhoneNumber = null;
     phoneError = false;
     socialLoginMsg = false;
-    initializeTelInput ;
+    initializeTelInput;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
         private fb: FormBuilder,
         private cookieService: CookieService,
         private userService: UserService,
-        public dialogRef: MatDialogRef<TsLoginSignupComponent>
+        private notificationService: NotificationService,
+        public dialogRef: MatDialogRef<TsLoginSignupComponent>,
     ) { }
 
     ngOnInit() {
@@ -112,8 +114,8 @@ export class TsLoginSignupComponent implements OnInit {
                     this.loginForm.get('password').enable();
                     this.loginForm.get('phoneNumber').enable();
                     this.socialLoginMsg = false;
-                    this.initializeTelInput = setTimeout(() => { 
-                        this.initializeIntlTelInput(); 
+                    this.initializeTelInput = setTimeout(() => {
+                        this.initializeIntlTelInput();
                     }, 200);
                 }
             },
@@ -124,19 +126,19 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     initializeIntlTelInput = () => {
-         // initialize intl tel
-         const input = document.querySelector('#phoneNumber');
-         console.log(input);
-         console.log(window);
-         (<any>window).intlTelInput(input, {
-             initialCountry: 'in',
-             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
-         });
+        // initialize intl tel
+        const input = document.querySelector('#phoneNumber');
+        // console.log(input);
+        // console.log(window);
+        (<any>window).intlTelInput(input, {
+            initialCountry: 'in',
+            utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
+        });
 
     }
 
     signIn = () => {
-        alert('you have signed in');
+        // alert('you have signed in');
         this.postSignInCredentials().subscribe(
             (retData: any) => {
                 const tokenData = {
@@ -145,9 +147,10 @@ export class TsLoginSignupComponent implements OnInit {
 
                 const userData = { ...retData.userDetails, ...tokenData };
                 this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                console.log(userData);
+                // console.log(userData);
                 this.userService.updateUser(userData);
                 this.close();
+                this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
                 // this.redirectToListings();
             },
             (error) => {
@@ -239,10 +242,10 @@ export class TsLoginSignupComponent implements OnInit {
     resetPassword = () => {
         this.resetPasswordCredentials().subscribe(
             (resp: any) => {
-                console.log(resp);
+                // console.log(resp);
             },
             (error: any) => {
-                console.log(error);
+                // console.log(error);
             }
         );
     }
@@ -289,7 +292,7 @@ export class TsLoginSignupComponent implements OnInit {
                 alert('verification email has been sent');
             },
             (error: any) => {
-                console.log('error');
+                // console.log('error');
             }
         );
     }
@@ -302,20 +305,20 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     hasError = (event) => {
-        console.log(event);
+        // console.log(event);
         this.phoneError = !event;
     }
 
     telInputObject = (event) => {
-        console.log(event);
+        // console.log(event);
     }
 
     onCountryChange = (event) => {
-        console.log(event);
+        // console.log(event);
     }
 
     getNumber = (event) => {
-        console.log(event);
+        // console.log(event);
         this.correctPhoneNumber = event;
     }
 

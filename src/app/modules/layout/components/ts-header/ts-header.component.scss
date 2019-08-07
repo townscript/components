@@ -52,6 +52,9 @@
   }
   .ts-header-new{
       min-height:75px;
+      .ts-logo{
+        height:35px;
+      }
       .view-type{
             i{
                 opacity: 0.8;
@@ -81,7 +84,7 @@
         }
         .user-menu{
             position: absolute;
-            top: 120%;
+            top: 145%;
             width: 300px;
             left: -42%;
             background: white;

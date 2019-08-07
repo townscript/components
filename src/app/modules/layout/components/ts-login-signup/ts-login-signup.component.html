@@ -1,67 +1,79 @@
-<section  class="container-background flex flex-row bg-white">
+<section class="container-background flex flex-row bg-white">
     <div id="login-signup-container" class="z-10 bg-white w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2">
-        <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>     
-        <app-login-top-content [condition] = "currScreen"></app-login-top-content>
+        <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>
+        <app-login-top-content [condition]="currScreen"></app-login-top-content>
         <form [formGroup]="loginForm" class="w-full max-w-sm ">
-            <div *ngIf= "ifSignUp" class="form-group md:flex md:items-center mb-1">
+            <div *ngIf="ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <ts-input-text formControlName="firstName" class=" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text" placeholder="Name" autocomplete="username"></ts-input-text>
+                    <ts-input-text formControlName="firstName"
+                        class=" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                        id="name" type="text" placeholder="Name" autocomplete="username"></ts-input-text>
                 </div>
             </div>
-            <div *ngIf= "!showVerifyEmail" class="form-group md:flex md:items-center mb-1">
+            <div *ngIf="!showVerifyEmail" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <ts-input-text formControlName="email" class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="user-email" type="email" name="email" placeholder="Email" autocomplete="user-email" required></ts-input-text>
-                    <p class="text-sm text-red-500" *ngIf="socialLoginMsg">It seems you have signed up using Social Login.</p>
+                    <ts-input-text formControlName="email"
+                        class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                        id="user-email" type="email" name="email" placeholder="Email" autocomplete="user-email"
+                        required></ts-input-text>
+                    <p class="text-sm text-red-500" *ngIf="socialLoginMsg">It seems you have signed up using Social
+                        Login.</p>
                 </div>
-                
+
             </div>
-            <div *ngIf= "ifSignIn || ifSignUp" class="form-group md:flex md:items-center mb-1">
+            <div *ngIf="ifSignIn || ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <ts-input-text formControlName="password"  class="form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="user-pwd" type ="password" placeholder= "Password" autocomplete="current-password"></ts-input-text>
+                    <ts-input-text formControlName="password"
+                        class="form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                        id="user-pwd" type="password" placeholder="Password" autocomplete="current-password">
+                    </ts-input-text>
                 </div>
             </div>
-            <div *ngIf= "ifSignUp" class="form-group md:flex md:items-center mb-1">
+            <div *ngIf="ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <input
-                    type="tel"
-                    value="phone_number"
-                    formControlName="phoneNumber"
-                    class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone">
-                   
-                    
+                    <input type="tel" value="phone_number" formControlName="phoneNumber"
+                        class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                        id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone">
+
+
                     <p class="text-sm text-red-500" *ngIf="phoneError">Please enter a valid Phone no.</p>
                 </div>
             </div>
             <div *ngIf="showVerifyEmail" class="text-center">
                 <img class="m-auto" src="../../../../../assets/images/verify-email.png">
-                <span class="text-sm">Tap the link in the email we sent you at {{this.loginForm.value.email || 'someEMail'}}</span>
+                <span class="text-sm">Tap the link in the email we sent you at
+                    {{this.loginForm.value.email || 'someEMail'}}</span>
             </div>
             <div class="mt-5">
-                <div *ngIf= "ifUnverified" class="w-full text-center">
-                    <ts-button text="Continue" [disabled]="!loginForm.valid" (click) = "verifyEmail()" class="w-full"></ts-button>
-                </div>
-                <div *ngIf= "ifSignIn" class="w-full text-center">
-                    <ts-button text="Signin" [disabled]="!loginForm.valid" (click) = "signIn()" class="w-full">
+                <div *ngIf="ifUnverified" class="w-full text-center">
+                    <ts-button text="Continue" [disabled]="!loginForm.valid" (click)="verifyEmail()" class="w-full">
                     </ts-button>
-                    <a (click) = "forgotPassword()" class=" text-sm text-center verify-email py-2 px-2">
+                </div>
+                <div *ngIf="ifSignIn" class="w-full text-center">
+                    <ts-button text="Signin" [disabled]="!loginForm.valid" (click)="signIn()" class="w-full">
+                    </ts-button>
+                    <a (click)="forgotPassword()" class=" text-sm text-center verify-email py-2 px-2">
                         Forgot Password?
                     </a>
                 </div>
-                <div *ngIf= "ifSignUp" class="w-full text-center">
-                    <ts-button text="Create your account" [disabled]="!loginForm.valid || phoneError" (click) = "recaptchaRef.execute()" class="w-full">
+                <div *ngIf="ifSignUp" class="w-full text-center">
+                    <ts-button text="Create your account" [disabled]="!loginForm.valid || phoneError"
+                        (click)="recaptchaRef.execute()" class="w-full">
                     </ts-button>
                 </div>
                 <div *ngIf="showResetPassword" class="md:w-full text-center">
-                    <ts-button text="Send Reset Password Link" [disabled]="!loginForm.valid" (click) = "resetPassword()" class="w-full">
+                    <ts-button text="Send Reset Password Link" [disabled]="!loginForm.valid" (click)="resetPassword()"
+                        class="w-full">
                     </ts-button>
-                    <a (click) = "resetPassword()" class=" text-sm text-center resend-email py-2 px-2">
-                            Resend Email
+                    <a (click)="resetPassword()" class=" text-sm text-center resend-email py-2 px-2">
+                        Resend Email
                     </a>
                 </div>
                 <div *ngIf="showVerifyEmail" class="md:w-full text-center py-2 my-2 ">
-                    <ts-button text="Resend Verification Email" [disabled]="!loginForm.valid" (click) = "resendVerifyEmail()" class="w-full">
+                    <ts-button text="Resend Verification Email" [disabled]="!loginForm.valid"
+                        (click)="resendVerifyEmail()" class="w-full">
                     </ts-button>
-                    <a  class=" text-sm text-center resend-email py-2 px-2">
+                    <a class=" text-sm text-center resend-email py-2 px-2">
                         Why verify?
                     </a>
                 </div>
@@ -74,13 +86,9 @@
 
             </div>
             <div class="form-group">
-                <re-captcha
-                    #recaptchaRef="reCaptcha"
-                    (resolved)="resolveAndProceed($event)"
-                    siteKey= {{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}}
-                    size="invisible"
-                ></re-captcha>
-			</div>
+                <re-captcha #recaptchaRef="reCaptcha" (resolved)="resolveAndProceed($event)"
+                    siteKey={{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}} size="invisible"></re-captcha>
+            </div>
         </form>
         <section id="social-signin-container" *ngIf="showSocial">
             <div class="strike-through strike-through-margin">
@@ -89,25 +97,27 @@
                 </span>
             </div>
             <div class="form-group">
-                <button mat-raised-button class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center" 
-                    (click)="onLoginWithGoogle()" 
-                    ts-data-analytics prop-event="click" 
-                    eventLabel="Login with Google" 
+                <button mat-raised-button
+                    class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center"
+                    (click)="onLoginWithGoogle()" ts-data-analytics prop-event="click" eventLabel="Login with Google"
                     prop-clicked-location="Sign In">
-                        <div class="px-2">
-                            <img src="../../../../../assets/images/google-min.png"/>
-                        </div>
-                        <div class="text-sm">
-                            <span class="no-margin">Continue with Google</span>
-                        </div>
+                    <div class="px-2">
+                        <img src="../../../../../assets/images/google-min.png" />
+                    </div>
+                    <div class="text-sm">
+                        <span class="no-margin">Continue with Google</span>
+                    </div>
                 </button>
                 <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
             </div>
             <div class="form-group">
-                <button mat-raised-button class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center" (click)="onLoginWithFB()"
-                    ts-data-analytics prop-event="click" eventLabel="Login with Facebook" prop-clicked-location="Sign In">
+                <button mat-raised-button
+                    class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center"
+                    (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
+                    prop-clicked-location="Sign In">
                     <div class="px-2">
-                        <img src="https://s3.ap-southeast-1.amazonaws.com/common-resources/assets/facebook-min-new.png"/>
+                        <img
+                            src="https://s3.ap-southeast-1.amazonaws.com/common-resources/assets/facebook-min-new.png" />
                     </div>
                     <div class="text-sm">
                         <span class="no-margin">Continue with Facebook</span>
@@ -121,34 +131,40 @@
         </section>
         <div *ngIf="ifSignUp" class="agreement my-2 px-2">
             <div class="w-full hor-linear-grad m-2"></div>
-            <p class="text-xs text-center">By continuing, you agree to Townscript's <a class="text-blue-700" href="/terms-and-conditions">terms of service</a> and <a class="text-blue-700" href="/privacy-policy">privacy policy</a>.</p>
+            <p class="text-xs text-center">By continuing, you agree to Townscript's <a class="text-blue-700"
+                    href="/terms-and-conditions">terms of service</a> and <a class="text-blue-700"
+                    href="/privacy-policy">privacy policy</a>.</p>
         </div>
     </div>
     <div class="p-6 hidden md:block">
-            <div class="flex flex-col">
-                    <span class="text-2xl w-2/3"><strong>301,589 event organizers trust us.</strong></span>
-                    <div class="flex flex-column my-2">
-                        <i class="material-icons bg-purple-500 mr-2 rounded-full h-6 text-white">done</i>
-                        <span>
-                            <p class="">Quick and easy event creation</p>
-                            <p class="text-sm text-gray-600">Create your event page, it is easy and customizable.</p>
-                        </span>
-                    </div>
-                    <div class="flex flex-column my-2">
-                            <i class="material-icons bg-purple-500 mr-2 rounded-full h-6 text-white">done</i>
-                            <span>
-                                <p class="">Start selling tickets within minutes.</p>
-                                <p class="text-sm text-gray-600">Link your bank account, verify identity details and start selling instantly.</p>
-                            </span>
-                    </div>
-                    <div class="flex flex-column my-2">
-                            <i class="material-icons bg-purple-500 mr-2 rounded-full h-6 text-white">done</i>
-                            <span>
-                                <p class="">Simple Integration with your website.</p>
-                                <p class="text-sm text-gray-600">Easy to start selling tickets directly from your website and facebook without developers.</p>
-                            </span>
-                    </div>
-                </div>
+        <div class="flex flex-col mt-8">
+            <span class="text-2xl w-2/3 whitespace-no-wrap mb-4 text-gray-900">
+                <strong>301,589 event organizers trust us.</strong>
+            </span>
+            <div class="flex flex-column my-2">
+                <i class="mdi mdi-check-circle color-blue mr-2 h-6 "></i>
+                <span>
+                    <p class="">Quick and easy event creation</p>
+                    <p class="text-sm text-gray-600">Create your event page, it is easy and customizable.</p>
+                </span>
+            </div>
+            <div class="flex flex-column my-2">
+                <i class="mdi mdi-check-circle color-blue mr-2 h-6 "></i>
+                <span>
+                    <p class="">Start selling tickets within minutes.</p>
+                    <p class="text-sm text-gray-600">Link your bank account, verify identity details and start selling
+                        instantly.</p>
+                </span>
+            </div>
+            <div class="flex flex-column my-2">
+                <i class="mdi mdi-check-circle color-blue mr-2 h-6 "></i>
+                <span>
+                    <p class="">Simple Integration with your website.</p>
+                    <p class="text-sm text-gray-600">Easy to start selling tickets directly from your website and
+                        facebook without developers.</p>
+                </span>
+            </div>
+        </div>
     </div>
-    
+
 </section>
