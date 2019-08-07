@@ -1,5 +1,5 @@
 <section  class="container-background flex flex-row bg-white">
-    <div id="login-signup-container" class="z-10 bg-white border border-gray-400 shadow w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2">
+    <div id="login-signup-container" class="z-10 bg-white w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2">
         <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>     
         <app-login-top-content [condition] = "currScreen"></app-login-top-content>
         <form [formGroup]="loginForm" class="w-full max-w-sm ">
@@ -11,8 +11,9 @@
             <div *ngIf= "!showVerifyEmail" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
                     <ts-input-text formControlName="email" class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="user-email" type="email" name="email" placeholder="Email" autocomplete="user-email" required></ts-input-text>
+                    <p class="text-sm text-red-500" *ngIf="socialLoginMsg">It seems you have signed up using Social Login.</p>
                 </div>
-                <p class="text-sm text-red-500" *ngIf="socialLoginMsg">It seems you have signed up using Social Login.</p>
+                
             </div>
             <div *ngIf= "ifSignIn || ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
@@ -22,18 +23,12 @@
             <div *ngIf= "ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
                     <input
-                    ng2TelInput
-                    [ng2TelInputOptions]="{
-                        initialCountry: 'in',
-                        separateDialCode: true,
-                        utilsScript: '../../../../../../../node_modules/intl-tel-input/build/js/utils.js'
-                    }"
-                    (hasError)="hasError($event)"
-                    (ng2TelOutput)="getNumber($event)"
-                    (intlTelInputObject)="telInputObject($event)"
-                    (countryChange)="onCountryChange($event)"
+                    type="tel"
+                    value="phone_number"
                     formControlName="phoneNumber"
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone">
+                   
+                    
                     <p class="text-sm text-red-500" *ngIf="phoneError">Please enter a valid Phone no.</p>
                 </div>
             </div>

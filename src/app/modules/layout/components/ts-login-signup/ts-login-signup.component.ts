@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJ
     templateUrl: './ts-login-signup.component.html',
     styleUrls: ['./ts-login-signup.component.scss']
 })
-export class TsLoginSignupComponent implements OnInit, AfterViewInit {
+export class TsLoginSignupComponent implements OnInit {
     // @ViewChild(RecaptchaComponent, { read: true, static: true }) recaptcha: RecaptchaComponent;
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -43,6 +43,7 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
     correctPhoneNumber = null;
     phoneError = false;
     socialLoginMsg = false;
+    initializeTelInput ;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
@@ -57,10 +58,6 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
         this.currScreen = 'ifUnverified';
-    }
-
-    ngAfterViewInit() {
-
     }
 
     close() {
@@ -106,15 +103,18 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
                 } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                     this.socialLoginMsg = true;
                 } else {
+                    this.ifSignUp = true;
                     this.ifSignIn = false;
                     this.ifUnverified = false;
-                    this.ifSignUp = true;
                     this.showSocial = false;
                     this.currScreen = 'ifSignUp';
                     this.loginForm.get('firstName').enable();
                     this.loginForm.get('password').enable();
                     this.loginForm.get('phoneNumber').enable();
                     this.socialLoginMsg = false;
+                    this.initializeTelInput = setTimeout(() => { 
+                        this.initializeIntlTelInput(); 
+                    }, 200);
                 }
             },
             (error) => {
@@ -123,6 +123,17 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
 
     }
 
+    initializeIntlTelInput = () => {
+         // initialize intl tel
+         const input = document.querySelector('#phoneNumber');
+         console.log(input);
+         console.log(window);
+         (<any>window).intlTelInput(input, {
+             initialCountry: 'in',
+             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
+         });
+
+    }
 
     signIn = () => {
         alert('you have signed in');

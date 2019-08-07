@@ -1,7 +1,19 @@
 .listing-container {
-    background: #f7f7f7;
-    .bottom-purple-bar {
-        background: linear-gradient(138.55deg, #A165C4 0%, #4D2370 100%);
-        box-shadow: 0 2px 4px 0 #D4B1F0;
+    box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.13);
+    &:hover {
+        .bottom-purple-bar {
+            background: linear-gradient(138.55deg, #A165C4 0%, #4D2370 100%);
+            box-shadow: 0 2px 4px 0 #D4B1F0;
+            color: white !important;
+        }
     }
+    .listing-container--content {
+        background-color: rgb(238, 238, 238);
+        
+        .bottom-purple-bar{
+            color: #A165C4;
+            transition: 1.0s;
+        }
+    }
+    
 }

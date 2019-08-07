@@ -32,7 +32,6 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "ng-recaptcha": "^4.3.0",
-    "ng2-tel-input": "^2.0.3",
     "rxjs": "~6.5.2",
     "tailwindcss": "^1.0.5",
     "tslib": "^1.9.0",
