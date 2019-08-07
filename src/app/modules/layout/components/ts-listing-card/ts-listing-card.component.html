@@ -1,10 +1,10 @@
 <div
-    class="listing-container cursor-pointer border-gray-400 shadow rounded  my-4 m-auto lg:w-3/5 sm:w-1/2 md:w-1/2 lg:flex">
+    class="listing-container cursor-pointer border-gray-400 shadow rounded  my-4 m-auto lg:w-8/12 sm:w-1/2 md:w-1/2 lg:flex">
     <div class="h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover rounded text-center overflow-hidden"
         [style.background-image]="'url(' + eventData.cardImageUrl + ')'">
     </div>
     <div class="listing-container--content flex flex-col justify-between leading-normal w-full">
-        <div class="pl-4 pt-2 pb-1">
+        <div class="pl-4 pt-3 pb-1">
             <div *ngIf="urgencyMessage" class="flex flex-row justify-between align-items-center">
                 <span class="text-sm bg-orange-500 rounded text-sm px-2">In High Demand</span>
                 <span class="text-xs text-red-400">Booked 20 times in the last 24 hrs</span>
@@ -13,7 +13,7 @@
                     <strong class="text-xs">12 Viewing right now</strong>
                 </span>
             </div>
-            <div class="text-gray-900 text-xl my-2">{{eventData.name | titlecase}}</div>
+            <div class="text-gray-900 text-xl my-3">{{eventData.name | titlecase}}</div>
             <div class="text-gray flex text-xs ">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-xl pr-1  align-bottom text-purple-900"></i>
@@ -28,7 +28,7 @@
                     <span class="">700</span>
                 </div>
             </div>
-            <div class="py-2 pr-2 flex justify-end text-xs text-gray-800 mt-10">
+            <div class="py-2 pr-2 flex justify-end text-xs text-gray-800 mt-8">
                 <div class="pr-2" *ngFor="let key of eventData.keywords">#{{key.keyCode}}</div>
                 <div class="pr-2 hover:text-gray-900 hover:underline">#marathon</div>
                 <div class="pr-2 hover:text-gray-900 hover:underline">#running</div>
