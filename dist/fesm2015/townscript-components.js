@@ -801,7 +801,7 @@ LayoutModule = __decorate([
             RecaptchaModule,
             HttpClientModule,
             MatRippleModule,
-            IntlTelInputNgModule.forRoot()
+            IntlTelInputNgModule
         ],
         declarations: [
             TsHeaderComponent,

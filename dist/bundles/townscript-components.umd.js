@@ -855,7 +855,7 @@
                     ngRecaptcha.RecaptchaModule,
                     http.HttpClientModule,
                     core$1.MatRippleModule,
-                    intlTelInputNg.IntlTelInputNgModule.forRoot()
+                    intlTelInputNg.IntlTelInputNgModule
                 ],
                 declarations: [
                     TsHeaderComponent,

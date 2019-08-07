@@ -830,7 +830,7 @@ var LayoutModule = /** @class */ (function () {
                 RecaptchaModule,
                 HttpClientModule,
                 MatRippleModule,
-                IntlTelInputNgModule.forRoot()
+                IntlTelInputNgModule
             ],
             declarations: [
                 TsHeaderComponent,
