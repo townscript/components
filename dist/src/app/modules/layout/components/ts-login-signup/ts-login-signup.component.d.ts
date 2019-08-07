@@ -32,6 +32,7 @@ export declare class TsLoginSignupComponent implements OnInit {
     correctPhoneNumber: any;
     phoneError: boolean;
     socialLoginMsg: boolean;
+    initializeTelInput: any;
     constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, dialogRef: MatDialogRef<TsLoginSignupComponent>);
     ngOnInit(): void;
     close(): void;
@@ -41,6 +42,7 @@ export declare class TsLoginSignupComponent implements OnInit {
     onLoginWithGoogle: () => void;
     getEmailVerifyResponse: () => import("rxjs").Observable<Object>;
     verifyEmail: () => void;
+    initializeIntlTelInput: () => void;
     signIn: () => void;
     signup: () => void;
     forgotPassword: () => void;
