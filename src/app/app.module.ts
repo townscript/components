@@ -26,7 +26,7 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     HttpClientModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    IntlTelInputNgModule.forRoot()
+    IntlTelInputNgModule
   ],
   providers: [],
   bootstrap: [AppComponent],

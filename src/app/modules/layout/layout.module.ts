@@ -33,7 +33,7 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     RecaptchaModule,
     HttpClientModule,
     MatRippleModule,
-    IntlTelInputNgModule.forRoot()
+    IntlTelInputNgModule
   ],
   declarations: [
     TsHeaderComponent,
