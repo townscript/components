@@ -16,7 +16,6 @@ import {
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService } from '../../shared/index';
 import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
-import { Ng2TelInputModule } from 'ng2-tel-input';
 import { CookieService } from './components/ts-login-signup/cookie.service';
 import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
 import { HeaderService } from './components/ts-header/ts-header.service';
@@ -24,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
 import { UserService } from 'src/app/shared/services/user-service';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
+import { IntlTelInputNgModule } from 'intl-tel-input-ng';
 
 @NgModule({
   imports: [
@@ -32,9 +32,9 @@ import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.co
     TsFormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    Ng2TelInputModule,
     HttpClientModule,
-    MatRippleModule
+    MatRippleModule,
+    IntlTelInputNgModule.forRoot()
   ],
   declarations: [
     TsHeaderComponent,

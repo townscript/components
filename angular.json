@@ -31,7 +31,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
               "node_modules/intl-tel-input/build/js/utils.js"
             ]
           },

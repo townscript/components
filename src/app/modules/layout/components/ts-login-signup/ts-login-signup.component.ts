@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from '../../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJ
     templateUrl: './ts-login-signup.component.html',
     styleUrls: ['./ts-login-signup.component.scss']
 })
-export class TsLoginSignupComponent implements OnInit, AfterViewInit {
+export class TsLoginSignupComponent implements OnInit {
     // @ViewChild(RecaptchaComponent, { read: true, static: true }) recaptcha: RecaptchaComponent;
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -57,10 +57,9 @@ export class TsLoginSignupComponent implements OnInit, AfterViewInit {
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
         this.currScreen = 'ifUnverified';
-    }
 
-    ngAfterViewInit() {
-
+        // initialize intl tel
+       
     }
 
     close() {
