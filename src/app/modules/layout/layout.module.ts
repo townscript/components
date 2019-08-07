@@ -52,7 +52,8 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     TsHeaderComponent,
     TsFooterComponent,
     TsLoginSignupComponent,
-    TsListingCardComponent
+    TsListingCardComponent,
+    IntlTelInputNgModule
   ],
   providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
 
