@@ -22,22 +22,13 @@
             </div>
             <div *ngIf= "ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <!-- <input
+                    <input
                     type="tel"
-                    value=""
-                    id="intl-tel-input"
+                    value="phone_number"
                     formControlName="phoneNumber"
-                    class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone"> -->
-                    <form #form="ngForm">
-                    <intl-tel-input
-                        [cssClass]="'form-control'"
-                        [required]="true"
-                        [options]="{
-                            separateDialCode: true,
-                            initialCountry: 'in'
-                        }"
-                        name="intl-tel-input">
-                    </intl-tel-input></form>
+                    class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="phoneNumber" type="tel" placeholder="Phone no." autocomplete="user-phone">
+                   
+                    
                     <p class="text-sm text-red-500" *ngIf="phoneError">Please enter a valid Phone no.</p>
                 </div>
             </div>

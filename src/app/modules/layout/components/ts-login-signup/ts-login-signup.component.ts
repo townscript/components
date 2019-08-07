@@ -43,6 +43,7 @@ export class TsLoginSignupComponent implements OnInit {
     correctPhoneNumber = null;
     phoneError = false;
     socialLoginMsg = false;
+    initializeTelInput ;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
@@ -57,9 +58,6 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
         this.currScreen = 'ifUnverified';
-
-        // initialize intl tel
-       
     }
 
     close() {
@@ -105,15 +103,18 @@ export class TsLoginSignupComponent implements OnInit {
                 } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                     this.socialLoginMsg = true;
                 } else {
+                    this.ifSignUp = true;
                     this.ifSignIn = false;
                     this.ifUnverified = false;
-                    this.ifSignUp = true;
                     this.showSocial = false;
                     this.currScreen = 'ifSignUp';
                     this.loginForm.get('firstName').enable();
                     this.loginForm.get('password').enable();
                     this.loginForm.get('phoneNumber').enable();
                     this.socialLoginMsg = false;
+                    this.initializeTelInput = setTimeout(() => { 
+                        this.initializeIntlTelInput(); 
+                    }, 200);
                 }
             },
             (error) => {
@@ -122,6 +123,17 @@ export class TsLoginSignupComponent implements OnInit {
 
     }
 
+    initializeIntlTelInput = () => {
+         // initialize intl tel
+         const input = document.querySelector('#phoneNumber');
+         console.log(input);
+         console.log(window);
+         (<any>window).intlTelInput(input, {
+             initialCountry: 'in',
+             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
+         });
+
+    }
 
     signIn = () => {
         alert('you have signed in');

@@ -11,7 +11,6 @@ import { TsFormsModule } from '@townscript/elements';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { IntlTelInputNgModule } from 'intl-tel-input-ng';
 @NgModule({
   declarations: [
     AppComponent
@@ -25,8 +24,7 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     AngularMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RecaptchaModule,
-    IntlTelInputNgModule
+    RecaptchaModule
   ],
   providers: [],
   bootstrap: [AppComponent],

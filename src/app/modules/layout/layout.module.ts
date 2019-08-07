@@ -22,7 +22,6 @@ import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
-import { IntlTelInputNgModule } from 'intl-tel-input-ng';
 
 @NgModule({
   imports: [
@@ -33,7 +32,6 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     RecaptchaModule,
     HttpClientModule,
     MatRippleModule,
-    IntlTelInputNgModule
   ],
   declarations: [
     TsHeaderComponent,
@@ -52,8 +50,7 @@ import { IntlTelInputNgModule } from 'intl-tel-input-ng';
     TsHeaderComponent,
     TsFooterComponent,
     TsLoginSignupComponent,
-    TsListingCardComponent,
-    IntlTelInputNgModule
+    TsListingCardComponent
   ],
   providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
 
