@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
     selector: 'app-user-menu',
@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./user-menu.component.scss']
 })
 export class UserMenuComponent implements OnInit {
-    showArrow:String;
 
+    @Input("panelOpen1") panelOpen1: boolean = false;
+    @Input("panelOpen2") panelOpen2: boolean = false;
     constructor() {
 
     }

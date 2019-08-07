@@ -3,6 +3,7 @@ import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { TsLoginSignupComponent } from '../../components/ts-login-signup/ts-login-signup.component';
 import { UserService } from '../../../../shared/services/user-service';
+import { config } from '../../../../core/app-config';
 
 @Component({
   selector: 'ts-header',
@@ -16,7 +17,8 @@ export class TsHeaderComponent implements OnInit {
   @Input() algoliaIndexName: string = "tsTesting";
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   user: any;
-  userMenu = false;
+  router = config.router;
+  userMenu: any;
 
   cityPopupActive = false;
   constructor(private dialog: MatDialog, private userService: UserService) {
@@ -44,7 +46,7 @@ export class TsHeaderComponent implements OnInit {
   }
 
   openMyProfileComponent = () => {
-    // this.router.navigate(["/profile"])
+    this.router.navigate(["/profile"])
   }
   ngOnInit() {
     this.userService.user.subscribe(data => {

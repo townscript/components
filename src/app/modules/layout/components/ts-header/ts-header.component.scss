@@ -79,6 +79,25 @@
                 transform:translateY(-2px);
             }
         }
+        .user-menu{
+            position: absolute;
+            top: 120%;
+            width: 300px;
+            left: -42%;
+            background: white;
+            &:before{
+                content: " ";
+                width: 0;
+                height: 0;
+                position: absolute;
+                top:-11px;
+                left: 84%;
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-bottom: 15px solid #fff;
+                filter: drop-shadow(0px -2px 1px rgba(0, 0, 0, 0.09))
+            }
+        }
   }
 }
 

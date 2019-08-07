@@ -29,3 +29,11 @@
   animation-duration: .3s;
   animation-iteration-count: 1;
 }
+.rotate-0{
+ transform: rotate(0deg);
+ transition: transform .2s ease-in-out;
+}
+.rotate-180{
+ transform: rotate(180deg);
+ transition: transform .2s ease-in-out;
+}

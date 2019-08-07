@@ -50,7 +50,8 @@ import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.co
     TsHeaderComponent,
     TsFooterComponent,
     TsLoginSignupComponent,
-    TsListingCardComponent
+    TsListingCardComponent,
+    UserMenuComponent
   ],
   providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
 

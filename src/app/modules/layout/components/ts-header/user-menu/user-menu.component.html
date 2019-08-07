@@ -1,3 +1,73 @@
-<div class="user-menu" [class.arrow]="showArrow">
-
+<div class="user-menu  px-2 cursor-pointer">
+    <div class="flex items-center border-b py-2 border-gray-300">
+        <div class="mr-1 leading-none">
+            <i class="mdi mdi-account-circle text-5xl mr-2 color-blue"></i>
+        </div>
+        <div class="leading-tight">
+            <span class="block text-lg text-gray-800">Robb Stark</span>
+            <span class="text-xs text-gray-600">View and edit profile</span>
+        </div>
+    </div>
+    <div class="menu mt-2 px-1">
+        <ts-panel [disable]="false">
+            <ts-panel-header (click)="panelOpen1=!panelOpen1">
+                <div class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
+                    [class.border-dashed]="panelOpen1" matRipple>
+                    <span class="text-gray-700">
+                        Organizing Events
+                    </span>
+                    <i class="mdi mdi-chevron-down text-2xl color-blue" [class.rotate-180]="panelOpen1"></i>
+                </div>
+            </ts-panel-header>
+            <ts-panel-body [open]="panelOpen1">
+                <div class="text-sm text-gray-800">
+                    <div matRipple class="px-1 py-1 flex items-center">
+                        <i class="mdi mdi-calendar-today mr-2 color-blue text-xl"></i>
+                        Manage Event
+                    </div>
+                    <div matRipple class="px-1 py-1 flex items-center">
+                        <i class="mdi mdi-cash mr-2 color-blue text-xl"></i>
+                        Billings
+                    </div>
+                    <div matRipple class="px-1 py-1 flex items-center">
+                        <i class="mdi mdi-chart-line mr-2 color-blue text-xl"></i>
+                        Reports
+                    </div>
+                    <div matRipple class="px-1 py-1 pb-2 flex items-center border-b border-gray-300">
+                        <i class="mdi mdi-bullhorn mr-2 color-blue text-xl"></i>
+                        Promotions
+                    </div>
+                </div>
+            </ts-panel-body>
+        </ts-panel>
+        <ts-panel [disable]="false">
+            <ts-panel-header (click)="panelOpen2=!panelOpen2">
+                <div class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
+                    [class.border-dashed]="panelOpen2" matRipple>
+                    <span class="text-gray-700">
+                        Attending Events
+                    </span>
+                    <i class="mdi mdi-chevron-down text-2xl color-blue" [class.rotate-180]="panelOpen2"></i>
+                </div>
+            </ts-panel-header>
+            <ts-panel-body [open]="panelOpen2">
+                <div class="text-sm text-gray-800">
+                    <div matRipple class="px-1 py-1 flex items-center">
+                        <i class="mdi mdi-ticket-account mr-2 color-blue text-xl"></i>
+                        My Bookings
+                    </div>
+                    <div matRipple class="px-1 py-1 pb-2 flex items-center border-b border-gray-300">
+                        <i class="mdi mdi-heart mr-2 color-blue text-xl "></i>
+                        Following
+                    </div>
+                </div>
+            </ts-panel-body>
+        </ts-panel>
+        <div class="px-1 py-2 flex items-center justify-between" matRipple>
+            <span class="text-gray-700">
+                Logout
+            </span>
+            <i class="mdi mdi-logout-variant text-2xl color-blue" [class.rotate-180]="panelOpen2"></i>
+        </div>
+    </div>
 </div>

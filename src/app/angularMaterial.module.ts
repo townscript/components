@@ -4,17 +4,20 @@ import { CommonModule } from '@angular/common';
 import {
     MatDialogModule,
     MatButtonModule,
+    MatRippleModule
 } from '@angular/material';
 
 @NgModule({
     imports: [
         CommonModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        MatRippleModule
     ],
     exports: [
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
+        MatRippleModule
     ]
 })
 export class AngularMaterialModule { }
