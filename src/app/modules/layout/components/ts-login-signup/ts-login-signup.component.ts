@@ -8,7 +8,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
 import { MatDialogRef } from '@angular/material/dialog';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { NotificationService } from '../../../../shared/services/notification.service';
 
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 

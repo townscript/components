@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CookieService } from '../../ts-login-signup/cookie.service';
 import { UserService } from '../../../../../shared/services/user-service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { NotificationService } from '../../../../../shared/services/notification.service';
 
 @Component({
     selector: 'app-user-menu',
