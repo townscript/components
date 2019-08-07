@@ -1,6 +1,6 @@
-import { __decorate, __metadata } from 'tslib';
-import { Injectable, ViewChild, Component, Input, ElementRef, HostListener, Pipe, NgModule } from '@angular/core';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { __decorate, __metadata, __param } from 'tslib';
+import { Injectable, Inject, PLATFORM_ID, InjectionToken, ViewChild, Component, Input, ElementRef, HostListener, Pipe, EventEmitter, Output, NgModule } from '@angular/core';
+import { MatSnackBarConfig, MatSnackBar, MatDialogConfig, MatDialog } from '@angular/material';
 import { HttpHeaders, HttpParams, HttpClient, HttpClientModule } from '@angular/common/http';
 import { map, debounceTime } from 'rxjs/operators';
 import { Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,12 +8,13 @@ import * as moment$2 from 'moment-timezone';
 import { tz } from 'moment-timezone';
 import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { isPlatformBrowser, DOCUMENT, DatePipe, CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
-import { DatePipe, CommonModule } from '@angular/common';
 import { TsFormsModule } from '@townscript/elements';
 import * as moment_ from 'moment';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const config = {
     baseUrl: "",
@@ -66,7 +67,7 @@ let CookieService = class CookieService {
                 return c.substring(cookieName.length, c.length);
             }
         }
-        return '';
+        return null;
     }
     deleteCookie(name) {
         this.setCookie(name, '', -1);
@@ -84,9 +85,20 @@ CookieService = __decorate([
 ], CookieService);
 
 let UserService = class UserService {
-    constructor() {
-        this.user$ = new BehaviorSubject({});
+    constructor(cookieService, document, platformId) {
+        this.cookieService = cookieService;
+        this.document = document;
+        this.platformId = platformId;
+        this.user$ = new BehaviorSubject(null);
         this.user = this.user$.asObservable();
+        this.documentIsAccessible = isPlatformBrowser(this.platformId);
+        if (this.documentIsAccessible) {
+            let user = this.cookieService.getCookie("townscript-user");
+            console.log("got user from cookie" + user);
+            if (user != null && user.length > 0) {
+                this.updateUser(JSON.parse(user));
+            }
+        }
     }
     updateUser(data) {
         this.user$.next(data);
@@ -94,17 +106,36 @@ let UserService = class UserService {
 };
 UserService = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [])
+    __param(1, Inject(DOCUMENT)),
+    __param(2, Inject(PLATFORM_ID)),
+    __metadata("design:paramtypes", [CookieService, Object, InjectionToken])
 ], UserService);
+
+let NotificationService = class NotificationService {
+    constructor(snackBar) {
+        this.snackBar = snackBar;
+    }
+    success(message, duration, action) {
+        const config = new MatSnackBarConfig();
+        config.panelClass = ['ts-notification-success'];
+        config.duration = duration;
+        this.snackBar.open(message, action, config);
+    }
+};
+NotificationService = __decorate([
+    Injectable(),
+    __metadata("design:paramtypes", [MatSnackBar])
+], NotificationService);
 
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 let TsLoginSignupComponent = class TsLoginSignupComponent {
-    constructor(apiService, http, fb, cookieService, userService, dialogRef) {
+    constructor(apiService, http, fb, cookieService, userService, notificationService, dialogRef) {
         this.apiService = apiService;
         this.http = http;
         this.fb = fb;
         this.cookieService = cookieService;
         this.userService = userService;
+        this.notificationService = notificationService;
         this.dialogRef = dialogRef;
         this.showSocial = true;
         this.show = false;
@@ -177,24 +208,25 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         this.initializeIntlTelInput = () => {
             // initialize intl tel
             const input = document.querySelector('#phoneNumber');
-            console.log(input);
-            console.log(window);
+            // console.log(input);
+            // console.log(window);
             window.intlTelInput(input, {
                 initialCountry: 'in',
                 utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
             });
         };
         this.signIn = () => {
-            alert('you have signed in');
+            // alert('you have signed in');
             this.postSignInCredentials().subscribe((retData) => {
                 const tokenData = {
                     token: (retData.data)
                 };
                 const userData = Object.assign({}, retData.userDetails, tokenData);
                 this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                console.log(userData);
+                // console.log(userData);
                 this.userService.updateUser(userData);
                 this.close();
+                this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
                 // this.redirectToListings();
             }, (error) => {
             });
@@ -274,9 +306,9 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         };
         this.resetPassword = () => {
             this.resetPasswordCredentials().subscribe((resp) => {
-                console.log(resp);
+                // console.log(resp);
             }, (error) => {
-                console.log(error);
+                // console.log(error);
             });
         };
         this.postSignupCredentials = () => {
@@ -315,7 +347,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             this.resendVerifyEmailCredential().subscribe((retData) => {
                 alert('verification email has been sent');
             }, (error) => {
-                console.log('error');
+                // console.log('error');
             });
         };
         this.resendVerifyEmailCredential = () => {
@@ -325,17 +357,17 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode', emailObj, { headers: headers }).pipe(map(data => (data)));
         };
         this.hasError = (event) => {
-            console.log(event);
+            // console.log(event);
             this.phoneError = !event;
         };
         this.telInputObject = (event) => {
-            console.log(event);
+            // console.log(event);
         };
         this.onCountryChange = (event) => {
-            console.log(event);
+            // console.log(event);
         };
         this.getNumber = (event) => {
-            console.log(event);
+            // console.log(event);
             this.correctPhoneNumber = event;
         };
     }
@@ -360,7 +392,7 @@ __decorate([
 TsLoginSignupComponent = __decorate([
     Component({
         selector: 'app-ts-login-signup',
-        template: "<section  class=\"container-background flex flex-row bg-white\">\n    <div id=\"login-signup-container\" class=\"z-10 bg-white w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2\">\n        <i (click)=\"takeMeBack()\" class=\"cursor-pointer material-icons\">arrow_back</i>     \n        <app-login-top-content [condition] = \"currScreen\"></app-login-top-content>\n        <form [formGroup]=\"loginForm\" class=\"w-full max-w-sm \">\n            <div *ngIf= \"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"firstName\" class=\" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\" id=\"name\" type=\"text\" placeholder=\"Name\" autocomplete=\"username\"></ts-input-text>\n                </div>\n            </div>\n            <div *ngIf= \"!showVerifyEmail\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"email\" class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\" id=\"user-email\" type=\"email\" name=\"email\" placeholder=\"Email\" autocomplete=\"user-email\" required></ts-input-text>\n                    <p class=\"text-sm text-red-500\" *ngIf=\"socialLoginMsg\">It seems you have signed up using Social Login.</p>\n                </div>\n                \n            </div>\n            <div *ngIf= \"ifSignIn || ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"password\"  class=\"form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\" id=\"user-pwd\" type =\"password\" placeholder= \"Password\" autocomplete=\"current-password\"></ts-input-text>\n                </div>\n            </div>\n            <div *ngIf= \"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <input\n                    type=\"tel\"\n                    value=\"phone_number\"\n                    formControlName=\"phoneNumber\"\n                    class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\" id=\"phoneNumber\" type=\"tel\" placeholder=\"Phone no.\" autocomplete=\"user-phone\">\n                   \n                    \n                    <p class=\"text-sm text-red-500\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n                </div>\n            </div>\n            <div *ngIf=\"showVerifyEmail\" class=\"text-center\">\n                <img class=\"m-auto\" src=\"../../../../../assets/images/verify-email.png\">\n                <span class=\"text-sm\">Tap the link in the email we sent you at {{this.loginForm.value.email || 'someEMail'}}</span>\n            </div>\n            <div class=\"mt-5\">\n                <div *ngIf= \"ifUnverified\" class=\"w-full text-center\">\n                    <ts-button text=\"Continue\" [disabled]=\"!loginForm.valid\" (click) = \"verifyEmail()\" class=\"w-full\"></ts-button>\n                </div>\n                <div *ngIf= \"ifSignIn\" class=\"w-full text-center\">\n                    <ts-button text=\"Signin\" [disabled]=\"!loginForm.valid\" (click) = \"signIn()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click) = \"forgotPassword()\" class=\" text-sm text-center verify-email py-2 px-2\">\n                        Forgot Password?\n                    </a>\n                </div>\n                <div *ngIf= \"ifSignUp\" class=\"w-full text-center\">\n                    <ts-button text=\"Create your account\" [disabled]=\"!loginForm.valid || phoneError\" (click) = \"recaptchaRef.execute()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"showResetPassword\" class=\"md:w-full text-center\">\n                    <ts-button text=\"Send Reset Password Link\" [disabled]=\"!loginForm.valid\" (click) = \"resetPassword()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click) = \"resetPassword()\" class=\" text-sm text-center resend-email py-2 px-2\">\n                            Resend Email\n                    </a>\n                </div>\n                <div *ngIf=\"showVerifyEmail\" class=\"md:w-full text-center py-2 my-2 \">\n                    <ts-button text=\"Resend Verification Email\" [disabled]=\"!loginForm.valid\" (click) = \"resendVerifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                    <a  class=\" text-sm text-center resend-email py-2 px-2\">\n                        Why verify?\n                    </a>\n                </div>\n                <!-- <p class=\"text-sm\">\n                    Form Value: {{ loginForm.value | json }}\n                </p>\n                <p class=\"text-sm\">\n                    Form Status: {{ loginForm.status }}\n                </p> -->\n\n            </div>\n            <div class=\"form-group\">\n                <re-captcha\n                    #recaptchaRef=\"reCaptcha\"\n                    (resolved)=\"resolveAndProceed($event)\"\n                    siteKey= {{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}}\n                    size=\"invisible\"\n                ></re-captcha>\n\t\t\t</div>\n        </form>\n        <section id=\"social-signin-container\" *ngIf=\"showSocial\">\n            <div class=\"strike-through strike-through-margin\">\n                <span>\n                    <strong class=\"or-text\">or</strong>\n                </span>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button class=\"bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center\" \n                    (click)=\"onLoginWithGoogle()\" \n                    ts-data-analytics prop-event=\"click\" \n                    eventLabel=\"Login with Google\" \n                    prop-clicked-location=\"Sign In\">\n                        <div class=\"px-2\">\n                            <img src=\"../../../../../assets/images/google-min.png\"/>\n                        </div>\n                        <div class=\"text-sm\">\n                            <span class=\"no-margin\">Continue with Google</span>\n                        </div>\n                </button>\n                <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button class=\"bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center\" (click)=\"onLoginWithFB()\"\n                    ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\" prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img src=\"https://s3.ap-southeast-1.amazonaws.com/common-resources/assets/facebook-min-new.png\"/>\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Facebook</span>\n                    </div>\n                </button>\n                <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n                    <i class=\"ion-android-alert\"></i>\n                    <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n                </ng-container>\n            </div>\n        </section>\n        <div *ngIf=\"ifSignUp\" class=\"agreement my-2 px-2\">\n            <div class=\"w-full hor-linear-grad m-2\"></div>\n            <p class=\"text-xs text-center\">By continuing, you agree to Townscript's <a class=\"text-blue-700\" href=\"/terms-and-conditions\">terms of service</a> and <a class=\"text-blue-700\" href=\"/privacy-policy\">privacy policy</a>.</p>\n        </div>\n    </div>\n    <div class=\"p-6 hidden md:block\">\n            <div class=\"flex flex-col\">\n                    <span class=\"text-2xl w-2/3\"><strong>301,589 event organizers trust us.</strong></span>\n                    <div class=\"flex flex-column my-2\">\n                        <i class=\"material-icons bg-purple-500 mr-2 rounded-full h-6 text-white\">done</i>\n                        <span>\n                            <p class=\"\">Quick and easy event creation</p>\n                            <p class=\"text-sm text-gray-600\">Create your event page, it is easy and customizable.</p>\n                        </span>\n                    </div>\n                    <div class=\"flex flex-column my-2\">\n                            <i class=\"material-icons bg-purple-500 mr-2 rounded-full h-6 text-white\">done</i>\n                            <span>\n                                <p class=\"\">Start selling tickets within minutes.</p>\n                                <p class=\"text-sm text-gray-600\">Link your bank account, verify identity details and start selling instantly.</p>\n                            </span>\n                    </div>\n                    <div class=\"flex flex-column my-2\">\n                            <i class=\"material-icons bg-purple-500 mr-2 rounded-full h-6 text-white\">done</i>\n                            <span>\n                                <p class=\"\">Simple Integration with your website.</p>\n                                <p class=\"text-sm text-gray-600\">Easy to start selling tickets directly from your website and facebook without developers.</p>\n                            </span>\n                    </div>\n                </div>\n    </div>\n    \n</section>\n",
+        template: "<section class=\"container-background flex flex-row bg-white\">\n    <div id=\"login-signup-container\" class=\"z-10 bg-white w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2\">\n        <i (click)=\"takeMeBack()\" class=\"cursor-pointer material-icons\">arrow_back</i>\n        <app-login-top-content [condition]=\"currScreen\"></app-login-top-content>\n        <form [formGroup]=\"loginForm\" class=\"w-full max-w-sm \">\n            <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"firstName\"\n                        class=\" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"name\" type=\"text\" placeholder=\"Name\" autocomplete=\"username\"></ts-input-text>\n                </div>\n            </div>\n            <div *ngIf=\"!showVerifyEmail\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"email\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-email\" type=\"email\" name=\"email\" placeholder=\"Email\" autocomplete=\"user-email\"\n                        required></ts-input-text>\n                    <p class=\"text-sm text-red-500\" *ngIf=\"socialLoginMsg\">It seems you have signed up using Social\n                        Login.</p>\n                </div>\n\n            </div>\n            <div *ngIf=\"ifSignIn || ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"password\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-pwd\" type=\"password\" placeholder=\"Password\" autocomplete=\"current-password\">\n                    </ts-input-text>\n                </div>\n            </div>\n            <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <input type=\"tel\" value=\"phone_number\" formControlName=\"phoneNumber\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"phoneNumber\" type=\"tel\" placeholder=\"Phone no.\" autocomplete=\"user-phone\">\n\n\n                    <p class=\"text-sm text-red-500\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n                </div>\n            </div>\n            <div *ngIf=\"showVerifyEmail\" class=\"text-center\">\n                <img class=\"m-auto\" src=\"../../../../../assets/images/verify-email.png\">\n                <span class=\"text-sm\">Tap the link in the email we sent you at\n                    {{this.loginForm.value.email || 'someEMail'}}</span>\n            </div>\n            <div class=\"mt-5\">\n                <div *ngIf=\"ifUnverified\" class=\"w-full text-center\">\n                    <ts-button text=\"Continue\" [disabled]=\"!loginForm.valid\" (click)=\"verifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"ifSignIn\" class=\"w-full text-center\">\n                    <ts-button text=\"Signin\" [disabled]=\"!loginForm.valid\" (click)=\"signIn()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"forgotPassword()\" class=\" text-sm text-center verify-email py-2 px-2\">\n                        Forgot Password?\n                    </a>\n                </div>\n                <div *ngIf=\"ifSignUp\" class=\"w-full text-center\">\n                    <ts-button text=\"Create your account\" [disabled]=\"!loginForm.valid || phoneError\"\n                        (click)=\"recaptchaRef.execute()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"showResetPassword\" class=\"md:w-full text-center\">\n                    <ts-button text=\"Send Reset Password Link\" [disabled]=\"!loginForm.valid\" (click)=\"resetPassword()\"\n                        class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"resetPassword()\" class=\" text-sm text-center resend-email py-2 px-2\">\n                        Resend Email\n                    </a>\n                </div>\n                <div *ngIf=\"showVerifyEmail\" class=\"md:w-full text-center py-2 my-2 \">\n                    <ts-button text=\"Resend Verification Email\" [disabled]=\"!loginForm.valid\"\n                        (click)=\"resendVerifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                    <a class=\" text-sm text-center resend-email py-2 px-2\">\n                        Why verify?\n                    </a>\n                </div>\n                <!-- <p class=\"text-sm\">\n                    Form Value: {{ loginForm.value | json }}\n                </p>\n                <p class=\"text-sm\">\n                    Form Status: {{ loginForm.status }}\n                </p> -->\n\n            </div>\n            <div class=\"form-group\">\n                <re-captcha #recaptchaRef=\"reCaptcha\" (resolved)=\"resolveAndProceed($event)\"\n                    siteKey={{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}} size=\"invisible\"></re-captcha>\n            </div>\n        </form>\n        <section id=\"social-signin-container\" *ngIf=\"showSocial\">\n            <div class=\"strike-through strike-through-margin\">\n                <span>\n                    <strong class=\"or-text\">or</strong>\n                </span>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithGoogle()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Google\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img src=\"../../../../../assets/images/google-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Google</span>\n                    </div>\n                </button>\n                <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithFB()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img\n                            src=\"https://s3.ap-southeast-1.amazonaws.com/common-resources/assets/facebook-min-new.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Facebook</span>\n                    </div>\n                </button>\n                <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n                    <i class=\"ion-android-alert\"></i>\n                    <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n                </ng-container>\n            </div>\n        </section>\n        <div *ngIf=\"ifSignUp\" class=\"agreement my-2 px-2\">\n            <div class=\"w-full hor-linear-grad m-2\"></div>\n            <p class=\"text-xs text-center\">By continuing, you agree to Townscript's <a class=\"text-blue-700\"\n                    href=\"/terms-and-conditions\">terms of service</a> and <a class=\"text-blue-700\"\n                    href=\"/privacy-policy\">privacy policy</a>.</p>\n        </div>\n    </div>\n    <div class=\"p-6 hidden md:block\">\n        <div class=\"flex flex-col mt-8\">\n            <span class=\"text-2xl w-2/3 whitespace-no-wrap mb-4 text-gray-900\">\n                <strong>301,589 event organizers trust us.</strong>\n            </span>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Quick and easy event creation</p>\n                    <p class=\"text-sm text-gray-600\">Create your event page, it is easy and customizable.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Start selling tickets within minutes.</p>\n                    <p class=\"text-sm text-gray-600\">Link your bank account, verify identity details and start selling\n                        instantly.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Simple Integration with your website.</p>\n                    <p class=\"text-sm text-gray-600\">Easy to start selling tickets directly from your website and\n                        facebook without developers.</p>\n                </span>\n            </div>\n        </div>\n    </div>\n\n</section>",
         styles: [".container-background::before{color:#fff;background:url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 200 100' xmlns='http://www.w3.org/2000/svg'  preserveAspectRatio='none'><polygon points='0,110 0,50 300,0 300,300' width='100%' height='100%' style='fill:blue;'/></svg>\") 0 0/contain;width:30%;font-size:2em;padding:4px 40px}.strike-through-margin{margin:30px 0;text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em}.strike-through-margin span{background-color:#fff;padding:3px 30px}.strike-through{text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em;margin:30px auto}.strike-through span{background-color:#fff;padding:3px 30px}.hor-linear-grad{border:1px solid;border-left:0;border-right:0;-webkit-border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));-webkit-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);-o-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image-slice:1}.iti__flag{background-image:url(../../../../../../node_modules/intl-tel-input/build/img/flags.png)}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.iti__flag{background-image:url(../../../../../../node_modules/intl-tel-input/build/img/flags@2x.png)}}"]
     }),
     __metadata("design:paramtypes", [ApiService,
@@ -368,6 +400,7 @@ TsLoginSignupComponent = __decorate([
         FormBuilder,
         CookieService,
         UserService,
+        NotificationService,
         MatDialogRef])
 ], TsLoginSignupComponent);
 
@@ -385,20 +418,21 @@ let TsHeaderComponent = class TsHeaderComponent {
         };
     }
     clickout(event) {
-        console.log('clickout called');
         if (!this.citySuggestions.nativeElement.contains(event.target)) {
             this.cityPopupActive = false;
+        }
+        if (!this.userMenuEle.nativeElement.contains(event.target)) {
+            this.userMenu = false;
         }
     }
     openLogin() {
         const dialogConfig = new MatDialogConfig();
-        console.log('in Login');
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.minWidth = '900px';
         dialogConfig.minHeight = '530px';
         dialogConfig.height = 'auto';
-        dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+        // dialogConfig.backdropClass = 'mat-dialog-bkg-container';
         this.dialog.open(TsLoginSignupComponent, dialogConfig);
     }
     ngOnInit() {
@@ -425,6 +459,10 @@ __decorate([
     __metadata("design:type", ElementRef)
 ], TsHeaderComponent.prototype, "citySuggestions", void 0);
 __decorate([
+    ViewChild('userMenuEle', { static: false }),
+    __metadata("design:type", ElementRef)
+], TsHeaderComponent.prototype, "userMenuEle", void 0);
+__decorate([
     HostListener('document:click', ['$event']),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -433,8 +471,8 @@ __decorate([
 TsHeaderComponent = __decorate([
     Component({
         selector: 'ts-header',
-        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div class=\"position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer\" (click)=\"openLogin()\" *ngIf=\"!user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user.userId\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <!-- <span>{{user.user}}</span> -->\n            </div>\n            <div class=\"user-menu position-absolute shadow-md px-2 enter-slide-bottom\" *ngIf=\"userMenu\">\n                <app-user-menu></app-user-menu>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n        <div class=\"sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center\">\n            <div class=\"rounded-full\" matRipple>\n                <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            </div>\n            <div class=\"rounded-full\" matRipple>\n                <i class=\"mdi mdi-account text-2xl mr-2 ml-2 color-blue\" matRipple\n                    (click)=\"openMyProfileComponent()\"></i>\n            </div>\n        </div>\n    </div>\n</nav>",
-        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:58px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new{min-height:75px}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}.ts-header-new .user-menu{position:absolute;top:120%;width:300px;left:-42%;background:#fff}.ts-header-new .user-menu:before{content:\" \";width:0;height:0;position:absolute;top:-11px;left:84%;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:15px solid #fff;-webkit-filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09));filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09))}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
+        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new w-full fixed flex items-center\" *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img class=\"ts-logo\" src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n            <div #citySuggestions class=\"city-selection text-lg cursor-pointer\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center\" matRipple>\n                    <span class=\"mr-1 text-gray-700\">Pune</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search class=\"w-full\" [algoliaIndexName]=\"algoliaIndexName\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8\">\n            <div class=\"create-btn cursor-pointer flex justify-center items-center\">\n                <span class=\"text-sm mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div #userMenuEle\n            class=\"position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer px-2\" (click)=\"openLogin()\" *ngIf=\"!user\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user\" matRipple>\n                <img class=\"rounded-full mr-2\" width=\"36\"\n                    [src]=\"'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename\" />\n                <!-- <span>{{user.user}}</span> -->\n            </div>\n            <div class=\"user-menu position-absolute shadow-md px-2 enter-slide-bottom\" *ngIf=\"userMenu\">\n                <app-user-menu [user]=\"user\" (close)=\"userMenu=!userMenu\"></app-user-menu>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n\n        <!-- Mobile Menu -->\n        <div class=\"sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center\">\n            <div class=\"rounded-full\" matRipple>\n                <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            </div>\n            <div class=\"rounded-full\" matRipple>\n                <i class=\"mdi mdi-account text-2xl mr-2 ml-2 color-blue\" matRipple\n                    (click)=\"openMyProfileComponent()\"></i>\n            </div>\n        </div>\n    </div>\n</nav>",
+        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:58px;background-color:#f7f7f7;top:0;z-index:1000;box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new{min-height:75px}.ts-header-new .ts-logo{height:35px}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}.ts-header-new .user-menu{position:absolute;top:145%;width:300px;left:-42%;background:#fff}.ts-header-new .user-menu:before{content:\" \";width:0;height:0;position:absolute;top:-11px;left:84%;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:15px solid #fff;-webkit-filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09));filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09))}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
     }),
     __metadata("design:paramtypes", [MatDialog, UserService])
 ], TsHeaderComponent);
@@ -547,7 +585,6 @@ let SearchComponent = class SearchComponent {
                 query: text,
                 hitsPerPage: 6
             }).then((data) => {
-                console.log(data);
                 this.filterDataForSearchResult(data);
             });
         };
@@ -661,7 +698,6 @@ let CitySearchPopupComponent = class CitySearchPopupComponent {
         this.openCityPopup = () => {
             this.cityPopupActive = true;
             this.cityInput.nativeElement.focus();
-            // setTimeout(() => { ( }, 500);
         };
         this.searchCity = (text) => {
             if (!text || text.length == 0) {
@@ -673,12 +709,9 @@ let CitySearchPopupComponent = class CitySearchPopupComponent {
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
     }
     ngAfterViewInit() {
-        console.log("init");
-        setTimeout(() => { (this.cityInput.nativeElement).focus(); }, 500);
+        this.cityInput.nativeElement.focus();
     }
-    ngOnInit() {
-        console.log("init");
-    }
+    ngOnInit() { }
 };
 __decorate([
     ViewChild('cityInput', { static: true }),
@@ -730,8 +763,8 @@ __decorate([
 TsListingCardComponent = __decorate([
     Component({
         selector: 'ts-listing-card',
-        template: "<div class=\"listing-container border-gray-400 shadow rounded  my-4 m-auto lg:w-3/5 sm:w-1/2 md:w-1/2 lg:flex\">\n    <div class=\"h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-center rounded text-center overflow-hidden\" [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\" title=\"Woman holding a mug\">\n    </div>\n    <div class=\"listing-container--content flex flex-col justify-between leading-normal w-full\">\n      <div class=\"pl-4 pt-6 mb-8\">\n        <div *ngIf=\"urgencyMessage\" class=\"flex flex-row justify-between align-items-center\">\n            <span class=\"text-sm bg-orange-500 rounded text-sm px-2\">In High Demand</span>\n            <span class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n            <span class=\"bg-white rounded-l-full px-2\">\n                <i class=\"text-purple-900 material-icons align-bottom pr-1\">remove_red_eye</i>\n                <strong class=\"text-xs\">12 Viewing right now</strong>\n            </span>\n        </div>\n        <div class=\"text-gray-500 text-xl my-2\">{{eventData.name}}</div>\n        <div class=\"text-gray flex text-xs \">\n            <div class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">calendar_today</i>\n                <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n            </div>\n            <div class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">location_on</i>\n                <span class=\"\">{{eventData.city}}</span>\n            </div>\n            <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                <span class=\"\">700</span>\n            </div>\n        </div>\n        <div  class=\"py-2 pr-2 flex justify-end\">\n            <div class=\"pr-2\" *ngFor=\"let key of eventData.keywords\">#{{key.keyCode}}</div>\n        </div>\n      </div>\n      <div class=\"h-10 bottom-purple-bar flex flex-row justify-between pt-2 pl-4 sm:rounded-b-lg lg:rounded-none\">\n        <div class=\"text-sm\">\n            <i class=\"material-icons\">favorite_border</i>\n            <i class=\"material-icons px-2\">share</i>\n        </div>\n        <div class=\"\">\n            <span class=\"align-text-bottom text-lg\">{{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}-{{eventData.minimumTicketPrice}}</span>\n            <span><i class=\"material-icons px-2\">arrow_forward</i></span>\n        </div>\n      </div>\n    </div>\n  </div>\n\n",
-        styles: [".listing-container{box-shadow:0 2px 15px 0 rgba(0,0,0,.13)}.listing-container:hover .bottom-purple-bar{background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;color:#fff!important}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{color:#a165c4;-webkit-transition:1s;transition:1s}"]
+        template: "<div\n    class=\"listing-container cursor-pointer border-gray-400 shadow rounded  my-4 m-auto lg:w-3/5 sm:w-1/2 md:w-1/2 lg:flex\">\n    <div class=\"h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover rounded text-center overflow-hidden\"\n        [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\">\n    </div>\n    <div class=\"listing-container--content flex flex-col justify-between leading-normal w-full\">\n        <div class=\"pl-4 pt-2 pb-1\">\n            <div *ngIf=\"urgencyMessage\" class=\"flex flex-row justify-between align-items-center\">\n                <span class=\"text-sm bg-orange-500 rounded text-sm px-2\">In High Demand</span>\n                <span class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"text-purple-900 material-icons align-bottom pr-1\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"text-gray-900 text-xl my-2\">{{eventData.name | titlecase}}</div>\n            <div class=\"text-gray flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-xl pr-1  align-bottom text-purple-900\"></i>\n                    <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-xl  align-bottom text-purple-900\"></i>\n                    <span class=\"\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"\">700</span>\n                </div>\n            </div>\n            <div class=\"py-2 pr-2 flex justify-end text-xs text-gray-800 mt-10\">\n                <div class=\"pr-2\" *ngFor=\"let key of eventData.keywords\">#{{key.keyCode}}</div>\n                <div class=\"pr-2 hover:text-gray-900 hover:underline\">#marathon</div>\n                <div class=\"pr-2 hover:text-gray-900 hover:underline\">#running</div>\n                <div class=\"pr-2 hover:text-gray-900 hover:underline\">#conference</div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center \">\n                <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i>\n                <i class=\"mdi mdi-share-variant text-2xl\"></i>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom text-lg\"\n                    *ngIf=\"eventData.minimumTicketPrice\">{{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}-{{eventData.minimumTicketPrice}}</span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>",
+        styles: [".listing-container{box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);-webkit-transition:.3s;transition:.3s}.listing-container:hover{box-shadow:0 12px 17px -3px rgba(0,0,0,.1),0 7px 8px -2px rgba(0,0,0,.1)}.listing-container:hover .bottom-purple-bar{background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;color:#fff!important}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:.3s;transition:.3s;color:#44337a}"]
     }),
     __metadata("design:paramtypes", [])
 ], TsListingCardComponent);
@@ -749,7 +782,7 @@ __decorate([
 LoginTopContentComponent = __decorate([
     Component({
         selector: 'app-login-top-content',
-        template: "<div *ngIf= \"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-lg\"><strong>Let's get started</strong></p>\n        <p class=\"text-sm text-gray-500\">Your one stop tool for organizing events</p>    \n    </div>\n    <div *ngIf= \"condition == 'ifSignUp'\" class=\"py-2\">\n            <p class=\"text-lg\"><strong>Sign up</strong></p>\n            <p class=\"text-sm text-gray-500\">Welcome to Townscript</p>    \n    </div>\n    <div *ngIf= \"condition == 'showVerifyEmail'\" class=\"py-2\">\n            <p class=\"text-lg\"><strong>You're almost done</strong></p>\n            <p class=\"text-sm text-gray-500\">We just need to verify your e-mail</p>    \n    </div>\n    <div *ngIf= \"condition == 'ifSignIn'\" class=\"py-3\">\n            <p class=\"text-lg\"><strong>Sign in</strong></p>\n    </div>\n    <div *ngIf= \"condition == 'showResetPassword'\" class=\"py-3\">\n            <p class=\"text-lg\"><strong>Forgot password</strong></p>\n            <p class=\"text-sm text-gray-500\">Don't worry, we'll help you reset it</p>   \n    </div>\n",
+        template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-lg text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-sm text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-lg\"><strong>Sign up</strong></p>\n        <p class=\"text-sm text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-lg\"><strong>You're almost done</strong></p>\n        <p class=\"text-sm text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-lg\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-lg\"><strong>Forgot password</strong></p>\n        <p class=\"text-sm text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
         styles: [""]
     }),
     __metadata("design:paramtypes", [])
@@ -762,7 +795,6 @@ let RangeDatePipe = class RangeDatePipe {
             const date = rangeDates.map(d => moment$1(d).format('DD'));
             const month = rangeDates.map(d => moment$1(d).format('MMM'));
             const time = moment$1(rangeDates[0]).format('hh:mm A');
-            console.log(month[0]);
             if ((date[0] === date[1]) && (month[0] === month[1])) {
                 return month[0] + ' ' + date[0] + ' | ' + time;
             }
@@ -785,9 +817,19 @@ RangeDatePipe = __decorate([
 ], RangeDatePipe);
 
 let UserMenuComponent = class UserMenuComponent {
-    constructor() {
+    constructor(notificationService, userService, cookieService) {
+        this.notificationService = notificationService;
+        this.userService = userService;
+        this.cookieService = cookieService;
         this.panelOpen1 = false;
         this.panelOpen2 = false;
+        this.close = new EventEmitter();
+    }
+    logout() {
+        this.close.emit();
+        this.cookieService.deleteCookie("townscript-user");
+        this.userService.updateUser(null);
+        this.notificationService.success("You are logged out successfully!", 2000, "Dismiss");
     }
     ngAfterViewInit() {
     }
@@ -801,13 +843,21 @@ __decorate([
     Input("panelOpen2"),
     __metadata("design:type", Boolean)
 ], UserMenuComponent.prototype, "panelOpen2", void 0);
+__decorate([
+    Input("user"),
+    __metadata("design:type", Object)
+], UserMenuComponent.prototype, "user", void 0);
+__decorate([
+    Output("close"),
+    __metadata("design:type", Object)
+], UserMenuComponent.prototype, "close", void 0);
 UserMenuComponent = __decorate([
     Component({
         selector: 'app-user-menu',
-        template: "<div class=\"user-menu  px-2 cursor-pointer\">\n    <div class=\"flex items-center border-b py-2 border-gray-300\">\n        <div class=\"mr-1 leading-none\">\n            <i class=\"mdi mdi-account-circle text-5xl mr-2 color-blue\"></i>\n        </div>\n        <div class=\"leading-tight\">\n            <span class=\"block text-lg text-gray-800\">Robb Stark</span>\n            <span class=\"text-xs text-gray-600\">View and edit profile</span>\n        </div>\n    </div>\n    <div class=\"menu mt-2 px-1\">\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen1=!panelOpen1\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen1\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Organizing Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen1\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen1\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-calendar-today mr-2 color-blue text-xl\"></i>\n                        Manage Event\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-cash mr-2 color-blue text-xl\"></i>\n                        Billings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-chart-line mr-2 color-blue text-xl\"></i>\n                        Reports\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-bullhorn mr-2 color-blue text-xl\"></i>\n                        Promotions\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen2\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Attending Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen2\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen2\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-ticket-account mr-2 color-blue text-xl\"></i>\n                        My Bookings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-heart mr-2 color-blue text-xl \"></i>\n                        Following\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <div class=\"px-1 py-2 flex items-center justify-between\" matRipple>\n            <span class=\"text-gray-700\">\n                Logout\n            </span>\n            <i class=\"mdi mdi-logout-variant text-2xl color-blue\" [class.rotate-180]=\"panelOpen2\"></i>\n        </div>\n    </div>\n</div>",
+        template: "<div class=\"user-menu  px-2 cursor-pointer\">\n    <div class=\"flex items-center border-b py-2 border-gray-300\">\n        <div class=\"mr-1 leading-none\">\n            <img class=\"rounded-full mr-2\" width=\"45\"\n                [src]=\"'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename\" />\n        </div>\n        <div class=\"leading-tight\">\n            <span class=\"block text-lg text-gray-800\">{{user?.user}}</span>\n            <span class=\"text-xs text-gray-600 whitespace-nowrap\">View and edit profile</span>\n        </div>\n    </div>\n    <div class=\"menu mt-2 px-1\">\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen1=!panelOpen1\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen1\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Organizing Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen1\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen1\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-calendar-today mr-2 color-blue text-xl\"></i>\n                        Manage Event\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-cash mr-2 color-blue text-xl\"></i>\n                        Billings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-chart-line mr-2 color-blue text-xl\"></i>\n                        Reports\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-bullhorn mr-2 color-blue text-xl\"></i>\n                        Promotions\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen2\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Attending Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen2\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen2\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-ticket-account mr-2 color-blue text-xl\"></i>\n                        My Bookings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-heart mr-2 color-blue text-xl \"></i>\n                        Following\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <div class=\"px-1 py-2 flex items-center justify-between\" (click)=\"logout()\" matRipple>\n            <span class=\"text-gray-700\">\n                Logout\n            </span>\n            <i class=\"mdi mdi-logout-variant text-2xl color-blue\"></i>\n        </div>\n    </div>\n</div>",
         styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}"]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [NotificationService, UserService, CookieService])
 ], UserMenuComponent);
 
 let LayoutModule = class LayoutModule {
@@ -822,6 +872,7 @@ LayoutModule = __decorate([
             RecaptchaModule,
             HttpClientModule,
             MatRippleModule,
+            MatSnackBarModule
         ],
         declarations: [
             TsHeaderComponent,
@@ -843,9 +894,9 @@ LayoutModule = __decorate([
             TsListingCardComponent,
             UserMenuComponent
         ],
-        providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
+        providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService]
     })
 ], LayoutModule);
 
-export { ApiService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, HeaderService as ɵa, CookieService as ɵb, LoginTopContentComponent as ɵc, RangeDatePipe as ɵd, UserMenuComponent as ɵe };
+export { ApiService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, LoginTopContentComponent as ɵd, RangeDatePipe as ɵe, UserMenuComponent as ɵf };
 //# sourceMappingURL=townscript-components.js.map

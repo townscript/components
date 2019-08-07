@@ -8,6 +8,7 @@ export declare class TsHeaderComponent implements OnInit {
     source: string;
     algoliaIndexName: string;
     citySuggestions: ElementRef;
+    userMenuEle: ElementRef;
     user: any;
     router: any;
     userMenu: any;

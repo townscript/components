@@ -6,12 +6,14 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { NotificationService } from '../../../../shared/services/notification.service';
 export declare class TsLoginSignupComponent implements OnInit {
     apiService: ApiService;
     private http;
     private fb;
     private cookieService;
     private userService;
+    private notificationService;
     dialogRef: MatDialogRef<TsLoginSignupComponent>;
     recaptchaRef: RecaptchaComponent;
     showSocial: boolean;
@@ -33,7 +35,7 @@ export declare class TsLoginSignupComponent implements OnInit {
     phoneError: boolean;
     socialLoginMsg: boolean;
     initializeTelInput: any;
-    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, dialogRef: MatDialogRef<TsLoginSignupComponent>);
+    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, notificationService: NotificationService, dialogRef: MatDialogRef<TsLoginSignupComponent>);
     ngOnInit(): void;
     close(): void;
     resolveAndProceed(captchaResponse: string): void;
