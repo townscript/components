@@ -15,7 +15,8 @@ export class TsHeaderComponent implements OnInit {
   @Input() source: string = "marketplace";
   @Input() algoliaIndexName: string = "tsTesting";
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
-  user: Object;
+  user: any;
+  userMenu = false;
 
   cityPopupActive = false;
   constructor(private dialog: MatDialog, private userService: UserService) {
