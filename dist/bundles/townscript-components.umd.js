@@ -874,7 +874,8 @@
                     TsHeaderComponent,
                     TsFooterComponent,
                     TsLoginSignupComponent,
-                    TsListingCardComponent
+                    TsListingCardComponent,
+                    intlTelInputNg.IntlTelInputNgModule
                 ],
                 providers: [TimeService, UserService, common.DatePipe, ApiService, CookieService, HeaderService]
             })

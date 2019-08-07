@@ -820,7 +820,8 @@ LayoutModule = __decorate([
             TsHeaderComponent,
             TsFooterComponent,
             TsLoginSignupComponent,
-            TsListingCardComponent
+            TsListingCardComponent,
+            IntlTelInputNgModule
         ],
         providers: [TimeService, UserService, DatePipe, ApiService, CookieService, HeaderService]
     })
