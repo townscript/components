@@ -24,7 +24,7 @@ export class TsLoginSignupComponent implements OnInit {
     showSocial = true;
     show = false;
     showPassword = false;
-    rdurl = '';
+    rdurl = 'www.tsdugout.in/marketplace';
     ifSignIn = false;
     ifUnverified = true;
     ifSignUp = false;
@@ -151,7 +151,7 @@ export class TsLoginSignupComponent implements OnInit {
                 this.userService.updateUser(userData);
                 this.close();
                 this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
-                // this.redirectToListings();
+                this.redirectToListings();
             },
             (error) => {
             }
@@ -254,15 +254,13 @@ export class TsLoginSignupComponent implements OnInit {
         if (!this.loginForm.valid) {
             return;
         }
-        const signupObj = {
-            emailId: this.loginForm.value.email,
-            password: this.loginForm.value.password,
-            name: this.loginForm.value.firstName,
-            username: this.randomString(10, ''),
-            phone: this.correctPhoneNumber,
-            usertimezone: this.userTimezone,
-            reCaptcha: this.captchaResponse
-        };
+        const input = document.querySelector('#phoneNumber');
+        const iti = (<any>window).intlTelInputGlobals.getInstance(input);
+        this.correctPhoneNumber = iti.getNumber();
+
+        if (this.correctPhoneNumber === '') {
+            return;
+        }
 
         const formData = new FormData();
         formData.append('name', this.loginForm.value.firstName);
@@ -302,24 +300,6 @@ export class TsLoginSignupComponent implements OnInit {
         };
         return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
             emailObj, { headers: headers }).pipe(map(data => (data)));
-    }
-
-    hasError = (event) => {
-        // console.log(event);
-        this.phoneError = !event;
-    }
-
-    telInputObject = (event) => {
-        // console.log(event);
-    }
-
-    onCountryChange = (event) => {
-        // console.log(event);
-    }
-
-    getNumber = (event) => {
-        // console.log(event);
-        this.correctPhoneNumber = event;
     }
 
 }
