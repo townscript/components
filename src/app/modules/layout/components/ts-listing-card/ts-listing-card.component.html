@@ -1,48 +1,45 @@
 <div
-    class="listing-container cursor-pointer border-gray-400 shadow rounded  my-4 m-auto lg:w-8/12 sm:w-1/2 md:w-1/2 lg:flex">
-    <div class="h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover rounded text-center overflow-hidden"
+    class="listing-container cursor-pointer rounded  my-4 mx-auto lg:w-8/12 sm:w-1/2 md:w-1/2 lg:flex">
+    <div class="h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden"
         [style.background-image]="'url(' + eventData.cardImageUrl + ')'">
     </div>
     <div class="listing-container--content flex flex-col justify-between leading-normal w-full">
         <div class="pl-4 pt-3 pb-1">
             <div *ngIf="urgencyMessage" class="flex flex-row justify-between align-items-center">
-                <span class="text-sm bg-orange-500 rounded text-sm px-2">In High Demand</span>
+                <span class="text-sm bg-orange-500 rounded text-sm px-2 mr-2">In High Demand</span>
                 <span class="text-xs text-red-400">Booked 20 times in the last 24 hrs</span>
                 <span class="bg-white rounded-l-full px-2">
-                    <i class="text-purple-900 material-icons align-bottom pr-1">remove_red_eye</i>
+                    <i class="material-icons align-bottom pr-1 hidden">remove_red_eye</i>
                     <strong class="text-xs">12 Viewing right now</strong>
                 </span>
             </div>
-            <div class="text-gray-900 text-xl my-3">{{eventData.name | titlecase}}</div>
-            <div class="text-gray flex text-xs ">
+            <div class="font-303030 capitalize text-xl my-3">{{eventData.name | titlecase}}</div>
+            <div class="flex text-xs ">
                 <div class="mr-2 flex items-center">
-                    <i class="mdi mdi-calendar-today text-xl pr-1  align-bottom text-purple-900"></i>
+                    <i class="mdi mdi-calendar-today text-xl pr-1  align-bottom"></i>
                     <span class="">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>
                 </div>
                 <div class="mr-2 flex items-center">
-                    <i class="mdi mdi-map-marker pr-1 text-xl  align-bottom text-purple-900"></i>
-                    <span class="">{{eventData.city}}</span>
+                    <i class="mdi mdi-map-marker pr-1 text-xl  align-bottom"></i>
+                    <span class="font-323E48 font-bold">{{eventData.city}}</span>
                 </div>
                 <div *ngIf="goingCounter" class="mr-2">
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
-                    <span class="">700</span>
+                    <span class="font-323E48 font-bold">700</span>
                 </div>
             </div>
-            <div class="py-2 pr-2 flex justify-end text-xs text-gray-800 mt-8">
-                <div class="pr-2" *ngFor="let key of eventData.keywords">#{{key.keyCode}}</div>
-                <div class="pr-2 hover:text-gray-900 hover:underline">#marathon</div>
-                <div class="pr-2 hover:text-gray-900 hover:underline">#running</div>
-                <div class="pr-2 hover:text-gray-900 hover:underline">#conference</div>
+            <div class="py-2 pr-2 flex justify-end  mt-8">
+                <div class="pr-2  font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline" *ngFor="let key of eventData.keywords">#{{key.keyCode}}</div>
             </div>
         </div>
         <div
             class="h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none">
             <div class="text-sm flex items-center ">
-                <i class="mdi mdi-heart-outline text-2xl mr-2"></i>
+                <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
                 <i class="mdi mdi-share-variant text-2xl"></i>
             </div>
             <div class="flex items-center">
-                <span class="align-text-bottom text-lg"
+                <span class="align-text-bottom price-container font-323E48 text-base font-semibold pr-4"
                     *ngIf="eventData.minimumTicketPrice">{{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}-{{eventData.minimumTicketPrice}}</span>
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
