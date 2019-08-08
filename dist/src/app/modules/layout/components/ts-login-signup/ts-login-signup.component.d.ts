@@ -57,8 +57,4 @@ export declare class TsLoginSignupComponent implements OnInit {
     randomString: (len: any, an: any) => string;
     resendVerifyEmail: () => void;
     resendVerifyEmailCredential: () => import("rxjs").Observable<Object>;
-    hasError: (event: any) => void;
-    telInputObject: (event: any) => void;
-    onCountryChange: (event: any) => void;
-    getNumber: (event: any) => void;
 }
