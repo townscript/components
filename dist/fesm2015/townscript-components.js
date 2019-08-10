@@ -4,15 +4,13 @@ import { MatSnackBarConfig, MatSnackBar, MatDialogConfig, MatDialog } from '@ang
 import { HttpHeaders, HttpParams, HttpClient, HttpClientModule } from '@angular/common/http';
 import { map, debounceTime } from 'rxjs/operators';
 import { Validators, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import * as moment$2 from 'moment-timezone';
-import { tz } from 'moment-timezone';
+import { DateTime } from 'luxon';
 import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { isPlatformBrowser, DOCUMENT, DatePipe, CommonModule } from '@angular/common';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
 import { TsFormsModule } from '@townscript/elements';
-import * as moment_ from 'moment';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -147,7 +145,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         this.showVerifyEmail = false;
         this.showResetPassword = false;
         this.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-        this.userTimezone = tz.guess();
+        this.userTimezone = DateTime.local().zoneName;
         this.loginForm = this.fb.group({
             firstName: ['', Validators.required],
             email: ['', Validators.required],
@@ -353,6 +351,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             };
             return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode', emailObj, { headers: headers }).pipe(map(data => (data)));
         };
+        console.log(this.userTimezone);
     }
     ngOnInit() {
         this.loginForm.get('firstName').disable();
@@ -507,15 +506,12 @@ TsFooterComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], TsFooterComponent);
 
-const moment = moment$2;
 let TimeService = class TimeService {
     constructor() {
-        this.moment = moment();
         this.convertDateToTimezone = (date, timeZoneOffset) => {
-            var dateString = moment.tz(date, timeZoneOffset).format('YYYY-MM-DDTHH:mm:ss.sssZ');
-            var tzon = [dateString.substr(0, 23), dateString.substr(24)];
-            var currentSystemGMT = moment.tz(moment.tz.guess()).format("Z");
-            return this.formatLocalDate(new Date(tzon[0] + currentSystemGMT));
+            var date = DateTime.fromISO(date, { zone: timeZoneOffset });
+            var dateString = DateTime.fromISO(date).toString();
+            return this.formatLocalDate(new Date(dateString));
         };
         this.formatLocalDate = (now) => {
             var tzo = -now.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
@@ -746,23 +742,23 @@ let TsListingCardComponent = class TsListingCardComponent {
         ];
     }
     ngOnInit() {
-        // this.eventData = {
-        //   "id":1,"eventId":87429,
-        //   "name":"first event",
-        //   "shortName":"test-once-more-123442",
-        //   "startTime":"2019-07-25T10:30:00.000+0000","endTime":"2019-07-25T11:30:00.000+0000",
-        //   "displayName":null,"shortDescription":null,"eventTimeZone":"Asia/Calcutta",
-        //   "timeZoneDisplayName":null,"venueLocation":null,"city":"Pune",
-        //   "latitude":18.513217600000000,"longitude":73.928873200000000,
-        //   "coverImageUrl":"https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
-        //   "cardImageUrl":"https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
-        //   "publicEvent":true,"live":true,"categoryId":null,"eventTypeId":17,
-        //   "minimumTicketPrice":3456,"minimumTicketPriceCurrency":"INR",
-        //   "organizerIsTrusted":true,"soldOutFlag":false,"reportFlag":false,
-        //   "paid":false,"onlineEvent":false,"organizerId":3080,"pageViews":null,
-        //   "organizerScore":null,"ticketsSold":0,"roTicketsSold":null,"ticketsRemaining":0,
-        //   "farDuration":null,"townscriptIR":null,"score":null,"recurrent":false
-        // };
+        this.eventData = {
+            "id": 1, "eventId": 87429,
+            "name": "first event",
+            "shortName": "test-once-more-123442",
+            "startTime": "2019-07-25T10:30:00.000+0000", "endTime": "2019-07-25T11:30:00.000+0000",
+            "displayName": null, "shortDescription": null, "eventTimeZone": "Asia/Calcutta",
+            "timeZoneDisplayName": null, "venueLocation": null, "city": "Pune",
+            "latitude": 18.513217600000000, "longitude": 73.928873200000000,
+            "coverImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
+            "cardImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
+            "publicEvent": true, "live": true, "categoryId": null, "eventTypeId": 17,
+            "minimumTicketPrice": 3456, "minimumTicketPriceCurrency": "INR",
+            "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false,
+            "paid": false, "onlineEvent": false, "organizerId": 3080, "pageViews": null,
+            "organizerScore": null, "ticketsSold": 0, "roTicketsSold": null, "ticketsRemaining": 0,
+            "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false
+        };
     }
 };
 __decorate([
@@ -797,13 +793,12 @@ LoginTopContentComponent = __decorate([
     __metadata("design:paramtypes", [])
 ], LoginTopContentComponent);
 
-const moment$1 = moment_;
 let RangeDatePipe = class RangeDatePipe {
     transform(rangeDates, args) {
         if (rangeDates) {
-            const date = rangeDates.map(d => moment$1(d).format('DD'));
-            const month = rangeDates.map(d => moment$1(d).format('MMM'));
-            const time = moment$1(rangeDates[0]).format('hh:mm A');
+            const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
+            const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
+            const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
             if ((date[0] === date[1]) && (month[0] === month[1])) {
                 return month[0] + ' ' + date[0] + ' | ' + time;
             }
