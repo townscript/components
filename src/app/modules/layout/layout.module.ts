@@ -24,7 +24,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../../shared/services/notification.service';
-
+import { AppPasswordDirective } from  './components/ts-login-signup/ts-show-hide-directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -47,7 +47,8 @@ import { NotificationService } from '../../shared/services/notification.service'
     SearchComponent,
     CitySearchPopupComponent,
     HamburgerMenuComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    AppPasswordDirective
   ],
   exports: [
     TsHeaderComponent,

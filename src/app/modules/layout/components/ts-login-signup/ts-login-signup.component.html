@@ -1,8 +1,8 @@
-<section class="container-background flex flex-row bg-white">
-    <div id="login-signup-container" class="z-10 bg-white w-2/5 sm:w-1/2 p-6 m-auto md:m-2 lg:m-2">
+<section class="bg-white container-background flex flex-row m-auto md:w-11/12 w-2/5 overflow:hidden">
+    <div id="login-signup-container" class="z-10 bg-white lg:w-1/2 w-full p-6 m-auto md:m-2 lg:m-2">
         <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>
         <app-login-top-content [condition]="currScreen"></app-login-top-content>
-        <form [formGroup]="loginForm" class="w-full max-w-sm ">
+        <form [formGroup]="loginForm" class="w-full">
             <div *ngIf="ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
                     <ts-input-text formControlName="firstName"
@@ -23,9 +23,9 @@
             </div>
             <div *ngIf="ifSignIn || ifSignUp" class="form-group md:flex md:items-center mb-1">
                 <div class="md:w-full">
-                    <ts-input-text formControlName="password"
+                    <ts-input-text formControlName="password" appPassword
                         class="form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                        id="user-pwd" type="password" placeholder="Password" autocomplete="current-password">
+                        id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
                     </ts-input-text>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     </ts-button>
                 </div>
                 <div *ngIf="ifSignIn" class="w-full text-center">
-                    <ts-button text="Signin" [disabled]="!loginForm.valid" (click)="signIn()" class="w-full">
+                    <ts-button text="Sign in" [disabled]="!loginForm.valid" (click)="signIn()" class="w-full">
                     </ts-button>
                     <a (click)="forgotPassword()" class=" text-sm text-center verify-email py-2 px-2">
                         Forgot Password?
@@ -98,11 +98,12 @@
             </div>
             <div class="form-group">
                 <button mat-raised-button
-                    class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center"
+                    class="bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center"
                     (click)="onLoginWithGoogle()" ts-data-analytics prop-event="click" eventLabel="Login with Google"
                     prop-clicked-location="Sign In">
-                    <div class="px-2">
-                        <img src="../../../../../assets/images/google-min.png" />
+                    <div class="px-2" matRipple>
+                        <img  class="logo" 
+                            src="/assets/images/google-min.png" />
                     </div>
                     <div class="text-sm">
                         <span class="no-margin">Continue with Google</span>
@@ -112,12 +113,12 @@
             </div>
             <div class="form-group">
                 <button mat-raised-button
-                    class="bg-white w-full p-2 flex flex-row leading-loose border border-gray-400 rounded shadow mb-2 justify-center"
+                    class="bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center"
                     (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
                     prop-clicked-location="Sign In">
                     <div class="px-2">
-                        <img
-                            src="https://s3.ap-southeast-1.amazonaws.com/common-resources/assets/facebook-min-new.png" />
+                        <img class="logo"
+                            src="/assets/images/facebook-min.png" />
                     </div>
                     <div class="text-sm">
                         <span class="no-margin">Continue with Facebook</span>
@@ -129,16 +130,16 @@
                 </ng-container>
             </div>
         </section>
-        <div *ngIf="ifSignUp" class="agreement my-2 px-2">
-            <div class="w-full hor-linear-grad m-2"></div>
+        <div *ngIf="ifUnverified ||  ifSignUp" class="agreement my-2 px-2">
+            <div class="w-full hor-linear-grad m-4"></div>
             <p class="text-xs text-center">By continuing, you agree to Townscript's <a class="text-blue-700"
                     href="/terms-and-conditions">terms of service</a> and <a class="text-blue-700"
                     href="/privacy-policy">privacy policy</a>.</p>
         </div>
     </div>
-    <div class="p-6 hidden md:block">
-        <div class="flex flex-col mt-8">
-            <span class="text-2xl w-2/3 whitespace-no-wrap mb-4 text-gray-900">
+    <div class="p-6 hidden md:block mkt-content">
+        <div class="flex flex-col mt-10">
+            <span class="text-2xl w-2/3 mb-4 text-gray-900">
                 <strong>301,589 event organizers trust us.</strong>
             </span>
             <div class="flex flex-column my-2">

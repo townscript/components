@@ -24,7 +24,7 @@ export class TsLoginSignupComponent implements OnInit {
     showSocial = true;
     show = false;
     showPassword = false;
-    rdurl = 'www.tsdugout.in/marketplace';
+    rdurl = '/marketplace';
     ifSignIn = false;
     ifUnverified = true;
     ifSignUp = false;
@@ -75,13 +75,16 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     onLoginWithFB = () => {
-        window.open('https://' + this.apiService.hostName + '/api/user/signinwithfacebook' +
-            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
+        const url = 'https://' + this.apiService.hostName + '/api/user/signinwithfacebook' +
+        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        window.open(url, '_self');
     }
 
     onLoginWithGoogle = () => {
-        window.open('https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
-            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl), '_self');
+        const url = 'https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
+        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        console.log(url);
+        window.open(url, '_self');
     }
 
     getEmailVerifyResponse = () => {
@@ -146,7 +149,7 @@ export class TsLoginSignupComponent implements OnInit {
                 };
 
                 const userData = { ...retData.userDetails, ...tokenData };
-                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
+                // this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
                 // console.log(userData);
                 this.userService.updateUser(userData);
                 this.close();

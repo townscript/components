@@ -46,3 +46,19 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .iti__flag {background-image: url("../../../../../../node_modules/intl-tel-input/build/img/flags@2x.png");}
 }
+
+#social-signin-container {
+    .logo {
+        width: 22px;
+        height: 22px;
+    }
+
+    // .fb-logo {
+    //     width: 26px;
+    //     height: 26px;
+    // }
+}
+
+.mkt-content {
+    background-color: #f1f1f1;
+}
