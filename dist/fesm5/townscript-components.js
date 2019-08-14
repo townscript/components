@@ -765,12 +765,15 @@ var TsListingCardComponent = /** @class */ (function () {
         ];
     }
     TsListingCardComponent.prototype.ngOnInit = function () {
+<<<<<<< HEAD
         if (this.type === 'regular') {
             this.showRegularCard = true;
         }
         else {
             this.featuredCard = true;
         }
+=======
+>>>>>>> 66febfe1e4afc283f677f130cdfb1741e57a20b5
         // this.eventData = {
         //   "id": 1, "eventId": 87429,
         //   "name": "first event",
