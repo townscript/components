@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('@angular/common/http'), require('rxjs/operators'), require('@angular/forms'), require('moment-timezone'), require('ng-recaptcha'), require('rxjs'), require('@angular/common'), require('@angular/material/dialog'), require('algoliasearch'), require('@townscript/elements'), require('moment'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', '@angular/common/http', 'rxjs/operators', '@angular/forms', 'moment-timezone', 'ng-recaptcha', 'rxjs', '@angular/common', '@angular/material/dialog', 'algoliasearch', '@townscript/elements', 'moment', '@angular/material/core', '@angular/material/snack-bar'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.ng.common.http, global.rxjs.operators, global.ng.forms, global.moment$2, global.ngRecaptcha, global.rxjs, global.ng.common, global.ng.material.dialog, global.algoliaSearchImported, global.elements, global.moment_, global.ng.material.core, global.ng.material['snack-bar']));
-}(this, function (exports, core, material, http, operators, forms, moment$2, ngRecaptcha, rxjs, common, dialog, algoliaSearchImported, elements, moment_, core$1, snackBar) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('@angular/common/http'), require('rxjs/operators'), require('@angular/forms'), require('luxon'), require('ng-recaptcha'), require('rxjs'), require('@angular/common'), require('@angular/material/dialog'), require('algoliasearch'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', '@angular/common/http', 'rxjs/operators', '@angular/forms', 'luxon', 'ng-recaptcha', 'rxjs', '@angular/common', '@angular/material/dialog', 'algoliasearch', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.ng.common.http, global.rxjs.operators, global.ng.forms, global.luxon, global.ngRecaptcha, global.rxjs, global.ng.common, global.ng.material.dialog, global.algoliaSearchImported, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
+}(this, function (exports, core, material, http, operators, forms, luxon, ngRecaptcha, rxjs, common, dialog, algoliaSearchImported, elements, core$1, snackBar) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -184,7 +184,7 @@
             this.showVerifyEmail = false;
             this.showResetPassword = false;
             this.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-            this.userTimezone = moment$2.tz.guess();
+            this.userTimezone = luxon.DateTime.local().zoneName;
             this.loginForm = this.fb.group({
                 firstName: ['', forms.Validators.required],
                 email: ['', forms.Validators.required],
@@ -390,6 +390,7 @@
                 };
                 return _this.http.post(_this.apiService.API_SERVER + 'user/resendverificationcode', emailObj, { headers: headers }).pipe(operators.map(function (data) { return (data); }));
             };
+            console.log(this.userTimezone);
         }
         TsLoginSignupComponent.prototype.ngOnInit = function () {
             this.loginForm.get('firstName').disable();
@@ -549,16 +550,13 @@
         return TsFooterComponent;
     }());
 
-    var moment = moment$2;
     var TimeService = /** @class */ (function () {
         function TimeService() {
             var _this = this;
-            this.moment = moment();
             this.convertDateToTimezone = function (date, timeZoneOffset) {
-                var dateString = moment.tz(date, timeZoneOffset).format('YYYY-MM-DDTHH:mm:ss.sssZ');
-                var tzon = [dateString.substr(0, 23), dateString.substr(24)];
-                var currentSystemGMT = moment.tz(moment.tz.guess()).format("Z");
-                return _this.formatLocalDate(new Date(tzon[0] + currentSystemGMT));
+                var date = luxon.DateTime.fromISO(date, { zone: timeZoneOffset });
+                var dateString = luxon.DateTime.fromISO(date).toString();
+                return _this.formatLocalDate(new Date(dateString));
             };
             this.formatLocalDate = function (now) {
                 var tzo = -now.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
@@ -797,23 +795,23 @@
             ];
         }
         TsListingCardComponent.prototype.ngOnInit = function () {
-            // this.eventData = {
-            //   "id":1,"eventId":87429,
-            //   "name":"first event",
-            //   "shortName":"test-once-more-123442",
-            //   "startTime":"2019-07-25T10:30:00.000+0000","endTime":"2019-07-25T11:30:00.000+0000",
-            //   "displayName":null,"shortDescription":null,"eventTimeZone":"Asia/Calcutta",
-            //   "timeZoneDisplayName":null,"venueLocation":null,"city":"Pune",
-            //   "latitude":18.513217600000000,"longitude":73.928873200000000,
-            //   "coverImageUrl":"https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
-            //   "cardImageUrl":"https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
-            //   "publicEvent":true,"live":true,"categoryId":null,"eventTypeId":17,
-            //   "minimumTicketPrice":3456,"minimumTicketPriceCurrency":"INR",
-            //   "organizerIsTrusted":true,"soldOutFlag":false,"reportFlag":false,
-            //   "paid":false,"onlineEvent":false,"organizerId":3080,"pageViews":null,
-            //   "organizerScore":null,"ticketsSold":0,"roTicketsSold":null,"ticketsRemaining":0,
-            //   "farDuration":null,"townscriptIR":null,"score":null,"recurrent":false
-            // };
+            this.eventData = {
+                "id": 1, "eventId": 87429,
+                "name": "first event",
+                "shortName": "test-once-more-123442",
+                "startTime": "2019-07-25T10:30:00.000+0000", "endTime": "2019-07-25T11:30:00.000+0000",
+                "displayName": null, "shortDescription": null, "eventTimeZone": "Asia/Calcutta",
+                "timeZoneDisplayName": null, "venueLocation": null, "city": "Pune",
+                "latitude": 18.513217600000000, "longitude": 73.928873200000000,
+                "coverImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
+                "cardImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
+                "publicEvent": true, "live": true, "categoryId": null, "eventTypeId": 17,
+                "minimumTicketPrice": 3456, "minimumTicketPriceCurrency": "INR",
+                "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false,
+                "paid": false, "onlineEvent": false, "organizerId": 3080, "pageViews": null,
+                "organizerScore": null, "ticketsSold": 0, "roTicketsSold": null, "ticketsRemaining": 0,
+                "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false
+            };
         };
         __decorate([
             core.Input(),
@@ -851,15 +849,14 @@
         return LoginTopContentComponent;
     }());
 
-    var moment$1 = moment_;
     var RangeDatePipe = /** @class */ (function () {
         function RangeDatePipe() {
         }
         RangeDatePipe.prototype.transform = function (rangeDates, args) {
             if (rangeDates) {
-                var date = rangeDates.map(function (d) { return moment$1(d).format('DD'); });
-                var month = rangeDates.map(function (d) { return moment$1(d).format('MMM'); });
-                var time = moment$1(rangeDates[0]).format('hh:mm A');
+                var date = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('dd'); });
+                var month = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('MMM'); });
+                var time = luxon.DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
                 if ((date[0] === date[1]) && (month[0] === month[1])) {
                     return month[0] + ' ' + date[0] + ' | ' + time;
                 }

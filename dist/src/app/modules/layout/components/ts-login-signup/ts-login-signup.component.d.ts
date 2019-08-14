@@ -27,7 +27,7 @@ export declare class TsLoginSignupComponent implements OnInit {
     showResetPassword: boolean;
     isUserVerified: any;
     CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: string;
-    userTimezone: string;
+    userTimezone: any;
     loginForm: import("@angular/forms").FormGroup;
     captchaResponse: string;
     currScreen: string;
