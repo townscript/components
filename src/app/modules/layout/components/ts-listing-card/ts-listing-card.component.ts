@@ -7,16 +7,25 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TsListingCardComponent implements OnInit {
   @Input() eventData;
+  @Input() type;
   urgencyMessage = false;
   goingCounter = false;
+  moreIcons = false;
   keywords = [
     { keyCode: 'marathon' },
     { keyCode: 'run4life' },
     { keyCode: 'behindYou' }
   ];
+  showRegularCard: boolean;
+  featuredCard: boolean;
   constructor() { }
 
-  ngOnInit() {
+    ngOnInit() {
+        if (this.type === 'regular') {
+            this.showRegularCard = true;
+        } else {
+            this.featuredCard = true;
+        }
     // this.eventData = {
     //   "id": 1, "eventId": 87429,
     //   "name": "first event",

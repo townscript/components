@@ -36,6 +36,17 @@
             font-size: 15px;
         }
     }
+    .listing-container--featured-content {
+        background-color: #ffffff;
+        
+        .bottom-purple-bar{
+            transition: 1.0s;
+        }
+
+        .price-container {
+            font-size: 15px;
+        }
+    }
     i {
         color: #683592;
     }
