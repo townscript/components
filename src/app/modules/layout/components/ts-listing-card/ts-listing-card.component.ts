@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
-import { BrowserService } from 'src/app/core/browser.service';
-import { config } from 'src/app/core';
+import { BrowserService } from '../../../../core';
+import { config } from '../../../../core';
 
 @Component({
   selector: 'ts-listing-card',
