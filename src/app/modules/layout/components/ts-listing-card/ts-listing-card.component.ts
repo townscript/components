@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
-import { BrowserService } from '../../../../core';
+import { BrowserService } from '../../../../core/browser.service';
 import { config } from '../../../../core';
 
 @Component({
