@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   constructor(private dialog: MatDialog) {}
   eventData = '';
-
+  topicData = '';
 
   openDialog(type) {
       let data;

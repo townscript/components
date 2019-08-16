@@ -1,4 +1,4 @@
-<div [ngClass]="showRegularCard ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' 
+<div *ngIf="!topicCard" [ngClass]="showRegularCard ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' 
         : 'listing-container bg-white cursor-pointer rounded  my-4 mx-auto lg:flex lg:flex-row-reverse' 
 ">
     <div [ngClass]="showRegularCard 
@@ -64,6 +64,29 @@
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
             </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="topicCard" class="topic-container my-4 mx-auto  lg:flex ">
+    <div class="hidden w-full md:block md:3/5 bg-cover text-center overflow-hidden"
+        [style.background-image]="'url(' + topicData.cardImageUrl + ')'">
+    </div>
+    <div class="flex flex-col bg-white w-3/5 px-4">
+        <span class="m-2 text-2xl font-bold">
+            {{topicData.name}}
+        </span>
+        <span class="m-2 subTitle text-lg opacity-50">
+            {{topicData.subTitle}}
+        </span>
+        <span class="m-2 text-base">
+            {{topicData.topicDescription}}
+        </span>
+        <div class= "keywords m-2 flex">
+            <span class="font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize"
+                *ngFor="let key of keywords">{{key.keyCode}}
+            <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
+            </span>
         </div>
     </div>
 </div>

@@ -52,3 +52,21 @@
     }
     
 }
+
+.topic-container {
+    font-family: Lato;
+    min-height: 460px;
+    .subTitle {
+        color: #263240;
+    }
+    i {
+        color: #683592;
+    }
+
+    .keywords {
+        color: #683592;
+        & span {
+            border: 1.57px solid #683592;
+        }
+    }
+}
