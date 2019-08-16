@@ -13,7 +13,7 @@ import {
   CitySearchPopupComponent,
   HamburgerMenuComponent
 } from './components/index';
-import { BrowserService } from '../../core';
+import { BrowserService } from '../../core/browser.service';
 import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService, UserService } from '../../shared/index';
