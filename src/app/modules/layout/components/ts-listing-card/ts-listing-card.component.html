@@ -52,9 +52,11 @@
         </div>
         <div
             class="h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none">
-            <div class="text-sm flex items-center ">
+            <div class="text-sm flex items-center">
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
-                <i class="mdi mdi-share-variant text-2xl"></i>
+                <div class="px-2 rounded-full" matRipple>
+                    <i class="mdi mdi-share-variant text-2xl" (click)="shareEvent();$event.stopPropogation()"></i>
+                </div>
             </div>
             <div class="flex items-center">
                 <span class="align-text-bottom price-container font-323E48 text-base font-semibold"

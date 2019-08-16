@@ -1,4 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
+import { BrowserService } from 'src/app/core/browser.service';
+import { config } from 'src/app/core';
 
 @Component({
   selector: 'ts-listing-card',
@@ -18,14 +22,30 @@ export class TsListingCardComponent implements OnInit {
   ];
   showRegularCard: boolean;
   featuredCard: boolean;
-  constructor() { }
+  constructor(public dialog: MatDialog, private browser: BrowserService) { }
 
-    ngOnInit() {
-        if (this.type === 'regular') {
-            this.showRegularCard = true;
-        } else {
-            this.featuredCard = true;
-        }
+  shareEvent = () => {
+    console.log(this.browser.isMobile(), window.navigator, window.navigator['share'])
+    if (this.browser.isMobile() && window.navigator && window.navigator['share']) {
+      window.navigator['share']({
+        title: this.eventData.name,
+        text: this.eventData.name,
+        url: config.baseUrl + "e/" + this.eventData.shortName,
+      });
+    } else {
+      const dialogRef = this.dialog.open(ShareEventModalComponent, {
+        width: '450px',
+        data: { event: this.eventData }
+      });
+    }
+  }
+
+  ngOnInit() {
+    if (this.type === 'regular') {
+      this.showRegularCard = true;
+    } else {
+      this.featuredCard = true;
+    }
     // this.eventData = {
     //   "id": 1, "eventId": 87429,
     //   "name": "first event",

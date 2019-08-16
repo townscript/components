@@ -1,0 +1,21 @@
+.share-event-modal-container{
+    .platform{
+        transition: all ease 0.15s;
+        &:hover{
+            background: #fcfcfc;
+            transform: translateY(-5px);
+        }
+    }
+    .whatsapp{
+        color:#64bf56;
+    }
+    .facebook{
+        color:#4267B2;
+    }
+    .twitter{
+        color:#3AA1F2;
+    }
+    .linkedin{
+        color:#2977B5;
+    }
+}
