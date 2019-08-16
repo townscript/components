@@ -50,6 +50,22 @@
         router: ""
     };
 
+    var BrowserService = /** @class */ (function () {
+        function BrowserService() {
+            this.isMobile = function () {
+                var check = false;
+                (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4)))
+                    check = true; })(navigator.userAgent || navigator.vendor || window['opera']);
+                return check;
+            };
+        }
+        BrowserService = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [])
+        ], BrowserService);
+        return BrowserService;
+    }());
+
     var TsControlValueAccessor = /** @class */ (function () {
         function TsControlValueAccessor() {
             this.onChangePropagation = function () { };
@@ -784,17 +800,85 @@
         return HamburgerMenuComponent;
     }());
 
+    var ShareEventModalComponent = /** @class */ (function () {
+        function ShareEventModalComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.shareLink = {};
+            this.close = function () {
+                _this.dialogRef.close();
+            };
+        }
+        ShareEventModalComponent.prototype.ngAfterViewInit = function () {
+        };
+        ShareEventModalComponent.prototype.ngOnInit = function () {
+            this.event = this.data.event;
+            this.eventURL = "https://www.townscript.com/e/" + this.event.shortName;
+            this.eventName = this.event.name;
+            this.shareLink.fb = "https://www.facebook.com/sharer/sharer.php?s=100" +
+                "&p[url]=" + config.baseUrl + "e/" + this.event.shortName +
+                "&p[images][0]=" + config.baseUrl + "dashboard/images/organizer_login_files/logoforfb.png" +
+                "&p[title]=" + this.eventName +
+                "&p[summary]=" + "by townscript.com";
+            this.shareLink.twitter = "https://twitter.com/share" +
+                "?url=" + config.baseUrl + "e/" + this.event.shortName +
+                "&text=" + this.eventName + " is now live on Townscript!";
+            this.shareLink.linkedin = "https://www.linkedin.com/shareArticle?mini=true" +
+                "&url=" + config.baseUrl + "e/" + this.event.shortName +
+                "&title=" + this.eventName;
+            this.shareLink.whatsapp = "https://web.whatsapp.com/send?" +
+                "text=" + config.baseUrl + "e/" + this.event.shortName;
+        };
+        ShareEventModalComponent = __decorate([
+            core.Component({
+                selector: 'app-share-event-modal',
+                template: "<div class=\"share-event-modal-container\">\n    <div class=\"flex items-center text-lg text-gray-800 justify-between\">\n        <h2>Share Event</h2>\n        <div class=\"rounded-full\" matRipple (click)=\"close()\">\n            <i class=\"mdi mdi-close text-2xl cursor-pointer rounded-full\"></i>\n        </div>\n    </div>\n    <div class=\"px-2 py-2\">\n        <div class=\"platforms flex items-center justify-between\">\n            <a [href]=\"shareLink?.whatsapp\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-whatsapp block text-4xl whatsapp\"></i>\n                    <span class=\"text-gray-700 text-sm\">Whatsapp</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.fb\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-facebook block text-4xl facebook\"></i>\n                    <span class=\"text-gray-700 text-sm\">Facebook</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.twitter\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-twitter block text-4xl twitter\"></i>\n                    <span class=\"text-gray-700 text-sm\">Twitter</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.linkedin\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-linkedin block text-4xl linkedin\"></i>\n                    <span class=\"text-gray-700 text-sm\">LinkedIn</span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div>",
+                styles: [".share-event-modal-container .platform{-webkit-transition:.15s;transition:.15s}.share-event-modal-container .platform:hover{background:#fcfcfc;-webkit-transform:translateY(-5px);transform:translateY(-5px)}.share-event-modal-container .whatsapp{color:#64bf56}.share-event-modal-container .facebook{color:#4267b2}.share-event-modal-container .twitter{color:#3aa1f2}.share-event-modal-container .linkedin{color:#2977b5}"]
+            }),
+            __param(1, core.Inject(material.MAT_DIALOG_DATA)),
+            __metadata("design:paramtypes", [material.MatDialogRef, Object])
+        ], ShareEventModalComponent);
+        return ShareEventModalComponent;
+    }());
+
     var TsListingCardComponent = /** @class */ (function () {
-        function TsListingCardComponent() {
+        function TsListingCardComponent(dialog, browser) {
+            var _this = this;
+            this.dialog = dialog;
+            this.browser = browser;
             this.urgencyMessage = false;
             this.goingCounter = false;
+            this.moreIcons = false;
             this.keywords = [
                 { keyCode: 'marathon' },
                 { keyCode: 'run4life' },
                 { keyCode: 'behindYou' }
             ];
+            this.shareEvent = function () {
+                console.log(_this.browser.isMobile(), window.navigator, window.navigator['share']);
+                if (_this.browser.isMobile() && window.navigator && window.navigator['share']) {
+                    window.navigator['share']({
+                        title: _this.eventData.name,
+                        text: _this.eventData.name,
+                        url: config.baseUrl + "e/" + _this.eventData.shortName,
+                    });
+                }
+                else {
+                    var dialogRef = _this.dialog.open(ShareEventModalComponent, {
+                        width: '450px',
+                        data: { event: _this.eventData }
+                    });
+                }
+            };
         }
         TsListingCardComponent.prototype.ngOnInit = function () {
+            if (this.type === 'regular') {
+                this.showRegularCard = true;
+            }
+            else {
+                this.featuredCard = true;
+            }
             // this.eventData = {
             //   "id": 1, "eventId": 87429,
             //   "name": "first event",
@@ -817,13 +901,17 @@
             core.Input(),
             __metadata("design:type", Object)
         ], TsListingCardComponent.prototype, "eventData", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsListingCardComponent.prototype, "type", void 0);
         TsListingCardComponent = __decorate([
             core.Component({
                 selector: 'ts-listing-card',
-                template: "<div class=\"listing-container cursor-pointer rounded  my-4  lg:flex\">\n    <div class=\"h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden\"\n        [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\">\n    </div>\n    <div class=\"listing-container--content flex flex-col justify-between leading-normal w-full\">\n        <div class=\"pl-4 pt-3 pb-1\">\n            <div *ngIf=\"urgencyMessage\" class=\"flex flex-row justify-between align-items-center\">\n                <span class=\"text-sm bg-orange-500 rounded text-sm px-2 mr-2\">In High Demand</span>\n                <span class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-xl my-3\">{{eventData.name | titlecase}}</div>\n            <div class=\"flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-xl pr-1  align-bottom\"></i>\n                    <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-xl  align-bottom\"></i>\n                    <span class=\"font-323E48 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <div class=\"py-2 pr-2 flex justify-end  mt-8\">\n                <div class=\"pr-2  font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                    *ngFor=\"let key of eventData.keywords\">#{{key.keyCode}}</div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center \">\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <i class=\"mdi mdi-share-variant text-2xl\"></i>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold pr-4\"\n                    *ngIf=\"eventData.minimumTicketPrice\">{{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}-{{eventData.minimumTicketPrice}}</span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>",
-                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.listing-container{box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);-webkit-transition:.3s;transition:.3s;border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato}.listing-container:hover{box-shadow:0 2px 15px 0 rgba(0,0,0,.13);box-shadow:0 12px 17px -3px rgba(0,0,0,.1),0 7px 8px -2px rgba(0,0,0,.1)}.listing-container:hover .bottom-purple-bar{background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;border-radius:0 0 4px}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:1s;transition:1s}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container i{color:#683592}"]
+                template: "<div [ngClass]=\"showRegularCard ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' \n        : 'listing-container bg-white cursor-pointer rounded  my-4 mx-auto lg:flex lg:flex-row-reverse' \n\">\n    <div [ngClass]=\"showRegularCard \n                    ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden'\n                    : 'h-48 lg:h-auto sm:w-full md:w-full lg:w-3/5 flex-none bg-cover text-center overflow-hidden'\"\n        [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\">\n    </div>\n    <div [ngClass]=\"showRegularCard ?\n                     'listing-container--content flex flex-col justify-between leading-normal w-full'\n                     : 'listing-container--featured-content flex flex-col justify-between leading-normal w-full'\n                     \">\n        <div class=\"pl-4 pt-3 pb-1\">\n            <div class=\"flex flex-row justify-between align-items-center\">\n                <span *ngIf=\"urgencyMessage || featuredCard\"\n                    class=\"text-md bg-orange-500 rounded text-md px-2 mr-2\">Featured</span>\n                <span *ngIf=\"urgencyMessage\" class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span *ngIf=\"urgencyMessage\" class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-xl mb-1\">{{eventData.name | titlecase}}</div>\n            <div class=\"flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-xl pr-1  align-bottom\"></i>\n                    <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-xl  align-bottom\"></i>\n                    <span class=\"font-323E48 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <div *ngIf=\"featuredCard\" class=\"text-sm\">Heres goes some 2 line data which describes about the event.</div>\n            <div [ngClass]=\"showRegularCard ? 'py-2 pr-2 flex justify-between  mt-8' \n                    : 'py-2 pr-2 flex flex-col-reverse'\">\n                <div *ngIf=\"moreIcons\" id=\"set-of-icons\" class=\"flex\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                </div>\n                <div [ngClass]=\"showRegularCard ? '' : ''\">\n                    <span class=\"pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                        *ngFor=\"let key of keywords\">#{{key.keyCode}}</span>\n                </div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center\">\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <div class=\"px-2 rounded-full\" matRipple>\n                    <i class=\"mdi mdi-share-variant text-2xl\" (click)=\"shareEvent();$event.stopPropogation()\"></i>\n                </div>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold\"\n                    *ngIf=\"eventData.minimumTicketPrice\">\n                    Starting from\n                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}</span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>",
+                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.listing-container{box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);-webkit-transition:.3s;transition:.3s;border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato}.listing-container:hover{box-shadow:0 2px 15px 0 rgba(0,0,0,.13);box-shadow:0 12px 17px -3px rgba(0,0,0,.1),0 7px 8px -2px rgba(0,0,0,.1)}.listing-container:hover .bottom-purple-bar{background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;border-radius:0 0 4px}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:1s;transition:1s}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container .listing-container--featured-content{background-color:#fff}.listing-container .listing-container--featured-content .bottom-purple-bar{-webkit-transition:1s;transition:1s}.listing-container .listing-container--featured-content .price-container{font-size:15px}.listing-container i{color:#683592}"]
             }),
-            __metadata("design:paramtypes", [])
+            __metadata("design:paramtypes", [material.MatDialog, BrowserService])
         ], TsListingCardComponent);
         return TsListingCardComponent;
     }());
@@ -950,7 +1038,11 @@
                     SearchComponent,
                     CitySearchPopupComponent,
                     HamburgerMenuComponent,
-                    UserMenuComponent
+                    UserMenuComponent,
+                    ShareEventModalComponent
+                ],
+                entryComponents: [
+                    ShareEventModalComponent
                 ],
                 exports: [
                     TsHeaderComponent,
@@ -959,17 +1051,19 @@
                     TsListingCardComponent,
                     UserMenuComponent
                 ],
-                providers: [TimeService, UserService, NotificationService, common.DatePipe, ApiService, CookieService, HeaderService]
+                providers: [TimeService, UserService, NotificationService, common.DatePipe, ApiService, CookieService, HeaderService, BrowserService]
             })
         ], LayoutModule);
         return LayoutModule;
     }());
 
     exports.ApiService = ApiService;
+    exports.BrowserService = BrowserService;
     exports.CitySearchPopupComponent = CitySearchPopupComponent;
     exports.HamburgerMenuComponent = HamburgerMenuComponent;
     exports.LayoutModule = LayoutModule;
     exports.SearchComponent = SearchComponent;
+    exports.ShareEventModalComponent = ShareEventModalComponent;
     exports.TimeService = TimeService;
     exports.TsControlValueAccessor = TsControlValueAccessor;
     exports.TsFooterComponent = TsFooterComponent;

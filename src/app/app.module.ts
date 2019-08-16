@@ -11,6 +11,7 @@ import { TsFormsModule } from '@townscript/elements';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -28,6 +29,6 @@ import { RecaptchaModule } from 'ng-recaptcha';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents : [TsLoginSignupComponent]
+  entryComponents: [TsLoginSignupComponent]
 })
 export class AppModule { }

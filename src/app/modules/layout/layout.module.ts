@@ -13,6 +13,8 @@ import {
   CitySearchPopupComponent,
   HamburgerMenuComponent
 } from './components/index';
+import { BrowserService } from '../../core/browser.service';
+import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService, UserService } from '../../shared/index';
 import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
@@ -47,7 +49,11 @@ import { NotificationService } from '../../shared/services/notification.service'
     SearchComponent,
     CitySearchPopupComponent,
     HamburgerMenuComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    ShareEventModalComponent
+  ],
+  entryComponents: [
+    ShareEventModalComponent
   ],
   exports: [
     TsHeaderComponent,
@@ -56,7 +62,7 @@ import { NotificationService } from '../../shared/services/notification.service'
     TsListingCardComponent,
     UserMenuComponent
   ],
-  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService]
+  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
 
 })
 export class LayoutModule { }
