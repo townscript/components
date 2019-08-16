@@ -1075,10 +1075,9 @@
     exports.ɵa = CookieService;
     exports.ɵb = HeaderService;
     exports.ɵc = NotificationService;
-    exports.ɵd = BrowserService;
-    exports.ɵe = LoginTopContentComponent;
-    exports.ɵf = RangeDatePipe;
-    exports.ɵg = UserMenuComponent;
+    exports.ɵd = LoginTopContentComponent;
+    exports.ɵe = RangeDatePipe;
+    exports.ɵf = UserMenuComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

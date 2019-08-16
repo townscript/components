@@ -1026,5 +1026,5 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
-export { ApiService, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, ShareEventModalComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, BrowserService as ɵd, LoginTopContentComponent as ɵe, RangeDatePipe as ɵf, UserMenuComponent as ɵg };
+export { ApiService, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, ShareEventModalComponent, TimeService, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, LoginTopContentComponent as ɵd, RangeDatePipe as ɵe, UserMenuComponent as ɵf };
 //# sourceMappingURL=townscript-components.js.map
