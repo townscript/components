@@ -1,15 +1,16 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
-    <div class="w-2/3 m-2 flex items-center left-section">
+    <div #searchResultsEle class="w-2/3 m-2 flex items-center left-section">
         <i class="mdi mdi-magnify text-2xl color-blue p-2"></i>
         <input [(ngModel)]="searchText" (ngModelChange)="search($event)"
-            (focus)="searchActive = true;citySearchActive=false" (blur)="searchActive = false"
-            class="text-sm w-full h-full bg-transparent  p-2" type="text" placeholder="Search for an Event" />
+            (focus)="searchActive = true;citySearchActive=false" class="text-sm w-full h-full bg-transparent  p-2"
+            type="text" placeholder="Search for an Event, Interest or Organizer" />
         <div class="suggestions enter-slide-bottom w-full p-4 absolute" *ngIf="searchResults && searchActive">
             <ul class="ts-enter" *ngIf="searchResults?.interests.length>0">
                 <li class="list-head">
                     INTERESTS
                 </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let interest of searchResults.interests">
+                <li class="p-2 text-xs font-bold cursor-pointer" (click)="navigateToListing(interest.name)"
+                    *ngFor="let interest of searchResults.interests">
                     <div class="flex items-center">
                         <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ interest.imageUrl +')'">
                         </div>
@@ -27,7 +28,8 @@
                 <li class="list-head">
                     EVENTS
                 </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let event of searchResults.events">
+                <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let event of searchResults.events"
+                    (click)="navigateToEventPage(event.urlCode)">
                     <div class="flex items-center">
                         <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ event.imageUrl +')'"></div>
                         <div>
@@ -69,11 +71,13 @@
     <div #citySuggestions
         class="w-1/3 flex items-center justify-between p-2 cursor-pointer relative city-search-container"
         [class.active]="cityPopupActive" (click)="cityPopupActive = true">
-        <div class="flex items-center">
+        <div class="flex items-center w-10/12" [title]=" activeCity">
             <i class="mdi mdi-map-marker text-2xl color-blue"></i>
-            {{activeCity}}
+            <span class="truncate">{{activeCity}}</span>
         </div>
         <i class="mdi mdi-chevron-down text-2xl"></i>
-        <app-city-search-popup class="popup" *ngIf="cityPopupActive"></app-city-search-popup>
+        <app-city-search-popup class="popup" [(cityPopupActive)]="cityPopupActive" [(activeCity)]="activeCity"
+            *ngIf="cityPopupActive">
+        </app-city-search-popup>
     </div>
 </div>
