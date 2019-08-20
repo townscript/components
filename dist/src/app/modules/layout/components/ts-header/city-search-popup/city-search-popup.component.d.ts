@@ -1,4 +1,4 @@
-import { OnInit, ElementRef } from '@angular/core';
+import { OnInit, ElementRef, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common';
@@ -10,10 +10,12 @@ export declare class CitySearchPopupComponent implements OnInit {
     datepipe: DatePipe;
     cityInput: ElementRef;
     showArrow: boolean;
-    citySearchActive: boolean;
-    cityPopupActive: boolean;
-    placeSearchResults: any;
     activeCity: string;
+    activeCityChange: EventEmitter<String>;
+    cityPopupActive: boolean;
+    cityPopupActiveChange: EventEmitter<boolean>;
+    citySearchActive: boolean;
+    placeSearchResults: any;
     router: Router;
     cityQuery: string;
     cityQueryChanged: Subject<string>;

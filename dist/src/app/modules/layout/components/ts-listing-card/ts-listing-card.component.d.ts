@@ -6,6 +6,7 @@ export declare class TsListingCardComponent implements OnInit {
     private browser;
     eventData: any;
     type: any;
+    gridType: any;
     urgencyMessage: boolean;
     goingCounter: boolean;
     moreIcons: boolean;
