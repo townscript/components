@@ -48,7 +48,7 @@
                 </div>
                 <div [ngClass]="showRegularCard ? '' : ''">
                     <span class="pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline"
-                        *ngFor="let key of keywords">#{{key.keyCode}}</span>
+                        *ngFor="let key of keywords">#{{key.topicKeywordName}}</span>
                 </div>
             </div>
         </div>
@@ -86,10 +86,10 @@
         <span class="m-2 text-base">
             {{topicData.topicDescription}}
         </span>
-        <div class= "keywords m-2 flex">
+        <div class="keywords m-2 flex">
             <span class="font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize"
                 *ngFor="let key of keywords">{{key.keyCode}}
-            <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
+                <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
             </span>
         </div>
     </div>
