@@ -11,9 +11,6 @@ export declare class TsListingCardComponent implements OnInit {
     urgencyMessage: boolean;
     goingCounter: boolean;
     moreIcons: boolean;
-    keywords: {
-        keyCode: string;
-    }[];
     showRegularCard: boolean;
     featuredCard: boolean;
     topicCard: boolean;
