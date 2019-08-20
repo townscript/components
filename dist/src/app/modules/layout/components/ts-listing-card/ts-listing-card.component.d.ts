@@ -6,6 +6,7 @@ export declare class TsListingCardComponent implements OnInit {
     private browser;
     eventData: any;
     type: any;
+    topicData: any;
     gridType: any;
     urgencyMessage: boolean;
     goingCounter: boolean;
@@ -15,6 +16,7 @@ export declare class TsListingCardComponent implements OnInit {
     }[];
     showRegularCard: boolean;
     featuredCard: boolean;
+    topicCard: boolean;
     constructor(dialog: MatDialog, browser: BrowserService);
     shareEvent: () => void;
     ngOnInit(): void;
