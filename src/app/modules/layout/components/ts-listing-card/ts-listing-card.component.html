@@ -87,9 +87,13 @@
             {{topicData.topicDescription}}
         </span>
         <div class="keywords m-2 flex">
-            <span class="font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize"
+            <span class="font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize" <<<<<<< HEAD
                 *ngFor="let key of keywords">{{key.keyCode}}
                 <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
+                =======
+                *ngFor="let key of topicData?.keywords">{{key.keyCode}}
+                <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
+                >>>>>>> 9844ec35952bc67b653e9f890773b50fb4feef33
             </span>
         </div>
     </div>
