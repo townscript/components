@@ -11,7 +11,8 @@ import {
   TsLoginSignupComponent,
   TsListingCardComponent,
   CitySearchPopupComponent,
-  HamburgerMenuComponent
+  HamburgerMenuComponent,
+  TsCardSkeletonComponent
 } from './components/index';
 import { BrowserService } from '../../core/browser.service';
 import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
@@ -50,7 +51,8 @@ import { NotificationService } from '../../shared/services/notification.service'
     CitySearchPopupComponent,
     HamburgerMenuComponent,
     UserMenuComponent,
-    ShareEventModalComponent
+    ShareEventModalComponent,
+    TsCardSkeletonComponent
   ],
   entryComponents: [
     ShareEventModalComponent
@@ -60,7 +62,8 @@ import { NotificationService } from '../../shared/services/notification.service'
     TsFooterComponent,
     TsLoginSignupComponent,
     TsListingCardComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    TsCardSkeletonComponent
   ],
   providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
 
