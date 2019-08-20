@@ -14,6 +14,7 @@ import {
   HamburgerMenuComponent,
   TsCardSkeletonComponent
 } from './components/index';
+import { BrowserService } from '../../core/browser.service';
 import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService, UserService } from '../../shared/index';
@@ -64,7 +65,7 @@ import { NotificationService } from '../../shared/services/notification.service'
     UserMenuComponent,
     TsCardSkeletonComponent
   ],
-  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService]
+  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
 
 })
 export class LayoutModule { }

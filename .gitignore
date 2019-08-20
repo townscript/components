@@ -64,4 +64,5 @@ typings/
 .vscode/
 
 #build dist dir
-dist/
+dist/*
+

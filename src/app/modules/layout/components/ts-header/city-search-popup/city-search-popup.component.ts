@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, HostListener, EventEmitter, Output } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
@@ -17,11 +17,15 @@ export class CitySearchPopupComponent implements OnInit {
 
     @ViewChild('cityInput', { static: true }) cityInput: ElementRef;
     @Input() showArrow: boolean = true;
+    @Input() activeCity: string;
+    @Output() activeCityChange: EventEmitter<String> = new EventEmitter();
+    @Input() cityPopupActive: boolean;
+    @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
 
-    citySearchActive: boolean = false;
-    cityPopupActive: boolean = false;
+
+    citySearchActive: boolean = true;
     placeSearchResults: any;
-    activeCity: string = "Pune";
+
     router: Router = config.router;
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
@@ -41,14 +45,23 @@ export class CitySearchPopupComponent implements OnInit {
     }
     placeChanged = (place) => {
         if (place.type == "country") {
-            this.router.navigate(["/" + place.twoDigitCode])
+            this.router.navigate(["/" + place.twoDigitCode.toLowerCase()], { state: { place: place } })
         }
         if (place.type == "city") {
-            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode])
+            this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode], { state: { place: place } })
         }
         if (place.type == "locality") {
-            this.router.navigate(["/" + place.countryCode + "/" + place.cityCode + "/" + place.localityCode])
+            this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode + "/" + place.localityCode], { state: { place: place } })
         }
+        if (place.type == "unstructured") {
+            let name = place.name.replace(/,/g, "").replace(/ /g, "-");
+            let secondaryText = place.secondaryText.replace(/,/g, "").replace(/ /g, "-");
+            this.router.navigate(["/s/" + name + "--" + secondaryText], { state: { place: place } });
+        }
+        this.activeCity = place.name;
+        this.activeCityChange.emit(place.name);
+        this.cityPopupActive = false;
+        this.cityPopupActiveChange.emit(false);
     }
     openCityPopup = () => {
         this.cityPopupActive = true;
@@ -63,6 +76,7 @@ export class CitySearchPopupComponent implements OnInit {
             this.cityQueryChanged.next(text);
     }
     ngAfterViewInit() {
+        this.citySearchActive = true
         this.cityInput.nativeElement.focus()
     }
     ngOnInit() { }
