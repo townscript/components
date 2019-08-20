@@ -1,8 +1,10 @@
-<div [ngClass]="showRegularCard ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' 
+<div [ngClass]="showRegularCard ? 
+        gridType=='list' ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' :
+                    'bg-white cursor-pointer lg:flex lg:flex-col md:w-1/4 listing-container mx-auto my-1 rounded sm:w-1/2'
         : 'listing-container bg-white cursor-pointer rounded  my-4 mx-auto lg:flex lg:flex-row-reverse' 
 ">
-    <div [ngClass]="showRegularCard 
-                    ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden'
+    <div [ngClass]="showRegularCard
+                    ? gridType=='list' ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden' : 'bg-cover flex-none h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full overflow-hidden p-24 sm:w-full text-center'
                     : 'h-48 lg:h-auto sm:w-full md:w-full lg:w-3/5 flex-none bg-cover text-center overflow-hidden'"
         [style.background-image]="'url(' + eventData.cardImageUrl + ')'">
     </div>

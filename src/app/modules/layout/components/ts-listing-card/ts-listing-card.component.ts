@@ -12,6 +12,7 @@ import { config } from '../../../../core';
 export class TsListingCardComponent implements OnInit {
   @Input() eventData;
   @Input() type;
+  @Input() gridType;
   urgencyMessage = false;
   goingCounter = false;
   moreIcons = false;
