@@ -967,27 +967,6 @@ var TsCardSkeletonComponent = /** @class */ (function () {
     return TsCardSkeletonComponent;
 }());
 
-var LoginTopContentComponent = /** @class */ (function () {
-    function LoginTopContentComponent() {
-    }
-    LoginTopContentComponent.prototype.ngOnInit = function () {
-        console.log('whats the condition', this.condition);
-    };
-    __decorate([
-        Input(),
-        __metadata("design:type", String)
-    ], LoginTopContentComponent.prototype, "condition", void 0);
-    LoginTopContentComponent = __decorate([
-        Component({
-            selector: 'app-login-top-content',
-            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
-            styles: [""]
-        }),
-        __metadata("design:paramtypes", [])
-    ], LoginTopContentComponent);
-    return LoginTopContentComponent;
-}());
-
 var RangeDatePipe = /** @class */ (function () {
     function RangeDatePipe() {
     }
@@ -1016,6 +995,27 @@ var RangeDatePipe = /** @class */ (function () {
         })
     ], RangeDatePipe);
     return RangeDatePipe;
+}());
+
+var LoginTopContentComponent = /** @class */ (function () {
+    function LoginTopContentComponent() {
+    }
+    LoginTopContentComponent.prototype.ngOnInit = function () {
+        console.log('whats the condition', this.condition);
+    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LoginTopContentComponent.prototype, "condition", void 0);
+    LoginTopContentComponent = __decorate([
+        Component({
+            selector: 'app-login-top-content',
+            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
+            styles: [""]
+        }),
+        __metadata("design:paramtypes", [])
+    ], LoginTopContentComponent);
+    return LoginTopContentComponent;
 }());
 
 var UserMenuComponent = /** @class */ (function () {
@@ -1161,7 +1161,8 @@ var LayoutModule = /** @class */ (function () {
                 TsLoginSignupComponent,
                 TsListingCardComponent,
                 UserMenuComponent,
-                TsCardSkeletonComponent
+                TsCardSkeletonComponent,
+                RangeDatePipe
             ],
             providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
         })
@@ -1169,5 +1170,5 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
-export { ApiService, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, LoginTopContentComponent as ɵd, RangeDatePipe as ɵe, UserMenuComponent as ɵf, AppPasswordDirective as ɵg, LoginModalComponent as ɵh };
+export { ApiService, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, LoginTopContentComponent as ɵd, UserMenuComponent as ɵe, AppPasswordDirective as ɵf, LoginModalComponent as ɵg };
 //# sourceMappingURL=townscript-components.js.map
