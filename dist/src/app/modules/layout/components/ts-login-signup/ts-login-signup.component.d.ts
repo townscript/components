@@ -1,11 +1,10 @@
-import { OnInit } from '@angular/core';
+import { OnInit, EventEmitter } from '@angular/core';
 import { ApiService } from '../../../../shared/services/api-service';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '../../../../shared/services/notification.service';
 export declare class TsLoginSignupComponent implements OnInit {
     apiService: ApiService;
@@ -14,7 +13,8 @@ export declare class TsLoginSignupComponent implements OnInit {
     private cookieService;
     private userService;
     private notificationService;
-    dialogRef: MatDialogRef<TsLoginSignupComponent>;
+    mode: any;
+    closeDialog: EventEmitter<{}>;
     recaptchaRef: RecaptchaComponent;
     showSocial: boolean;
     show: boolean;
@@ -35,7 +35,7 @@ export declare class TsLoginSignupComponent implements OnInit {
     phoneError: boolean;
     socialLoginMsg: boolean;
     initializeTelInput: any;
-    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, notificationService: NotificationService, dialogRef: MatDialogRef<TsLoginSignupComponent>);
+    constructor(apiService: ApiService, http: HttpClient, fb: FormBuilder, cookieService: CookieService, userService: UserService, notificationService: NotificationService);
     ngOnInit(): void;
     close(): void;
     resolveAndProceed(captchaResponse: string): void;

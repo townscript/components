@@ -1,0 +1,38 @@
+import * as tslib_1 from "tslib";
+import { Directive, ElementRef } from '@angular/core';
+let AppPasswordDirective = class AppPasswordDirective {
+    constructor(el) {
+        this.el = el;
+        this._shown = false;
+        this.setup();
+    }
+    toggle(span) {
+        this._shown = !this._shown;
+        if (this._shown) {
+            console.log(this.el.nativeElement);
+            this.el.nativeElement.setAttribute('type', 'text');
+            span.innerHTML = 'Hide password';
+        }
+        else {
+            this.el.nativeElement.setAttribute('type', 'password');
+            span.innerHTML = 'Show password';
+        }
+    }
+    setup() {
+        const parent = this.el.nativeElement.parentNode;
+        const span = document.createElement('span');
+        span.innerHTML = `Show password`;
+        span.addEventListener('click', (event) => {
+            this.toggle(span);
+        });
+        parent.appendChild(span);
+    }
+};
+AppPasswordDirective = tslib_1.__decorate([
+    Directive({
+        selector: '[appPassword]'
+    }),
+    tslib_1.__metadata("design:paramtypes", [ElementRef])
+], AppPasswordDirective);
+export { AppPasswordDirective };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidHMtc2hvdy1oaWRlLWRpcmVjdGl2ZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0B0b3duc2NyaXB0L2NvbXBvbmVudHMvIiwic291cmNlcyI6WyJzcmMvYXBwL21vZHVsZXMvbGF5b3V0L2NvbXBvbmVudHMvdHMtbG9naW4tc2lnbnVwL3RzLXNob3ctaGlkZS1kaXJlY3RpdmUudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsVUFBVSxFQUFDLE1BQU0sZUFBZSxDQUFDO0FBSXJELElBQWEsb0JBQW9CLEdBQWpDLE1BQWEsb0JBQW9CO0lBRWpDLFlBQW9CLEVBQWM7UUFBZCxPQUFFLEdBQUYsRUFBRSxDQUFZO1FBRHpCLFdBQU0sR0FBRyxLQUFLLENBQUM7UUFFcEIsSUFBSSxDQUFDLEtBQUssRUFBRSxDQUFDO0lBQ2YsQ0FBQztJQUNILE1BQU0sQ0FBQyxJQUFpQjtRQUNwQixJQUFJLENBQUMsTUFBTSxHQUFHLENBQUMsSUFBSSxDQUFDLE1BQU0sQ0FBQztRQUMzQixJQUFJLElBQUksQ0FBQyxNQUFNLEVBQUU7WUFDYixPQUFPLENBQUMsR0FBRyxDQUFDLElBQUksQ0FBQyxFQUFFLENBQUMsYUFBYSxDQUFDLENBQUM7WUFDckMsSUFBSSxDQUFDLEVBQUUsQ0FBQyxhQUFhLENBQUMsWUFBWSxDQUFDLE1BQU0sRUFBRSxNQUFNLENBQUMsQ0FBQztZQUNuRCxJQUFJLENBQUMsU0FBUyxHQUFHLGVBQWUsQ0FBQztTQUNsQzthQUFNO1lBQ0wsSUFBSSxDQUFDLEVBQUUsQ0FBQyxhQUFhLENBQUMsWUFBWSxDQUFDLE1BQU0sRUFBRSxVQUFVLENBQUMsQ0FBQztZQUN2RCxJQUFJLENBQUMsU0FBUyxHQUFHLGVBQWUsQ0FBQztTQUNsQztJQUNILENBQUM7SUFDSCxLQUFLO1FBQ0QsTUFBTSxNQUFNLEdBQUcsSUFBSSxDQUFDLEVBQUUsQ0FBQyxhQUFhLENBQUMsVUFBVSxDQUFDO1FBQ2hELE1BQU0sSUFBSSxHQUFHLFFBQVEsQ0FBQyxhQUFhLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDNUMsSUFBSSxDQUFDLFNBQVMsR0FBRyxlQUFlLENBQUM7UUFDakMsSUFBSSxDQUFDLGdCQUFnQixDQUFDLE9BQU8sRUFBRSxDQUFDLEtBQUssRUFBRSxFQUFFO1lBQ3ZDLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFDLENBQUM7UUFDcEIsQ0FBQyxDQUFDLENBQUM7UUFDSCxNQUFNLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxDQUFDO0lBQzNCLENBQUM7Q0FDRixDQUFBO0FBekJZLG9CQUFvQjtJQUhoQyxTQUFTLENBQUM7UUFDVCxRQUFRLEVBQUUsZUFBZTtLQUMxQixDQUFDOzZDQUdzQixVQUFVO0dBRnJCLG9CQUFvQixDQXlCaEM7U0F6Qlksb0JBQW9CIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgRGlyZWN0aXZlLCBFbGVtZW50UmVmfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbkBEaXJlY3RpdmUoe1xuICBzZWxlY3RvcjogJ1thcHBQYXNzd29yZF0nXG59KVxuZXhwb3J0IGNsYXNzIEFwcFBhc3N3b3JkRGlyZWN0aXZlIHtcbiBwcml2YXRlIF9zaG93biA9IGZhbHNlO1xuY29uc3RydWN0b3IocHJpdmF0ZSBlbDogRWxlbWVudFJlZikge1xuICAgIHRoaXMuc2V0dXAoKTtcbiAgfVxudG9nZ2xlKHNwYW46IEhUTUxFbGVtZW50KSB7XG4gICAgdGhpcy5fc2hvd24gPSAhdGhpcy5fc2hvd247XG4gICAgaWYgKHRoaXMuX3Nob3duKSB7XG4gICAgICAgIGNvbnNvbGUubG9nKHRoaXMuZWwubmF0aXZlRWxlbWVudCk7XG4gICAgICB0aGlzLmVsLm5hdGl2ZUVsZW1lbnQuc2V0QXR0cmlidXRlKCd0eXBlJywgJ3RleHQnKTtcbiAgICAgIHNwYW4uaW5uZXJIVE1MID0gJ0hpZGUgcGFzc3dvcmQnO1xuICAgIH0gZWxzZSB7XG4gICAgICB0aGlzLmVsLm5hdGl2ZUVsZW1lbnQuc2V0QXR0cmlidXRlKCd0eXBlJywgJ3Bhc3N3b3JkJyk7XG4gICAgICBzcGFuLmlubmVySFRNTCA9ICdTaG93IHBhc3N3b3JkJztcbiAgICB9XG4gIH1cbnNldHVwKCkge1xuICAgIGNvbnN0IHBhcmVudCA9IHRoaXMuZWwubmF0aXZlRWxlbWVudC5wYXJlbnROb2RlO1xuICAgIGNvbnN0IHNwYW4gPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzcGFuJyk7XG4gICAgc3Bhbi5pbm5lckhUTUwgPSBgU2hvdyBwYXNzd29yZGA7XG4gICAgc3Bhbi5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsIChldmVudCkgPT4ge1xuICAgICAgdGhpcy50b2dnbGUoc3Bhbik7XG4gICAgfSk7XG4gICAgcGFyZW50LmFwcGVuZENoaWxkKHNwYW4pO1xuICB9XG59Il19
