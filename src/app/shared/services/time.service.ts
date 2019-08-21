@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import * as momentImported from 'moment-timezone';
-
-const moment = momentImported;
+import { DateTime } from "luxon";
 
 @Injectable()
 export class TimeService {
 
-    moment: any = moment();
     constructor() {
     }
 
     convertDateToTimezone = (date, timeZoneOffset) => {
-        var dateString = moment.tz(date, timeZoneOffset).format('YYYY-MM-DDTHH:mm:ss.sssZ');
-        var tzon = [dateString.substr(0, 23), dateString.substr(24)];
-        var currentSystemGMT = moment.tz(moment.tz.guess()).format("Z");
-        return this.formatLocalDate(new Date(tzon[0] + currentSystemGMT));
+        var date = DateTime.fromISO(date, { zone: timeZoneOffset });
+        var dateString = DateTime.fromISO(date).toString();
+        return this.formatLocalDate(new Date(dateString));
     };
 
     formatLocalDate = (now) => {

@@ -29,15 +29,17 @@
     }
 }
 .ts-header-new{
-    min-height:58px;
+    min-height:75px;
     background-color: #F7F7F7;
     top:0;
     z-index: 1000;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.11);
+    .shadow{
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.11);
+    }
     .ts-logo{
         // width:146px;
         // min-width:146px;
-        height: 28px;
+        height: 38px;
     }
     .popup{
         position: absolute;
@@ -51,7 +53,6 @@
     padding: 0 80px!important;
   }
   .ts-header-new{
-      min-height:75px;
       .ts-logo{
         height:35px;
       }

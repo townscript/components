@@ -3,7 +3,7 @@ import { ApiService } from '../../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
-import * as moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
@@ -32,7 +32,7 @@ export class TsLoginSignupComponent implements OnInit {
     showResetPassword = false;
     isUserVerified: any;
     CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-    userTimezone = moment.tz.guess();
+    userTimezone = DateTime.local().zoneName;
     loginForm = this.fb.group({
         firstName: ['', Validators.required],
         email: ['', Validators.required],
@@ -59,6 +59,7 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
         this.currScreen = 'ifUnverified';
+
     }
 
     close() {

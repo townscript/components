@@ -15,6 +15,7 @@ export class TsHeaderComponent implements OnInit {
   @Input() Components: Array<String> = ["createEventBtn"];
   @Input() source: string = "marketplace";
   @Input() algoliaIndexName: string = "tsTesting";
+  @Input() shadow: boolean = true;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
   user: any;

@@ -1,6 +1,6 @@
 <section class="bg-white container-background flex flex-row m-auto md:w-11/12 w-2/5 overflow:hidden">
     <div id="login-signup-container" class="z-10 bg-white lg:w-1/2 w-full p-6 m-auto md:m-2 lg:m-2">
-        <i (click)="takeMeBack()" class="cursor-pointer material-icons">arrow_back</i>
+        <i *ngIf="!ifUnverified" (click)="takeMeBack()" class="cursor-pointer mdi mdi-arrow-left">arrow_back</i>
         <app-login-top-content [condition]="currScreen"></app-login-top-content>
         <form [formGroup]="loginForm" class="w-full">
             <div *ngIf="ifSignUp" class="form-group md:flex md:items-center mb-1">

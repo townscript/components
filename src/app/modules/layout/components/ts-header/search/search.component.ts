@@ -5,6 +5,8 @@ import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
+import { config } from '../../../../../core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -18,6 +20,7 @@ export class SearchComponent implements OnInit {
     @Input() algoliaIndexName: string = "tsTesting";
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
+    @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
     searchText: string;
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive: boolean = false;
@@ -31,6 +34,7 @@ export class SearchComponent implements OnInit {
     activeCityBackup: string;
     client: any;
     index: any;
+    router: Router = config.router;
 
     popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
 
@@ -94,6 +98,19 @@ export class SearchComponent implements OnInit {
         if (!this.citySuggestions.nativeElement.contains(event.target)) {
             this.cityPopupActive = false;
         }
+        if (this.searchResultsEle && !this.searchResultsEle.nativeElement.contains(event.target)) {
+            this.searchActive = false;
+        }
+    }
+    navigateToListing = (interest) => {
+        console.log("navigating to interest page");
+        this.router.navigate(["../" + interest], { relativeTo: config.activatedRoute.parent });
+        this.searchActive = false;
+    }
+    navigateToEventPage = (eventCode) => {
+        console.log("navigating to event page");
+        this.router.navigate(["/e/" + eventCode]);
+        this.searchActive = false;
     }
     search = (text) => {
         if (text != undefined && text.length > 0)

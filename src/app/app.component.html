@@ -9,6 +9,14 @@
         <br>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <ts-listing-card [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
+
+    <ts-listing-card [type]="'featured'" [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'topic'" [eventData]="topicData"></ts-listing-card>
+    <ts-card-skeleton></ts-card-skeleton>
     <ts-footer source='marketplace'></ts-footer>
 </section>

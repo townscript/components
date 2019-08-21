@@ -11,8 +11,11 @@ import {
   TsLoginSignupComponent,
   TsListingCardComponent,
   CitySearchPopupComponent,
-  HamburgerMenuComponent
+  HamburgerMenuComponent,
+  TsCardSkeletonComponent
 } from './components/index';
+import { BrowserService } from '../../core/browser.service';
+import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsFormsModule } from '@townscript/elements';
 import { TimeService, ApiService, UserService } from '../../shared/index';
 import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
@@ -24,7 +27,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../../shared/services/notification.service';
-import { AppPasswordDirective } from  './components/ts-login-signup/ts-show-hide-directive';
+import { AppPasswordDirective } from './components/ts-login-signup/ts-show-hide-directive';
 import { LoginModalComponent } from './components/ts-login-signup/login-modal/login-modal.component';
 @NgModule({
   imports: [
@@ -50,16 +53,22 @@ import { LoginModalComponent } from './components/ts-login-signup/login-modal/lo
     HamburgerMenuComponent,
     UserMenuComponent,
     AppPasswordDirective,
-    LoginModalComponent
+    LoginModalComponent,
+    ShareEventModalComponent,
+    TsCardSkeletonComponent
+  ],
+  entryComponents: [
+    ShareEventModalComponent
   ],
   exports: [
     TsHeaderComponent,
     TsFooterComponent,
     TsLoginSignupComponent,
     TsListingCardComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    TsCardSkeletonComponent
   ],
-  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService]
+  providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
 
 })
 export class LayoutModule { }

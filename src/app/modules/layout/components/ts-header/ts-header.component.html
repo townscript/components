@@ -19,7 +19,7 @@
     </div>
 </nav>
 
-<nav class="ts-header-new w-full fixed flex items-center" *ngIf="source=='marketplace'">
+<nav class="ts-header-new w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block lg:w-1/6">
             <img class="ts-logo" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
@@ -47,9 +47,9 @@
             <i class="mdi mdi-map-legend mr-4"></i>
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
-        <div class="lg:w-1/6 hidden sm:hidden md:hidden lg:flex items-center pr-8">
-            <div class="create-btn cursor-pointer flex justify-center items-center">
-                <span class="text-sm mr-2">CREATE EVENT</span>
+        <div class="lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
+            <div class="create-btn cursor-pointer flex h-full justify-center items-center">
+                <span class="text-base mr-2">CREATE EVENT</span>
                 <i class="mdi mdi-ticket text-2xl"></i>
             </div>
         </div>
@@ -73,10 +73,10 @@
         <!-- Mobile Menu -->
         <div class="sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center">
             <div class="rounded-full" matRipple>
-                <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
+                <i class="mdi mdi-magnify text-3xl ml-2 mr-4 color-blue"></i>
             </div>
             <div class="rounded-full" matRipple>
-                <i class="mdi mdi-account text-2xl mr-2 ml-2 color-blue" matRipple
+                <i class="mdi mdi-account text-3xl mr-2 ml-2 color-blue" matRipple
                     (click)="openMyProfileComponent()"></i>
             </div>
         </div>

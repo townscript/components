@@ -1,4 +1,5 @@
 export const config: any = {
   baseUrl: "",
-  router: ""
+  router: "",
+  activatedRoute: ""
 };
