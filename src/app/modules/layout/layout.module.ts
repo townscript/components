@@ -66,7 +66,8 @@ import { LoginModalComponent } from './components/ts-login-signup/login-modal/lo
     TsLoginSignupComponent,
     TsListingCardComponent,
     UserMenuComponent,
-    TsCardSkeletonComponent
+    TsCardSkeletonComponent,
+    RangeDatePipe
   ],
   providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
 
