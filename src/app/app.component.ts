@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-import { TsLoginSignupComponent } from './modules/layout/components';
+import { LoginModalComponent } from './modules/layout/components/ts-login-signup/login-modal/login-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
       dialogConfig.height = 'auto';
       dialogConfig.data = data;
       dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-      this.dialog.open(TsLoginSignupComponent, dialogConfig);
+      this.dialog.open(LoginModalComponent, dialogConfig);
   }
 
   ngOnInit() {

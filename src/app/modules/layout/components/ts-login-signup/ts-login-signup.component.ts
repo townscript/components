@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter , Output, Input } from '@angular/core';
 import { ApiService } from '../../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -7,7 +7,6 @@ import * as moment from 'moment-timezone';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from './cookie.service';
 import { UserService } from '../../../../shared/services/user-service';
-import { MatDialogRef } from '@angular/material/dialog';
 import { NotificationService } from '../../../../shared/services/notification.service';
 
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
@@ -18,7 +17,8 @@ const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJ
     styleUrls: ['./ts-login-signup.component.scss']
 })
 export class TsLoginSignupComponent implements OnInit {
-    // @ViewChild(RecaptchaComponent, { read: true, static: true }) recaptcha: RecaptchaComponent;
+    @Input() mode;
+    @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
     showSocial = true;
@@ -52,7 +52,6 @@ export class TsLoginSignupComponent implements OnInit {
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
-        public dialogRef: MatDialogRef<TsLoginSignupComponent>,
     ) { }
 
     ngOnInit() {
@@ -63,8 +62,9 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     close() {
-        this.dialogRef.close();
+        this.closeDialog.emit(true);
     }
+
     public resolveAndProceed(captchaResponse: string) {
         this.captchaResponse = captchaResponse;
         this.signup();
@@ -131,8 +131,7 @@ export class TsLoginSignupComponent implements OnInit {
     initializeIntlTelInput = () => {
         // initialize intl tel
         const input = document.querySelector('#phoneNumber');
-        // console.log(input);
-        // console.log(window);
+
         (<any>window).intlTelInput(input, {
             initialCountry: 'in',
             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
@@ -149,11 +148,11 @@ export class TsLoginSignupComponent implements OnInit {
                 };
 
                 const userData = { ...retData.userDetails, ...tokenData };
-                // this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                // console.log(userData);
                 this.userService.updateUser(userData);
-                this.close();
                 this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
+                if (this.mode === 'dialog') {
+                     this.close();
+                }
                 this.redirectToListings();
             },
             (error) => {

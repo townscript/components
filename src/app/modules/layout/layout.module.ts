@@ -25,6 +25,7 @@ import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.co
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from '../../shared/services/notification.service';
 import { AppPasswordDirective } from  './components/ts-login-signup/ts-show-hide-directive';
+import { LoginModalComponent } from './components/ts-login-signup/login-modal/login-modal.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -48,7 +49,8 @@ import { AppPasswordDirective } from  './components/ts-login-signup/ts-show-hide
     CitySearchPopupComponent,
     HamburgerMenuComponent,
     UserMenuComponent,
-    AppPasswordDirective
+    AppPasswordDirective,
+    LoginModalComponent
   ],
   exports: [
     TsHeaderComponent,
