@@ -1035,6 +1035,43 @@ var LoginTopContentComponent = /** @class */ (function () {
     return LoginTopContentComponent;
 }());
 
+var AppPasswordDirective = /** @class */ (function () {
+    function AppPasswordDirective(el) {
+        this.el = el;
+        this._shown = false;
+        this.setup();
+    }
+    AppPasswordDirective.prototype.toggle = function (span) {
+        this._shown = !this._shown;
+        if (this._shown) {
+            console.log(this.el.nativeElement);
+            this.el.nativeElement.setAttribute('type', 'text');
+            span.innerHTML = 'Hide password';
+        }
+        else {
+            this.el.nativeElement.setAttribute('type', 'password');
+            span.innerHTML = 'Show password';
+        }
+    };
+    AppPasswordDirective.prototype.setup = function () {
+        var _this = this;
+        var parent = this.el.nativeElement.parentNode;
+        var span = document.createElement('span');
+        span.innerHTML = "Show password";
+        span.addEventListener('click', function (event) {
+            _this.toggle(span);
+        });
+        parent.appendChild(span);
+    };
+    AppPasswordDirective = __decorate([
+        Directive({
+            selector: '[appPassword]'
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], AppPasswordDirective);
+    return AppPasswordDirective;
+}());
+
 var UserMenuComponent = /** @class */ (function () {
     function UserMenuComponent(notificationService, userService, cookieService) {
         this.notificationService = notificationService;
@@ -1080,43 +1117,6 @@ var UserMenuComponent = /** @class */ (function () {
     return UserMenuComponent;
 }());
 
-var AppPasswordDirective = /** @class */ (function () {
-    function AppPasswordDirective(el) {
-        this.el = el;
-        this._shown = false;
-        this.setup();
-    }
-    AppPasswordDirective.prototype.toggle = function (span) {
-        this._shown = !this._shown;
-        if (this._shown) {
-            console.log(this.el.nativeElement);
-            this.el.nativeElement.setAttribute('type', 'text');
-            span.innerHTML = 'Hide password';
-        }
-        else {
-            this.el.nativeElement.setAttribute('type', 'password');
-            span.innerHTML = 'Show password';
-        }
-    };
-    AppPasswordDirective.prototype.setup = function () {
-        var _this = this;
-        var parent = this.el.nativeElement.parentNode;
-        var span = document.createElement('span');
-        span.innerHTML = "Show password";
-        span.addEventListener('click', function (event) {
-            _this.toggle(span);
-        });
-        parent.appendChild(span);
-    };
-    AppPasswordDirective = __decorate([
-        Directive({
-            selector: '[appPassword]'
-        }),
-        __metadata("design:paramtypes", [ElementRef])
-    ], AppPasswordDirective);
-    return AppPasswordDirective;
-}());
-
 var LayoutModule = /** @class */ (function () {
     function LayoutModule() {
     }
@@ -1152,19 +1152,13 @@ var LayoutModule = /** @class */ (function () {
             exports: [
                 TsHeaderComponent,
                 TsFooterComponent,
-                SearchComponent,
                 TsLoginSignupComponent,
-                LoginTopContentComponent,
                 TsListingCardComponent,
-                RangeDatePipe,
-                SearchComponent,
-                CitySearchPopupComponent,
-                HamburgerMenuComponent,
                 UserMenuComponent,
-                AppPasswordDirective,
-                LoginModalComponent,
+                TsCardSkeletonComponent,
                 ShareEventModalComponent,
-                TsCardSkeletonComponent
+                RangeDatePipe,
+                LoginModalComponent
             ],
             providers: [TimeService,
                 UserService,
@@ -1180,5 +1174,5 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
-export { ApiService, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, LoginModalComponent, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, LoginTopContentComponent as ɵd, UserMenuComponent as ɵe, AppPasswordDirective as ɵf };
+export { ApiService, AppPasswordDirective, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, LoginModalComponent, LoginTopContentComponent, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, UserMenuComponent as ɵd };
 //# sourceMappingURL=townscript-components.js.map
