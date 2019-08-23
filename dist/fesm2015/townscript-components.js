@@ -1112,15 +1112,21 @@ LayoutModule = __decorate([
         exports: [
             TsHeaderComponent,
             TsFooterComponent,
+            SearchComponent,
             TsLoginSignupComponent,
             TsListingCardComponent,
-            UserMenuComponent,
-            TsCardSkeletonComponent,
-            ShareEventModalComponent,
+            LoginTopContentComponent,
             RangeDatePipe,
-            LoginModalComponent
+            CitySearchPopupComponent,
+            HamburgerMenuComponent,
+            UserMenuComponent,
+            AppPasswordDirective,
+            LoginModalComponent,
+            ShareEventModalComponent,
+            TsCardSkeletonComponent
         ],
-        providers: [TimeService,
+        providers: [
+            TimeService,
             UserService,
             NotificationService,
             DatePipe,
