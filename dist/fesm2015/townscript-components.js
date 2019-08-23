@@ -1110,9 +1110,9 @@ LayoutModule = __decorate([
             ShareEventModalComponent,
             TsCardSkeletonComponent
         ],
-        // entryComponents: [
-        //   ShareEventModalComponent
-        // ],
+        entryComponents: [
+            ShareEventModalComponent
+        ],
         exports: [
             TsHeaderComponent,
             TsFooterComponent,
@@ -1121,9 +1121,18 @@ LayoutModule = __decorate([
             UserMenuComponent,
             TsCardSkeletonComponent,
             ShareEventModalComponent,
-            RangeDatePipe
+            RangeDatePipe,
+            LoginModalComponent
         ],
-        providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
+        providers: [TimeService,
+            UserService,
+            NotificationService,
+            DatePipe,
+            ApiService,
+            CookieService,
+            HeaderService,
+            BrowserService
+        ]
     })
 ], LayoutModule);
 

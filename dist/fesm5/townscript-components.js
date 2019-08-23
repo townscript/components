@@ -1149,9 +1149,9 @@ var LayoutModule = /** @class */ (function () {
                 ShareEventModalComponent,
                 TsCardSkeletonComponent
             ],
-            // entryComponents: [
-            //   ShareEventModalComponent
-            // ],
+            entryComponents: [
+                ShareEventModalComponent
+            ],
             exports: [
                 TsHeaderComponent,
                 TsFooterComponent,
@@ -1160,9 +1160,18 @@ var LayoutModule = /** @class */ (function () {
                 UserMenuComponent,
                 TsCardSkeletonComponent,
                 ShareEventModalComponent,
-                RangeDatePipe
+                RangeDatePipe,
+                LoginModalComponent
             ],
-            providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]
+            providers: [TimeService,
+                UserService,
+                NotificationService,
+                DatePipe,
+                ApiService,
+                CookieService,
+                HeaderService,
+                BrowserService
+            ]
         })
     ], LayoutModule);
     return LayoutModule;

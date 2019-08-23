@@ -1180,9 +1180,9 @@
                     ShareEventModalComponent,
                     TsCardSkeletonComponent
                 ],
-                // entryComponents: [
-                //   ShareEventModalComponent
-                // ],
+                entryComponents: [
+                    ShareEventModalComponent
+                ],
                 exports: [
                     TsHeaderComponent,
                     TsFooterComponent,
@@ -1191,9 +1191,18 @@
                     UserMenuComponent,
                     TsCardSkeletonComponent,
                     ShareEventModalComponent,
-                    RangeDatePipe
+                    RangeDatePipe,
+                    LoginModalComponent
                 ],
-                providers: [TimeService, UserService, NotificationService, common.DatePipe, ApiService, CookieService, HeaderService, BrowserService]
+                providers: [TimeService,
+                    UserService,
+                    NotificationService,
+                    common.DatePipe,
+                    ApiService,
+                    CookieService,
+                    HeaderService,
+                    BrowserService
+                ]
             })
         ], LayoutModule);
         return LayoutModule;
