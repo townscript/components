@@ -1180,9 +1180,9 @@
                     ShareEventModalComponent,
                     TsCardSkeletonComponent
                 ],
-                entryComponents: [
-                    ShareEventModalComponent
-                ],
+                // entryComponents: [
+                //   ShareEventModalComponent
+                // ],
                 exports: [
                     TsHeaderComponent,
                     TsFooterComponent,
