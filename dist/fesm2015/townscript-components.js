@@ -1110,9 +1110,6 @@ LayoutModule = __decorate([
             ShareEventModalComponent,
             TsCardSkeletonComponent
         ],
-        entryComponents: [
-            ShareEventModalComponent
-        ],
         exports: [
             TsHeaderComponent,
             TsFooterComponent,

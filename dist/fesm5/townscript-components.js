@@ -1149,9 +1149,6 @@ var LayoutModule = /** @class */ (function () {
                 ShareEventModalComponent,
                 TsCardSkeletonComponent
             ],
-            entryComponents: [
-                ShareEventModalComponent
-            ],
             exports: [
                 TsHeaderComponent,
                 TsFooterComponent,
