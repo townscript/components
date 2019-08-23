@@ -26,10 +26,6 @@ export class AppComponent implements OnInit {
 
       dialogConfig.disableClose = false;
       dialogConfig.autoFocus = true;
-      dialogConfig.minWidth = '900px';
-      dialogConfig.minHeight = '530px';
-      dialogConfig.height = 'auto';
-      dialogConfig.data = data;
       dialogConfig.backdropClass = 'mat-dialog-bkg-container';
       this.dialog.open(LoginModalComponent, dialogConfig);
   }
