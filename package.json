@@ -6,7 +6,7 @@
     "start": "ng serve --aot --host 0.0.0.0",
     "build": "npm run packagr",
     "deploy": "git subtree push --prefix dist origin library",
-    "localdeploy": "rm -r /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/* && cp -r ./dist/* /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/",
+    "localdeploy": "rm -r /home/prabir/Documents/code/{tsCode}/Marketplace/node_modules/@townscript/components/* && cp -r ./dist/* /home/prabir/Documents/code/{tsCode}/Marketplace/node_modules/@townscript/components/",
     "postbuild": "scss-bundle -c scss-bundle.config.json",
     "test": "ng test",
     "lint": "ng lint",

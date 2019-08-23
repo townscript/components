@@ -1,5 +1,8 @@
-<section class="bg-white container-background flex flex-row m-auto md:w-11/12 w-2/5 overflow:hidden">
-    <div id="login-signup-container" class="z-10 bg-white lg:w-1/2 w-full p-6 m-auto md:m-2 lg:m-2">
+<section [ngClass]="(mode=='dialog') ? 
+            'bg-white container-background flex flex-row m-auto overflow:hidden'
+            :'flex flex-row m-auto overflow:hidden'">
+    <div id="login-signup-container" [ngClass]="(mode=='dialog') ? 'z-10 bg-white w-full p-6 m-auto md:m-2 lg:m-2'
+            : 'login-card-box z-10 bg-white max-w-sm w-full p-10'">
         <i *ngIf="!ifUnverified" (click)="takeMeBack()" class="cursor-pointer mdi mdi-arrow-left">arrow_back</i>
         <app-login-top-content [condition]="currScreen"></app-login-top-content>
         <form [formGroup]="loginForm" class="w-full">
@@ -137,8 +140,8 @@
                     href="/privacy-policy">privacy policy</a>.</p>
         </div>
     </div>
-    <div class="p-6 hidden md:block mkt-content">
-        <div class="flex flex-col mt-10">
+    <div [ngClass]="(mode=='dialog') ? 'hidden' : 'ml-20 p-6 hidden md:block'">
+        <div class="flex flex-col mt-4">
             <span class="text-2xl w-2/3 mb-4 text-gray-900">
                 <strong>301,589 event organizers trust us.</strong>
             </span>

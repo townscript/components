@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { TsLoginSignupComponent } from '../../components/ts-login-signup/ts-login-signup.component';
+import { LoginModalComponent } from '../../components/ts-login-signup/login-modal/login-modal.component';
 import { UserService } from '../../../../shared/services/user-service';
 import { config } from '../../../../core/app-config';
 
@@ -40,11 +40,8 @@ export class TsHeaderComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
-    dialogConfig.minWidth = '900px';
-    dialogConfig.minHeight = '530px';
-    dialogConfig.height = 'auto';
-    // dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-    this.dialog.open(TsLoginSignupComponent, dialogConfig);
+    dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+    this.dialog.open(LoginModalComponent, dialogConfig);
   }
 
   openMyProfileComponent = () => {
