@@ -1171,7 +1171,6 @@
                     LoginTopContentComponent,
                     TsListingCardComponent,
                     RangeDatePipe,
-                    SearchComponent,
                     CitySearchPopupComponent,
                     HamburgerMenuComponent,
                     UserMenuComponent,

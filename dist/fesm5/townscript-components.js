@@ -1140,7 +1140,6 @@ var LayoutModule = /** @class */ (function () {
                 LoginTopContentComponent,
                 TsListingCardComponent,
                 RangeDatePipe,
-                SearchComponent,
                 CitySearchPopupComponent,
                 HamburgerMenuComponent,
                 UserMenuComponent,
