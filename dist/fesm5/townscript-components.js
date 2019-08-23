@@ -729,115 +729,6 @@ var TsLoginSignupComponent = /** @class */ (function () {
     return TsLoginSignupComponent;
 }());
 
-var CitySearchPopupComponent = /** @class */ (function () {
-    function CitySearchPopupComponent(headerService, timeService, datepipe) {
-        var _this = this;
-        this.headerService = headerService;
-        this.timeService = timeService;
-        this.datepipe = datepipe;
-        this.showArrow = true;
-        this.activeCityChange = new EventEmitter();
-        this.cityPopupActiveChange = new EventEmitter();
-        this.citySearchActive = true;
-        this.router = config.router;
-        this.cityQueryChanged = new Subject();
-        this.popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
-        this.callSearchCity = function (query) {
-            _this.headerService.getplaceSearchResults(query).subscribe(function (res) {
-                _this.placeSearchResults = res['data'];
-            });
-        };
-        this.placeChanged = function (place) {
-            if (place.type == "country") {
-                _this.router.navigate(["/" + place.twoDigitCode.toLowerCase()], { state: { place: place } });
-            }
-            if (place.type == "city") {
-                _this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode], { state: { place: place } });
-            }
-            if (place.type == "locality") {
-                _this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode + "/" + place.localityCode], { state: { place: place } });
-            }
-            if (place.type == "unstructured") {
-                var name_1 = place.name.replace(/,/g, "").replace(/ /g, "-");
-                var secondaryText = place.secondaryText.replace(/,/g, "").replace(/ /g, "-");
-                _this.router.navigate(["/s/" + name_1 + "--" + secondaryText], { state: { place: place } });
-            }
-            _this.activeCity = place.name;
-            _this.activeCityChange.emit(place.name);
-            _this.cityPopupActive = false;
-            _this.cityPopupActiveChange.emit(false);
-        };
-        this.openCityPopup = function () {
-            _this.cityPopupActive = true;
-            _this.cityInput.nativeElement.focus();
-        };
-        this.searchCity = function (text) {
-            if (!text || text.length == 0) {
-                _this.placeSearchResults = [];
-            }
-            if (text != undefined && text.length > 0)
-                _this.cityQueryChanged.next(text);
-        };
-        this.cityQueryChanged.pipe(debounceTime(300)).subscribe(function (text) { return _this.callSearchCity(text); });
-    }
-    CitySearchPopupComponent.prototype.ngAfterViewInit = function () {
-        this.citySearchActive = true;
-        this.cityInput.nativeElement.focus();
-    };
-    CitySearchPopupComponent.prototype.ngOnInit = function () { };
-    __decorate([
-        ViewChild('cityInput', { static: true }),
-        __metadata("design:type", ElementRef)
-    ], CitySearchPopupComponent.prototype, "cityInput", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Boolean)
-    ], CitySearchPopupComponent.prototype, "showArrow", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", String)
-    ], CitySearchPopupComponent.prototype, "activeCity", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
-    ], CitySearchPopupComponent.prototype, "activeCityChange", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Boolean)
-    ], CitySearchPopupComponent.prototype, "cityPopupActive", void 0);
-    __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
-    ], CitySearchPopupComponent.prototype, "cityPopupActiveChange", void 0);
-    CitySearchPopupComponent = __decorate([
-        Component({
-            selector: 'app-city-search-popup',
-            template: "<div class=\"city-suggestions enter-slide-bottom\" [class.arrow]=\"showArrow\">\n    <div class=\"suggestions-container\">\n        <ul>\n            <li [class.active]=\"citySearchActive\" class=\"p-2 cursor-pointer flex items-center truncate\">\n                <i class=\"mdi mdi-magnify mr-2\"></i>\n                <input #cityInput autocomplete=\"off\" id=\"cityInput\" type=\"text\" placeholder=\"Type here to search...\"\n                    [(ngModel)]=\"cityQuery\" (ngModelChange)=\"searchCity($event)\" (focus)=\"citySearchActive=true\"\n                    class=\"w-full bg-transparent text-sm\" />\n            </li>\n            <li matRipple (click)=\"placeChanged(place);\" class=\"p-2 cursor-pointer flex items-center truncate\"\n                *ngFor=\"let place of placeSearchResults\">\n                <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                <span class=\"text-sm flex items-end truncate\">\n                    <span class=\"mr-1 whitespace-no-wrap\">{{place.name}} </span>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.city && place?.city.length>0 && place?.type!='city'\">\n                        {{place.city}},\n                    </small>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.country && place?.country.length>0 && place?.type!='country'\">{{place.country}}\n                    </small>\n                    <small class=\"text-2xs truncate text-gray-600\">{{place.secondaryText}}</small>\n                </span>\n            </li>\n            <ng-container matRipple *ngIf=\"!placeSearchResults || placeSearchResults.length==0\">\n                <li class=\"p-2 cursor-pointer\" *ngFor=\"let city of popularPlaces\">\n                    <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                    <span class=\"text-sm\">{{city}}</span>\n                </li>\n            </ng-container>\n        </ul>\n    </div>\n</div>",
-            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.city-suggestions{width:100%;background:#fafafa;position:absolute;box-shadow:0 5px 10px 0 rgba(0,0,0,.15)}.city-suggestions li.active,.city-suggestions li:hover{background:#ededed}.city-suggestions.arrow{border-top:3px solid #3782c4}.city-suggestions.arrow:before{content:\" \";width:10px;position:absolute;top:-7px;left:88%;height:10px;-webkit-filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));background:#ededed;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-top:3px solid #3782c4;border-left:3px solid #3782c4}"]
-        }),
-        __metadata("design:paramtypes", [HeaderService, TimeService, DatePipe])
-    ], CitySearchPopupComponent);
-    return CitySearchPopupComponent;
-}());
-
-var HamburgerMenuComponent = /** @class */ (function () {
-    function HamburgerMenuComponent() {
-    }
-    HamburgerMenuComponent.prototype.ngAfterViewInit = function () {
-    };
-    HamburgerMenuComponent.prototype.ngOnInit = function () {
-    };
-    HamburgerMenuComponent = __decorate([
-        Component({
-            selector: 'app-hamburger-menu',
-            template: "<nav role=\"navigation\">\n    <div class=\"ham-container position-relative cursor-pointer\">\n        <div class=\"hamburger position-relative\">\n            <!-- <input type=\"checkbox\" /> -->\n            <div class=\"spans\" (click)=\"active=!active\">\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n            </div>\n            <div class=\"overlay fixed bg-black w-full h-full\" *ngIf=\"active\"></div>\n            <ul class=\"menu fixed h-full px-4\" [class.active]=\"active\">\n                <img class=\"mb-10\" src=\"assets/images/ts-logo.svg\" class=\"logo\" />\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen=!panelOpen\">\n                        <div>Organizing Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen\">\n                        <div>\n                            <div>Manage Event</div>\n                            <div>Billings</div>\n                            <div>Reports</div>\n                            <div>Promotions</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                        <div>Attending Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen2\">\n                        <div>\n                            <div>My Bookings</div>\n                            <div>Following</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <a href=\"#\">\n                    <li>My Profile</li>\n                </a>\n                <a href=\"#\">\n                    <li>Logout</li>\n                </a>\n            </ul>\n        </div>\n    </div>\n</nav>",
-            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ham-container{z-index:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ham-container .hamburger span{width:28px;height:3.2px;margin-bottom:5px;position:relative;border-radius:3px;z-index:1;-webkit-transform-origin:4px 0;transform-origin:4px 0;-webkit-transition:background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .hamburger span:first-child{-webkit-transform-origin:0 0;transform-origin:0 0}.ham-container .hamburger span:last-child{margin-bottom:0}.ham-container .hamburger span:nth-last-child(2){-webkit-transform-origin:0 100%;transform-origin:0 100%}.ham-container .hamburger span.active{opacity:1;margin-left:240px;-webkit-transform:rotate(45deg) translate(-14px,-16px);transform:rotate(45deg) translate(-14px,-16px);background:#8c8c8c}.ham-container .hamburger span.active:nth-last-child(3){opacity:0;-webkit-transform:rotate(0) scale(.2,.2);transform:rotate(0) scale(.2,.2)}.ham-container .hamburger span.active:nth-last-child(2){-webkit-transform:rotate(-45deg) translate(0,4px);transform:rotate(-45deg) translate(0,4px)}.ham-container .hamburger span.active~ul{-webkit-transform:none;transform:none}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}@keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}.ham-container .overlay{top:0;left:0;opacity:.5;-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.ham-container .menu{top:0;left:0;width:300px;padding-top:15px;background:#fafafa;box-shadow:0 2px 4px 0 rgba(0,0,0,.11);list-style-type:none;-webkit-font-smoothing:antialiased;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:translate(-100%,0);transform:translate(-100%,0);-webkit-transition:-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .menu .logo{height:40px}.ham-container .menu.active{-webkit-transform:none;transform:none}.ham-container .menu li{padding:10px 0}"]
-        }),
-        __metadata("design:paramtypes", [])
-    ], HamburgerMenuComponent);
-    return HamburgerMenuComponent;
-}());
-
 var ShareEventModalComponent = /** @class */ (function () {
     function ShareEventModalComponent(dialogRef, data) {
         var _this = this;
@@ -968,20 +859,25 @@ var TsListingCardComponent = /** @class */ (function () {
     return TsListingCardComponent;
 }());
 
-var TsCardSkeletonComponent = /** @class */ (function () {
-    function TsCardSkeletonComponent() {
+var LoginTopContentComponent = /** @class */ (function () {
+    function LoginTopContentComponent() {
     }
-    TsCardSkeletonComponent.prototype.ngOnInit = function () {
+    LoginTopContentComponent.prototype.ngOnInit = function () {
+        console.log('whats the condition', this.condition);
     };
-    TsCardSkeletonComponent = __decorate([
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LoginTopContentComponent.prototype, "condition", void 0);
+    LoginTopContentComponent = __decorate([
         Component({
-            selector: 'ts-card-skeleton',
-            template: "<div class=\"w-full flex\">\n        <div class=\"w-full\">\n            <div class=\"bg-white border border-gray-300 card flex flex-col md:flex-row overflow-hidden rounded translate-3d-none-after w-full\">\n                <div class=\"w-full lg:w-2/3 md:w-2/3 relative p-24 md:p-0 text-primary-500\">\n                    <div class=\"absolute top-0 left-0 h-full w-full\">\n                        <span class=\"skeleton-box group-hover:scale-110 transition-transform transform-center block h-full\">\n                        </span>\n                    </div>\n                </div>\n                <div class=\"flex flex-col flex-grow w-full\">\n                    <div class=\"pl-4 pr-4 pt-4 mb-4 text-left relative flex-grow\">\n                        <h3 class=\"text-lg font-bold text-gray-darkest mr-10\">\n                            <span class=\"skeleton-box h-5 w-1/6 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-1/2 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/4 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/5 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/3 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-3/4 inline-block\"></span>\n                        </h3>\n                    </div>        \n                </div>\n            </div>\n          </div>\n</div>",
-            styles: [".skeleton-box{position:relative;overflow:hidden;background-color:#e2e8f0}.skeleton-box::after{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform:translateX(-100%);transform:translateX(-100%);background-image:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(20%,rgba(255,255,255,.2)),color-stop(60%,rgba(255,255,255,.5)),to(rgba(255,255,255,0)));background-image:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 20%,rgba(255,255,255,.5) 60%,rgba(255,255,255,0));-webkit-animation:1.5s infinite shimmer;animation:1.5s infinite shimmer;content:''}@-webkit-keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}@keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}"]
+            selector: 'app-login-top-content',
+            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
+            styles: [""]
         }),
         __metadata("design:paramtypes", [])
-    ], TsCardSkeletonComponent);
-    return TsCardSkeletonComponent;
+    ], LoginTopContentComponent);
+    return LoginTopContentComponent;
 }());
 
 var RangeDatePipe = /** @class */ (function () {
@@ -1014,62 +910,113 @@ var RangeDatePipe = /** @class */ (function () {
     return RangeDatePipe;
 }());
 
-var LoginTopContentComponent = /** @class */ (function () {
-    function LoginTopContentComponent() {
+var CitySearchPopupComponent = /** @class */ (function () {
+    function CitySearchPopupComponent(headerService, timeService, datepipe) {
+        var _this = this;
+        this.headerService = headerService;
+        this.timeService = timeService;
+        this.datepipe = datepipe;
+        this.showArrow = true;
+        this.activeCityChange = new EventEmitter();
+        this.cityPopupActiveChange = new EventEmitter();
+        this.citySearchActive = true;
+        this.router = config.router;
+        this.cityQueryChanged = new Subject();
+        this.popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
+        this.callSearchCity = function (query) {
+            _this.headerService.getplaceSearchResults(query).subscribe(function (res) {
+                _this.placeSearchResults = res['data'];
+            });
+        };
+        this.placeChanged = function (place) {
+            if (place.type == "country") {
+                _this.router.navigate(["/" + place.twoDigitCode.toLowerCase()], { state: { place: place } });
+            }
+            if (place.type == "city") {
+                _this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode], { state: { place: place } });
+            }
+            if (place.type == "locality") {
+                _this.router.navigate(["/" + place.countryCode.toLowerCase() + "/" + place.cityCode + "/" + place.localityCode], { state: { place: place } });
+            }
+            if (place.type == "unstructured") {
+                var name_1 = place.name.replace(/,/g, "").replace(/ /g, "-");
+                var secondaryText = place.secondaryText.replace(/,/g, "").replace(/ /g, "-");
+                _this.router.navigate(["/s/" + name_1 + "--" + secondaryText], { state: { place: place } });
+            }
+            _this.activeCity = place.name;
+            _this.activeCityChange.emit(place.name);
+            _this.cityPopupActive = false;
+            _this.cityPopupActiveChange.emit(false);
+        };
+        this.openCityPopup = function () {
+            _this.cityPopupActive = true;
+            _this.cityInput.nativeElement.focus();
+        };
+        this.searchCity = function (text) {
+            if (!text || text.length == 0) {
+                _this.placeSearchResults = [];
+            }
+            if (text != undefined && text.length > 0)
+                _this.cityQueryChanged.next(text);
+        };
+        this.cityQueryChanged.pipe(debounceTime(300)).subscribe(function (text) { return _this.callSearchCity(text); });
     }
-    LoginTopContentComponent.prototype.ngOnInit = function () {
-        console.log('whats the condition', this.condition);
+    CitySearchPopupComponent.prototype.ngAfterViewInit = function () {
+        this.citySearchActive = true;
+        this.cityInput.nativeElement.focus();
     };
+    CitySearchPopupComponent.prototype.ngOnInit = function () { };
+    __decorate([
+        ViewChild('cityInput', { static: true }),
+        __metadata("design:type", ElementRef)
+    ], CitySearchPopupComponent.prototype, "cityInput", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CitySearchPopupComponent.prototype, "showArrow", void 0);
     __decorate([
         Input(),
         __metadata("design:type", String)
-    ], LoginTopContentComponent.prototype, "condition", void 0);
-    LoginTopContentComponent = __decorate([
+    ], CitySearchPopupComponent.prototype, "activeCity", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CitySearchPopupComponent.prototype, "activeCityChange", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean)
+    ], CitySearchPopupComponent.prototype, "cityPopupActive", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], CitySearchPopupComponent.prototype, "cityPopupActiveChange", void 0);
+    CitySearchPopupComponent = __decorate([
         Component({
-            selector: 'app-login-top-content',
-            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
-            styles: [""]
+            selector: 'app-city-search-popup',
+            template: "<div class=\"city-suggestions enter-slide-bottom\" [class.arrow]=\"showArrow\">\n    <div class=\"suggestions-container\">\n        <ul>\n            <li [class.active]=\"citySearchActive\" class=\"p-2 cursor-pointer flex items-center truncate\">\n                <i class=\"mdi mdi-magnify mr-2\"></i>\n                <input #cityInput autocomplete=\"off\" id=\"cityInput\" type=\"text\" placeholder=\"Type here to search...\"\n                    [(ngModel)]=\"cityQuery\" (ngModelChange)=\"searchCity($event)\" (focus)=\"citySearchActive=true\"\n                    class=\"w-full bg-transparent text-sm\" />\n            </li>\n            <li matRipple (click)=\"placeChanged(place);\" class=\"p-2 cursor-pointer flex items-center truncate\"\n                *ngFor=\"let place of placeSearchResults\">\n                <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                <span class=\"text-sm flex items-end truncate\">\n                    <span class=\"mr-1 whitespace-no-wrap\">{{place.name}} </span>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.city && place?.city.length>0 && place?.type!='city'\">\n                        {{place.city}},\n                    </small>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.country && place?.country.length>0 && place?.type!='country'\">{{place.country}}\n                    </small>\n                    <small class=\"text-2xs truncate text-gray-600\">{{place.secondaryText}}</small>\n                </span>\n            </li>\n            <ng-container matRipple *ngIf=\"!placeSearchResults || placeSearchResults.length==0\">\n                <li class=\"p-2 cursor-pointer\" *ngFor=\"let city of popularPlaces\">\n                    <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                    <span class=\"text-sm\">{{city}}</span>\n                </li>\n            </ng-container>\n        </ul>\n    </div>\n</div>",
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.city-suggestions{width:100%;background:#fafafa;position:absolute;box-shadow:0 5px 10px 0 rgba(0,0,0,.15)}.city-suggestions li.active,.city-suggestions li:hover{background:#ededed}.city-suggestions.arrow{border-top:3px solid #3782c4}.city-suggestions.arrow:before{content:\" \";width:10px;position:absolute;top:-7px;left:88%;height:10px;-webkit-filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));background:#ededed;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-top:3px solid #3782c4;border-left:3px solid #3782c4}"]
         }),
-        __metadata("design:paramtypes", [])
-    ], LoginTopContentComponent);
-    return LoginTopContentComponent;
+        __metadata("design:paramtypes", [HeaderService, TimeService, DatePipe])
+    ], CitySearchPopupComponent);
+    return CitySearchPopupComponent;
 }());
 
-var AppPasswordDirective = /** @class */ (function () {
-    function AppPasswordDirective(el) {
-        this.el = el;
-        this._shown = false;
-        this.setup();
+var HamburgerMenuComponent = /** @class */ (function () {
+    function HamburgerMenuComponent() {
     }
-    AppPasswordDirective.prototype.toggle = function (span) {
-        this._shown = !this._shown;
-        if (this._shown) {
-            console.log(this.el.nativeElement);
-            this.el.nativeElement.setAttribute('type', 'text');
-            span.innerHTML = 'Hide password';
-        }
-        else {
-            this.el.nativeElement.setAttribute('type', 'password');
-            span.innerHTML = 'Show password';
-        }
+    HamburgerMenuComponent.prototype.ngAfterViewInit = function () {
     };
-    AppPasswordDirective.prototype.setup = function () {
-        var _this = this;
-        var parent = this.el.nativeElement.parentNode;
-        var span = document.createElement('span');
-        span.innerHTML = "Show password";
-        span.addEventListener('click', function (event) {
-            _this.toggle(span);
-        });
-        parent.appendChild(span);
+    HamburgerMenuComponent.prototype.ngOnInit = function () {
     };
-    AppPasswordDirective = __decorate([
-        Directive({
-            selector: '[appPassword]'
+    HamburgerMenuComponent = __decorate([
+        Component({
+            selector: 'app-hamburger-menu',
+            template: "<nav role=\"navigation\">\n    <div class=\"ham-container position-relative cursor-pointer\">\n        <div class=\"hamburger position-relative\">\n            <!-- <input type=\"checkbox\" /> -->\n            <div class=\"spans\" (click)=\"active=!active\">\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n            </div>\n            <div class=\"overlay fixed bg-black w-full h-full\" *ngIf=\"active\"></div>\n            <ul class=\"menu fixed h-full px-4\" [class.active]=\"active\">\n                <img class=\"mb-10\" src=\"assets/images/ts-logo.svg\" class=\"logo\" />\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen=!panelOpen\">\n                        <div>Organizing Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen\">\n                        <div>\n                            <div>Manage Event</div>\n                            <div>Billings</div>\n                            <div>Reports</div>\n                            <div>Promotions</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                        <div>Attending Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen2\">\n                        <div>\n                            <div>My Bookings</div>\n                            <div>Following</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <a href=\"#\">\n                    <li>My Profile</li>\n                </a>\n                <a href=\"#\">\n                    <li>Logout</li>\n                </a>\n            </ul>\n        </div>\n    </div>\n</nav>",
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ham-container{z-index:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ham-container .hamburger span{width:28px;height:3.2px;margin-bottom:5px;position:relative;border-radius:3px;z-index:1;-webkit-transform-origin:4px 0;transform-origin:4px 0;-webkit-transition:background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .hamburger span:first-child{-webkit-transform-origin:0 0;transform-origin:0 0}.ham-container .hamburger span:last-child{margin-bottom:0}.ham-container .hamburger span:nth-last-child(2){-webkit-transform-origin:0 100%;transform-origin:0 100%}.ham-container .hamburger span.active{opacity:1;margin-left:240px;-webkit-transform:rotate(45deg) translate(-14px,-16px);transform:rotate(45deg) translate(-14px,-16px);background:#8c8c8c}.ham-container .hamburger span.active:nth-last-child(3){opacity:0;-webkit-transform:rotate(0) scale(.2,.2);transform:rotate(0) scale(.2,.2)}.ham-container .hamburger span.active:nth-last-child(2){-webkit-transform:rotate(-45deg) translate(0,4px);transform:rotate(-45deg) translate(0,4px)}.ham-container .hamburger span.active~ul{-webkit-transform:none;transform:none}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}@keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}.ham-container .overlay{top:0;left:0;opacity:.5;-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.ham-container .menu{top:0;left:0;width:300px;padding-top:15px;background:#fafafa;box-shadow:0 2px 4px 0 rgba(0,0,0,.11);list-style-type:none;-webkit-font-smoothing:antialiased;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:translate(-100%,0);transform:translate(-100%,0);-webkit-transition:-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .menu .logo{height:40px}.ham-container .menu.active{-webkit-transform:none;transform:none}.ham-container .menu li{padding:10px 0}"]
         }),
-        __metadata("design:paramtypes", [ElementRef])
-    ], AppPasswordDirective);
-    return AppPasswordDirective;
+        __metadata("design:paramtypes", [])
+    ], HamburgerMenuComponent);
+    return HamburgerMenuComponent;
 }());
 
 var UserMenuComponent = /** @class */ (function () {
@@ -1117,6 +1064,59 @@ var UserMenuComponent = /** @class */ (function () {
     return UserMenuComponent;
 }());
 
+var AppPasswordDirective = /** @class */ (function () {
+    function AppPasswordDirective(el) {
+        this.el = el;
+        this._shown = false;
+        this.setup();
+    }
+    AppPasswordDirective.prototype.toggle = function (span) {
+        this._shown = !this._shown;
+        if (this._shown) {
+            console.log(this.el.nativeElement);
+            this.el.nativeElement.setAttribute('type', 'text');
+            span.innerHTML = 'Hide password';
+        }
+        else {
+            this.el.nativeElement.setAttribute('type', 'password');
+            span.innerHTML = 'Show password';
+        }
+    };
+    AppPasswordDirective.prototype.setup = function () {
+        var _this = this;
+        var parent = this.el.nativeElement.parentNode;
+        var span = document.createElement('span');
+        span.innerHTML = "Show password";
+        span.addEventListener('click', function (event) {
+            _this.toggle(span);
+        });
+        parent.appendChild(span);
+    };
+    AppPasswordDirective = __decorate([
+        Directive({
+            selector: '[appPassword]'
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], AppPasswordDirective);
+    return AppPasswordDirective;
+}());
+
+var TsCardSkeletonComponent = /** @class */ (function () {
+    function TsCardSkeletonComponent() {
+    }
+    TsCardSkeletonComponent.prototype.ngOnInit = function () {
+    };
+    TsCardSkeletonComponent = __decorate([
+        Component({
+            selector: 'ts-card-skeleton',
+            template: "<div class=\"w-full flex\">\n        <div class=\"w-full\">\n            <div class=\"bg-white border border-gray-300 card flex flex-col md:flex-row overflow-hidden rounded translate-3d-none-after w-full\">\n                <div class=\"w-full lg:w-2/3 md:w-2/3 relative p-24 md:p-0 text-primary-500\">\n                    <div class=\"absolute top-0 left-0 h-full w-full\">\n                        <span class=\"skeleton-box group-hover:scale-110 transition-transform transform-center block h-full\">\n                        </span>\n                    </div>\n                </div>\n                <div class=\"flex flex-col flex-grow w-full\">\n                    <div class=\"pl-4 pr-4 pt-4 mb-4 text-left relative flex-grow\">\n                        <h3 class=\"text-lg font-bold text-gray-darkest mr-10\">\n                            <span class=\"skeleton-box h-5 w-1/6 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-1/2 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/4 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/5 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/3 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-3/4 inline-block\"></span>\n                        </h3>\n                    </div>        \n                </div>\n            </div>\n          </div>\n</div>",
+            styles: [".skeleton-box{position:relative;overflow:hidden;background-color:#e2e8f0}.skeleton-box::after{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform:translateX(-100%);transform:translateX(-100%);background-image:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(20%,rgba(255,255,255,.2)),color-stop(60%,rgba(255,255,255,.5)),to(rgba(255,255,255,0)));background-image:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 20%,rgba(255,255,255,.5) 60%,rgba(255,255,255,0));-webkit-animation:1.5s infinite shimmer;animation:1.5s infinite shimmer;content:''}@-webkit-keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}@keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TsCardSkeletonComponent);
+    return TsCardSkeletonComponent;
+}());
+
 var LayoutModule = /** @class */ (function () {
     function LayoutModule() {
     }
@@ -1137,8 +1137,8 @@ var LayoutModule = /** @class */ (function () {
                 TsFooterComponent,
                 SearchComponent,
                 TsLoginSignupComponent,
-                LoginTopContentComponent,
                 TsListingCardComponent,
+                LoginTopContentComponent,
                 RangeDatePipe,
                 CitySearchPopupComponent,
                 HamburgerMenuComponent,
@@ -1173,5 +1173,5 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
-export { ApiService, AppPasswordDirective, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, LoginModalComponent, LoginTopContentComponent, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc, UserMenuComponent as ɵd };
+export { ApiService, AppPasswordDirective, BrowserService, CitySearchPopupComponent, HamburgerMenuComponent, LayoutModule, LoginModalComponent, LoginTopContentComponent, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, UserMenuComponent, UserService, config, CookieService as ɵa, HeaderService as ɵb, NotificationService as ɵc };
 //# sourceMappingURL=townscript-components.js.map
