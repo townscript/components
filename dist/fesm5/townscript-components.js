@@ -1159,6 +1159,7 @@ var LayoutModule = /** @class */ (function () {
                 TsListingCardComponent,
                 UserMenuComponent,
                 TsCardSkeletonComponent,
+                ShareEventModalComponent,
                 RangeDatePipe
             ],
             providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]

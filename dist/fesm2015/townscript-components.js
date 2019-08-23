@@ -1120,6 +1120,7 @@ LayoutModule = __decorate([
             TsListingCardComponent,
             UserMenuComponent,
             TsCardSkeletonComponent,
+            ShareEventModalComponent,
             RangeDatePipe
         ],
         providers: [TimeService, UserService, NotificationService, DatePipe, ApiService, CookieService, HeaderService, BrowserService]

@@ -1190,6 +1190,7 @@
                     TsListingCardComponent,
                     UserMenuComponent,
                     TsCardSkeletonComponent,
+                    ShareEventModalComponent,
                     RangeDatePipe
                 ],
                 providers: [TimeService, UserService, NotificationService, common.DatePipe, ApiService, CookieService, HeaderService, BrowserService]
