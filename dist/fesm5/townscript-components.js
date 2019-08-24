@@ -1212,6 +1212,7 @@ var CardsModule = /** @class */ (function () {
                 TsCardSkeletonComponent
             ],
             exports: [
+                TsFormsModule,
                 TsListingCardComponent,
                 RangeDatePipe,
                 ShareEventModalComponent,

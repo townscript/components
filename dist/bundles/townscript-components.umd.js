@@ -1243,6 +1243,7 @@
                     TsCardSkeletonComponent
                 ],
                 exports: [
+                    elements.TsFormsModule,
                     TsListingCardComponent,
                     RangeDatePipe,
                     ShareEventModalComponent,

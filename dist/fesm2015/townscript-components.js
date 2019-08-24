@@ -1167,6 +1167,7 @@ CardsModule = __decorate([
             TsCardSkeletonComponent
         ],
         exports: [
+            TsFormsModule,
             TsListingCardComponent,
             RangeDatePipe,
             ShareEventModalComponent,
