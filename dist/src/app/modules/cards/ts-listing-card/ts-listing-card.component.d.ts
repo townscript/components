@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { BrowserService } from '../../../../core/browser.service';
+import { BrowserService } from '../../../core/browser.service';
 export declare class TsListingCardComponent implements OnInit {
     dialog: MatDialog;
     private browser;

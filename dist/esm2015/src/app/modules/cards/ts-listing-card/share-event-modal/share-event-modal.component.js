@@ -1,0 +1,45 @@
+import * as tslib_1 from "tslib";
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { config } from '../../../../core/app-config';
+let ShareEventModalComponent = class ShareEventModalComponent {
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+        this.shareLink = {};
+        this.close = () => {
+            this.dialogRef.close();
+        };
+    }
+    ngAfterViewInit() {
+    }
+    ngOnInit() {
+        this.event = this.data.event;
+        this.eventURL = "https://www.townscript.com/e/" + this.event.shortName;
+        this.eventName = this.event.name;
+        this.shareLink.fb = "https://www.facebook.com/sharer/sharer.php?s=100" +
+            "&p[url]=" + config.baseUrl + "e/" + this.event.shortName +
+            "&p[images][0]=" + config.baseUrl + "dashboard/images/organizer_login_files/logoforfb.png" +
+            "&p[title]=" + this.eventName +
+            "&p[summary]=" + "by townscript.com";
+        this.shareLink.twitter = "https://twitter.com/share" +
+            "?url=" + config.baseUrl + "e/" + this.event.shortName +
+            "&text=" + this.eventName + " is now live on Townscript!";
+        this.shareLink.linkedin = "https://www.linkedin.com/shareArticle?mini=true" +
+            "&url=" + config.baseUrl + "e/" + this.event.shortName +
+            "&title=" + this.eventName;
+        this.shareLink.whatsapp = "https://web.whatsapp.com/send?" +
+            "text=" + config.baseUrl + "e/" + this.event.shortName;
+    }
+};
+ShareEventModalComponent = tslib_1.__decorate([
+    Component({
+        selector: 'app-share-event-modal',
+        template: "<div class=\"share-event-modal-container\">\n    <div class=\"flex items-center text-lg text-gray-800 justify-between\">\n        <h2>Share Event</h2>\n        <div class=\"rounded-full\" matRipple (click)=\"close()\">\n            <i class=\"mdi mdi-close text-2xl cursor-pointer rounded-full\"></i>\n        </div>\n    </div>\n    <div class=\"px-2 py-2\">\n        <div class=\"platforms flex items-center justify-between\">\n            <a [href]=\"shareLink?.whatsapp\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-whatsapp block text-4xl whatsapp\"></i>\n                    <span class=\"text-gray-700 text-sm\">Whatsapp</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.fb\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-facebook block text-4xl facebook\"></i>\n                    <span class=\"text-gray-700 text-sm\">Facebook</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.twitter\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-twitter block text-4xl twitter\"></i>\n                    <span class=\"text-gray-700 text-sm\">Twitter</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.linkedin\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-linkedin block text-4xl linkedin\"></i>\n                    <span class=\"text-gray-700 text-sm\">LinkedIn</span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div>",
+        styles: [".share-event-modal-container .platform{-webkit-transition:.15s;transition:.15s}.share-event-modal-container .platform:hover{background:#fcfcfc;-webkit-transform:translateY(-5px);transform:translateY(-5px)}.share-event-modal-container .whatsapp{color:#64bf56}.share-event-modal-container .facebook{color:#4267b2}.share-event-modal-container .twitter{color:#3aa1f2}.share-event-modal-container .linkedin{color:#2977b5}"]
+    }),
+    tslib_1.__param(1, Inject(MAT_DIALOG_DATA)),
+    tslib_1.__metadata("design:paramtypes", [MatDialogRef, Object])
+], ShareEventModalComponent);
+export { ShareEventModalComponent };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2hhcmUtZXZlbnQtbW9kYWwuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6Im5nOi8vQHRvd25zY3JpcHQvY29tcG9uZW50cy8iLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9jYXJkcy90cy1saXN0aW5nLWNhcmQvc2hhcmUtZXZlbnQtbW9kYWwvc2hhcmUtZXZlbnQtbW9kYWwuY29tcG9uZW50LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFVLE1BQU0sRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMxRCxPQUFPLEVBQUUsWUFBWSxFQUFFLGVBQWUsRUFBRSxNQUFNLG1CQUFtQixDQUFDO0FBQ2xFLE9BQU8sRUFBRSxNQUFNLEVBQUUsTUFBTSw2QkFBNkIsQ0FBQztBQU9yRCxJQUFhLHdCQUF3QixHQUFyQyxNQUFhLHdCQUF3QjtJQU1qQyxZQUFtQixTQUFpRCxFQUNoQyxJQUFTO1FBRDFCLGNBQVMsR0FBVCxTQUFTLENBQXdDO1FBQ2hDLFNBQUksR0FBSixJQUFJLENBQUs7UUFGN0MsY0FBUyxHQUFRLEVBQUUsQ0FBQztRQUtwQixVQUFLLEdBQUcsR0FBRyxFQUFFO1lBQ1QsSUFBSSxDQUFDLFNBQVMsQ0FBQyxLQUFLLEVBQUUsQ0FBQztRQUMzQixDQUFDLENBQUE7SUFIRCxDQUFDO0lBSUQsZUFBZTtJQUNmLENBQUM7SUFDRCxRQUFRO1FBQ0osSUFBSSxDQUFDLEtBQUssR0FBRyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQztRQUM3QixJQUFJLENBQUMsUUFBUSxHQUFHLCtCQUErQixHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsU0FBUyxDQUFDO1FBQ3ZFLElBQUksQ0FBQyxTQUFTLEdBQUcsSUFBSSxDQUFDLEtBQUssQ0FBQyxJQUFJLENBQUM7UUFDakMsSUFBSSxDQUFDLFNBQVMsQ0FBQyxFQUFFLEdBQUcsa0RBQWtEO1lBQ2xFLFVBQVUsR0FBRyxNQUFNLENBQUMsT0FBTyxHQUFHLElBQUksR0FBRyxJQUFJLENBQUMsS0FBSyxDQUFDLFNBQVM7WUFDekQsZ0JBQWdCLEdBQUcsTUFBTSxDQUFDLE9BQU8sR0FBRyxzREFBc0Q7WUFDMUYsWUFBWSxHQUFHLElBQUksQ0FBQyxTQUFTO1lBQzdCLGNBQWMsR0FBRyxtQkFBbUIsQ0FBQztRQUV6QyxJQUFJLENBQUMsU0FBUyxDQUFDLE9BQU8sR0FBRywyQkFBMkI7WUFDaEQsT0FBTyxHQUFHLE1BQU0sQ0FBQyxPQUFPLEdBQUcsSUFBSSxHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsU0FBUztZQUN0RCxRQUFRLEdBQUcsSUFBSSxDQUFDLFNBQVMsR0FBRyw2QkFBNkIsQ0FBQztRQUU5RCxJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxpREFBaUQ7WUFDdkUsT0FBTyxHQUFHLE1BQU0sQ0FBQyxPQUFPLEdBQUcsSUFBSSxHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsU0FBUztZQUN0RCxTQUFTLEdBQUcsSUFBSSxDQUFDLFNBQVMsQ0FBQztRQUUvQixJQUFJLENBQUMsU0FBUyxDQUFDLFFBQVEsR0FBRyxnQ0FBZ0M7WUFDdEQsT0FBTyxHQUFHLE1BQU0sQ0FBQyxPQUFPLEdBQUcsSUFBSSxHQUFHLElBQUksQ0FBQyxLQUFLLENBQUMsU0FBUyxDQUFDO0lBQy9ELENBQUM7Q0FFSixDQUFBO0FBckNZLHdCQUF3QjtJQUxwQyxTQUFTLENBQUM7UUFDUCxRQUFRLEVBQUUsdUJBQXVCO1FBQ2pDLDh5REFBaUQ7O0tBRXBELENBQUM7SUFRTyxtQkFBQSxNQUFNLENBQUMsZUFBZSxDQUFDLENBQUE7NkNBREUsWUFBWTtHQU5qQyx3QkFBd0IsQ0FxQ3BDO1NBckNZLHdCQUF3QiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IENvbXBvbmVudCwgT25Jbml0LCBJbmplY3QgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IE1hdERpYWxvZ1JlZiwgTUFUX0RJQUxPR19EQVRBIH0gZnJvbSAnQGFuZ3VsYXIvbWF0ZXJpYWwnO1xuaW1wb3J0IHsgY29uZmlnIH0gZnJvbSAnLi4vLi4vLi4vLi4vY29yZS9hcHAtY29uZmlnJztcblxuQENvbXBvbmVudCh7XG4gICAgc2VsZWN0b3I6ICdhcHAtc2hhcmUtZXZlbnQtbW9kYWwnLFxuICAgIHRlbXBsYXRlVXJsOiAnLi9zaGFyZS1ldmVudC1tb2RhbC5jb21wb25lbnQuaHRtbCcsXG4gICAgc3R5bGVVcmxzOiBbJy4vc2hhcmUtZXZlbnQtbW9kYWwuY29tcG9uZW50LnNjc3MnXVxufSlcbmV4cG9ydCBjbGFzcyBTaGFyZUV2ZW50TW9kYWxDb21wb25lbnQgaW1wbGVtZW50cyBPbkluaXQge1xuXG4gICAgZXZlbnQ6IGFueTtcbiAgICBldmVudFVSTDogYW55O1xuICAgIGV2ZW50TmFtZTogYW55O1xuICAgIHNoYXJlTGluazogYW55ID0ge307XG4gICAgY29uc3RydWN0b3IocHVibGljIGRpYWxvZ1JlZjogTWF0RGlhbG9nUmVmPFNoYXJlRXZlbnRNb2RhbENvbXBvbmVudD4sXG4gICAgICAgIEBJbmplY3QoTUFUX0RJQUxPR19EQVRBKSBwdWJsaWMgZGF0YTogYW55KSB7XG5cbiAgICB9XG4gICAgY2xvc2UgPSAoKSA9PiB7XG4gICAgICAgIHRoaXMuZGlhbG9nUmVmLmNsb3NlKCk7XG4gICAgfVxuICAgIG5nQWZ0ZXJWaWV3SW5pdCgpIHtcbiAgICB9XG4gICAgbmdPbkluaXQoKSB7XG4gICAgICAgIHRoaXMuZXZlbnQgPSB0aGlzLmRhdGEuZXZlbnQ7XG4gICAgICAgIHRoaXMuZXZlbnRVUkwgPSBcImh0dHBzOi8vd3d3LnRvd25zY3JpcHQuY29tL2UvXCIgKyB0aGlzLmV2ZW50LnNob3J0TmFtZTtcbiAgICAgICAgdGhpcy5ldmVudE5hbWUgPSB0aGlzLmV2ZW50Lm5hbWU7XG4gICAgICAgIHRoaXMuc2hhcmVMaW5rLmZiID0gXCJodHRwczovL3d3dy5mYWNlYm9vay5jb20vc2hhcmVyL3NoYXJlci5waHA/cz0xMDBcIiArXG4gICAgICAgICAgICBcIiZwW3VybF09XCIgKyBjb25maWcuYmFzZVVybCArIFwiZS9cIiArIHRoaXMuZXZlbnQuc2hvcnROYW1lICtcbiAgICAgICAgICAgIFwiJnBbaW1hZ2VzXVswXT1cIiArIGNvbmZpZy5iYXNlVXJsICsgXCJkYXNoYm9hcmQvaW1hZ2VzL29yZ2FuaXplcl9sb2dpbl9maWxlcy9sb2dvZm9yZmIucG5nXCIgK1xuICAgICAgICAgICAgXCImcFt0aXRsZV09XCIgKyB0aGlzLmV2ZW50TmFtZSArXG4gICAgICAgICAgICBcIiZwW3N1bW1hcnldPVwiICsgXCJieSB0b3duc2NyaXB0LmNvbVwiO1xuXG4gICAgICAgIHRoaXMuc2hhcmVMaW5rLnR3aXR0ZXIgPSBcImh0dHBzOi8vdHdpdHRlci5jb20vc2hhcmVcIiArXG4gICAgICAgICAgICBcIj91cmw9XCIgKyBjb25maWcuYmFzZVVybCArIFwiZS9cIiArIHRoaXMuZXZlbnQuc2hvcnROYW1lICtcbiAgICAgICAgICAgIFwiJnRleHQ9XCIgKyB0aGlzLmV2ZW50TmFtZSArIFwiIGlzIG5vdyBsaXZlIG9uIFRvd25zY3JpcHQhXCI7XG5cbiAgICAgICAgdGhpcy5zaGFyZUxpbmsubGlua2VkaW4gPSBcImh0dHBzOi8vd3d3LmxpbmtlZGluLmNvbS9zaGFyZUFydGljbGU/bWluaT10cnVlXCIgK1xuICAgICAgICAgICAgXCImdXJsPVwiICsgY29uZmlnLmJhc2VVcmwgKyBcImUvXCIgKyB0aGlzLmV2ZW50LnNob3J0TmFtZSArXG4gICAgICAgICAgICBcIiZ0aXRsZT1cIiArIHRoaXMuZXZlbnROYW1lO1xuXG4gICAgICAgIHRoaXMuc2hhcmVMaW5rLndoYXRzYXBwID0gXCJodHRwczovL3dlYi53aGF0c2FwcC5jb20vc2VuZD9cIiArXG4gICAgICAgICAgICBcInRleHQ9XCIgKyBjb25maWcuYmFzZVVybCArIFwiZS9cIiArIHRoaXMuZXZlbnQuc2hvcnROYW1lO1xuICAgIH1cblxufVxuIl19

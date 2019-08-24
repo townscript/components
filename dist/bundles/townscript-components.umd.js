@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('@angular/material/dialog'), require('rxjs'), require('@angular/common'), require('algoliasearch'), require('rxjs/operators'), require('luxon'), require('@angular/common/http'), require('@angular/forms'), require('ng-recaptcha'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', '@angular/material/dialog', 'rxjs', '@angular/common', 'algoliasearch', 'rxjs/operators', 'luxon', '@angular/common/http', '@angular/forms', 'ng-recaptcha', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.ng.material.dialog, global.rxjs, global.ng.common, global.algoliaSearchImported, global.rxjs.operators, global.luxon, global.ng.common.http, global.ng.forms, global.ngRecaptcha, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
-}(this, function (exports, core, material, dialog, rxjs, common, algoliaSearchImported, operators, luxon, http, forms, ngRecaptcha, elements, core$1, snackBar) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/material'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/common/http'), require('@angular/forms'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar'), require('ng-recaptcha')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', 'luxon', 'rxjs', '@angular/common', '@angular/material', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/common/http', '@angular/forms', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar', 'ng-recaptcha'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.luxon, global.rxjs, global.ng.common, global.ng.material, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.common.http, global.ng.forms, global.elements, global.ng.material.core, global.ng.material['snack-bar'], global.ngRecaptcha));
+}(this, function (exports, core, luxon, rxjs, common, material, dialog, algoliaSearchImported, operators, http, forms, elements, core$1, snackBar, ngRecaptcha) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -45,26 +45,6 @@
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
     }
 
-    var LoginModalComponent = /** @class */ (function () {
-        function LoginModalComponent(dialogRef) {
-            this.dialogRef = dialogRef;
-        }
-        LoginModalComponent.prototype.ngOnInit = function () {
-        };
-        LoginModalComponent.prototype.close = function () {
-            this.dialogRef.close();
-        };
-        LoginModalComponent = __decorate([
-            core.Component({
-                selector: 'app-login-modal',
-                template: "<app-ts-login-signup [mode]=\"'dialog'\" (closeDialog)='close()'></app-ts-login-signup>",
-                styles: ["::ng-deep .mat-dialog-bkg-container{background:#414243;opacity:.7!important}"]
-            }),
-            __metadata("design:paramtypes", [dialog.MatDialogRef])
-        ], LoginModalComponent);
-        return LoginModalComponent;
-    }());
-
     var config = {
         baseUrl: "",
         router: "",
@@ -85,6 +65,22 @@
             __metadata("design:paramtypes", [])
         ], BrowserService);
         return BrowserService;
+    }());
+
+    var TsControlValueAccessor = /** @class */ (function () {
+        function TsControlValueAccessor() {
+            this.onChangePropagation = function () { };
+            this.onTouchedPropagation = function () { };
+        }
+        TsControlValueAccessor.prototype.registerOnChange = function (fn) {
+            this.onChangePropagation = fn;
+        };
+        TsControlValueAccessor.prototype.registerOnTouched = function (fn) {
+            this.onTouchedPropagation = fn;
+        };
+        TsControlValueAccessor.prototype.setDisabledState = function (isDisabled) {
+        };
+        return TsControlValueAccessor;
     }());
 
     var CookieService = /** @class */ (function () {
@@ -120,6 +116,56 @@
         return CookieService;
     }());
 
+    var TimeService = /** @class */ (function () {
+        function TimeService() {
+            var _this = this;
+            this.convertDateToTimezone = function (date, timeZoneOffset) {
+                var date = luxon.DateTime.fromISO(date, { zone: timeZoneOffset });
+                var dateString = luxon.DateTime.fromISO(date).toString();
+                return _this.formatLocalDate(new Date(dateString));
+            };
+            this.formatLocalDate = function (now) {
+                var tzo = -now.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
+                    var norm = Math.abs(Math.floor(num));
+                    return (norm < 10 ? '0' : '') + norm;
+                };
+                return now.getFullYear()
+                    + '-' + pad(now.getMonth() + 1)
+                    + '-' + pad(now.getDate())
+                    + 'T' + pad(now.getHours())
+                    + ':' + pad(now.getMinutes())
+                    + ':' + pad(now.getSeconds())
+                    + '.000'
+                    + dif + pad(tzo / 60)
+                    + pad(tzo % 60);
+            };
+        }
+        TimeService = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [])
+        ], TimeService);
+        return TimeService;
+    }());
+
+    var ApiService = /** @class */ (function () {
+        function ApiService() {
+            this.FB_APP_ID = '303059286557418';
+            this.hostName = 'www.tsdugout.in';
+            this.S3_BUCKET_NAME = 'townscript-testing';
+            this.GA_TRACKER_CODE = 'UA-68181318-1';
+            this.SERVER_URL = 'https://www.tsdugout.in';
+            this.API_SERVER = 'https://www.tsdugout.in/api/';
+            this.algoliaIndexName = 'tsTesting';
+            this.IPINFO_ACCESS_TOKEN = 'a27cfbcc77e854'; // change afterwards
+            this.RECORD_FOR_KINESIS = true; // temporary
+            this.PAYMENT_PAGE_URL = 'https://www.tsdugout.in/payment/';
+        }
+        ApiService = __decorate([
+            core.Injectable()
+        ], ApiService);
+        return ApiService;
+    }());
+
     var UserService = /** @class */ (function () {
         function UserService(cookieService, document, platformId) {
             this.cookieService = cookieService;
@@ -146,6 +192,26 @@
             __metadata("design:paramtypes", [CookieService, Object, core.InjectionToken])
         ], UserService);
         return UserService;
+    }());
+
+    var LoginModalComponent = /** @class */ (function () {
+        function LoginModalComponent(dialogRef) {
+            this.dialogRef = dialogRef;
+        }
+        LoginModalComponent.prototype.ngOnInit = function () {
+        };
+        LoginModalComponent.prototype.close = function () {
+            this.dialogRef.close();
+        };
+        LoginModalComponent = __decorate([
+            core.Component({
+                selector: 'app-login-modal',
+                template: "<app-ts-login-signup [mode]=\"'dialog'\" (closeDialog)='close()'></app-ts-login-signup>",
+                styles: ["::ng-deep .mat-dialog-bkg-container{background:#414243;opacity:.7!important}"]
+            }),
+            __metadata("design:paramtypes", [dialog.MatDialogRef])
+        ], LoginModalComponent);
+        return LoginModalComponent;
     }());
 
     var TsHeaderComponent = /** @class */ (function () {
@@ -267,37 +333,6 @@
             __metadata("design:paramtypes", [])
         ], TsFooterComponent);
         return TsFooterComponent;
-    }());
-
-    var TimeService = /** @class */ (function () {
-        function TimeService() {
-            var _this = this;
-            this.convertDateToTimezone = function (date, timeZoneOffset) {
-                var date = luxon.DateTime.fromISO(date, { zone: timeZoneOffset });
-                var dateString = luxon.DateTime.fromISO(date).toString();
-                return _this.formatLocalDate(new Date(dateString));
-            };
-            this.formatLocalDate = function (now) {
-                var tzo = -now.getTimezoneOffset(), dif = tzo >= 0 ? '+' : '-', pad = function (num) {
-                    var norm = Math.abs(Math.floor(num));
-                    return (norm < 10 ? '0' : '') + norm;
-                };
-                return now.getFullYear()
-                    + '-' + pad(now.getMonth() + 1)
-                    + '-' + pad(now.getDate())
-                    + 'T' + pad(now.getHours())
-                    + ':' + pad(now.getMinutes())
-                    + ':' + pad(now.getSeconds())
-                    + '.000'
-                    + dif + pad(tzo / 60)
-                    + pad(tzo % 60);
-            };
-        }
-        TimeService = __decorate([
-            core.Injectable(),
-            __metadata("design:paramtypes", [])
-        ], TimeService);
-        return TimeService;
     }());
 
     var HeaderService = /** @class */ (function () {
@@ -436,166 +471,6 @@
             __metadata("design:paramtypes", [HeaderService, TimeService, common.DatePipe])
         ], SearchComponent);
         return SearchComponent;
-    }());
-
-    var ShareEventModalComponent = /** @class */ (function () {
-        function ShareEventModalComponent(dialogRef, data) {
-            var _this = this;
-            this.dialogRef = dialogRef;
-            this.data = data;
-            this.shareLink = {};
-            this.close = function () {
-                _this.dialogRef.close();
-            };
-        }
-        ShareEventModalComponent.prototype.ngAfterViewInit = function () {
-        };
-        ShareEventModalComponent.prototype.ngOnInit = function () {
-            this.event = this.data.event;
-            this.eventURL = "https://www.townscript.com/e/" + this.event.shortName;
-            this.eventName = this.event.name;
-            this.shareLink.fb = "https://www.facebook.com/sharer/sharer.php?s=100" +
-                "&p[url]=" + config.baseUrl + "e/" + this.event.shortName +
-                "&p[images][0]=" + config.baseUrl + "dashboard/images/organizer_login_files/logoforfb.png" +
-                "&p[title]=" + this.eventName +
-                "&p[summary]=" + "by townscript.com";
-            this.shareLink.twitter = "https://twitter.com/share" +
-                "?url=" + config.baseUrl + "e/" + this.event.shortName +
-                "&text=" + this.eventName + " is now live on Townscript!";
-            this.shareLink.linkedin = "https://www.linkedin.com/shareArticle?mini=true" +
-                "&url=" + config.baseUrl + "e/" + this.event.shortName +
-                "&title=" + this.eventName;
-            this.shareLink.whatsapp = "https://web.whatsapp.com/send?" +
-                "text=" + config.baseUrl + "e/" + this.event.shortName;
-        };
-        ShareEventModalComponent = __decorate([
-            core.Component({
-                selector: 'app-share-event-modal',
-                template: "<div class=\"share-event-modal-container\">\n    <div class=\"flex items-center text-lg text-gray-800 justify-between\">\n        <h2>Share Event</h2>\n        <div class=\"rounded-full\" matRipple (click)=\"close()\">\n            <i class=\"mdi mdi-close text-2xl cursor-pointer rounded-full\"></i>\n        </div>\n    </div>\n    <div class=\"px-2 py-2\">\n        <div class=\"platforms flex items-center justify-between\">\n            <a [href]=\"shareLink?.whatsapp\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-whatsapp block text-4xl whatsapp\"></i>\n                    <span class=\"text-gray-700 text-sm\">Whatsapp</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.fb\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-facebook block text-4xl facebook\"></i>\n                    <span class=\"text-gray-700 text-sm\">Facebook</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.twitter\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-twitter block text-4xl twitter\"></i>\n                    <span class=\"text-gray-700 text-sm\">Twitter</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.linkedin\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-linkedin block text-4xl linkedin\"></i>\n                    <span class=\"text-gray-700 text-sm\">LinkedIn</span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div>",
-                styles: [".share-event-modal-container .platform{-webkit-transition:.15s;transition:.15s}.share-event-modal-container .platform:hover{background:#fcfcfc;-webkit-transform:translateY(-5px);transform:translateY(-5px)}.share-event-modal-container .whatsapp{color:#64bf56}.share-event-modal-container .facebook{color:#4267b2}.share-event-modal-container .twitter{color:#3aa1f2}.share-event-modal-container .linkedin{color:#2977b5}"]
-            }),
-            __param(1, core.Inject(material.MAT_DIALOG_DATA)),
-            __metadata("design:paramtypes", [material.MatDialogRef, Object])
-        ], ShareEventModalComponent);
-        return ShareEventModalComponent;
-    }());
-
-    var TsListingCardComponent = /** @class */ (function () {
-        function TsListingCardComponent(dialog, browser) {
-            var _this = this;
-            this.dialog = dialog;
-            this.browser = browser;
-            this.urgencyMessage = false;
-            this.goingCounter = false;
-            this.moreIcons = false;
-            this.shareEvent = function () {
-                console.log(_this.browser.isMobile(), window.navigator, window.navigator['share']);
-                if (_this.browser.isMobile() && window.navigator && window.navigator['share']) {
-                    window.navigator['share']({
-                        title: _this.eventData.name,
-                        text: _this.eventData.name,
-                        url: config.baseUrl + 'e/' + _this.eventData.shortName,
-                    });
-                }
-                else {
-                    var dialogRef = _this.dialog.open(ShareEventModalComponent, {
-                        width: '450px',
-                        data: { event: _this.eventData }
-                    });
-                }
-            };
-        }
-        TsListingCardComponent.prototype.ngOnInit = function () {
-            switch (this.type) {
-                case 'featured':
-                    this.showRegularCard = true;
-                    break;
-                case 'topic':
-                    this.topicCard = true;
-                    break;
-                default:
-                    this.showRegularCard = true;
-                    break;
-            }
-            // this.eventData = {
-            //   "id": 1, "eventId": 87429,
-            //   "name": "first event",
-            //   "shortName": "test-once-more-123442",
-            //   "startTime": "2019-07-25T10:30:00.000+0000", "endTime": "2019-07-25T11:30:00.000+0000",
-            //   "displayName": null, "shortDescription": null, "eventTimeZone": "Asia/Calcutta",
-            //   "timeZoneDisplayName": null, "venueLocation": null, "city": "Pune",
-            //   "latitude": 18.513217600000000, "longitude": 73.928873200000000,
-            //   "coverImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
-            //   "cardImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
-            //   "publicEvent": true, "live": true, "categoryId": null, "eventTypeId": 17,
-            //   "minimumTicketPrice": 3456, "minimumTicketPriceCurrency": "INR",
-            //   "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false,
-            //   "paid": false, "onlineEvent": false, "organizerId": 3080, "pageViews": null,
-            //   "organizerScore": null, "ticketsSold": 0, "roTicketsSold": null, "ticketsRemaining": 0,
-            //   "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false
-            // };
-            // this.topicData = {
-            //   cardImageUrl: 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/category/748x220/marathon1.jpg',
-            //   name: 'Marathons in Pune',
-            //   subTitle: 'Upcoming Running Events In Pune - 5K, 10K, Half & Full Marathon In Pune',
-            //   topicDescription: 'Being fit is the new trend. The fitness community grown in number with increased participation in running and marathons in Pune. Upcoming Running Events In Pune involves all types of run, like the city run, trail run, fun run, social cause run and many more. Nearly every week there are activities planned by running groups in Pune. Some of the most anticipated runs are full marathon in Pune, half marathon, 10K and 5K marathon in Pune. Pune marathon events best suited for everyone, be it kids, elders, seasonal runners or newbies.'
-            // };
-        };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], TsListingCardComponent.prototype, "eventData", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], TsListingCardComponent.prototype, "type", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], TsListingCardComponent.prototype, "topicData", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], TsListingCardComponent.prototype, "gridType", void 0);
-        TsListingCardComponent = __decorate([
-            core.Component({
-                selector: 'ts-listing-card',
-                template: "<div *ngIf=\"!topicCard\" [ngClass]=\"showRegularCard ? \n        gridType=='list' ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' :\n                    'bg-white cursor-pointer lg:flex lg:flex-col listing-container my-1 rounded w-full'\n        : 'listing-container bg-white cursor-pointer rounded  my-4 mx-auto lg:flex lg:flex-row-reverse' \n\">\n    <div [ngClass]=\"showRegularCard\n                    ? gridType=='list' ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden' : 'bg-cover flex-none h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full overflow-hidden p-24 sm:w-full text-center'\n                    : 'h-48 lg:h-auto sm:w-full md:w-full lg:w-3/5 flex-none bg-cover text-center overflow-hidden'\"\n        [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\">\n    </div>\n    <div [ngClass]=\"showRegularCard ?\n                     'listing-container--content flex flex-col justify-between leading-normal w-full'\n                     : 'listing-container--featured-content flex flex-col justify-between leading-normal w-full'\n                     \">\n        <div class=\"pl-4 pt-3 pb-1\">\n            <div class=\"flex flex-row justify-between align-items-center\">\n                <span *ngIf=\"urgencyMessage || featuredCard\"\n                    class=\"text-md bg-orange-500 rounded text-md px-2 mr-2\">Featured</span>\n                <span *ngIf=\"urgencyMessage\" class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span *ngIf=\"urgencyMessage\" class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-xl mb-1\">{{eventData.name | titlecase}}</div>\n            <div class=\"flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-xl pr-1  align-bottom\"></i>\n                    <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-xl  align-bottom\"></i>\n                    <span class=\"font-323E48 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <div *ngIf=\"featuredCard\" class=\"text-sm\">Heres goes some 2 line data which describes about the event.</div>\n            <div [ngClass]=\"showRegularCard ? 'py-2 pr-2 flex justify-between  mt-8' \n                    : 'py-2 pr-2 flex flex-col-reverse'\">\n                <div *ngIf=\"moreIcons\" id=\"set-of-icons\" class=\"flex\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                </div>\n                <div [ngClass]=\"showRegularCard ? '' : ''\">\n                    <span class=\"pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                        *ngFor=\"let key of eventData.keywords\">#{{key.topicKeywordName}}</span>\n                </div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center\">\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <div class=\"px-2 rounded-full\" matRipple>\n                    <i class=\"mdi mdi-share-variant text-2xl\" (click)=\"shareEvent();$event.stopPropagation()\"></i>\n                </div>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold\"\n                    *ngIf=\"eventData.minimumTicketPrice\">\n                    Starting from\n                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}</span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div *ngIf=\"topicCard\" class=\"topic-container my-4 mx-auto  lg:flex \">\n    <div class=\"hidden w-full md:block md:3/5 bg-cover text-center overflow-hidden\"\n        [style.background-image]=\"'url(' + topicData.cardImageUrl + ')'\">\n    </div>\n    <div class=\"flex flex-col bg-white w-3/5 px-4\">\n        <span class=\"m-2 text-2xl font-bold\">\n            {{topicData.name}}\n        </span>\n        <span class=\"m-2 subTitle text-lg opacity-50\">\n            {{topicData.subTitle}}\n        </span>\n        <span class=\"m-2 text-base\">\n            {{topicData.topicDescription}}\n        </span>\n        <div class=\"keywords m-2 flex\">\n            <span class=\"font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize\"\n                *ngFor=\"let key of topicData?.keywords\">{{key.keyCode}}\n                <i class=\"align-middle mdi mdi-heart-outline text-2xl\"></i>\n            </span>\n        </div>\n    </div>\n</div>",
-                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.listing-container{border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato}.listing-container:hover{box-shadow:0 2px 8px 0 rgba(0,0,0,.2)}.listing-container:hover .bottom-purple-bar{box-shadow:0 2px 8px 0 rgba(0,0,0,.2);background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);border-radius:0 0 4px;-webkit-transition:1.3s;transition:1.3s}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:background 1s ease-out;transition:background 1s ease-out}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container .listing-container--featured-content{background-color:#fff}.listing-container .listing-container--featured-content .bottom-purple-bar{-webkit-transition:1s ease-in;transition:1s ease-in}.listing-container .listing-container--featured-content .price-container{font-size:15px}.listing-container i{color:#683592}.topic-container{font-family:Lato;min-height:460px}.topic-container .subTitle{color:#263240}.topic-container .keywords,.topic-container i{color:#683592}.topic-container .keywords span{border:1.57px solid #683592}"]
-            }),
-            __metadata("design:paramtypes", [material.MatDialog, BrowserService])
-        ], TsListingCardComponent);
-        return TsListingCardComponent;
-    }());
-
-    var RangeDatePipe = /** @class */ (function () {
-        function RangeDatePipe() {
-        }
-        RangeDatePipe.prototype.transform = function (rangeDates, args) {
-            if (rangeDates) {
-                var date = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('dd'); });
-                var month = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('MMM'); });
-                var time = luxon.DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-                if ((date[0] === date[1]) && (month[0] === month[1])) {
-                    return month[0] + ' ' + date[0] + ' | ' + time;
-                }
-                else if ((date[0] === date[1]) && (month[0] !== month[1])) {
-                    return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
-                }
-                else {
-                    return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
-                }
-            }
-            else {
-                return null;
-            }
-        };
-        RangeDatePipe = __decorate([
-            core.Pipe({
-                name: 'dateRange'
-            })
-        ], RangeDatePipe);
-        return RangeDatePipe;
     }());
 
     var CitySearchPopupComponent = /** @class */ (function () {
@@ -767,41 +642,6 @@
             __metadata("design:paramtypes", [NotificationService, UserService, CookieService])
         ], UserMenuComponent);
         return UserMenuComponent;
-    }());
-
-    var TsCardSkeletonComponent = /** @class */ (function () {
-        function TsCardSkeletonComponent() {
-        }
-        TsCardSkeletonComponent.prototype.ngOnInit = function () {
-        };
-        TsCardSkeletonComponent = __decorate([
-            core.Component({
-                selector: 'ts-card-skeleton',
-                template: "<div class=\"w-full flex\">\n        <div class=\"w-full\">\n            <div class=\"bg-white border border-gray-300 card flex flex-col md:flex-row overflow-hidden rounded translate-3d-none-after w-full\">\n                <div class=\"w-full lg:w-2/3 md:w-2/3 relative p-24 md:p-0 text-primary-500\">\n                    <div class=\"absolute top-0 left-0 h-full w-full\">\n                        <span class=\"skeleton-box group-hover:scale-110 transition-transform transform-center block h-full\">\n                        </span>\n                    </div>\n                </div>\n                <div class=\"flex flex-col flex-grow w-full\">\n                    <div class=\"pl-4 pr-4 pt-4 mb-4 text-left relative flex-grow\">\n                        <h3 class=\"text-lg font-bold text-gray-darkest mr-10\">\n                            <span class=\"skeleton-box h-5 w-1/6 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-1/2 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/4 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/5 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/3 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-3/4 inline-block\"></span>\n                        </h3>\n                    </div>        \n                </div>\n            </div>\n          </div>\n</div>",
-                styles: [".skeleton-box{position:relative;overflow:hidden;background-color:#e2e8f0}.skeleton-box::after{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform:translateX(-100%);transform:translateX(-100%);background-image:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(20%,rgba(255,255,255,.2)),color-stop(60%,rgba(255,255,255,.5)),to(rgba(255,255,255,0)));background-image:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 20%,rgba(255,255,255,.5) 60%,rgba(255,255,255,0));-webkit-animation:1.5s infinite shimmer;animation:1.5s infinite shimmer;content:''}@-webkit-keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}@keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}"]
-            }),
-            __metadata("design:paramtypes", [])
-        ], TsCardSkeletonComponent);
-        return TsCardSkeletonComponent;
-    }());
-
-    var ApiService = /** @class */ (function () {
-        function ApiService() {
-            this.FB_APP_ID = '303059286557418';
-            this.hostName = 'www.tsdugout.in';
-            this.S3_BUCKET_NAME = 'townscript-testing';
-            this.GA_TRACKER_CODE = 'UA-68181318-1';
-            this.SERVER_URL = 'https://www.tsdugout.in';
-            this.API_SERVER = 'https://www.tsdugout.in/api/';
-            this.algoliaIndexName = 'tsTesting';
-            this.IPINFO_ACCESS_TOKEN = 'a27cfbcc77e854'; // change afterwards
-            this.RECORD_FOR_KINESIS = true; // temporary
-            this.PAYMENT_PAGE_URL = 'https://www.tsdugout.in/payment/';
-        }
-        ApiService = __decorate([
-            core.Injectable()
-        ], ApiService);
-        return ApiService;
     }());
 
     var headers = new http.HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
@@ -1177,45 +1017,32 @@
                 imports: [
                     common.CommonModule,
                     forms.FormsModule,
-                    elements.TsFormsModule,
-                    forms.ReactiveFormsModule,
-                    ngRecaptcha.RecaptchaModule,
                     http.HttpClientModule,
                     core$1.MatRippleModule,
                     snackBar.MatSnackBarModule,
-                    TsLoginSignupModule
+                    TsLoginSignupModule,
+                    elements.TsFormsModule
                 ],
                 declarations: [
                     TsHeaderComponent,
                     TsFooterComponent,
                     SearchComponent,
-                    TsListingCardComponent,
-                    RangeDatePipe,
                     CitySearchPopupComponent,
                     HamburgerMenuComponent,
-                    UserMenuComponent,
-                    ShareEventModalComponent,
-                    TsCardSkeletonComponent
+                    UserMenuComponent
                 ],
                 exports: [
                     TsHeaderComponent,
                     TsFooterComponent,
                     SearchComponent,
-                    TsListingCardComponent,
-                    RangeDatePipe,
                     CitySearchPopupComponent,
                     HamburgerMenuComponent,
-                    UserMenuComponent,
-                    ShareEventModalComponent,
-                    TsCardSkeletonComponent
+                    UserMenuComponent
                 ],
                 providers: [
                     TimeService,
-                    UserService,
-                    NotificationService,
                     common.DatePipe,
                     ApiService,
-                    CookieService,
                     HeaderService,
                     BrowserService
                 ]
@@ -1224,9 +1051,217 @@
         return LayoutModule;
     }());
 
+    var ShareEventModalComponent = /** @class */ (function () {
+        function ShareEventModalComponent(dialogRef, data) {
+            var _this = this;
+            this.dialogRef = dialogRef;
+            this.data = data;
+            this.shareLink = {};
+            this.close = function () {
+                _this.dialogRef.close();
+            };
+        }
+        ShareEventModalComponent.prototype.ngAfterViewInit = function () {
+        };
+        ShareEventModalComponent.prototype.ngOnInit = function () {
+            this.event = this.data.event;
+            this.eventURL = "https://www.townscript.com/e/" + this.event.shortName;
+            this.eventName = this.event.name;
+            this.shareLink.fb = "https://www.facebook.com/sharer/sharer.php?s=100" +
+                "&p[url]=" + config.baseUrl + "e/" + this.event.shortName +
+                "&p[images][0]=" + config.baseUrl + "dashboard/images/organizer_login_files/logoforfb.png" +
+                "&p[title]=" + this.eventName +
+                "&p[summary]=" + "by townscript.com";
+            this.shareLink.twitter = "https://twitter.com/share" +
+                "?url=" + config.baseUrl + "e/" + this.event.shortName +
+                "&text=" + this.eventName + " is now live on Townscript!";
+            this.shareLink.linkedin = "https://www.linkedin.com/shareArticle?mini=true" +
+                "&url=" + config.baseUrl + "e/" + this.event.shortName +
+                "&title=" + this.eventName;
+            this.shareLink.whatsapp = "https://web.whatsapp.com/send?" +
+                "text=" + config.baseUrl + "e/" + this.event.shortName;
+        };
+        ShareEventModalComponent = __decorate([
+            core.Component({
+                selector: 'app-share-event-modal',
+                template: "<div class=\"share-event-modal-container\">\n    <div class=\"flex items-center text-lg text-gray-800 justify-between\">\n        <h2>Share Event</h2>\n        <div class=\"rounded-full\" matRipple (click)=\"close()\">\n            <i class=\"mdi mdi-close text-2xl cursor-pointer rounded-full\"></i>\n        </div>\n    </div>\n    <div class=\"px-2 py-2\">\n        <div class=\"platforms flex items-center justify-between\">\n            <a [href]=\"shareLink?.whatsapp\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-whatsapp block text-4xl whatsapp\"></i>\n                    <span class=\"text-gray-700 text-sm\">Whatsapp</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.fb\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-facebook block text-4xl facebook\"></i>\n                    <span class=\"text-gray-700 text-sm\">Facebook</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.twitter\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-twitter block text-4xl twitter\"></i>\n                    <span class=\"text-gray-700 text-sm\">Twitter</span>\n                </div>\n            </a>\n            <a [href]=\"shareLink?.linkedin\" target=\"_blank\">\n                <div class=\"platform text-center cursor-pointer p-2 flex-1\">\n                    <i class=\"mdi mdi-linkedin block text-4xl linkedin\"></i>\n                    <span class=\"text-gray-700 text-sm\">LinkedIn</span>\n                </div>\n            </a>\n        </div>\n    </div>\n</div>",
+                styles: [".share-event-modal-container .platform{-webkit-transition:.15s;transition:.15s}.share-event-modal-container .platform:hover{background:#fcfcfc;-webkit-transform:translateY(-5px);transform:translateY(-5px)}.share-event-modal-container .whatsapp{color:#64bf56}.share-event-modal-container .facebook{color:#4267b2}.share-event-modal-container .twitter{color:#3aa1f2}.share-event-modal-container .linkedin{color:#2977b5}"]
+            }),
+            __param(1, core.Inject(material.MAT_DIALOG_DATA)),
+            __metadata("design:paramtypes", [material.MatDialogRef, Object])
+        ], ShareEventModalComponent);
+        return ShareEventModalComponent;
+    }());
+
+    var TsCardSkeletonComponent = /** @class */ (function () {
+        function TsCardSkeletonComponent() {
+        }
+        TsCardSkeletonComponent.prototype.ngOnInit = function () {
+        };
+        TsCardSkeletonComponent = __decorate([
+            core.Component({
+                selector: 'ts-card-skeleton',
+                template: "<div class=\"w-full flex\">\n        <div class=\"w-full\">\n            <div class=\"bg-white border border-gray-300 card flex flex-col md:flex-row overflow-hidden rounded translate-3d-none-after w-full\">\n                <div class=\"w-full lg:w-2/3 md:w-2/3 relative p-24 md:p-0 text-primary-500\">\n                    <div class=\"absolute top-0 left-0 h-full w-full\">\n                        <span class=\"skeleton-box group-hover:scale-110 transition-transform transform-center block h-full\">\n                        </span>\n                    </div>\n                </div>\n                <div class=\"flex flex-col flex-grow w-full\">\n                    <div class=\"pl-4 pr-4 pt-4 mb-4 text-left relative flex-grow\">\n                        <h3 class=\"text-lg font-bold text-gray-darkest mr-10\">\n                            <span class=\"skeleton-box h-5 w-1/6 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-1/2 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/4 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/5 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-2/3 inline-block\"></span>\n                            <span class=\"skeleton-box h-5 w-3/4 inline-block\"></span>\n                        </h3>\n                    </div>        \n                </div>\n            </div>\n          </div>\n</div>",
+                styles: [".skeleton-box{position:relative;overflow:hidden;background-color:#e2e8f0}.skeleton-box::after{position:absolute;top:0;right:0;bottom:0;left:0;-webkit-transform:translateX(-100%);transform:translateX(-100%);background-image:-webkit-gradient(linear,left top,right top,color-stop(0,rgba(255,255,255,0)),color-stop(20%,rgba(255,255,255,.2)),color-stop(60%,rgba(255,255,255,.5)),to(rgba(255,255,255,0)));background-image:linear-gradient(90deg,rgba(255,255,255,0) 0,rgba(255,255,255,.2) 20%,rgba(255,255,255,.5) 60%,rgba(255,255,255,0));-webkit-animation:1.5s infinite shimmer;animation:1.5s infinite shimmer;content:''}@-webkit-keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}@keyframes shimmer{100%{-webkit-transform:translateX(100%);transform:translateX(100%)}}"]
+            }),
+            __metadata("design:paramtypes", [])
+        ], TsCardSkeletonComponent);
+        return TsCardSkeletonComponent;
+    }());
+
+    var TsListingCardComponent = /** @class */ (function () {
+        function TsListingCardComponent(dialog, browser) {
+            var _this = this;
+            this.dialog = dialog;
+            this.browser = browser;
+            this.urgencyMessage = false;
+            this.goingCounter = false;
+            this.moreIcons = false;
+            this.shareEvent = function () {
+                console.log(_this.browser.isMobile(), window.navigator, window.navigator['share']);
+                if (_this.browser.isMobile() && window.navigator && window.navigator['share']) {
+                    window.navigator['share']({
+                        title: _this.eventData.name,
+                        text: _this.eventData.name,
+                        url: config.baseUrl + 'e/' + _this.eventData.shortName,
+                    });
+                }
+                else {
+                    var dialogRef = _this.dialog.open(ShareEventModalComponent, {
+                        width: '450px',
+                        data: { event: _this.eventData }
+                    });
+                }
+            };
+        }
+        TsListingCardComponent.prototype.ngOnInit = function () {
+            switch (this.type) {
+                case 'featured':
+                    this.showRegularCard = true;
+                    break;
+                case 'topic':
+                    this.topicCard = true;
+                    break;
+                default:
+                    this.showRegularCard = true;
+                    break;
+            }
+            // this.eventData = {
+            //   "id": 1, "eventId": 87429,
+            //   "name": "first event",
+            //   "shortName": "test-once-more-123442",
+            //   "startTime": "2019-07-25T10:30:00.000+0000", "endTime": "2019-07-25T11:30:00.000+0000",
+            //   "displayName": null, "shortDescription": null, "eventTimeZone": "Asia/Calcutta",
+            //   "timeZoneDisplayName": null, "venueLocation": null, "city": "Pune",
+            //   "latitude": 18.513217600000000, "longitude": 73.928873200000000,
+            //   "coverImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/pune.jpg",
+            //   "cardImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/pune.jpg",
+            //   "publicEvent": true, "live": true, "categoryId": null, "eventTypeId": 17,
+            //   "minimumTicketPrice": 3456, "minimumTicketPriceCurrency": "INR",
+            //   "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false,
+            //   "paid": false, "onlineEvent": false, "organizerId": 3080, "pageViews": null,
+            //   "organizerScore": null, "ticketsSold": 0, "roTicketsSold": null, "ticketsRemaining": 0,
+            //   "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false
+            // };
+            // this.topicData = {
+            //   cardImageUrl: 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/category/748x220/marathon1.jpg',
+            //   name: 'Marathons in Pune',
+            //   subTitle: 'Upcoming Running Events In Pune - 5K, 10K, Half & Full Marathon In Pune',
+            //   topicDescription: 'Being fit is the new trend. The fitness community grown in number with increased participation in running and marathons in Pune. Upcoming Running Events In Pune involves all types of run, like the city run, trail run, fun run, social cause run and many more. Nearly every week there are activities planned by running groups in Pune. Some of the most anticipated runs are full marathon in Pune, half marathon, 10K and 5K marathon in Pune. Pune marathon events best suited for everyone, be it kids, elders, seasonal runners or newbies.'
+            // };
+        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsListingCardComponent.prototype, "eventData", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsListingCardComponent.prototype, "type", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsListingCardComponent.prototype, "topicData", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsListingCardComponent.prototype, "gridType", void 0);
+        TsListingCardComponent = __decorate([
+            core.Component({
+                selector: 'ts-listing-card',
+                template: "<div *ngIf=\"!topicCard\" [ngClass]=\"showRegularCard ? \n        gridType=='list' ? 'listing-container cursor-pointer rounded  my-4 mx-auto  lg:flex' :\n                    'bg-white cursor-pointer lg:flex lg:flex-col listing-container my-1 rounded w-full'\n        : 'listing-container bg-white cursor-pointer rounded  my-4 mx-auto lg:flex lg:flex-row-reverse' \n\">\n    <div [ngClass]=\"showRegularCard\n                    ? gridType=='list' ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden' : 'bg-cover flex-none h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full overflow-hidden p-24 sm:w-full text-center'\n                    : 'h-48 lg:h-auto sm:w-full md:w-full lg:w-3/5 flex-none bg-cover text-center overflow-hidden'\"\n        [style.background-image]=\"'url(' + eventData.cardImageUrl + ')'\">\n    </div>\n    <div [ngClass]=\"showRegularCard ?\n                     'listing-container--content flex flex-col justify-between leading-normal w-full'\n                     : 'listing-container--featured-content flex flex-col justify-between leading-normal w-full'\n                     \">\n        <div class=\"pl-4 pt-3 pb-1\">\n            <div class=\"flex flex-row justify-between align-items-center\">\n                <span *ngIf=\"urgencyMessage || featuredCard\"\n                    class=\"text-md bg-orange-500 rounded text-md px-2 mr-2\">Featured</span>\n                <span *ngIf=\"urgencyMessage\" class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span *ngIf=\"urgencyMessage\" class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-xl mb-1\">{{eventData.name | titlecase}}</div>\n            <div class=\"flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-xl pr-1  align-bottom\"></i>\n                    <span class=\"\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-xl  align-bottom\"></i>\n                    <span class=\"font-323E48 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <div *ngIf=\"featuredCard\" class=\"text-sm\">Heres goes some 2 line data which describes about the event.</div>\n            <div [ngClass]=\"showRegularCard ? 'py-2 pr-2 flex justify-between  mt-8' \n                    : 'py-2 pr-2 flex flex-col-reverse'\">\n                <div *ngIf=\"moreIcons\" id=\"set-of-icons\" class=\"flex\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                </div>\n                <div [ngClass]=\"showRegularCard ? '' : ''\">\n                    <span class=\"pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                        *ngFor=\"let key of eventData.keywords\">#{{key.topicKeywordName}}</span>\n                </div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center\">\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <div class=\"px-2 rounded-full\" matRipple>\n                    <i class=\"mdi mdi-share-variant text-2xl\" (click)=\"shareEvent();$event.stopPropagation()\"></i>\n                </div>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold\"\n                    *ngIf=\"eventData.minimumTicketPrice\">\n                    Starting from\n                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}</span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n\n<div *ngIf=\"topicCard\" class=\"topic-container my-4 mx-auto  lg:flex \">\n    <div class=\"hidden w-full md:block md:3/5 bg-cover text-center overflow-hidden\"\n        [style.background-image]=\"'url(' + topicData.cardImageUrl + ')'\">\n    </div>\n    <div class=\"flex flex-col bg-white w-3/5 px-4\">\n        <span class=\"m-2 text-2xl font-bold\">\n            {{topicData.name}}\n        </span>\n        <span class=\"m-2 subTitle text-lg opacity-50\">\n            {{topicData.subTitle}}\n        </span>\n        <span class=\"m-2 text-base\">\n            {{topicData.topicDescription}}\n        </span>\n        <div class=\"keywords m-2 flex\">\n            <span class=\"font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize\"\n                *ngFor=\"let key of topicData?.keywords\">{{key.keyCode}}\n                <i class=\"align-middle mdi mdi-heart-outline text-2xl\"></i>\n            </span>\n        </div>\n    </div>\n</div>",
+                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.listing-container{border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato}.listing-container:hover{box-shadow:0 2px 8px 0 rgba(0,0,0,.2)}.listing-container:hover .bottom-purple-bar{box-shadow:0 2px 8px 0 rgba(0,0,0,.2);background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);border-radius:0 0 4px;-webkit-transition:1.3s;transition:1.3s}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:background 1s ease-out;transition:background 1s ease-out}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container .listing-container--featured-content{background-color:#fff}.listing-container .listing-container--featured-content .bottom-purple-bar{-webkit-transition:1s ease-in;transition:1s ease-in}.listing-container .listing-container--featured-content .price-container{font-size:15px}.listing-container i{color:#683592}.topic-container{font-family:Lato;min-height:460px}.topic-container .subTitle{color:#263240}.topic-container .keywords,.topic-container i{color:#683592}.topic-container .keywords span{border:1.57px solid #683592}"]
+            }),
+            __metadata("design:paramtypes", [material.MatDialog, BrowserService])
+        ], TsListingCardComponent);
+        return TsListingCardComponent;
+    }());
+
+    var RangeDatePipe = /** @class */ (function () {
+        function RangeDatePipe() {
+        }
+        RangeDatePipe.prototype.transform = function (rangeDates, args) {
+            if (rangeDates) {
+                var date = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('dd'); });
+                var month = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('MMM'); });
+                var time = luxon.DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+                if ((date[0] === date[1]) && (month[0] === month[1])) {
+                    return month[0] + ' ' + date[0] + ' | ' + time;
+                }
+                else if ((date[0] === date[1]) && (month[0] !== month[1])) {
+                    return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+                }
+                else {
+                    return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                }
+            }
+            else {
+                return null;
+            }
+        };
+        RangeDatePipe = __decorate([
+            core.Pipe({
+                name: 'dateRange'
+            })
+        ], RangeDatePipe);
+        return RangeDatePipe;
+    }());
+
+    var CardsModule = /** @class */ (function () {
+        function CardsModule() {
+        }
+        CardsModule = __decorate([
+            core.NgModule({
+                imports: [
+                    common.CommonModule,
+                    elements.TsFormsModule
+                ],
+                declarations: [
+                    TsListingCardComponent,
+                    RangeDatePipe,
+                    ShareEventModalComponent,
+                    TsCardSkeletonComponent
+                ],
+                exports: [
+                    TsListingCardComponent,
+                    RangeDatePipe,
+                    ShareEventModalComponent,
+                    TsCardSkeletonComponent
+                ],
+                providers: [
+                    BrowserService
+                ]
+            })
+        ], CardsModule);
+        return CardsModule;
+    }());
+
     exports.ApiService = ApiService;
     exports.AppPasswordDirective = AppPasswordDirective;
+    exports.BrowserService = BrowserService;
+    exports.CardsModule = CardsModule;
     exports.CitySearchPopupComponent = CitySearchPopupComponent;
+    exports.CookieService = CookieService;
     exports.HamburgerMenuComponent = HamburgerMenuComponent;
     exports.LayoutModule = LayoutModule;
     exports.LoginModalComponent = LoginModalComponent;
@@ -1236,6 +1271,7 @@
     exports.ShareEventModalComponent = ShareEventModalComponent;
     exports.TimeService = TimeService;
     exports.TsCardSkeletonComponent = TsCardSkeletonComponent;
+    exports.TsControlValueAccessor = TsControlValueAccessor;
     exports.TsFooterComponent = TsFooterComponent;
     exports.TsHeaderComponent = TsHeaderComponent;
     exports.TsListingCardComponent = TsListingCardComponent;
@@ -1243,13 +1279,13 @@
     exports.TsLoginSignupModule = TsLoginSignupModule;
     exports.UserMenuComponent = UserMenuComponent;
     exports.UserService = UserService;
+    exports.config = config;
     exports.ɵa = CookieService;
     exports.ɵb = HeaderService;
-    exports.ɵc = BrowserService;
-    exports.ɵd = NotificationService;
-    exports.ɵe = CookieService;
-    exports.ɵf = ApiService;
-    exports.ɵg = UserService;
+    exports.ɵc = NotificationService;
+    exports.ɵd = ApiService;
+    exports.ɵe = UserService;
+    exports.ɵf = BrowserService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
