@@ -1,6 +1,6 @@
 import { Injectable, Input } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { config } from '../../../../core';
+import { config } from '../../../../core/app-config';
 
 @Injectable()
 export class HeaderService {

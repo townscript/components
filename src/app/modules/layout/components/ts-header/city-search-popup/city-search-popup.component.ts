@@ -5,7 +5,7 @@ import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
 import { Router } from '@angular/router';
-import { config } from '../../../../../core';
+import { config } from '../../../../../core/app-config';
 
 
 @Component({

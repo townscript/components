@@ -9,7 +9,6 @@ import { UserService } from './services/user-service';
 
     ],
     imports: [
-        BrowserModule,
     ],
     providers: [TimeService, ApiService, UserService]
 })

@@ -1,16 +1,18 @@
-import { Directive, ElementRef} from '@angular/core';
+import { Directive, ElementRef } from '@angular/core';
+
+
 @Directive({
   selector: '[appPassword]'
 })
 export class AppPasswordDirective {
- private _shown = false;
-constructor(private el: ElementRef) {
+  private _shown = false;
+  constructor(private el: ElementRef) {
     this.setup();
   }
-toggle(span: HTMLElement) {
+  toggle(span: HTMLElement) {
     this._shown = !this._shown;
     if (this._shown) {
-        console.log(this.el.nativeElement);
+      console.log(this.el.nativeElement);
       this.el.nativeElement.setAttribute('type', 'text');
       span.innerHTML = 'Hide password';
     } else {
@@ -18,7 +20,7 @@ toggle(span: HTMLElement) {
       span.innerHTML = 'Show password';
     }
   }
-setup() {
+  setup() {
     const parent = this.el.nativeElement.parentNode;
     const span = document.createElement('span');
     span.innerHTML = `Show password`;

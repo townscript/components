@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
-import { BrowserService } from '../../../../core/browser.service';
-import { config } from '../../../../core';
+import { BrowserService } from '../../../core/browser.service';
+import { config } from '../../../core/app-config';
 
 @Component({
   selector: 'ts-listing-card',
@@ -40,17 +40,17 @@ export class TsListingCardComponent implements OnInit {
   }
 
   ngOnInit() {
-      switch (this.type) {
-        case 'featured':
-          this.showRegularCard = true;
-          break;
-        case 'topic':
-          this.topicCard = true;
-          break;
-        default:
-          this.showRegularCard = true;
-          break;
-      }
+    switch (this.type) {
+      case 'featured':
+        this.showRegularCard = true;
+        break;
+      case 'topic':
+        this.topicCard = true;
+        break;
+      default:
+        this.showRegularCard = true;
+        break;
+    }
     // this.eventData = {
     //   "id": 1, "eventId": 87429,
     //   "name": "first event",

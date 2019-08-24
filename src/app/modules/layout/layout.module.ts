@@ -1,86 +1,59 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RecaptchaModule } from 'ng-recaptcha';
-
-import {
-  TsHeaderComponent,
-  TsFooterComponent,
-  SearchComponent,
-  TsLoginSignupComponent,
-  TsListingCardComponent,
-  CitySearchPopupComponent,
-  HamburgerMenuComponent,
-  TsCardSkeletonComponent
-} from './components/index';
-import { BrowserService } from '../../core/browser.service';
-import { ShareEventModalComponent } from './components/ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsFormsModule } from '@townscript/elements';
-import { TimeService, ApiService, UserService } from '../../shared/index';
-import { LoginTopContentComponent } from './components/ts-login-signup/login-top-content/login-top-content.component';
-import { CookieService } from './components/ts-login-signup/cookie.service';
-import { RangeDatePipe } from '../layout/components/ts-listing-card/ts-date-range.pipe';
-import { HeaderService } from './components/ts-header/ts-header.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
-import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { NotificationService } from '../../shared/services/notification.service';
-import { AppPasswordDirective } from './components/ts-login-signup/ts-show-hide-directive';
-import { LoginModalComponent } from './components/ts-login-signup/login-modal/login-modal.component';
+
+import { BrowserService } from '../../core/browser.service';
+
+import { HeaderService } from './components/ts-header/ts-header.service';
+import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
+
+import { TsHeaderComponent } from './components/ts-header/ts-header.component';
+import { TsFooterComponent } from './components/ts-footer/ts-footer.component';
+import { SearchComponent } from './components/ts-header/search/search.component';
+import { CitySearchPopupComponent } from './components/ts-header/city-search-popup/city-search-popup.component';
+import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/hamburger-menu.component';
+import { TimeService } from '../../shared/services/time.service';
+import { ApiService } from '../../shared/services/api-service';
+import { TsLoginSignupModule } from '../loginSignup/login-signup.module';
+import { UserService } from '../../shared/services/user-service';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    TsFormsModule,
-    ReactiveFormsModule,
-    RecaptchaModule,
     HttpClientModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    TsLoginSignupModule,
+    TsFormsModule
   ],
   declarations: [
     TsHeaderComponent,
     TsFooterComponent,
     SearchComponent,
-    TsLoginSignupComponent,
-    LoginTopContentComponent,
-    TsListingCardComponent,
-    RangeDatePipe,
-    SearchComponent,
     CitySearchPopupComponent,
     HamburgerMenuComponent,
-    UserMenuComponent,
-    AppPasswordDirective,
-    LoginModalComponent,
-    ShareEventModalComponent,
-    TsCardSkeletonComponent
-  ],
-  entryComponents: [
-    ShareEventModalComponent
+    UserMenuComponent
   ],
   exports: [
     TsHeaderComponent,
     TsFooterComponent,
-    TsLoginSignupComponent,
-    TsListingCardComponent,
-    UserMenuComponent,
-    TsCardSkeletonComponent,
-    ShareEventModalComponent,
-    RangeDatePipe,
-    LoginModalComponent
+    SearchComponent,
+    CitySearchPopupComponent,
+    HamburgerMenuComponent,
+    UserMenuComponent
   ],
-  providers: [TimeService,
-    UserService,
-    NotificationService,
+  providers: [
+    TimeService,
     DatePipe,
     ApiService,
-    CookieService,
     HeaderService,
-    BrowserService
+    BrowserService,
+    UserService
   ]
-
 })
 export class LayoutModule { }

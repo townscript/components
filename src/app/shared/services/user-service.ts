@@ -1,6 +1,6 @@
 import { Injectable, Inject, PLATFORM_ID, InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { CookieService } from '../../modules/layout/components/ts-login-signup/cookie.service';
+import { CookieService } from '../../core/cookie.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 
 

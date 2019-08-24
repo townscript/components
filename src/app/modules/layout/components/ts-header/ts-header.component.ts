@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LoginModalComponent } from '../../components/ts-login-signup/login-modal/login-modal.component';
+import { LoginModalComponent } from '../../../loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { UserService } from '../../../../shared/services/user-service';
 import { config } from '../../../../core/app-config';
 

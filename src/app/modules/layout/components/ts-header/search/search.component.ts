@@ -5,7 +5,7 @@ import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
-import { config } from '../../../../../core';
+import { config } from '../../../../../core/app-config';
 import { ActivatedRoute, Router } from '@angular/router';
 
 const algoliasearch = algoliaSearchImported;

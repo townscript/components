@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, EventEmitter , Output, Input } from '@angular/core';
-import { ApiService } from '../../../../shared/services/api-service';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { ApiService } from '../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
-import { CookieService } from './cookie.service';
-import { UserService } from '../../../../shared/services/user-service';
-import { NotificationService } from '../../../../shared/services/notification.service';
+import { CookieService } from '../../../core/cookie.service';
+import { UserService } from '../../../shared/services/user-service';
+import { NotificationService } from '../../../shared/services/notification.service';
 
 const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
 
@@ -77,13 +77,13 @@ export class TsLoginSignupComponent implements OnInit {
 
     onLoginWithFB = () => {
         const url = 'https://' + this.apiService.hostName + '/api/user/signinwithfacebook' +
-        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
 
     onLoginWithGoogle = () => {
         const url = 'https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
-        (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         console.log(url);
         window.open(url, '_self');
     }
@@ -152,7 +152,7 @@ export class TsLoginSignupComponent implements OnInit {
                 this.userService.updateUser(userData);
                 this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
                 if (this.mode === 'dialog') {
-                     this.close();
+                    this.close();
                 }
                 this.redirectToListings();
             },

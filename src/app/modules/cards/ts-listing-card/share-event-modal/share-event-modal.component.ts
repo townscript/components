@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { config } from '../../../../../core/app-config';
+import { config } from '../../../../core/app-config';
 
 @Component({
     selector: 'app-share-event-modal',

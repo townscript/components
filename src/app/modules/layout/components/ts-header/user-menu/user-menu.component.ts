@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CookieService } from '../../ts-login-signup/cookie.service';
+import { CookieService } from '../../../../../core/cookie.service';
 import { UserService } from '../../../../../shared/services/user-service';
 import { NotificationService } from '../../../../../shared/services/notification.service';
 
