@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CookieService } from '../../modules/layout/components/ts-login-signup/cookie.service';
+import { CookieService } from '../../core';
 export declare class UserService {
     private cookieService;
     private document;

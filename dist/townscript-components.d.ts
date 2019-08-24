@@ -2,7 +2,9 @@
  * Generated bundle index. Do not edit.
  */
 export * from './public_api';
-export { BrowserService as ɵd } from './src/app/core/browser.service';
+export { CookieService as ɵa } from './src/app/core';
+export { BrowserService as ɵc } from './src/app/core/browser.service';
+export { CookieService as ɵe } from './src/app/core/cookie.service';
 export { HeaderService as ɵb } from './src/app/modules/layout/components/ts-header/ts-header.service';
-export { CookieService as ɵa } from './src/app/modules/layout/components/ts-login-signup/cookie.service';
-export { NotificationService as ɵc } from './src/app/shared/services/notification.service';
+export { ApiService as ɵf, UserService as ɵg } from './src/app/shared';
+export { NotificationService as ɵd } from './src/app/shared/services/notification.service';
