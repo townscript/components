@@ -985,6 +985,33 @@ LayoutModule = __decorate([
     })
 ], LayoutModule);
 
+let RangeDatePipe = class RangeDatePipe {
+    transform(rangeDates, args) {
+        if (rangeDates) {
+            const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
+            const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
+            const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+            if ((date[0] === date[1]) && (month[0] === month[1])) {
+                return month[0] + ' ' + date[0] + ' | ' + time;
+            }
+            else if ((date[0] === date[1]) && (month[0] !== month[1])) {
+                return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+            }
+            else {
+                return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+            }
+        }
+        else {
+            return null;
+        }
+    }
+};
+RangeDatePipe = __decorate([
+    Pipe({
+        name: 'dateRange'
+    })
+], RangeDatePipe);
+
 let ShareEventModalComponent = class ShareEventModalComponent {
     constructor(dialogRef, data) {
         this.dialogRef = dialogRef;
@@ -1124,33 +1151,6 @@ TsListingCardComponent = __decorate([
     }),
     __metadata("design:paramtypes", [MatDialog, BrowserService])
 ], TsListingCardComponent);
-
-let RangeDatePipe = class RangeDatePipe {
-    transform(rangeDates, args) {
-        if (rangeDates) {
-            const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
-            const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
-            const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-            if ((date[0] === date[1]) && (month[0] === month[1])) {
-                return month[0] + ' ' + date[0] + ' | ' + time;
-            }
-            else if ((date[0] === date[1]) && (month[0] !== month[1])) {
-                return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
-            }
-            else {
-                return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
-            }
-        }
-        else {
-            return null;
-        }
-    }
-};
-RangeDatePipe = __decorate([
-    Pipe({
-        name: 'dateRange'
-    })
-], RangeDatePipe);
 
 let CardsModule = class CardsModule {
 };

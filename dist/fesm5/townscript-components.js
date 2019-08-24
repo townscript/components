@@ -1020,6 +1020,36 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
+var RangeDatePipe = /** @class */ (function () {
+    function RangeDatePipe() {
+    }
+    RangeDatePipe.prototype.transform = function (rangeDates, args) {
+        if (rangeDates) {
+            var date = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('dd'); });
+            var month = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('MMM'); });
+            var time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+            if ((date[0] === date[1]) && (month[0] === month[1])) {
+                return month[0] + ' ' + date[0] + ' | ' + time;
+            }
+            else if ((date[0] === date[1]) && (month[0] !== month[1])) {
+                return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+            }
+            else {
+                return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+            }
+        }
+        else {
+            return null;
+        }
+    };
+    RangeDatePipe = __decorate([
+        Pipe({
+            name: 'dateRange'
+        })
+    ], RangeDatePipe);
+    return RangeDatePipe;
+}());
+
 var ShareEventModalComponent = /** @class */ (function () {
     function ShareEventModalComponent(dialogRef, data) {
         var _this = this;
@@ -1164,36 +1194,6 @@ var TsListingCardComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [MatDialog, BrowserService])
     ], TsListingCardComponent);
     return TsListingCardComponent;
-}());
-
-var RangeDatePipe = /** @class */ (function () {
-    function RangeDatePipe() {
-    }
-    RangeDatePipe.prototype.transform = function (rangeDates, args) {
-        if (rangeDates) {
-            var date = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('dd'); });
-            var month = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('MMM'); });
-            var time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-            if ((date[0] === date[1]) && (month[0] === month[1])) {
-                return month[0] + ' ' + date[0] + ' | ' + time;
-            }
-            else if ((date[0] === date[1]) && (month[0] !== month[1])) {
-                return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
-            }
-            else {
-                return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
-            }
-        }
-        else {
-            return null;
-        }
-    };
-    RangeDatePipe = __decorate([
-        Pipe({
-            name: 'dateRange'
-        })
-    ], RangeDatePipe);
-    return RangeDatePipe;
 }());
 
 var CardsModule = /** @class */ (function () {
