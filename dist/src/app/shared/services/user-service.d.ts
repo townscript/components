@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CookieService } from '../../core';
+import { CookieService } from '../../core/cookie.service';
 export declare class UserService {
     private cookieService;
     private document;

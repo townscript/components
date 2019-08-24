@@ -1044,7 +1044,8 @@
                     common.DatePipe,
                     ApiService,
                     HeaderService,
-                    BrowserService
+                    BrowserService,
+                    UserService
                 ]
             })
         ], LayoutModule);
@@ -1281,9 +1282,9 @@
     exports.UserMenuComponent = UserMenuComponent;
     exports.UserService = UserService;
     exports.config = config;
-    exports.ɵa = CookieService;
-    exports.ɵb = HeaderService;
-    exports.ɵc = NotificationService;
+    exports.ɵa = HeaderService;
+    exports.ɵb = NotificationService;
+    exports.ɵc = CookieService;
     exports.ɵd = ApiService;
     exports.ɵe = UserService;
 
