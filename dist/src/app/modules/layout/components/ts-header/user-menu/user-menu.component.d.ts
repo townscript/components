@@ -1,5 +1,5 @@
 import { OnInit, EventEmitter } from '@angular/core';
-import { CookieService } from '../../../../../core';
+import { CookieService } from '../../../../../core/cookie.service';
 import { UserService } from '../../../../../shared/services/user-service';
 import { NotificationService } from '../../../../../shared/services/notification.service';
 export declare class UserMenuComponent implements OnInit {

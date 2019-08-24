@@ -1,18 +1,18 @@
 import { __decorate, __metadata, __param, __assign } from 'tslib';
-import { Injectable, Inject, PLATFORM_ID, InjectionToken, Component, Input, ViewChild, ElementRef, HostListener, Output, EventEmitter, Directive, NgModule, Pipe } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, InjectionToken, Input, Component, ViewChild, ElementRef, HostListener, Output, EventEmitter, Directive, Pipe, NgModule } from '@angular/core';
+import { MatSnackBarConfig, MatSnackBar, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatDialogRef as MatDialogRef$1, MatRippleModule, MatSnackBarModule } from '@angular/material';
 import { DateTime } from 'luxon';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { DOCUMENT, isPlatformBrowser, DatePipe, CommonModule } from '@angular/common';
-import { MatDialogConfig, MatDialog, MatSnackBarConfig, MatSnackBar, MatRippleModule, MatSnackBarModule, MAT_DIALOG_DATA, MatDialogRef as MatDialogRef$1 } from '@angular/material';
+import { HttpClient, HttpHeaders, HttpParams, HttpClientModule } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
 import { debounceTime, map } from 'rxjs/operators';
-import { HttpClient, HttpHeaders, HttpParams, HttpClientModule } from '@angular/common/http';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import { TsFormsModule } from '@townscript/elements';
 import { MatRippleModule as MatRippleModule$1 } from '@angular/material/core';
 import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snack-bar';
-import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 
 var config = {
     baseUrl: "",
@@ -34,22 +34,6 @@ var BrowserService = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], BrowserService);
     return BrowserService;
-}());
-
-var TsControlValueAccessor = /** @class */ (function () {
-    function TsControlValueAccessor() {
-        this.onChangePropagation = function () { };
-        this.onTouchedPropagation = function () { };
-    }
-    TsControlValueAccessor.prototype.registerOnChange = function (fn) {
-        this.onChangePropagation = fn;
-    };
-    TsControlValueAccessor.prototype.registerOnTouched = function (fn) {
-        this.onTouchedPropagation = fn;
-    };
-    TsControlValueAccessor.prototype.setDisabledState = function (isDisabled) {
-    };
-    return TsControlValueAccessor;
 }());
 
 var CookieService = /** @class */ (function () {
@@ -85,6 +69,58 @@ var CookieService = /** @class */ (function () {
     return CookieService;
 }());
 
+var TsControlValueAccessor = /** @class */ (function () {
+    function TsControlValueAccessor() {
+        this.onChangePropagation = function () { };
+        this.onTouchedPropagation = function () { };
+    }
+    TsControlValueAccessor.prototype.registerOnChange = function (fn) {
+        this.onChangePropagation = fn;
+    };
+    TsControlValueAccessor.prototype.registerOnTouched = function (fn) {
+        this.onTouchedPropagation = fn;
+    };
+    TsControlValueAccessor.prototype.setDisabledState = function (isDisabled) {
+    };
+    return TsControlValueAccessor;
+}());
+
+var ApiService = /** @class */ (function () {
+    function ApiService() {
+        this.FB_APP_ID = '303059286557418';
+        this.hostName = 'www.tsdugout.in';
+        this.S3_BUCKET_NAME = 'townscript-testing';
+        this.GA_TRACKER_CODE = 'UA-68181318-1';
+        this.SERVER_URL = 'https://www.tsdugout.in';
+        this.API_SERVER = 'https://www.tsdugout.in/api/';
+        this.algoliaIndexName = 'tsTesting';
+        this.IPINFO_ACCESS_TOKEN = 'a27cfbcc77e854'; // change afterwards
+        this.RECORD_FOR_KINESIS = true; // temporary
+        this.PAYMENT_PAGE_URL = 'https://www.tsdugout.in/payment/';
+    }
+    ApiService = __decorate([
+        Injectable()
+    ], ApiService);
+    return ApiService;
+}());
+
+var NotificationService = /** @class */ (function () {
+    function NotificationService(snackBar) {
+        this.snackBar = snackBar;
+    }
+    NotificationService.prototype.success = function (message, duration, action) {
+        var config = new MatSnackBarConfig();
+        config.panelClass = ['ts-notification-success'];
+        config.duration = duration;
+        this.snackBar.open(message, action, config);
+    };
+    NotificationService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [MatSnackBar])
+    ], NotificationService);
+    return NotificationService;
+}());
+
 var TimeService = /** @class */ (function () {
     function TimeService() {
         var _this = this;
@@ -116,25 +152,6 @@ var TimeService = /** @class */ (function () {
     return TimeService;
 }());
 
-var ApiService = /** @class */ (function () {
-    function ApiService() {
-        this.FB_APP_ID = '303059286557418';
-        this.hostName = 'www.tsdugout.in';
-        this.S3_BUCKET_NAME = 'townscript-testing';
-        this.GA_TRACKER_CODE = 'UA-68181318-1';
-        this.SERVER_URL = 'https://www.tsdugout.in';
-        this.API_SERVER = 'https://www.tsdugout.in/api/';
-        this.algoliaIndexName = 'tsTesting';
-        this.IPINFO_ACCESS_TOKEN = 'a27cfbcc77e854'; // change afterwards
-        this.RECORD_FOR_KINESIS = true; // temporary
-        this.PAYMENT_PAGE_URL = 'https://www.tsdugout.in/payment/';
-    }
-    ApiService = __decorate([
-        Injectable()
-    ], ApiService);
-    return ApiService;
-}());
-
 var UserService = /** @class */ (function () {
     function UserService(cookieService, document, platformId) {
         this.cookieService = cookieService;
@@ -161,6 +178,66 @@ var UserService = /** @class */ (function () {
         __metadata("design:paramtypes", [CookieService, Object, InjectionToken])
     ], UserService);
     return UserService;
+}());
+
+var HeaderService = /** @class */ (function () {
+    function HeaderService(http) {
+        var _this = this;
+        this.http = http;
+        this.baseUrl = config.baseUrl;
+        this.apiServerUrl = this.baseUrl + "api/";
+        this.getplaceSearchResults = function (query) {
+            return _this.http.get(_this.baseUrl + "listings/place/autocomplete?query=" + query);
+        };
+    }
+    HeaderService = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [HttpClient])
+    ], HeaderService);
+    return HeaderService;
+}());
+
+var TsFooterComponent = /** @class */ (function () {
+    function TsFooterComponent() {
+        this.source = "landingPages";
+        this.popularEvents = [];
+        this.recentBlogs = [];
+        this.popularReads = [];
+        this.openContactUs = function () {
+            window.open('/contact-us');
+        };
+        this.openMyBooking = function () {
+            window.open('/signin?rdurl=/dashboard/mybookings', '_self');
+        };
+    }
+    TsFooterComponent.prototype.ngOnInit = function () {
+        if (this.source == "landingPages") ;
+    };
+    __decorate([
+        Input("source"),
+        __metadata("design:type", Object)
+    ], TsFooterComponent.prototype, "source", void 0);
+    __decorate([
+        Input("popularEvents"),
+        __metadata("design:type", Object)
+    ], TsFooterComponent.prototype, "popularEvents", void 0);
+    __decorate([
+        Input("recentBlogs"),
+        __metadata("design:type", Object)
+    ], TsFooterComponent.prototype, "recentBlogs", void 0);
+    __decorate([
+        Input("popularReads"),
+        __metadata("design:type", Object)
+    ], TsFooterComponent.prototype, "popularReads", void 0);
+    TsFooterComponent = __decorate([
+        Component({
+            selector: 'ts-footer',
+            template: "<footer class=\"ts-footer text-center pt-32 pb-24\" [class.new-footer]=\"source=='marketplace'\">\n    <div class=\"ts-container content-footer\">\n        <div class=\"flex mb-4\">\n            <div class=\"w-1/5 hidden-xs px-4\">\n                <h5>ORGANISE EVENTS</h5>\n                <ul class=\"list-unstyled\">\n                    <li><a href=\"/i/conference-registration\">Conferences</a></li>\n                    <li><a href=\"/i/workshops-and-trainings\">Workshops and Trainings</a></li>\n                    <li><a href=\"/i/college-fest-payment-portal\">College Festivals</a></li>\n                    <li><a href=\"/i/marathon-cycling-trips-treks-registration\">Sports and Fitness Events</a></li>\n                    <li><a href=\"/i/entertainment-events-ticketing\">Entertainment Events</a></li>\n                    <li><a href=\"/i/meetup-registration\">Meetups and Reunions</a></li>\n                    <li><a href=\"/i/treks-trips-registration\">Treks and Trips</a></li>\n                    <!-- <li><a href=\"/i/fundraising-crowdfunding\">Fundraisings</a></li> -->\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\">\n                <h5>POPULAR SEARCHES</h5>\n                <ul class=\"list-unstyled\">\n                    <!--<li><a href=\"/pune/new-year-party\">New Year Parties In Pune</a></li>\n\t\t\t\t<li><a href=\"/mumbai/new-year-party\">New Year Parties In Mumbai</a></li>\n\t\t\t\t<li><a href=\"/delhi/new-year-party\">New Year Parties In Delhi</a></li>\n\t\t\t\t<li><a href=\"/bangalore/new-year-party\">New Year Parties In Bangalore</a></li>-->\n                    <li><a\n                            href=\"http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-\">\n                            List of Countries supported by Townscript</a></li>\n                    <li><a href=\"/i/sell-event-tickets-online\">Sell Event Tickets Online</a></li>\n                    <li><a href=\"/i/event-management-software\">Event Management Software</a></li>\n                    <li><a href=\"/i/event-registration-software\">Event Registration Software</a></li>\n                    <li><a href=\"/i/conference-management-system\">Conference management System</a></li>\n                    <li><a href=\"/i/event-planning-software\">Event Planning Software</a></li>\n                    <li><a href=\"/i/online-event-ticketing\">Online Event Ticketing</a></li>\n                    <li><a href=\"/i/corporate-event-management\">Corporate Event Management</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\" *ngIf=\"source=='landingPages'\">\n                <h5>RECENT BLOGS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let blog of recentBlogs\"><a [href]=\"blog.url\">{{blog.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\" *ngIf=\"source=='marketplace'\">\n                <h5>POPULAR EVENTS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let event of popularEvents\"><a [href]=\"event.url\">{{event.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\">\n                <h5>POPULAR READS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let read of popularReads\"><a [href]=\"read.url\" target=\"_blank\">{{read.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 hidden-xs pl-12\">\n                <h5>BOOKINGS</h5>\n                <ul class=\"list-unstyled\">\n                    <li>\n                        <a href (click)=\"openMyBooking()\">My Bookings</a>\n                    </li>\n                </ul>\n                <h5 (click)=\"openContactUs()\">GET IN TOUCH</h5>\n                <!--<h5><a href=\"mailto:service@townscript.com\" target=\"_blank\" class=\"mail-to visible-xs\">service@townscript.com</a></h5>-->\n                <ul class=\"list-unstyled\">\n                    <!-- \t\t\t\t<li class=\"hidden-xs\">\n\t\t\t\t\t<a href=\"#\">Contact us</a>\n\t\t\t\t</li> -->\n                    <li class=\"social-list-item\">\n                        <ul class=\"social-list clearfix\">\n                            <li>\n                                <a href=\"https://www.facebook.com/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-facebook\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://twitter.com/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-twitter\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://plus.google.com/+Townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-google-plus\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://www.linkedin.com/company/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-linkedin\"></i></a>\n                            </li>\n                            <!--<li>\n\t\t\t\t\t\t\t<a href=\"mailto:service@townscript.com\" target=\"_blank\"><i class=\"ion-email\"></i></a>\n\t\t\t\t\t\t</li>-->\n                        </ul>\n                    </li>\n                </ul>\n                <h5 class=\"hidden-xs\">ORGANIZER APP</h5>\n                <ul class=\"list-apps hidden-xs\">\n                    <li>\n                        <a href=\"//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN\"\n                            title=\"Download on Google play\" class=\"store-icon google-play-icon\" target=\"_blank\">Download\n                            on Google\n                            play</a>\n                    </li>\n                    <li>\n                        <a href=\"//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8\"\n                            title=\"Download on App Store\" target=\"_blank\" class=\"store-icon app-store-icon\">Download on\n                            App Store</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n    <div class=\"ts-container\">\n        <div class=\"brand-footer\">\n            <div class=\"flex mb-4\">\n                <div class=\"w-1/4\">\n                    <img src=\"assets/images/ts-logoBMS.png\" alt=\"Townscript Event Ticketing Logo\"\n                        title=\"Townscript Event Ticketing Logo\" />\n                    <a class=\"ts-footer__copyright\">Copyright@2019</a>\n                    <!--<a href=\"mailto:service@townscript.com\" target=\"_blank\" class=\"ts-footer__mail hidden-xs\">service@townscript.com</a>-->\n                </div>\n                <div class=\"w-2/3 linear-footer hidden-xs\">\n                    <h5>LEARN MORE</h5>\n                    <br>\n                    <ul class=\"list-linear\">\n                        <!-- <li><a href=\"#\">Features</a></li> -->\n                        <li><a href=\"/pricing\">Pricing</a></li>\n                        <li><a href=\"/how-it-works\" ts-data-analytics prop-event=\"click\" eventLabel=\"How It Works\"\n                                prop-clicked-location=\"Footer\">How it works</a></li>\n                        <!-- <li><a href=\"#\">Mobile Apps</a></li> -->\n                        <li><a href=\"//townscript-api.readme.io/\" target=\"_blank\">APIs for Developers</a></li>\n                        <li><a href=\"/terms-and-conditions\">Policies</a></li>\n                        <li><a href=\"/privacy-policy\">Privacy</a></li>\n                        <li><a href=\"http://support.townscript.com/support/home\" target=\"_blank\">Support / FAQs</a></li>\n                    </ul>\n                    <div class=\"linear-footer hidden-xs\" *ngIf=\"source=='marketplace'\">\n                        <h5>POPULAR CITIES</h5>\n                        <br>\n                        <ul class=\"list-linear\">\n                            <!-- <li *ngFor=\"let city of countryCityMap\">\n                                <div (click)=\"onChangeCity(city)\"><a href=\"/{{city | lowercase}}\">{{city}}</a></div>\n                            </li> -->\n                        </ul>\n                    </div>\n                    <div class=\"linear-footer hidden-xs\">\n                        <h5>ABOUT</h5>\n                        <br>\n                        <ul class=\"list-linear\">\n                            <li><a href=\"/about-us\">About us</a></li>\n                            <li><a href=\"/contact-us\">Contact us</a></li>\n                            <!-- <li><a href=\"#\">Career</a></li> -->\n                            <!-- <li><a href=\"#\">Media</a></li> -->\n                            <li><a href=\"http://blog.townscript.com\" target=\"_blank\">Blog</a></li>\n                            <li><a href=\"http://eventmagazine.townscript.com/\" target=\"_blank\">Event Magazine</a></li>\n                            <li><a href=\"https://productblog.townscript.com/\" target=\"_blank\">Product Diary</a></li>\n                            <li><a href=\"/sitemap\" target=\"_blank\">Sitemap</a></li>\n                        </ul>\n                    </div>\n                </div>\n                <div class=\"w-1/12 mixpanel-button align-text hidden-xs\">\n                    <a href=\"https://mixpanel.com/f/partner\" target=\"_blank\"><img\n                            src=\"//cdn.mxpnl.com/site_media/images/partner/badge_blue.png\" alt=\"Mobile Analytics\"\n                            width=\"100\"></a>\n                    <a href=\"https://www.g2crowd.com/products/townscript/reviews\" target=\"_blank\">\n                        <img src=\"https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png\"\n                            alt=\"G2Crowd Townscript Reviews\" width=\"100\">\n                        <span>30 Reviews</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n    <br>\n</footer>",
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}footer{background-color:#ebebeb}footer.new-footer{background-color:#f7f7f7}footer.new-footer a,footer.new-footer h5{color:#3e3e3e;text-decoration:none;margin-bottom:0}footer h5{font-size:14px!important;font-weight:600}footer li,footer ul{margin-bottom:0}footer .content-footer{padding-bottom:20px}footer .m-l-8per{margin-left:8%}footer .brand-footer{border-top:1px solid #e5d7f1;padding-top:30px}footer img{width:165px}footer .bookmyshow-logo{width:140px}footer .mixpanel-button{padding:0;position:relative;left:-71px;display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;text-align:center}footer .mixpanel-button a,footer .mixpanel-button span{white-space:nowrap;display:block}footer .mixpanel-button img{width:100px!important}footer .mail-to{font-weight:600}footer a,footer h5{color:#683594;text-decoration:none;margin-bottom:0}footer a{letter-spacing:.4px;font-size:13px;font-weight:400}footer ul.social-list{list-style-type:none;padding:0;margin:0}footer ul.social-list li{display:inline-block;margin-right:10px}footer ul.social-list li i{font-size:17px}.ts-footer__copyright{display:block;text-indent:50px}@media (min-width:768px){.ts-footer__copyright{text-align:left}.ts-footer__mail{display:block;text-align:left;text-indent:50px;font-weight:700;line-height:36px}.ts-footer .container-fluid .row>div:first-child{padding-left:0}.ts-footer .container-fluid .row>div:nth-child(2){padding:0}.ts-footer .container-fluid .row>div:last-child{padding-right:0}footer{margin-top:100px;text-align:left;background-image:url(//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/footer-skyline.png);background-repeat:repeat-x;background-position:left top}footer .brand-footer .linear-footer h5,footer .brand-footer .linear-footer ul{display:inline-block;margin:2px 25px 2px 0;vertical-align:middle}footer .brand-footer .linear-footer .list-linear{list-style-type:none;padding:0}footer .brand-footer .linear-footer .list-linear li{float:left;margin-right:35px}footer ul.social-list{list-style-type:none;padding:0}footer ul.social-list li{display:block;float:left;margin-right:10px}footer ul.list-apps{list-style-type:none;padding:0}footer ul.list-apps li{line-height:50px;margin:10px 0}footer ul.list-apps li .store-icon{background-size:auto 45px;background-image:url(//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/store.png);background-repeat:no-repeat;display:block;width:150px;text-indent:-9999px}footer ul.list-apps li .store-icon.google-play-icon{background-position:0 0}footer ul.list-apps li .store-icon.app-store-icon{background-position:-172px 0}footer ul li{line-height:31px}footer ul li>a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block}}.blog-links li{line-height:1.5;margin-bottom:18px}.blog-links li a{white-space:normal}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TsFooterComponent);
+    return TsFooterComponent;
 }());
 
 var LoginModalComponent = /** @class */ (function () {
@@ -261,64 +338,49 @@ var TsHeaderComponent = /** @class */ (function () {
     return TsHeaderComponent;
 }());
 
-var TsFooterComponent = /** @class */ (function () {
-    function TsFooterComponent() {
-        this.source = "landingPages";
-        this.popularEvents = [];
-        this.recentBlogs = [];
-        this.popularReads = [];
-        this.openContactUs = function () {
-            window.open('/contact-us');
-        };
-        this.openMyBooking = function () {
-            window.open('/signin?rdurl=/dashboard/mybookings', '_self');
-        };
+var UserMenuComponent = /** @class */ (function () {
+    function UserMenuComponent(notificationService, userService, cookieService) {
+        this.notificationService = notificationService;
+        this.userService = userService;
+        this.cookieService = cookieService;
+        this.panelOpen1 = false;
+        this.panelOpen2 = false;
+        this.close = new EventEmitter();
     }
-    TsFooterComponent.prototype.ngOnInit = function () {
-        if (this.source == "landingPages") ;
+    UserMenuComponent.prototype.logout = function () {
+        this.close.emit();
+        this.cookieService.deleteCookie("townscript-user");
+        this.userService.updateUser(null);
+        this.notificationService.success("You are logged out successfully!", 2000, "Dismiss");
     };
+    UserMenuComponent.prototype.ngAfterViewInit = function () {
+    };
+    UserMenuComponent.prototype.ngOnInit = function () { };
     __decorate([
-        Input("source"),
-        __metadata("design:type", Object)
-    ], TsFooterComponent.prototype, "source", void 0);
+        Input("panelOpen1"),
+        __metadata("design:type", Boolean)
+    ], UserMenuComponent.prototype, "panelOpen1", void 0);
     __decorate([
-        Input("popularEvents"),
-        __metadata("design:type", Object)
-    ], TsFooterComponent.prototype, "popularEvents", void 0);
+        Input("panelOpen2"),
+        __metadata("design:type", Boolean)
+    ], UserMenuComponent.prototype, "panelOpen2", void 0);
     __decorate([
-        Input("recentBlogs"),
+        Input("user"),
         __metadata("design:type", Object)
-    ], TsFooterComponent.prototype, "recentBlogs", void 0);
+    ], UserMenuComponent.prototype, "user", void 0);
     __decorate([
-        Input("popularReads"),
+        Output("close"),
         __metadata("design:type", Object)
-    ], TsFooterComponent.prototype, "popularReads", void 0);
-    TsFooterComponent = __decorate([
+    ], UserMenuComponent.prototype, "close", void 0);
+    UserMenuComponent = __decorate([
         Component({
-            selector: 'ts-footer',
-            template: "<footer class=\"ts-footer text-center pt-32 pb-24\" [class.new-footer]=\"source=='marketplace'\">\n    <div class=\"ts-container content-footer\">\n        <div class=\"flex mb-4\">\n            <div class=\"w-1/5 hidden-xs px-4\">\n                <h5>ORGANISE EVENTS</h5>\n                <ul class=\"list-unstyled\">\n                    <li><a href=\"/i/conference-registration\">Conferences</a></li>\n                    <li><a href=\"/i/workshops-and-trainings\">Workshops and Trainings</a></li>\n                    <li><a href=\"/i/college-fest-payment-portal\">College Festivals</a></li>\n                    <li><a href=\"/i/marathon-cycling-trips-treks-registration\">Sports and Fitness Events</a></li>\n                    <li><a href=\"/i/entertainment-events-ticketing\">Entertainment Events</a></li>\n                    <li><a href=\"/i/meetup-registration\">Meetups and Reunions</a></li>\n                    <li><a href=\"/i/treks-trips-registration\">Treks and Trips</a></li>\n                    <!-- <li><a href=\"/i/fundraising-crowdfunding\">Fundraisings</a></li> -->\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\">\n                <h5>POPULAR SEARCHES</h5>\n                <ul class=\"list-unstyled\">\n                    <!--<li><a href=\"/pune/new-year-party\">New Year Parties In Pune</a></li>\n\t\t\t\t<li><a href=\"/mumbai/new-year-party\">New Year Parties In Mumbai</a></li>\n\t\t\t\t<li><a href=\"/delhi/new-year-party\">New Year Parties In Delhi</a></li>\n\t\t\t\t<li><a href=\"/bangalore/new-year-party\">New Year Parties In Bangalore</a></li>-->\n                    <li><a\n                            href=\"http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-\">\n                            List of Countries supported by Townscript</a></li>\n                    <li><a href=\"/i/sell-event-tickets-online\">Sell Event Tickets Online</a></li>\n                    <li><a href=\"/i/event-management-software\">Event Management Software</a></li>\n                    <li><a href=\"/i/event-registration-software\">Event Registration Software</a></li>\n                    <li><a href=\"/i/conference-management-system\">Conference management System</a></li>\n                    <li><a href=\"/i/event-planning-software\">Event Planning Software</a></li>\n                    <li><a href=\"/i/online-event-ticketing\">Online Event Ticketing</a></li>\n                    <li><a href=\"/i/corporate-event-management\">Corporate Event Management</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\" *ngIf=\"source=='landingPages'\">\n                <h5>RECENT BLOGS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let blog of recentBlogs\"><a [href]=\"blog.url\">{{blog.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\" *ngIf=\"source=='marketplace'\">\n                <h5>POPULAR EVENTS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let event of popularEvents\"><a [href]=\"event.url\">{{event.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 px-4 hidden-xs\">\n                <h5>POPULAR READS</h5>\n                <ul class=\"list-unstyled blog-links\">\n                    <li *ngFor=\"let read of popularReads\"><a [href]=\"read.url\" target=\"_blank\">{{read.title}}</a></li>\n                </ul>\n            </div>\n            <div class=\"w-1/5 hidden-xs pl-12\">\n                <h5>BOOKINGS</h5>\n                <ul class=\"list-unstyled\">\n                    <li>\n                        <a href (click)=\"openMyBooking()\">My Bookings</a>\n                    </li>\n                </ul>\n                <h5 (click)=\"openContactUs()\">GET IN TOUCH</h5>\n                <!--<h5><a href=\"mailto:service@townscript.com\" target=\"_blank\" class=\"mail-to visible-xs\">service@townscript.com</a></h5>-->\n                <ul class=\"list-unstyled\">\n                    <!-- \t\t\t\t<li class=\"hidden-xs\">\n\t\t\t\t\t<a href=\"#\">Contact us</a>\n\t\t\t\t</li> -->\n                    <li class=\"social-list-item\">\n                        <ul class=\"social-list clearfix\">\n                            <li>\n                                <a href=\"https://www.facebook.com/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-facebook\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://twitter.com/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-twitter\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://plus.google.com/+Townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-google-plus\"></i></a>\n                            </li>\n                            <li>\n                                <a href=\"https://www.linkedin.com/company/townscript\" target=\"_blank\"><i\n                                        class=\"mdi mdi-linkedin\"></i></a>\n                            </li>\n                            <!--<li>\n\t\t\t\t\t\t\t<a href=\"mailto:service@townscript.com\" target=\"_blank\"><i class=\"ion-email\"></i></a>\n\t\t\t\t\t\t</li>-->\n                        </ul>\n                    </li>\n                </ul>\n                <h5 class=\"hidden-xs\">ORGANIZER APP</h5>\n                <ul class=\"list-apps hidden-xs\">\n                    <li>\n                        <a href=\"//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN\"\n                            title=\"Download on Google play\" class=\"store-icon google-play-icon\" target=\"_blank\">Download\n                            on Google\n                            play</a>\n                    </li>\n                    <li>\n                        <a href=\"//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8\"\n                            title=\"Download on App Store\" target=\"_blank\" class=\"store-icon app-store-icon\">Download on\n                            App Store</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n    </div>\n    <div class=\"ts-container\">\n        <div class=\"brand-footer\">\n            <div class=\"flex mb-4\">\n                <div class=\"w-1/4\">\n                    <img src=\"assets/images/ts-logoBMS.png\" alt=\"Townscript Event Ticketing Logo\"\n                        title=\"Townscript Event Ticketing Logo\" />\n                    <a class=\"ts-footer__copyright\">Copyright@2019</a>\n                    <!--<a href=\"mailto:service@townscript.com\" target=\"_blank\" class=\"ts-footer__mail hidden-xs\">service@townscript.com</a>-->\n                </div>\n                <div class=\"w-2/3 linear-footer hidden-xs\">\n                    <h5>LEARN MORE</h5>\n                    <br>\n                    <ul class=\"list-linear\">\n                        <!-- <li><a href=\"#\">Features</a></li> -->\n                        <li><a href=\"/pricing\">Pricing</a></li>\n                        <li><a href=\"/how-it-works\" ts-data-analytics prop-event=\"click\" eventLabel=\"How It Works\"\n                                prop-clicked-location=\"Footer\">How it works</a></li>\n                        <!-- <li><a href=\"#\">Mobile Apps</a></li> -->\n                        <li><a href=\"//townscript-api.readme.io/\" target=\"_blank\">APIs for Developers</a></li>\n                        <li><a href=\"/terms-and-conditions\">Policies</a></li>\n                        <li><a href=\"/privacy-policy\">Privacy</a></li>\n                        <li><a href=\"http://support.townscript.com/support/home\" target=\"_blank\">Support / FAQs</a></li>\n                    </ul>\n                    <div class=\"linear-footer hidden-xs\" *ngIf=\"source=='marketplace'\">\n                        <h5>POPULAR CITIES</h5>\n                        <br>\n                        <ul class=\"list-linear\">\n                            <!-- <li *ngFor=\"let city of countryCityMap\">\n                                <div (click)=\"onChangeCity(city)\"><a href=\"/{{city | lowercase}}\">{{city}}</a></div>\n                            </li> -->\n                        </ul>\n                    </div>\n                    <div class=\"linear-footer hidden-xs\">\n                        <h5>ABOUT</h5>\n                        <br>\n                        <ul class=\"list-linear\">\n                            <li><a href=\"/about-us\">About us</a></li>\n                            <li><a href=\"/contact-us\">Contact us</a></li>\n                            <!-- <li><a href=\"#\">Career</a></li> -->\n                            <!-- <li><a href=\"#\">Media</a></li> -->\n                            <li><a href=\"http://blog.townscript.com\" target=\"_blank\">Blog</a></li>\n                            <li><a href=\"http://eventmagazine.townscript.com/\" target=\"_blank\">Event Magazine</a></li>\n                            <li><a href=\"https://productblog.townscript.com/\" target=\"_blank\">Product Diary</a></li>\n                            <li><a href=\"/sitemap\" target=\"_blank\">Sitemap</a></li>\n                        </ul>\n                    </div>\n                </div>\n                <div class=\"w-1/12 mixpanel-button align-text hidden-xs\">\n                    <a href=\"https://mixpanel.com/f/partner\" target=\"_blank\"><img\n                            src=\"//cdn.mxpnl.com/site_media/images/partner/badge_blue.png\" alt=\"Mobile Analytics\"\n                            width=\"100\"></a>\n                    <a href=\"https://www.g2crowd.com/products/townscript/reviews\" target=\"_blank\">\n                        <img src=\"https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png\"\n                            alt=\"G2Crowd Townscript Reviews\" width=\"100\">\n                        <span>30 Reviews</span>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n    <br>\n</footer>",
-            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}footer{background-color:#ebebeb}footer.new-footer{background-color:#f7f7f7}footer.new-footer a,footer.new-footer h5{color:#3e3e3e;text-decoration:none;margin-bottom:0}footer h5{font-size:14px!important;font-weight:600}footer li,footer ul{margin-bottom:0}footer .content-footer{padding-bottom:20px}footer .m-l-8per{margin-left:8%}footer .brand-footer{border-top:1px solid #e5d7f1;padding-top:30px}footer img{width:165px}footer .bookmyshow-logo{width:140px}footer .mixpanel-button{padding:0;position:relative;left:-71px;display:-webkit-box;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;flex-direction:column;-webkit-box-pack:center;justify-content:center;-webkit-box-align:center;align-items:center;text-align:center}footer .mixpanel-button a,footer .mixpanel-button span{white-space:nowrap;display:block}footer .mixpanel-button img{width:100px!important}footer .mail-to{font-weight:600}footer a,footer h5{color:#683594;text-decoration:none;margin-bottom:0}footer a{letter-spacing:.4px;font-size:13px;font-weight:400}footer ul.social-list{list-style-type:none;padding:0;margin:0}footer ul.social-list li{display:inline-block;margin-right:10px}footer ul.social-list li i{font-size:17px}.ts-footer__copyright{display:block;text-indent:50px}@media (min-width:768px){.ts-footer__copyright{text-align:left}.ts-footer__mail{display:block;text-align:left;text-indent:50px;font-weight:700;line-height:36px}.ts-footer .container-fluid .row>div:first-child{padding-left:0}.ts-footer .container-fluid .row>div:nth-child(2){padding:0}.ts-footer .container-fluid .row>div:last-child{padding-right:0}footer{margin-top:100px;text-align:left;background-image:url(//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/footer-skyline.png);background-repeat:repeat-x;background-position:left top}footer .brand-footer .linear-footer h5,footer .brand-footer .linear-footer ul{display:inline-block;margin:2px 25px 2px 0;vertical-align:middle}footer .brand-footer .linear-footer .list-linear{list-style-type:none;padding:0}footer .brand-footer .linear-footer .list-linear li{float:left;margin-right:35px}footer ul.social-list{list-style-type:none;padding:0}footer ul.social-list li{display:block;float:left;margin-right:10px}footer ul.list-apps{list-style-type:none;padding:0}footer ul.list-apps li{line-height:50px;margin:10px 0}footer ul.list-apps li .store-icon{background-size:auto 45px;background-image:url(//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/store.png);background-repeat:no-repeat;display:block;width:150px;text-indent:-9999px}footer ul.list-apps li .store-icon.google-play-icon{background-position:0 0}footer ul.list-apps li .store-icon.app-store-icon{background-position:-172px 0}footer ul li{line-height:31px}footer ul li>a{text-overflow:ellipsis;white-space:nowrap;overflow:hidden;display:block}}.blog-links li{line-height:1.5;margin-bottom:18px}.blog-links li a{white-space:normal}"]
+            selector: 'app-user-menu',
+            template: "<div class=\"user-menu  px-2 cursor-pointer\">\n    <div class=\"flex items-center border-b py-2 border-gray-300\">\n        <div class=\"mr-1 leading-none\">\n            <img class=\"rounded-full mr-2\" width=\"45\"\n                [src]=\"'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename\" />\n        </div>\n        <div class=\"leading-tight\">\n            <span class=\"block text-lg text-gray-800\">{{user?.user}}</span>\n            <span class=\"text-xs text-gray-600 whitespace-nowrap\">View and edit profile</span>\n        </div>\n    </div>\n    <div class=\"menu mt-2 px-1\">\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen1=!panelOpen1\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen1\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Organizing Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen1\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen1\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-calendar-today mr-2 color-blue text-xl\"></i>\n                        Manage Event\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-cash mr-2 color-blue text-xl\"></i>\n                        Billings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-chart-line mr-2 color-blue text-xl\"></i>\n                        Reports\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-bullhorn mr-2 color-blue text-xl\"></i>\n                        Promotions\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen2\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Attending Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen2\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen2\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-ticket-account mr-2 color-blue text-xl\"></i>\n                        My Bookings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-heart mr-2 color-blue text-xl \"></i>\n                        Following\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <div class=\"px-1 py-2 flex items-center justify-between\" (click)=\"logout()\" matRipple>\n            <span class=\"text-gray-700\">\n                Logout\n            </span>\n            <i class=\"mdi mdi-logout-variant text-2xl color-blue\"></i>\n        </div>\n    </div>\n</div>",
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}"]
         }),
-        __metadata("design:paramtypes", [])
-    ], TsFooterComponent);
-    return TsFooterComponent;
-}());
-
-var HeaderService = /** @class */ (function () {
-    function HeaderService(http) {
-        var _this = this;
-        this.http = http;
-        this.baseUrl = config.baseUrl;
-        this.apiServerUrl = this.baseUrl + "api/";
-        this.getplaceSearchResults = function (query) {
-            return _this.http.get(_this.baseUrl + "listings/place/autocomplete?query=" + query);
-        };
-    }
-    HeaderService = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [HttpClient])
-    ], HeaderService);
-    return HeaderService;
+        __metadata("design:paramtypes", [NotificationService, UserService, CookieService])
+    ], UserMenuComponent);
+    return UserMenuComponent;
 }());
 
 var algoliasearch = algoliaSearchImported;
@@ -442,6 +504,24 @@ var SearchComponent = /** @class */ (function () {
     return SearchComponent;
 }());
 
+var HamburgerMenuComponent = /** @class */ (function () {
+    function HamburgerMenuComponent() {
+    }
+    HamburgerMenuComponent.prototype.ngAfterViewInit = function () {
+    };
+    HamburgerMenuComponent.prototype.ngOnInit = function () {
+    };
+    HamburgerMenuComponent = __decorate([
+        Component({
+            selector: 'app-hamburger-menu',
+            template: "<nav role=\"navigation\">\n    <div class=\"ham-container position-relative cursor-pointer\">\n        <div class=\"hamburger position-relative\">\n            <!-- <input type=\"checkbox\" /> -->\n            <div class=\"spans\" (click)=\"active=!active\">\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n            </div>\n            <div class=\"overlay fixed bg-black w-full h-full\" *ngIf=\"active\"></div>\n            <ul class=\"menu fixed h-full px-4\" [class.active]=\"active\">\n                <img class=\"mb-10\" src=\"assets/images/ts-logo.svg\" class=\"logo\" />\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen=!panelOpen\">\n                        <div>Organizing Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen\">\n                        <div>\n                            <div>Manage Event</div>\n                            <div>Billings</div>\n                            <div>Reports</div>\n                            <div>Promotions</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                        <div>Attending Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen2\">\n                        <div>\n                            <div>My Bookings</div>\n                            <div>Following</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <a href=\"#\">\n                    <li>My Profile</li>\n                </a>\n                <a href=\"#\">\n                    <li>Logout</li>\n                </a>\n            </ul>\n        </div>\n    </div>\n</nav>",
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ham-container{z-index:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ham-container .hamburger span{width:28px;height:3.2px;margin-bottom:5px;position:relative;border-radius:3px;z-index:1;-webkit-transform-origin:4px 0;transform-origin:4px 0;-webkit-transition:background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .hamburger span:first-child{-webkit-transform-origin:0 0;transform-origin:0 0}.ham-container .hamburger span:last-child{margin-bottom:0}.ham-container .hamburger span:nth-last-child(2){-webkit-transform-origin:0 100%;transform-origin:0 100%}.ham-container .hamburger span.active{opacity:1;margin-left:240px;-webkit-transform:rotate(45deg) translate(-14px,-16px);transform:rotate(45deg) translate(-14px,-16px);background:#8c8c8c}.ham-container .hamburger span.active:nth-last-child(3){opacity:0;-webkit-transform:rotate(0) scale(.2,.2);transform:rotate(0) scale(.2,.2)}.ham-container .hamburger span.active:nth-last-child(2){-webkit-transform:rotate(-45deg) translate(0,4px);transform:rotate(-45deg) translate(0,4px)}.ham-container .hamburger span.active~ul{-webkit-transform:none;transform:none}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}@keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}.ham-container .overlay{top:0;left:0;opacity:.5;-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.ham-container .menu{top:0;left:0;width:300px;padding-top:15px;background:#fafafa;box-shadow:0 2px 4px 0 rgba(0,0,0,.11);list-style-type:none;-webkit-font-smoothing:antialiased;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:translate(-100%,0);transform:translate(-100%,0);-webkit-transition:-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .menu .logo{height:40px}.ham-container .menu.active{-webkit-transform:none;transform:none}.ham-container .menu li{padding:10px 0}"]
+        }),
+        __metadata("design:paramtypes", [])
+    ], HamburgerMenuComponent);
+    return HamburgerMenuComponent;
+}());
+
 var CitySearchPopupComponent = /** @class */ (function () {
     function CitySearchPopupComponent(headerService, timeService, datepipe) {
         var _this = this;
@@ -533,84 +613,41 @@ var CitySearchPopupComponent = /** @class */ (function () {
     return CitySearchPopupComponent;
 }());
 
-var HamburgerMenuComponent = /** @class */ (function () {
-    function HamburgerMenuComponent() {
+var AppPasswordDirective = /** @class */ (function () {
+    function AppPasswordDirective(el) {
+        this.el = el;
+        this._shown = false;
+        this.setup();
     }
-    HamburgerMenuComponent.prototype.ngAfterViewInit = function () {
+    AppPasswordDirective.prototype.toggle = function (span) {
+        this._shown = !this._shown;
+        if (this._shown) {
+            console.log(this.el.nativeElement);
+            this.el.nativeElement.setAttribute('type', 'text');
+            span.innerHTML = 'Hide password';
+        }
+        else {
+            this.el.nativeElement.setAttribute('type', 'password');
+            span.innerHTML = 'Show password';
+        }
     };
-    HamburgerMenuComponent.prototype.ngOnInit = function () {
+    AppPasswordDirective.prototype.setup = function () {
+        var _this = this;
+        var parent = this.el.nativeElement.parentNode;
+        var span = document.createElement('span');
+        span.innerHTML = "Show password";
+        span.addEventListener('click', function (event) {
+            _this.toggle(span);
+        });
+        parent.appendChild(span);
     };
-    HamburgerMenuComponent = __decorate([
-        Component({
-            selector: 'app-hamburger-menu',
-            template: "<nav role=\"navigation\">\n    <div class=\"ham-container position-relative cursor-pointer\">\n        <div class=\"hamburger position-relative\">\n            <!-- <input type=\"checkbox\" /> -->\n            <div class=\"spans\" (click)=\"active=!active\">\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n                <span class=\"block background-blue\" [class.active]=\"active\"></span>\n            </div>\n            <div class=\"overlay fixed bg-black w-full h-full\" *ngIf=\"active\"></div>\n            <ul class=\"menu fixed h-full px-4\" [class.active]=\"active\">\n                <img class=\"mb-10\" src=\"assets/images/ts-logo.svg\" class=\"logo\" />\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen=!panelOpen\">\n                        <div>Organizing Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen\">\n                        <div>\n                            <div>Manage Event</div>\n                            <div>Billings</div>\n                            <div>Reports</div>\n                            <div>Promotions</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <ts-panel [disable]=\"false\">\n                    <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                        <div>Attending Events</div>\n                    </ts-panel-header>\n                    <ts-panel-body [open]=\"panelOpen2\">\n                        <div>\n                            <div>My Bookings</div>\n                            <div>Following</div>\n                        </div>\n                    </ts-panel-body>\n                </ts-panel>\n                <a href=\"#\">\n                    <li>My Profile</li>\n                </a>\n                <a href=\"#\">\n                    <li>Logout</li>\n                </a>\n            </ul>\n        </div>\n    </div>\n</nav>",
-            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ham-container{z-index:1;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.ham-container .hamburger span{width:28px;height:3.2px;margin-bottom:5px;position:relative;border-radius:3px;z-index:1;-webkit-transform-origin:4px 0;transform-origin:4px 0;-webkit-transition:background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),background .5s cubic-bezier(.77,.2,.05,1),margin .5s cubic-bezier(.77,.2,.05,1),opacity .55s,-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .hamburger span:first-child{-webkit-transform-origin:0 0;transform-origin:0 0}.ham-container .hamburger span:last-child{margin-bottom:0}.ham-container .hamburger span:nth-last-child(2){-webkit-transform-origin:0 100%;transform-origin:0 100%}.ham-container .hamburger span.active{opacity:1;margin-left:240px;-webkit-transform:rotate(45deg) translate(-14px,-16px);transform:rotate(45deg) translate(-14px,-16px);background:#8c8c8c}.ham-container .hamburger span.active:nth-last-child(3){opacity:0;-webkit-transform:rotate(0) scale(.2,.2);transform:rotate(0) scale(.2,.2)}.ham-container .hamburger span.active:nth-last-child(2){-webkit-transform:rotate(-45deg) translate(0,4px);transform:rotate(-45deg) translate(0,4px)}.ham-container .hamburger span.active~ul{-webkit-transform:none;transform:none}@-webkit-keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}@keyframes fadeIn{0%{opacity:0}100%{opacity:.5}}.ham-container .overlay{top:0;left:0;opacity:.5;-webkit-animation-name:fadeIn;animation-name:fadeIn;-webkit-animation-duration:.5s;animation-duration:.5s}.ham-container .menu{top:0;left:0;width:300px;padding-top:15px;background:#fafafa;box-shadow:0 2px 4px 0 rgba(0,0,0,.11);list-style-type:none;-webkit-font-smoothing:antialiased;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:translate(-100%,0);transform:translate(-100%,0);-webkit-transition:-webkit-transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1);transition:transform .5s cubic-bezier(.77,.2,.05,1),-webkit-transform .5s cubic-bezier(.77,.2,.05,1)}.ham-container .menu .logo{height:40px}.ham-container .menu.active{-webkit-transform:none;transform:none}.ham-container .menu li{padding:10px 0}"]
+    AppPasswordDirective = __decorate([
+        Directive({
+            selector: '[appPassword]'
         }),
-        __metadata("design:paramtypes", [])
-    ], HamburgerMenuComponent);
-    return HamburgerMenuComponent;
-}());
-
-var NotificationService = /** @class */ (function () {
-    function NotificationService(snackBar) {
-        this.snackBar = snackBar;
-    }
-    NotificationService.prototype.success = function (message, duration, action) {
-        var config = new MatSnackBarConfig();
-        config.panelClass = ['ts-notification-success'];
-        config.duration = duration;
-        this.snackBar.open(message, action, config);
-    };
-    NotificationService = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [MatSnackBar])
-    ], NotificationService);
-    return NotificationService;
-}());
-
-var UserMenuComponent = /** @class */ (function () {
-    function UserMenuComponent(notificationService, userService, cookieService) {
-        this.notificationService = notificationService;
-        this.userService = userService;
-        this.cookieService = cookieService;
-        this.panelOpen1 = false;
-        this.panelOpen2 = false;
-        this.close = new EventEmitter();
-    }
-    UserMenuComponent.prototype.logout = function () {
-        this.close.emit();
-        this.cookieService.deleteCookie("townscript-user");
-        this.userService.updateUser(null);
-        this.notificationService.success("You are logged out successfully!", 2000, "Dismiss");
-    };
-    UserMenuComponent.prototype.ngAfterViewInit = function () {
-    };
-    UserMenuComponent.prototype.ngOnInit = function () { };
-    __decorate([
-        Input("panelOpen1"),
-        __metadata("design:type", Boolean)
-    ], UserMenuComponent.prototype, "panelOpen1", void 0);
-    __decorate([
-        Input("panelOpen2"),
-        __metadata("design:type", Boolean)
-    ], UserMenuComponent.prototype, "panelOpen2", void 0);
-    __decorate([
-        Input("user"),
-        __metadata("design:type", Object)
-    ], UserMenuComponent.prototype, "user", void 0);
-    __decorate([
-        Output("close"),
-        __metadata("design:type", Object)
-    ], UserMenuComponent.prototype, "close", void 0);
-    UserMenuComponent = __decorate([
-        Component({
-            selector: 'app-user-menu',
-            template: "<div class=\"user-menu  px-2 cursor-pointer\">\n    <div class=\"flex items-center border-b py-2 border-gray-300\">\n        <div class=\"mr-1 leading-none\">\n            <img class=\"rounded-full mr-2\" width=\"45\"\n                [src]=\"'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename\" />\n        </div>\n        <div class=\"leading-tight\">\n            <span class=\"block text-lg text-gray-800\">{{user?.user}}</span>\n            <span class=\"text-xs text-gray-600 whitespace-nowrap\">View and edit profile</span>\n        </div>\n    </div>\n    <div class=\"menu mt-2 px-1\">\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen1=!panelOpen1\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen1\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Organizing Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen1\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen1\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-calendar-today mr-2 color-blue text-xl\"></i>\n                        Manage Event\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-cash mr-2 color-blue text-xl\"></i>\n                        Billings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-chart-line mr-2 color-blue text-xl\"></i>\n                        Reports\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-bullhorn mr-2 color-blue text-xl\"></i>\n                        Promotions\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <ts-panel [disable]=\"false\">\n            <ts-panel-header (click)=\"panelOpen2=!panelOpen2\">\n                <div class=\"px-1 py-2 flex items-center border-b  border-gray-300 justify-between\"\n                    [class.border-dashed]=\"panelOpen2\" matRipple>\n                    <span class=\"text-gray-700\">\n                        Attending Events\n                    </span>\n                    <i class=\"mdi mdi-chevron-down text-2xl color-blue\" [class.rotate-180]=\"panelOpen2\"></i>\n                </div>\n            </ts-panel-header>\n            <ts-panel-body [open]=\"panelOpen2\">\n                <div class=\"text-sm text-gray-800\">\n                    <div matRipple class=\"px-1 py-1 flex items-center\">\n                        <i class=\"mdi mdi-ticket-account mr-2 color-blue text-xl\"></i>\n                        My Bookings\n                    </div>\n                    <div matRipple class=\"px-1 py-1 pb-2 flex items-center border-b border-gray-300\">\n                        <i class=\"mdi mdi-heart mr-2 color-blue text-xl \"></i>\n                        Following\n                    </div>\n                </div>\n            </ts-panel-body>\n        </ts-panel>\n        <div class=\"px-1 py-2 flex items-center justify-between\" (click)=\"logout()\" matRipple>\n            <span class=\"text-gray-700\">\n                Logout\n            </span>\n            <i class=\"mdi mdi-logout-variant text-2xl color-blue\"></i>\n        </div>\n    </div>\n</div>",
-            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}"]
-        }),
-        __metadata("design:paramtypes", [NotificationService, UserService, CookieService])
-    ], UserMenuComponent);
-    return UserMenuComponent;
+        __metadata("design:paramtypes", [ElementRef])
+    ], AppPasswordDirective);
+    return AppPasswordDirective;
 }());
 
 var headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
@@ -904,123 +941,6 @@ var LoginTopContentComponent = /** @class */ (function () {
     return LoginTopContentComponent;
 }());
 
-var AppPasswordDirective = /** @class */ (function () {
-    function AppPasswordDirective(el) {
-        this.el = el;
-        this._shown = false;
-        this.setup();
-    }
-    AppPasswordDirective.prototype.toggle = function (span) {
-        this._shown = !this._shown;
-        if (this._shown) {
-            console.log(this.el.nativeElement);
-            this.el.nativeElement.setAttribute('type', 'text');
-            span.innerHTML = 'Hide password';
-        }
-        else {
-            this.el.nativeElement.setAttribute('type', 'password');
-            span.innerHTML = 'Show password';
-        }
-    };
-    AppPasswordDirective.prototype.setup = function () {
-        var _this = this;
-        var parent = this.el.nativeElement.parentNode;
-        var span = document.createElement('span');
-        span.innerHTML = "Show password";
-        span.addEventListener('click', function (event) {
-            _this.toggle(span);
-        });
-        parent.appendChild(span);
-    };
-    AppPasswordDirective = __decorate([
-        Directive({
-            selector: '[appPassword]'
-        }),
-        __metadata("design:paramtypes", [ElementRef])
-    ], AppPasswordDirective);
-    return AppPasswordDirective;
-}());
-
-var TsLoginSignupModule = /** @class */ (function () {
-    function TsLoginSignupModule() {
-    }
-    TsLoginSignupModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                FormsModule,
-                TsFormsModule,
-                ReactiveFormsModule,
-                RecaptchaModule,
-                HttpClientModule,
-                MatRippleModule,
-                MatSnackBarModule
-            ],
-            declarations: [
-                TsLoginSignupComponent,
-                LoginTopContentComponent,
-                AppPasswordDirective,
-                LoginModalComponent
-            ],
-            exports: [
-                TsLoginSignupComponent,
-                LoginTopContentComponent,
-                LoginModalComponent
-            ],
-            providers: [
-                ApiService,
-                CookieService,
-                UserService,
-                NotificationService
-            ]
-        })
-    ], TsLoginSignupModule);
-    return TsLoginSignupModule;
-}());
-
-var LayoutModule = /** @class */ (function () {
-    function LayoutModule() {
-    }
-    LayoutModule = __decorate([
-        NgModule({
-            imports: [
-                CommonModule,
-                FormsModule,
-                HttpClientModule,
-                MatRippleModule$1,
-                MatSnackBarModule$1,
-                TsLoginSignupModule,
-                TsFormsModule
-            ],
-            declarations: [
-                TsHeaderComponent,
-                TsFooterComponent,
-                SearchComponent,
-                CitySearchPopupComponent,
-                HamburgerMenuComponent,
-                UserMenuComponent
-            ],
-            exports: [
-                TsHeaderComponent,
-                TsFooterComponent,
-                SearchComponent,
-                CitySearchPopupComponent,
-                HamburgerMenuComponent,
-                UserMenuComponent
-            ],
-            providers: [
-                TimeService,
-                DatePipe,
-                ApiService,
-                HeaderService,
-                BrowserService,
-                UserService
-            ]
-        })
-    ], LayoutModule);
-    return LayoutModule;
-}());
-
 var RangeDatePipe = /** @class */ (function () {
     function RangeDatePipe() {
     }
@@ -1197,6 +1117,86 @@ var TsListingCardComponent = /** @class */ (function () {
     return TsListingCardComponent;
 }());
 
+var TsLoginSignupModule = /** @class */ (function () {
+    function TsLoginSignupModule() {
+    }
+    TsLoginSignupModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                TsFormsModule,
+                ReactiveFormsModule,
+                RecaptchaModule,
+                HttpClientModule,
+                MatRippleModule,
+                MatSnackBarModule
+            ],
+            declarations: [
+                TsLoginSignupComponent,
+                LoginTopContentComponent,
+                AppPasswordDirective,
+                LoginModalComponent
+            ],
+            exports: [
+                TsLoginSignupComponent,
+                LoginTopContentComponent,
+                LoginModalComponent
+            ],
+            providers: [
+                ApiService,
+                CookieService,
+                UserService,
+                NotificationService
+            ]
+        })
+    ], TsLoginSignupModule);
+    return TsLoginSignupModule;
+}());
+
+var LayoutModule = /** @class */ (function () {
+    function LayoutModule() {
+    }
+    LayoutModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule,
+                FormsModule,
+                HttpClientModule,
+                MatRippleModule$1,
+                MatSnackBarModule$1,
+                TsLoginSignupModule,
+                TsFormsModule
+            ],
+            declarations: [
+                TsHeaderComponent,
+                TsFooterComponent,
+                SearchComponent,
+                CitySearchPopupComponent,
+                HamburgerMenuComponent,
+                UserMenuComponent
+            ],
+            exports: [
+                TsHeaderComponent,
+                TsFooterComponent,
+                SearchComponent,
+                CitySearchPopupComponent,
+                HamburgerMenuComponent,
+                UserMenuComponent
+            ],
+            providers: [
+                TimeService,
+                DatePipe,
+                ApiService,
+                HeaderService,
+                BrowserService,
+                UserService
+            ]
+        })
+    ], LayoutModule);
+    return LayoutModule;
+}());
+
 var CardsModule = /** @class */ (function () {
     function CardsModule() {
     }
@@ -1227,5 +1227,5 @@ var CardsModule = /** @class */ (function () {
     return CardsModule;
 }());
 
-export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, LayoutModule, LoginModalComponent, LoginTopContentComponent, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config, HeaderService as ɵa, NotificationService as ɵb, CookieService as ɵc, ApiService as ɵd, UserService as ɵe };
+export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config };
 //# sourceMappingURL=townscript-components.js.map
