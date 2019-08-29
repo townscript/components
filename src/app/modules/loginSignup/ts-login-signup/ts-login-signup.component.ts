@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ɵSWITCH_COMPILE_DIRECTIVE__POST_R3__ } from '@angular/core';
 import { ApiService } from '../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -8,13 +8,44 @@ import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from '../../../core/cookie.service';
 import { UserService } from '../../../shared/services/user-service';
 import { NotificationService } from '../../../shared/services/notification.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
-const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
+const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9VU0VSIiwic3ViIjoidGVzdGluZ0B0b3duc2NyaXB0LmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTU2NjkwODg0NjE2MCwiVVNFUl9JRCI6NDkwNiwiZXhwIjoxNTc0Njg0ODQ2fQ.ge-O16ZPw9wHvjoJrmTKbJRhfOkvAdI57N_YBZ5yr_IwymKOhPAyQpD8vHxIqhJGJ4tfJ_jez4xh3vQoWwngZw');
 
 @Component({
     selector: 'app-ts-login-signup',
     templateUrl: './ts-login-signup.component.html',
-    styleUrls: ['./ts-login-signup.component.scss']
+    styleUrls: ['./ts-login-signup.component.scss'],
+    animations: [
+        trigger('btn-animate', [
+            transition('void => *', [
+                animate('1s ease', style({ opacity: 1})),
+            ]),
+            transition('* => void', [
+              animate('1s ease', style({ opacity: 0, height: '0'}))
+            ])
+          ]),
+          trigger('in-out-animate', [
+            transition('void => *', [
+                style({ opacity: 0.2}),
+                animate('1s ease', style({ opacity: 1})),
+            ]),
+            transition('* => void', [
+              style({ opacity: 0.6}),
+              animate('1s ease', style({ opacity: 0, height: '0'}))
+            ])
+          ]),
+          trigger('EnterLeave', [
+            state('flyIn', style({ transform: 'translateY(0)'})),
+            transition(':enter', [
+              style({ transform: 'translateY(0%)' }),
+              animate('1s ease-in-out')
+            ]),
+            transition(':leave', [
+              animate('.5s ease', style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
+            ])
+          ])
+    ]
 })
 export class TsLoginSignupComponent implements OnInit {
     @Input() mode;
@@ -24,7 +55,7 @@ export class TsLoginSignupComponent implements OnInit {
     showSocial = true;
     show = false;
     showPassword = false;
-    rdurl = '/marketplace';
+    rdurl = 'http://' + this.apiService.betaHostName + '/marketplace';
     ifSignIn = false;
     ifUnverified = true;
     ifSignUp = false;
@@ -76,15 +107,14 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     onLoginWithFB = () => {
-        const url = 'https://' + this.apiService.hostName + '/api/user/signinwithfacebook' +
+        const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithfacebook' +
             (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
 
     onLoginWithGoogle = () => {
-        const url = 'https://' + this.apiService.hostName + '/api/user/signinwithgoogle' +
+        const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithgoogle' +
             (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-        console.log(url);
         window.open(url, '_self');
     }
 
@@ -150,7 +180,7 @@ export class TsLoginSignupComponent implements OnInit {
 
                 const userData = { ...retData.userDetails, ...tokenData };
                 this.userService.updateUser(userData);
-                this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
+                this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
                 if (this.mode === 'dialog') {
                     this.close();
                 }
@@ -273,13 +303,16 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('usertimezone', this.userTimezone);
         formData.append('reCaptcha', this.captchaResponse);
         formData.append('username', this.randomString(10, ''));
+        formData.append('rdurl', this.rdurl);
         return this.http.post(this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha',
             formData, { headers: headers, responseType: 'text' });
     }
 
     randomString = (len, an) => {
         an = an && an.toLowerCase();
-        let str = '', i = 0, min = an == 'a' ? 10 : 0, max = an == 'n' ? 10 : 62;
+        let str = '', i = 0;
+        const min = an === 'a' ? 10 : 0;
+        const max = an === 'n' ? 10 : 62;
         for (; i++ < len;) {
             let r = Math.random() * (max - min) + min << 0;
             str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
@@ -298,11 +331,11 @@ export class TsLoginSignupComponent implements OnInit {
         );
     }
     resendVerifyEmailCredential = () => {
-        const emailObj = {
-            emailId: this.loginForm.value.email
-        };
+        const formData = new FormData();
+        formData.append('rdurl', this.rdurl);
+        formData.append('emailid', this.loginForm.value.email);
         return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
-            emailObj, { headers: headers }).pipe(map(data => (data)));
+        formData, { headers: headers }).pipe(map(data => (data)));
     }
 
 }
