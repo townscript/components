@@ -1,3 +1,6 @@
+<section *ngIf="mode==='dialog'" class="text-right">
+    <i class="cursor-pointer mdi mdi-close text-2xl" (click)="close()"></i>
+</section>
 <section [ngClass]="(mode=='dialog') ?
             ' bg-white container-background flex flex-row m-auto overflow:hidden'
             :' flex flex-row m-auto overflow:hidden'">
