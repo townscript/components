@@ -1274,8 +1274,7 @@
         }
         SharedModule = __decorate([
             core.NgModule({
-                declarations: [
-                    RangeDatePipe
+                declarations: [RangeDatePipe
                 ],
                 imports: [],
                 exports: [RangeDatePipe],
@@ -1329,6 +1328,7 @@
     exports.RangeDatePipe = RangeDatePipe;
     exports.SearchComponent = SearchComponent;
     exports.ShareEventModalComponent = ShareEventModalComponent;
+    exports.SharedModule = SharedModule;
     exports.TimeService = TimeService;
     exports.TsCardSkeletonComponent = TsCardSkeletonComponent;
     exports.TsControlValueAccessor = TsControlValueAccessor;
@@ -1340,7 +1340,6 @@
     exports.UserMenuComponent = UserMenuComponent;
     exports.UserService = UserService;
     exports.config = config;
-    exports.ɵa = SharedModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

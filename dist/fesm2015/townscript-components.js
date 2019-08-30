@@ -1199,8 +1199,7 @@ let SharedModule = class SharedModule {
 };
 SharedModule = __decorate([
     NgModule({
-        declarations: [
-            RangeDatePipe
+        declarations: [RangeDatePipe
         ],
         imports: [],
         exports: [RangeDatePipe],
@@ -1234,5 +1233,5 @@ CardsModule = __decorate([
     })
 ], CardsModule);
 
-export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config, SharedModule as ɵa };
+export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, RangeDatePipe, SearchComponent, ShareEventModalComponent, SharedModule, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config };
 //# sourceMappingURL=townscript-components.js.map
