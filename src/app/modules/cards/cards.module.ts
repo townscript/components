@@ -3,25 +3,23 @@ import { CommonModule } from '@angular/common';
 import { BrowserService } from '../../core/browser.service';
 import { TsFormsModule } from '@townscript/elements';
 import { TsListingCardComponent } from './ts-listing-card/ts-listing-card.component';
-import { RangeDatePipe } from './ts-listing-card/ts-date-range.pipe';
 import { ShareEventModalComponent } from './ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsCardSkeletonComponent } from './ts-card-skeleton/ts-card-skeleton.component';
-
+import { SharedModule } from '../../shared/shared.module';
 @NgModule({
     imports: [
         CommonModule,
-        TsFormsModule
+        TsFormsModule,
+        SharedModule
     ],
     declarations: [
         TsListingCardComponent,
-        RangeDatePipe,
         ShareEventModalComponent,
         TsCardSkeletonComponent
     ],
     exports: [
         TsFormsModule,
         TsListingCardComponent,
-        RangeDatePipe,
         ShareEventModalComponent,
         TsCardSkeletonComponent
     ],
