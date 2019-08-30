@@ -6,8 +6,7 @@ import { UserService } from './services/user-service';
 import { RangeDatePipe } from './pipes/ts-date-range.pipe';
 
 @NgModule({
-    declarations: [
-        RangeDatePipe
+    declarations: [RangeDatePipe
     ],
     imports: [
     ],
