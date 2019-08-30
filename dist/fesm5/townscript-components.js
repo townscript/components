@@ -1,5 +1,5 @@
 import { __decorate, __metadata, __param, __assign } from 'tslib';
-import { Injectable, Inject, PLATFORM_ID, InjectionToken, Input, Component, ViewChild, ElementRef, HostListener, Output, EventEmitter, Directive, Pipe, NgModule } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID, InjectionToken, Input, Component, ViewEncapsulation, ViewChild, ElementRef, HostListener, Output, EventEmitter, Directive, Pipe, NgModule } from '@angular/core';
 import { MatSnackBarConfig, MatSnackBar, MatDialogConfig, MatDialog, MAT_DIALOG_DATA, MatDialogRef as MatDialogRef$1, MatRippleModule, MatSnackBarModule } from '@angular/material';
 import { DateTime } from 'luxon';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -10,6 +10,7 @@ import * as algoliaSearchImported from 'algoliasearch';
 import { debounceTime, map } from 'rxjs/operators';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
+import { trigger, transition, animate, style, state } from '@angular/animations';
 import { TsFormsModule } from '@townscript/elements';
 import { MatRippleModule as MatRippleModule$1 } from '@angular/material/core';
 import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snack-bar';
@@ -89,6 +90,7 @@ var ApiService = /** @class */ (function () {
     function ApiService() {
         this.FB_APP_ID = '303059286557418';
         this.hostName = 'www.tsdugout.in';
+        this.betaHostName = 'beta.tsdugout.in';
         this.S3_BUCKET_NAME = 'townscript-testing';
         this.GA_TRACKER_CODE = 'UA-68181318-1';
         this.SERVER_URL = 'https://www.tsdugout.in';
@@ -253,7 +255,8 @@ var LoginModalComponent = /** @class */ (function () {
         Component({
             selector: 'app-login-modal',
             template: "<app-ts-login-signup [mode]=\"'dialog'\" (closeDialog)='close()'></app-ts-login-signup>",
-            styles: ["::ng-deep .mat-dialog-bkg-container{background:#414243;opacity:.7!important}"]
+            encapsulation: ViewEncapsulation.None,
+            styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.mat-dialog-bkg-container{background:#414243;opacity:.7!important}@media (max-width:480px){.cdk-overlay-pane{height:100vh!important;max-width:100vw!important}}"]
         }),
         __metadata("design:paramtypes", [MatDialogRef])
     ], LoginModalComponent);
@@ -650,7 +653,7 @@ var AppPasswordDirective = /** @class */ (function () {
     return AppPasswordDirective;
 }());
 
-var headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NTgzMzUwNjI0MTksIlVTRVJfSUQiOjAsImV4cCI6MTU2NjExMTA2Mn0.FL9I1Rn0OtQ4eHdE1QaFtzI7WwHFPe_45p6sO4Civin_drrvp9itjvcoDHCPjz_4GeNN45mYGnHsQExVgTbHuA');
+var headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9VU0VSIiwic3ViIjoidGVzdGluZ0B0b3duc2NyaXB0LmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTU2NjkwODg0NjE2MCwiVVNFUl9JRCI6NDkwNiwiZXhwIjoxNTc0Njg0ODQ2fQ.ge-O16ZPw9wHvjoJrmTKbJRhfOkvAdI57N_YBZ5yr_IwymKOhPAyQpD8vHxIqhJGJ4tfJ_jez4xh3vQoWwngZw');
 var TsLoginSignupComponent = /** @class */ (function () {
     function TsLoginSignupComponent(apiService, http, fb, cookieService, userService, notificationService) {
         var _this = this;
@@ -664,7 +667,7 @@ var TsLoginSignupComponent = /** @class */ (function () {
         this.showSocial = true;
         this.show = false;
         this.showPassword = false;
-        this.rdurl = '/marketplace';
+        this.rdurl = 'http://' + this.apiService.betaHostName + '/marketplace';
         this.ifSignIn = false;
         this.ifUnverified = true;
         this.ifSignUp = false;
@@ -686,14 +689,13 @@ var TsLoginSignupComponent = /** @class */ (function () {
             _this.show = !_this.show;
         };
         this.onLoginWithFB = function () {
-            var url = 'https://' + _this.apiService.hostName + '/api/user/signinwithfacebook' +
+            var url = 'http://' + _this.apiService.betaHostName + '/api/user/signinwithfacebook' +
                 (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
             window.open(url, '_self');
         };
         this.onLoginWithGoogle = function () {
-            var url = 'https://' + _this.apiService.hostName + '/api/user/signinwithgoogle' +
+            var url = 'http://' + _this.apiService.betaHostName + '/api/user/signinwithgoogle' +
                 (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
-            console.log(url);
             window.open(url, '_self');
         };
         this.getEmailVerifyResponse = function () {
@@ -748,7 +750,7 @@ var TsLoginSignupComponent = /** @class */ (function () {
                 };
                 var userData = __assign({}, retData.userDetails, tokenData);
                 _this.userService.updateUser(userData);
-                _this.notificationService.success("Congrats! You are signed in", 2000, "Dismiss");
+                _this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
                 if (_this.mode === 'dialog') {
                     _this.close();
                 }
@@ -854,11 +856,14 @@ var TsLoginSignupComponent = /** @class */ (function () {
             formData.append('usertimezone', _this.userTimezone);
             formData.append('reCaptcha', _this.captchaResponse);
             formData.append('username', _this.randomString(10, ''));
+            formData.append('rdurl', _this.rdurl);
             return _this.http.post(_this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha', formData, { headers: headers, responseType: 'text' });
         };
         this.randomString = function (len, an) {
             an = an && an.toLowerCase();
-            var str = '', i = 0, min = an == 'a' ? 10 : 0, max = an == 'n' ? 10 : 62;
+            var str = '', i = 0;
+            var min = an === 'a' ? 10 : 0;
+            var max = an === 'n' ? 10 : 62;
             for (; i++ < len;) {
                 var r = Math.random() * (max - min) + min << 0;
                 str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
@@ -873,10 +878,10 @@ var TsLoginSignupComponent = /** @class */ (function () {
             });
         };
         this.resendVerifyEmailCredential = function () {
-            var emailObj = {
-                emailId: _this.loginForm.value.email
-            };
-            return _this.http.post(_this.apiService.API_SERVER + 'user/resendverificationcode', emailObj, { headers: headers }).pipe(map(function (data) { return (data); }));
+            var formData = new FormData();
+            formData.append('rdurl', _this.rdurl);
+            formData.append('emailid', _this.loginForm.value.email);
+            return _this.http.post(_this.apiService.API_SERVER + 'user/resendverificationcode', formData, { headers: headers }).pipe(map(function (data) { return (data); }));
         };
     }
     TsLoginSignupComponent.prototype.ngOnInit = function () {
@@ -907,7 +912,37 @@ var TsLoginSignupComponent = /** @class */ (function () {
     TsLoginSignupComponent = __decorate([
         Component({
             selector: 'app-ts-login-signup',
-            template: "<section [ngClass]=\"(mode=='dialog') ? \n            'bg-white container-background flex flex-row m-auto overflow:hidden'\n            :'flex flex-row m-auto overflow:hidden'\">\n    <div id=\"login-signup-container\" [ngClass]=\"(mode=='dialog') ? 'z-10 bg-white w-full p-6 m-auto md:m-2 lg:m-2'\n            : 'login-card-box z-10 bg-white max-w-sm w-full p-10'\">\n        <i *ngIf=\"!ifUnverified\" (click)=\"takeMeBack()\" class=\"cursor-pointer mdi mdi-arrow-left\">arrow_back</i>\n        <app-login-top-content [condition]=\"currScreen\"></app-login-top-content>\n        <form [formGroup]=\"loginForm\" class=\"w-full\">\n            <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"firstName\"\n                        class=\" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"name\" type=\"text\" placeholder=\"Name\" autocomplete=\"username\"></ts-input-text>\n                </div>\n            </div>\n            <div *ngIf=\"!showVerifyEmail\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"email\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-email\" type=\"email\" name=\"email\" placeholder=\"Email\" autocomplete=\"user-email\"\n                        required></ts-input-text>\n                    <p class=\"text-sm text-red-500\" *ngIf=\"socialLoginMsg\">It seems you have signed up using Social\n                        Login.</p>\n                </div>\n\n            </div>\n            <div *ngIf=\"ifSignIn || ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"password\" appPassword\n                        class=\"form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-pwd\" [type]=\"'password'\" placeholder=\"Password\" autocomplete=\"current-password\">\n                    </ts-input-text>\n                </div>\n            </div>\n            <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <input type=\"tel\" value=\"phone_number\" formControlName=\"phoneNumber\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"phoneNumber\" type=\"tel\" placeholder=\"Phone no.\" autocomplete=\"user-phone\">\n\n\n                    <p class=\"text-sm text-red-500\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n                </div>\n            </div>\n            <div *ngIf=\"showVerifyEmail\" class=\"text-center\">\n                <img class=\"m-auto\" src=\"../../../../../assets/images/verify-email.png\">\n                <span class=\"text-sm\">Tap the link in the email we sent you at\n                    {{this.loginForm.value.email}}</span>\n            </div>\n            <div class=\"mt-5\">\n                <div *ngIf=\"ifUnverified\" class=\"w-full text-center\">\n                    <ts-button text=\"Continue\" [disabled]=\"!loginForm.valid\" (click)=\"verifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"ifSignIn\" class=\"w-full text-center\">\n                    <ts-button text=\"Sign in\" [disabled]=\"!loginForm.valid\" (click)=\"signIn()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"forgotPassword()\" class=\" text-sm text-center verify-email py-2 px-2\">\n                        Forgot Password?\n                    </a>\n                </div>\n                <div *ngIf=\"ifSignUp\" class=\"w-full text-center\">\n                    <ts-button text=\"Create your account\" [disabled]=\"!loginForm.valid || phoneError\"\n                        (click)=\"recaptchaRef.execute()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"showResetPassword\" class=\"md:w-full text-center\">\n                    <ts-button text=\"Send Reset Password Link\" [disabled]=\"!loginForm.valid\" (click)=\"resetPassword()\"\n                        class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"resetPassword()\" class=\" text-sm text-center resend-email py-2 px-2\">\n                        Resend Email\n                    </a>\n                </div>\n                <div *ngIf=\"showVerifyEmail\" class=\"md:w-full text-center py-2 my-2 \">\n                    <ts-button text=\"Resend Verification Email\" [disabled]=\"!loginForm.valid\"\n                        (click)=\"resendVerifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                    <a class=\" text-sm text-center resend-email py-2 px-2\">\n                        Why verify?\n                    </a>\n                </div>\n                <!-- <p class=\"text-sm\">\n                    Form Value: {{ loginForm.value | json }}\n                </p>\n                <p class=\"text-sm\">\n                    Form Status: {{ loginForm.status }}\n                </p> -->\n\n            </div>\n            <div class=\"form-group\">\n                <re-captcha #recaptchaRef=\"reCaptcha\" (resolved)=\"resolveAndProceed($event)\"\n                    siteKey={{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}} size=\"invisible\"></re-captcha>\n            </div>\n        </form>\n        <section id=\"social-signin-container\" *ngIf=\"showSocial\">\n            <div class=\"strike-through strike-through-margin\">\n                <span>\n                    <strong class=\"or-text\">or</strong>\n                </span>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithGoogle()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Google\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\" matRipple>\n                        <img  class=\"logo\" \n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Google</span>\n                    </div>\n                </button>\n                <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithFB()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img class=\"logo\"\n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Facebook</span>\n                    </div>\n                </button>\n                <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n                    <i class=\"ion-android-alert\"></i>\n                    <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n                </ng-container>\n            </div>\n        </section>\n        <div *ngIf=\"ifUnverified ||  ifSignUp\" class=\"agreement my-2 px-2\">\n            <div class=\"w-full hor-linear-grad m-4\"></div>\n            <p class=\"text-xs text-center\">By continuing, you agree to Townscript's <a class=\"text-blue-700\"\n                    href=\"/terms-and-conditions\">terms of service</a> and <a class=\"text-blue-700\"\n                    href=\"/privacy-policy\">privacy policy</a>.</p>\n        </div>\n    </div>\n    <div [ngClass]=\"(mode=='dialog') ? 'hidden' : 'ml-20 p-6 hidden md:block'\">\n        <div class=\"flex flex-col mt-4\">\n            <span class=\"text-2xl w-2/3 mb-4 text-gray-900\">\n                <strong>301,589 event organizers trust us.</strong>\n            </span>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Quick and easy event creation</p>\n                    <p class=\"text-sm text-gray-600\">Create your event page, it is easy and customizable.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Start selling tickets within minutes.</p>\n                    <p class=\"text-sm text-gray-600\">Link your bank account, verify identity details and start selling\n                        instantly.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Simple Integration with your website.</p>\n                    <p class=\"text-sm text-gray-600\">Easy to start selling tickets directly from your website and\n                        facebook without developers.</p>\n                </span>\n            </div>\n        </div>\n    </div>\n\n</section>",
+            template: "<section *ngIf=\"mode==='dialog'\" class=\"text-right\">\n    <i class=\"cursor-pointer mdi mdi-close text-2xl\" (click)=\"close()\"></i>\n</section>\n<section [ngClass]=\"(mode=='dialog') ?\n            ' bg-white container-background flex flex-row m-auto overflow:hidden'\n            :' flex flex-row m-auto overflow:hidden'\">\n    <div id=\"login-signup-container\" [ngClass]=\"(mode=='dialog') ? 'z-10 bg-white w-full p-6 m-auto md:m-2 lg:m-2'\n            : 'login-card-box z-10 bg-white max-w-sm w-full p-10'\">\n        <i *ngIf=\"!ifUnverified\" (click)=\"takeMeBack()\" class=\"cursor-pointer text-3xl mdi mdi-arrow-left\"></i>\n        <app-login-top-content [condition]=\"currScreen\"></app-login-top-content>\n        <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full\">\n            <div [@in-out-animate] *ngIf=\"!showVerifyEmail\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"email\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-email\" type=\"email\" name=\"email\" placeholder=\"Email\" autocomplete=\"user-email\"\n                        required></ts-input-text>\n                    <p class=\"text-sm text-red-500\" *ngIf=\"socialLoginMsg\">It seems you have signed up using Social\n                        Login.</p>\n                </div>\n\n            </div>\n            <div [@EnterLeave]=\"'flyIn'\">\n                <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <ts-input-text formControlName=\"firstName\"\n                            class=\" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"name\" type=\"text\" placeholder=\"Name\" autocomplete=\"username\"></ts-input-text>\n                    </div>\n                </div>\n                <div  *ngIf=\"ifSignIn || ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <ts-input-text formControlName=\"password\" appPassword\n                            class=\"form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"user-pwd\" [type]=\"'password'\" placeholder=\"Password\" autocomplete=\"current-password\">\n                        </ts-input-text>\n                    </div>\n                </div>\n                <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <input type=\"tel\" value=\"phone_number\" formControlName=\"phoneNumber\"\n                            class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"phoneNumber\" type=\"tel\" placeholder=\"Phone no.\" autocomplete=\"user-phone\">\n\n\n                        <p class=\"text-sm text-red-500\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"showVerifyEmail\" class=\"text-center\">\n                <img class=\"m-auto\" src=\"../../../../../assets/images/verify-email.png\">\n                <span class=\"text-sm\">Tap the link in the email we sent you at\n                    {{this.loginForm.value.email}}</span>\n            </div>\n            <div class=\"mt-5\">\n                <div [@btn-animate] *ngIf=\"ifUnverified\" class=\"w-full text-center\">\n                    <ts-button text=\"Continue\" [disabled]=\"!loginForm.valid\" (click)=\"verifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"ifSignIn\" class=\"w-full text-center\" >\n                    <ts-button text=\"Sign in\" [disabled]=\"!loginForm.valid\" (click)=\"signIn()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"forgotPassword()\" class=\" text-sm text-center verify-email py-2 px-2\">\n                        Forgot Password?\n                    </a>\n                </div>\n                <div [@btn-animate] *ngIf=\"ifSignUp\" class=\"w-full text-center\">\n                    <ts-button text=\"Create your account\" [disabled]=\"!loginForm.valid || phoneError\"\n                        (click)=\"recaptchaRef.execute()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"showResetPassword\" class=\"md:w-full text-center\">\n                    <ts-button text=\"Send Reset Password Link\" [disabled]=\"!loginForm.valid\" (click)=\"resetPassword()\"\n                        class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"resetPassword()\" class=\" text-sm text-center resend-email py-2 px-2\">\n                        Resend Email\n                    </a>\n                </div>\n                <div *ngIf=\"showVerifyEmail\" class=\"md:w-full text-center py-2 my-2 \">\n                    <ts-button text=\"Resend Verification Email\" [disabled]=\"!loginForm.valid\"\n                        (click)=\"resendVerifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                    <a class=\" text-sm text-center resend-email py-2 px-2\">\n                        Why verify?\n                    </a>\n                </div>\n\n            </div>\n            <div class=\"form-group\">\n                <re-captcha #recaptchaRef=\"reCaptcha\" (resolved)=\"resolveAndProceed($event)\"\n                    siteKey={{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}} size=\"invisible\"></re-captcha>\n            </div>\n        </form>\n        <section id=\"social-signin-container\" *ngIf=\"showSocial\">\n            <div class=\"strike-through strike-through-margin\">\n                <span>\n                    <strong class=\"or-text\">or</strong>\n                </span>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithGoogle()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Google\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\" matRipple>\n                        <img  class=\"logo\" \n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Google</span>\n                    </div>\n                </button>\n                <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithFB()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img class=\"logo\"\n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Facebook</span>\n                    </div>\n                </button>\n                <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n                    <i class=\"ion-android-alert\"></i>\n                    <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n                </ng-container>\n            </div>\n        </section>\n        <div *ngIf=\"ifUnverified ||  ifSignUp\" class=\"agreement my-2 px-2\">\n            <div class=\"w-full hor-linear-grad m-4\"></div>\n            <p class=\"text-xs text-center\">By continuing, you agree to Townscript's <a class=\"text-blue-700\"\n                    href=\"/terms-and-conditions\">terms of service</a> and <a class=\"text-blue-700\"\n                    href=\"/privacy-policy\">privacy policy</a>.</p>\n        </div>\n    </div>\n    <div [ngClass]=\"(mode=='dialog') ? 'hidden' : 'ml-20 p-6 hidden md:block'\">\n        <div class=\"flex flex-col mt-4\">\n            <span class=\"text-2xl w-2/3 mb-4 text-gray-900\">\n                <strong>301,589 event organizers trust us.</strong>\n            </span>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Quick and easy event creation</p>\n                    <p class=\"text-sm text-gray-600\">Create your event page, it is easy and customizable.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Start selling tickets within minutes.</p>\n                    <p class=\"text-sm text-gray-600\">Link your bank account, verify identity details and start selling\n                        instantly.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Simple Integration with your website.</p>\n                    <p class=\"text-sm text-gray-600\">Easy to start selling tickets directly from your website and\n                        facebook without developers.</p>\n                </span>\n            </div>\n        </div>\n    </div>\n\n</section>",
+            animations: [
+                trigger('btn-animate', [
+                    transition('void => *', [
+                        animate('1s ease', style({ opacity: 1 })),
+                    ]),
+                    transition('* => void', [
+                        animate('1s ease', style({ opacity: 0, height: '0' }))
+                    ])
+                ]),
+                trigger('in-out-animate', [
+                    transition('void => *', [
+                        style({ opacity: 0.2 }),
+                        animate('1s ease', style({ opacity: 1 })),
+                    ]),
+                    transition('* => void', [
+                        style({ opacity: 0.6 }),
+                        animate('1s ease', style({ opacity: 0, height: '0' }))
+                    ])
+                ]),
+                trigger('EnterLeave', [
+                    state('flyIn', style({ transform: 'translateY(0)' })),
+                    transition(':enter', [
+                        style({ transform: 'translateY(0%)' }),
+                        animate('1s ease-in-out')
+                    ]),
+                    transition(':leave', [
+                        animate('.5s ease', style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
+                    ])
+                ])
+            ],
             styles: [".container-background::before{color:#fff;background:url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 200 100' xmlns='http://www.w3.org/2000/svg'  preserveAspectRatio='none'><polygon points='0,110 0,50 300,0 300,300' width='100%' height='100%' style='fill:blue;'/></svg>\") 0 0/contain;width:30%;font-size:2em;padding:4px 40px}.strike-through-margin{margin:30px 0;text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em}.strike-through-margin span{background-color:#fff;padding:3px 30px}.strike-through{text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em;margin:30px auto}.strike-through span{background-color:#fff;padding:3px 30px}.hor-linear-grad{border:1px solid;border-left:0;border-right:0;-webkit-border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));-webkit-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);-o-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image-slice:1}.iti__flag{background-image:url(../../../../../node_modules/intl-tel-input/build/img/flags.png)}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.iti__flag{background-image:url(../../../../../node_modules/intl-tel-input/build/img/flags@2x.png)}}#social-signin-container .logo{width:22px;height:22px}.mkt-content{background-color:#f1f1f1}.login-card-box{box-shadow:0 0 8px rgba(0,0,0,.25);border-radius:5px;max-width:460px}"]
         }),
         __metadata("design:paramtypes", [ApiService,
@@ -933,7 +968,7 @@ var LoginTopContentComponent = /** @class */ (function () {
     LoginTopContentComponent = __decorate([
         Component({
             selector: 'app-login-top-content',
-            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"py-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"py-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"py-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
+            template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"pb-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"pb-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"pb-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"pb-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"pb-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
             styles: [""]
         }),
         __metadata("design:paramtypes", [])
@@ -948,15 +983,22 @@ var RangeDatePipe = /** @class */ (function () {
         if (rangeDates) {
             var date = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('dd'); });
             var month = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('MMM'); });
+            var year = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('yy'); });
             var time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-            if ((date[0] === date[1]) && (month[0] === month[1])) {
-                return month[0] + ' ' + date[0] + ' | ' + time;
-            }
-            else if ((date[0] === date[1]) && (month[0] !== month[1])) {
-                return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+            console.log(year[0], year[1]);
+            if (year[0] !== year[1]) {
+                return month[0] + ' ' + date[0] + "'" + year[0] + ' - ' + month[1] + ' ' + date[1] + "'" + year[1] + ' | ' + time;
             }
             else {
-                return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                if ((date[0] === date[1]) && (month[0] === month[1])) {
+                    return month[0] + ' ' + date[0] + ' | ' + time;
+                }
+                else if ((month[0] !== month[1])) {
+                    return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+                }
+                else {
+                    return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                }
             }
         }
         else {
@@ -1197,6 +1239,22 @@ var LayoutModule = /** @class */ (function () {
     return LayoutModule;
 }());
 
+var SharedModule = /** @class */ (function () {
+    function SharedModule() {
+    }
+    SharedModule = __decorate([
+        NgModule({
+            declarations: [
+                RangeDatePipe
+            ],
+            imports: [],
+            exports: [RangeDatePipe],
+            providers: [TimeService, ApiService, UserService]
+        })
+    ], SharedModule);
+    return SharedModule;
+}());
+
 var CardsModule = /** @class */ (function () {
     function CardsModule() {
     }
@@ -1204,18 +1262,17 @@ var CardsModule = /** @class */ (function () {
         NgModule({
             imports: [
                 CommonModule,
-                TsFormsModule
+                TsFormsModule,
+                SharedModule
             ],
             declarations: [
                 TsListingCardComponent,
-                RangeDatePipe,
                 ShareEventModalComponent,
                 TsCardSkeletonComponent
             ],
             exports: [
                 TsFormsModule,
                 TsListingCardComponent,
-                RangeDatePipe,
                 ShareEventModalComponent,
                 TsCardSkeletonComponent
             ],
@@ -1227,5 +1284,5 @@ var CardsModule = /** @class */ (function () {
     return CardsModule;
 }());
 
-export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config };
+export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, RangeDatePipe, SearchComponent, ShareEventModalComponent, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config, SharedModule as ɵa };
 //# sourceMappingURL=townscript-components.js.map
