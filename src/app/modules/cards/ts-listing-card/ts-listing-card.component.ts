@@ -20,6 +20,7 @@ export class TsListingCardComponent implements OnInit {
   showRegularCard: boolean;
   featuredCard: boolean;
   topicCard: boolean;
+  defaultCardImageUrl: string = "https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/default-card.png";
 
   constructor(public dialog: MatDialog, private browser: BrowserService) { }
 

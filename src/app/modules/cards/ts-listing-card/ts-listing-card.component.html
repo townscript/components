@@ -6,7 +6,7 @@
     <div [ngClass]="showRegularCard
                     ? gridType=='list' ? 'h-48 lg:h-auto sm:w-full md:w-full lg:w-2/5 flex-none bg-cover text-center overflow-hidden' : 'bg-cover flex-none h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full overflow-hidden p-24 sm:w-full text-center'
                     : 'h-48 lg:h-auto sm:w-full md:w-full lg:w-3/5 flex-none bg-cover text-center overflow-hidden'"
-        [style.background-image]="'url(' + eventData.cardImageUrl + ')'">
+        [style.background-image]="eventData.cardImageUrl?'url(' + eventData.cardImageUrl + ')':'url(' + defaultCardImageUrl + ')'">
     </div>
     <div [ngClass]="showRegularCard ?
                      'listing-container--content flex flex-col justify-between leading-normal w-full'
