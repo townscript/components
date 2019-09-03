@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'ts-card-skeleton',
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TsCardSkeletonComponent implements OnInit {
 
+  @Input() gridType: string = "list";
   constructor() { }
 
   ngOnInit() {
