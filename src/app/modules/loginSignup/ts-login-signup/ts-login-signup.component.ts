@@ -55,7 +55,7 @@ export class TsLoginSignupComponent implements OnInit {
     showSocial = true;
     show = false;
     showPassword = false;
-    rdurl = 'http://' + this.apiService.betaHostName + '/marketplace';
+    rdurl = 'http://' + this.apiService.betaHostName + 'marketplace';
     ifSignIn = false;
     ifUnverified = true;
     ifSignUp = false;
@@ -107,13 +107,13 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     onLoginWithFB = () => {
-        const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithfacebook' +
+        const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithfacebook' +
             (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
 
     onLoginWithGoogle = () => {
-        const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithgoogle' +
+        const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithgoogle' +
             (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }

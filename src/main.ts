@@ -9,6 +9,7 @@ if (environment.production) {
   enableProdMode();
 }
 config.baseUrl = "https://www.tsdugout.in/"
+config.betaHostName = "beta.tsdugout.in/"
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 
