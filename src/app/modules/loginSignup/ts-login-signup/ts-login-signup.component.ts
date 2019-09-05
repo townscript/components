@@ -19,32 +19,32 @@ const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJ
     animations: [
         trigger('btn-animate', [
             transition('void => *', [
-                animate('1s ease', style({ opacity: 1})),
+                animate('1s ease', style({ opacity: 1 })),
             ]),
             transition('* => void', [
-              animate('1s ease', style({ opacity: 0, height: '0'}))
+                animate('1s ease', style({ opacity: 0, height: '0' }))
             ])
-          ]),
-          trigger('in-out-animate', [
+        ]),
+        trigger('in-out-animate', [
             transition('void => *', [
-                style({ opacity: 0.2}),
-                animate('1s ease', style({ opacity: 1})),
+                style({ opacity: 0.2 }),
+                animate('1s ease', style({ opacity: 1 })),
             ]),
             transition('* => void', [
-              style({ opacity: 0.6}),
-              animate('1s ease', style({ opacity: 0, height: '0'}))
+                style({ opacity: 0.6 }),
+                animate('1s ease', style({ opacity: 0, height: '0' }))
             ])
-          ]),
-          trigger('EnterLeave', [
-            state('flyIn', style({ transform: 'translateY(0)'})),
+        ]),
+        trigger('EnterLeave', [
+            state('flyIn', style({ transform: 'translateY(0)' })),
             transition(':enter', [
-              style({ transform: 'translateY(0%)' }),
-              animate('1s ease-in-out')
+                style({ transform: 'translateY(0%)' }),
+                animate('1s ease-in-out')
             ]),
             transition(':leave', [
-              animate('.5s ease', style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
+                animate('.5s ease', style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
             ])
-          ])
+        ])
     ]
 })
 export class TsLoginSignupComponent implements OnInit {
@@ -180,6 +180,7 @@ export class TsLoginSignupComponent implements OnInit {
 
                 const userData = { ...retData.userDetails, ...tokenData };
                 this.userService.updateUser(userData);
+                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
                 this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
                 if (this.mode === 'dialog') {
                     this.close();
@@ -335,7 +336,7 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('rdurl', this.rdurl);
         formData.append('emailid', this.loginForm.value.email);
         return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
-        formData, { headers: headers }).pipe(map(data => (data)));
+            formData, { headers: headers }).pipe(map(data => (data)));
     }
 
 }
