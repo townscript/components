@@ -18,7 +18,8 @@ import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snac
 const config = {
     baseUrl: "",
     router: "",
-    activatedRoute: ""
+    activatedRoute: "",
+    betaHostName: ""
 };
 
 let BrowserService = class BrowserService {
@@ -84,8 +85,8 @@ class TsControlValueAccessor {
 let ApiService = class ApiService {
     constructor() {
         this.FB_APP_ID = '303059286557418';
-        this.hostName = 'www.tsdugout.in';
-        this.betaHostName = 'beta.tsdugout.in';
+        this.hostName = config.baseUrl;
+        this.betaHostName = config.betaHostName || 'beta.tsdugout.in/';
         this.S3_BUCKET_NAME = 'townscript-testing';
         this.GA_TRACKER_CODE = 'UA-68181318-1';
         this.SERVER_URL = 'https://www.tsdugout.in';
@@ -641,7 +642,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         this.showSocial = true;
         this.show = false;
         this.showPassword = false;
-        this.rdurl = 'http://' + this.apiService.betaHostName + '/marketplace';
+        this.rdurl = 'http://' + this.apiService.betaHostName + 'marketplace';
         this.ifSignIn = false;
         this.ifUnverified = true;
         this.ifSignUp = false;
@@ -663,12 +664,12 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             this.show = !this.show;
         };
         this.onLoginWithFB = () => {
-            const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithfacebook' +
+            const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithfacebook' +
                 (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
             window.open(url, '_self');
         };
         this.onLoginWithGoogle = () => {
-            const url = 'http://' + this.apiService.betaHostName + '/api/user/signinwithgoogle' +
+            const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithgoogle' +
                 (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
             window.open(url, '_self');
         };

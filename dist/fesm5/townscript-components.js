@@ -18,7 +18,8 @@ import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snac
 var config = {
     baseUrl: "",
     router: "",
-    activatedRoute: ""
+    activatedRoute: "",
+    betaHostName: ""
 };
 
 var BrowserService = /** @class */ (function () {
@@ -89,8 +90,8 @@ var TsControlValueAccessor = /** @class */ (function () {
 var ApiService = /** @class */ (function () {
     function ApiService() {
         this.FB_APP_ID = '303059286557418';
-        this.hostName = 'www.tsdugout.in';
-        this.betaHostName = 'beta.tsdugout.in';
+        this.hostName = config.baseUrl;
+        this.betaHostName = config.betaHostName || 'beta.tsdugout.in/';
         this.S3_BUCKET_NAME = 'townscript-testing';
         this.GA_TRACKER_CODE = 'UA-68181318-1';
         this.SERVER_URL = 'https://www.tsdugout.in';
@@ -667,7 +668,7 @@ var TsLoginSignupComponent = /** @class */ (function () {
         this.showSocial = true;
         this.show = false;
         this.showPassword = false;
-        this.rdurl = 'http://' + this.apiService.betaHostName + '/marketplace';
+        this.rdurl = 'http://' + this.apiService.betaHostName + 'marketplace';
         this.ifSignIn = false;
         this.ifUnverified = true;
         this.ifSignUp = false;
@@ -689,12 +690,12 @@ var TsLoginSignupComponent = /** @class */ (function () {
             _this.show = !_this.show;
         };
         this.onLoginWithFB = function () {
-            var url = 'http://' + _this.apiService.betaHostName + '/api/user/signinwithfacebook' +
+            var url = 'http://' + _this.apiService.betaHostName + 'api/user/signinwithfacebook' +
                 (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
             window.open(url, '_self');
         };
         this.onLoginWithGoogle = function () {
-            var url = 'http://' + _this.apiService.betaHostName + '/api/user/signinwithgoogle' +
+            var url = 'http://' + _this.apiService.betaHostName + 'api/user/signinwithgoogle' +
                 (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
             window.open(url, '_self');
         };
