@@ -124,12 +124,12 @@
             this.betaHostName = config.betaHostName || 'beta.tsdugout.in/';
             this.S3_BUCKET_NAME = 'townscript-testing';
             this.GA_TRACKER_CODE = 'UA-68181318-1';
-            this.SERVER_URL = 'https://www.tsdugout.in';
-            this.API_SERVER = 'https://www.tsdugout.in/api/';
+            this.SERVER_URL = config.baseUrl;
+            this.API_SERVER = config.baseUrl + 'api/';
             this.algoliaIndexName = 'tsTesting';
             this.IPINFO_ACCESS_TOKEN = 'a27cfbcc77e854'; // change afterwards
             this.RECORD_FOR_KINESIS = true; // temporary
-            this.PAYMENT_PAGE_URL = 'https://www.tsdugout.in/payment/';
+            this.PAYMENT_PAGE_URL = config.baseUrl + 'payment/';
         }
         ApiService = __decorate([
             core.Injectable()
