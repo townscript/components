@@ -13,6 +13,7 @@ export declare class TsHeaderComponent implements OnInit {
     user: any;
     router: any;
     userMenu: any;
+    s3BucketUrl: any;
     cityPopupActive: boolean;
     constructor(dialog: MatDialog, userService: UserService);
     clickout(event: any): void;
