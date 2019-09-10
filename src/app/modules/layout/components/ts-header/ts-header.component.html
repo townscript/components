@@ -60,8 +60,7 @@
                 <span>Login | Signup</span>
             </div>
             <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user" matRipple>
-                <img class="rounded-full mr-2" width="36"
-                    [src]="'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename" />
+                <img class="rounded-full mr-2" width="36" [src]="s3BucketUrl+'images/'+user?.s3imagename" />
                 <!-- <span>{{user.user}}</span> -->
             </div>
             <div class="user-menu position-absolute shadow-md px-2 enter-slide-bottom" *ngIf="userMenu">

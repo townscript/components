@@ -21,6 +21,7 @@ export class TsHeaderComponent implements OnInit {
   user: any;
   router = config.router;
   userMenu: any;
+  s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
   cityPopupActive = false;
   constructor(private dialog: MatDialog, private userService: UserService) {
