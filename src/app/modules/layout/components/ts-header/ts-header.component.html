@@ -25,17 +25,19 @@
             <img class="ts-logo" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
         </div>
-        <div class="sm:w-1/4 flex md:hidden lg:hidden items-center">
+        <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
             <!-- <app-hamburger-menu class="mr-3"></app-hamburger-menu> -->
-            <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
-                title="Townscript Event Ticketing Logo" />
-            <div #citySuggestions class="city-selection text-lg cursor-pointer" (click)="cityPopupActive=true">
-                <div class="flex items-center" matRipple>
-                    <span class="mr-1 text-gray-700">Pune</span>
+            <!-- <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
+                title="Townscript Event Ticketing Logo" /> -->
+            <i class="mdi mdi-map-marker color-blue text-2xl mr-2"></i>
+            <div #citySuggestions class="city-selection text-lg cursor-pointer w-full" (click)="cityPopupActive=true">
+                <div class="flex items-center w-full" matRipple>
+                    <span class="mr-1 text-gray-700 truncate">{{activeCity}}</span>
                     <i class="mdi mdi-menu-down color-blue"></i>
                 </div>
-                <app-city-search-popup [showArrow]="false" class="popup" *ngIf="cityPopupActive">
+                <app-city-search-popup [(cityPopupActive)]="cityPopupActive" [(activeCity)]="activeCity"
+                    [showArrow]="false" class="popup" *ngIf="cityPopupActive">
                 </app-city-search-popup>
             </div>
         </div>
@@ -71,13 +73,15 @@
 
         <!-- Mobile Menu -->
         <div class="sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center">
-            <div class="rounded-full" matRipple>
-                <i class="mdi mdi-magnify text-3xl ml-2 mr-4 color-blue"></i>
+            <div class="rounded-full" matRipple (click)="navigateToMobileSearch()">
+                <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
             </div>
             <div class="rounded-full" matRipple>
-                <i class="mdi mdi-account text-3xl mr-2 ml-2 color-blue" matRipple
-                    (click)="openMyProfileComponent()"></i>
+                <i class="mdi mdi-account text-2xl  ml-2 color-blue" matRipple (click)="openMyProfileComponent()"></i>
             </div>
         </div>
     </div>
+</nav>
+<nav class="ts-header-new w-screen flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+
 </nav>

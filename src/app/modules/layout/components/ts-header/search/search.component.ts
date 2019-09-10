@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common'
 import { HeaderService } from '../ts-header.service';
 import { config } from '../../../../../core/app-config';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PlaceService } from '../place.service';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -28,7 +29,7 @@ export class SearchComponent implements OnInit {
     cityPopupActive: boolean = false;
     placeSearchResults: any;
     searchResults: any;
-    activeCity: string = "Pune";
+    activeCity: any = "Pune";
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
     activeCityBackup: string;
@@ -38,7 +39,7 @@ export class SearchComponent implements OnInit {
 
     popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
 
-    constructor(private headerService: HeaderService, private timeService: TimeService, public datepipe: DatePipe) {
+    constructor(private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch("AT5UB8FMSR", "c7e946f5b740ef035bd824f69dcc1612");
@@ -103,12 +104,10 @@ export class SearchComponent implements OnInit {
         }
     }
     navigateToListing = (interest) => {
-        console.log("navigating to interest page");
         this.router.navigate(["../" + interest], { relativeTo: config.activatedRoute.parent });
         this.searchActive = false;
     }
     navigateToEventPage = (eventCode) => {
-        console.log("navigating to event page");
         this.router.navigate(["/e/" + eventCode]);
         this.searchActive = false;
     }
@@ -117,6 +116,11 @@ export class SearchComponent implements OnInit {
             this.searchTextChanged.next(text);
     }
     ngOnInit() {
+        this.placeService.place.subscribe(res => {
+            if (res) {
+                this.activeCity = res;
+            }
+        });
     }
 
 }

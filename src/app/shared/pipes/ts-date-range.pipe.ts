@@ -12,7 +12,6 @@ export class RangeDatePipe implements PipeTransform {
             const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
             const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
             const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-            console.log(year[0], year[1]);
             if (year[0] !== year[1]) {
                 return month[0] + ' ' + date[0] + "'" + year[0] + ' - ' + month[1] + ' ' + date[1] + "'" + year[1] + ' | ' + time;
             } else {

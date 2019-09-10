@@ -12,7 +12,6 @@ export class AppPasswordDirective {
   toggle(span: HTMLElement) {
     this._shown = !this._shown;
     if (this._shown) {
-      console.log(this.el.nativeElement);
       this.el.nativeElement.setAttribute('type', 'text');
       span.innerHTML = 'Hide password';
     } else {

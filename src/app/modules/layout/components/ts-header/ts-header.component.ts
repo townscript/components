@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginModalComponent } from '../../../loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { UserService } from '../../../../shared/services/user-service';
 import { config } from '../../../../core/app-config';
+import { PlaceService } from './place.service';
 
 @Component({
   selector: 'ts-header',
@@ -21,10 +22,11 @@ export class TsHeaderComponent implements OnInit {
   user: any;
   router = config.router;
   userMenu: any;
+  activeCity: any = "Pune";
   s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
   cityPopupActive = false;
-  constructor(private dialog: MatDialog, private userService: UserService) {
+  constructor(private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
   }
 
   @HostListener('document:click', ['$event'])
@@ -45,14 +47,21 @@ export class TsHeaderComponent implements OnInit {
     this.dialog.open(LoginModalComponent, dialogConfig);
   }
 
+  navigateToMobileSearch() {
+    this.router.navigate(["/mobile/search"])
+  }
   openMyProfileComponent = () => {
     this.router.navigate(["/profile"])
   }
   ngOnInit() {
     this.userService.user.subscribe(data => {
-      console.log(data);
       this.user = data;
-    })
+    });
+    this.placeService.place.subscribe(res => {
+      if (res) {
+        this.activeCity = res;
+      }
+    });
   }
 
 }

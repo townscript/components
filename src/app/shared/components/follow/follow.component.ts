@@ -18,7 +18,7 @@ export class FollowComponent implements OnInit {
     allFollowData: any;
     currentId: any;
     loggedIn = false;
-    @Input() followedText = 'Followed';
+    @Input() followedText = 'Following';
     hover: any;
     @Input() type = 'button';
     @Input() color = '#553c9a';
@@ -31,7 +31,6 @@ export class FollowComponent implements OnInit {
     constructor(private userService: UserService, private followService: FollowService, private dialog: MatDialog) { }
 
     ngOnInit() {
-        console.log(this.followType, this.followTypeId);
         this.textCopy = this.text;
         this.userService.user.subscribe(data => {
             this.user = data;

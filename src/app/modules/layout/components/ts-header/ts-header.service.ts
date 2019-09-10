@@ -6,10 +6,13 @@ import { config } from '../../../../core/app-config';
 export class HeaderService {
 
     baseUrl: string = config.baseUrl;
-    apiServerUrl: string = this.baseUrl + "api/";
+    apiServerUrl: string = this.baseUrl + 'api/';
     constructor(private http: HttpClient) {
     }
     getplaceSearchResults = (query) => {
-        return this.http.get(this.baseUrl + "listings/place/autocomplete?query=" + query);
+        return this.http.get(this.baseUrl + 'listings/place/autocomplete?query=' + query);
+    }
+    getPopularCities(countryCode) {
+        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode);
     }
 }

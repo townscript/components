@@ -1,12 +1,13 @@
 @import "../../../../.././../assets/scss/variables";
 @media (min-width: $screen-sm-max){
     .search-container{
-        height: 44px;
+        height: 42px;
         border-radius: 2px;
-        background-color: $gray--light;
         transition: all ease 0.3s;
         .left-section{
-            border-right: 1px solid rgba(151, 151, 151, 0.3);
+            background-color: $gray--light;
+            border-radius: 4px;
+            //border-right: 1px solid rgba(151, 151, 151, 0.3);
             input{
                 transition: all ease 0.3s;
                 &:focus{
@@ -47,6 +48,7 @@
         }
         .city-search-container{
             transition: all ease 0.3s;
+            max-width: 33.33%;
             &.active{
                 background: $gray--lighter;
                 box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);   
@@ -59,8 +61,10 @@
             }
         }
         &.active{
-            background: $gray--lighter;
+            .left-section{
+                background: $gray--lighter;
             box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+            }
             .suggestions{
                 box-shadow: 0 11px 15px 0 rgba(0, 0, 0, 0.15);
             }

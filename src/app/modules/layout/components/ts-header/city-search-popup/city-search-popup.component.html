@@ -1,13 +1,15 @@
 <div class="city-suggestions enter-slide-bottom" [class.arrow]="showArrow">
     <div class="suggestions-container">
         <ul>
-            <li [class.active]="citySearchActive" class="p-2 cursor-pointer flex items-center truncate">
+            <li [class.active]="citySearchActive" class="p-2 capitalize cursor-pointer flex items-center truncate">
                 <i class="mdi mdi-magnify mr-2"></i>
                 <input #cityInput autocomplete="off" id="cityInput" type="text" placeholder="Type here to search..."
                     [(ngModel)]="cityQuery" (ngModelChange)="searchCity($event)" (focus)="citySearchActive=true"
                     class="w-full bg-transparent text-sm" />
+                <i *ngIf="cityLoading" class="mdi mdi-loading mdi-spin"></i>
             </li>
-            <li matRipple (click)="placeChanged(place);" class="p-2 cursor-pointer flex items-center truncate"
+            <li matRipple (click)="placeChanged(place);"
+                class="p-2 capitalize cursor-pointer flex items-center truncate"
                 *ngFor="let place of placeSearchResults">
                 <i class="mdi mdi-map-marker text-base mr-1 color-blue"></i>
                 <span class="text-sm flex items-end truncate">
@@ -23,9 +25,10 @@
                 </span>
             </li>
             <ng-container matRipple *ngIf="!placeSearchResults || placeSearchResults.length==0">
-                <li class="p-2 cursor-pointer" *ngFor="let city of popularPlaces">
+                <li (click)="placeChanged(city);" class="p-2 px-4 cursor-pointer capitalize"
+                    *ngFor="let city of popularPlaces">
                     <i class="mdi mdi-map-marker text-base mr-1 color-blue"></i>
-                    <span class="text-sm">{{city}}</span>
+                    <span class="text-base">{{city.name}}</span>
                 </li>
             </ng-container>
         </ul>

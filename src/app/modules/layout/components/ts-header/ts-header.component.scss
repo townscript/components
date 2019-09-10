@@ -29,7 +29,7 @@
     }
 }
 .ts-header-new{
-    min-height:75px;
+    min-height:50px;
     background-color: #F7F7F7;
     top:0;
     z-index: 1000;
@@ -39,7 +39,7 @@
     .ts-logo{
         // width:146px;
         // min-width:146px;
-        height: 38px;
+        height: 28px;
     }
     .popup{
         position: absolute;
@@ -47,12 +47,16 @@
         width: 100%;
         left: 0%;
     }
+    .max-50{
+        max-width:50%;
+    }
 }
 @media (min-width: $screen-sm-max){
   .ts-container{
     padding: 0 80px!important;
   }
   .ts-header-new{
+      min-height:68px;
       .ts-logo{
         height:35px;
       }

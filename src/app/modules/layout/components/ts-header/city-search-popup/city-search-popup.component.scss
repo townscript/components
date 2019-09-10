@@ -4,6 +4,9 @@
     background: $gray--lighter;
     position: absolute;
     box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+    .mdi-spin::before{
+        animation-duration: 0.5s;
+    }
     li:hover, li.active{
         background: $gray--light;
     }
@@ -23,5 +26,11 @@
         transform: rotate(45deg);
         border-top: 3px solid $ts-primary-blue;
         border-left: 3px solid $ts-primary-blue;
+    }
+}
+@media (min-width: $screen-sm-max){
+    .city-suggestions{
+        width: 140%;
+        left: -40%;
     }
 }
