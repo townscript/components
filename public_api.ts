@@ -7,6 +7,7 @@ export * from './src/app/shared/services/api-service';
 export * from './src/app/shared/services/notification.service';
 export * from './src/app/shared/services/time.service';
 export * from './src/app/shared/services/user-service';
+export * from './src/app/shared/services/follow.service';
 export * from './src/app/modules/layout/components/ts-header/ts-header.service';
 
 // Layout Components
@@ -29,6 +30,9 @@ export * from './src/app/shared/pipes/ts-date-range.pipe';
 export * from './src/app/modules/cards/ts-listing-card/share-event-modal/share-event-modal.component';
 export * from './src/app/modules/cards/ts-card-skeleton/ts-card-skeleton.component';
 export * from './src/app/modules/cards/ts-listing-card/ts-listing-card.component';
+
+// Shared module components
+export * from './src/app/shared/components/follow/follow.component';
 
 export * from './src/app/modules/layout/layout.module';
 export * from './src/app/modules/loginSignup/login-signup.module';

@@ -50,7 +50,14 @@
     }
     
 }
-
+:host ::ng-deep .listing-container:hover{
+    .bottom-purple-bar i{
+        color: white;
+    }
+    .bottom-purple-bar .followed i{
+        color: #EB4B4B;
+    }
+}
 .topic-container {
     font-family: Lato;
     min-height: 460px;

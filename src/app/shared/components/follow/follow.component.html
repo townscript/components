@@ -1,0 +1,12 @@
+<div class="follow-container rounded-full cursor-pointer" [class.flex]="type=='icon'" (click)="followedFn()"
+    (mouseover)="hover=true" (mouseleave)="hover=false" [class.followed]="followed">
+    <div [style.background-color]="hover && type=='button' ? color : 'transparent'"
+        [style.border-color]="type=='button' ? color : 'transparent'" [class.rounded-full]="type=='button'"
+        class="text-sm flex items-center justify-around antialiased font-bold border-purple-800"
+        [style.color]="hover && type=='button'?'white':color" [ngClass]="{'py-2 px-4 border-2':type=='button'}">
+        <span class="text-sm mr-1" *ngIf="type=='button'">{{text}}</span>
+        <i class="mdi mdi-heart-outline text-base antialiased" [class.text-2xl]="type=='icon'" *ngIf="!followed"></i>
+        <i class="mdi mdi-heart text-base antialiased followed-heart" [class.text-2xl]="type=='icon'"
+            *ngIf="followed"></i>
+    </div>
+</div>

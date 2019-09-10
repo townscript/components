@@ -55,6 +55,8 @@
         <div
             class="h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none">
             <div class="text-sm flex items-center">
+                <app-follow type="icon" [followTypeId]="eventData.id" [followType]="'EVENT'" color="#553c9a"
+                    (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
                 <div class="px-2 rounded-full" matRipple>
                     <i class="mdi mdi-share-variant text-2xl" (click)="shareEvent();$event.stopPropagation()"></i>

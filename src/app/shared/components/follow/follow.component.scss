@@ -1,0 +1,31 @@
+.follow-container{
+    max-width: 10rem;
+    text-align: center;
+    div{
+        transition: all ease 0.1s;
+    }
+    div:active{
+        transform: scale(0.9);
+    }
+    // &.followed{
+    //     div{
+    //         background: #553c9a;
+    //         i,span{
+    //             color:white;
+    //         }
+    //     }
+    // }
+    .followed-heart{
+            color:#EB4B4B;
+    }
+    div:hover{
+        //background: purple;
+        color:rgb(194, 181, 181);
+        // span{
+        //     color: white;
+        // }
+        // i{
+        //     color:white;
+        // }
+    }
+}
