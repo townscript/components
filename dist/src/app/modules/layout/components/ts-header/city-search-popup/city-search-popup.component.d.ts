@@ -4,7 +4,9 @@ import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common';
 import { HeaderService } from '../ts-header.service';
 import { Router } from '@angular/router';
+import { PlaceService } from '../place.service';
 export declare class CitySearchPopupComponent implements OnInit {
+    private placeService;
     private headerService;
     private timeService;
     datepipe: DatePipe;
@@ -17,16 +19,19 @@ export declare class CitySearchPopupComponent implements OnInit {
     citySearchActive: boolean;
     placeSearchResults: any;
     router: Router;
+    urlArray: any;
     cityQuery: string;
     cityQueryChanged: Subject<string>;
     client: any;
+    cityLoading: boolean;
     index: any;
-    popularPlaces: string[];
-    constructor(headerService: HeaderService, timeService: TimeService, datepipe: DatePipe);
+    popularPlaces: any;
+    constructor(placeService: PlaceService, headerService: HeaderService, timeService: TimeService, datepipe: DatePipe);
     callSearchCity: (query: any) => void;
     placeChanged: (place: any) => void;
     openCityPopup: () => void;
     searchCity: (text: any) => void;
+    getPopularPlaces: () => void;
     ngAfterViewInit(): void;
     ngOnInit(): void;
 }

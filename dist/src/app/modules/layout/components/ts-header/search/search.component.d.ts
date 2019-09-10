@@ -2,10 +2,10 @@ import { OnInit, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { DatePipe } from '@angular/common';
-import { HeaderService } from '../ts-header.service';
 import { Router } from '@angular/router';
+import { PlaceService } from '../place.service';
 export declare class SearchComponent implements OnInit {
-    private headerService;
+    private placeService;
     private timeService;
     datepipe: DatePipe;
     algoliaIndexName: string;
@@ -19,7 +19,7 @@ export declare class SearchComponent implements OnInit {
     cityPopupActive: boolean;
     placeSearchResults: any;
     searchResults: any;
-    activeCity: string;
+    activeCity: any;
     cityQuery: string;
     cityQueryChanged: Subject<string>;
     activeCityBackup: string;
@@ -27,7 +27,7 @@ export declare class SearchComponent implements OnInit {
     index: any;
     router: Router;
     popularPlaces: string[];
-    constructor(headerService: HeaderService, timeService: TimeService, datepipe: DatePipe);
+    constructor(placeService: PlaceService, timeService: TimeService, datepipe: DatePipe);
     callAlgolia: (text: any) => void;
     filterDataForSearchResult: (data: any) => void;
     clickout(event: any): void;
