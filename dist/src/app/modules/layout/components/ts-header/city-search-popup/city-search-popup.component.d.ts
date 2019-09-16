@@ -12,8 +12,8 @@ export declare class CitySearchPopupComponent implements OnInit {
     datepipe: DatePipe;
     cityInput: ElementRef;
     showArrow: boolean;
-    activeCity: string;
-    activeCityChange: EventEmitter<String>;
+    activePlace: string;
+    activePlaceChange: EventEmitter<String>;
     cityPopupActive: boolean;
     cityPopupActiveChange: EventEmitter<boolean>;
     citySearchActive: boolean;

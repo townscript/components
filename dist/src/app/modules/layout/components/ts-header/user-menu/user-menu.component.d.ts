@@ -10,6 +10,7 @@ export declare class UserMenuComponent implements OnInit {
     panelOpen2: boolean;
     user: any;
     close: EventEmitter<{}>;
+    s3BucketUrl: any;
     constructor(notificationService: NotificationService, userService: UserService, cookieService: CookieService);
     logout(): void;
     ngAfterViewInit(): void;
