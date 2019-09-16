@@ -649,7 +649,7 @@ let CitySearchPopupComponent = class CitySearchPopupComponent {
                 const secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
                 this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
             }
-            this.placeService.updatePlace(place.name);
+            //this.placeService.updatePlace(place.name);
             this.activePlace = place.name;
             this.activePlaceChange.emit(place.name);
             this.cityPopupActive = false;
