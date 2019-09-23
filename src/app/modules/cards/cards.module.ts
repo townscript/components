@@ -6,14 +6,12 @@ import { TsListingCardComponent } from './ts-listing-card/ts-listing-card.compon
 import { ShareEventModalComponent } from './ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsCardSkeletonComponent } from './ts-card-skeleton/ts-card-skeleton.component';
 import { SharedModule } from '../../shared/shared.module';
-import { NgxTextOverflowClampModule } from 'ngx-text-overflow-clamp';
 
 @NgModule({
     imports: [
         CommonModule,
         TsFormsModule,
         SharedModule,
-        NgxTextOverflowClampModule
     ],
     declarations: [
         TsListingCardComponent,

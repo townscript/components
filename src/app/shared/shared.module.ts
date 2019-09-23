@@ -6,18 +6,21 @@ import { UserService } from './services/user-service';
 import { RangeDatePipe } from './pipes/ts-date-range.pipe';
 import { FollowComponent } from './components/follow/follow.component';
 import { FollowService } from './services/follow.service';
+import { TextOverflowClampDirective } from './pipes/text-overflow.directive';
 
 @NgModule({
     declarations: [
         RangeDatePipe,
         FollowComponent,
+        TextOverflowClampDirective
     ],
     imports: [
         CommonModule
     ],
     exports: [
         FollowComponent,
-        RangeDatePipe
+        RangeDatePipe,
+        TextOverflowClampDirective
     ],
     providers: [TimeService, ApiService, UserService, FollowService]
 })
