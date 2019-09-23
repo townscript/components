@@ -1269,7 +1269,7 @@
             this.urgencyMessage = false;
             this.goingCounter = false;
             this.moreIcons = false;
-            this.defaultCardImageUrl = "https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/default-card.png";
+            this.defaultCardImageUrl = "https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/default-card.jpg";
             this.shareEvent = function () {
                 if (_this.browser.isMobile() && window.navigator && window.navigator['share']) {
                     window.navigator['share']({
