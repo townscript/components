@@ -2,94 +2,69 @@ import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ɵSWITCH_COM
 import { ApiService } from '../../../shared/services/api-service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from '../../../core/cookie.service';
 import { UserService } from '../../../shared/services/user-service';
 import { NotificationService } from '../../../shared/services/notification.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { TsLoginSignupService } from './ts-login-signup.service';
 
-const headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9VU0VSIiwic3ViIjoidGVzdGluZ0B0b3duc2NyaXB0LmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTU2NjkwODg0NjE2MCwiVVNFUl9JRCI6NDkwNiwiZXhwIjoxNTc0Njg0ODQ2fQ.ge-O16ZPw9wHvjoJrmTKbJRhfOkvAdI57N_YBZ5yr_IwymKOhPAyQpD8vHxIqhJGJ4tfJ_jez4xh3vQoWwngZw');
+const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
 @Component({
     selector: 'app-ts-login-signup',
     templateUrl: './ts-login-signup.component.html',
-    styleUrls: ['./ts-login-signup.component.scss'],
-    animations: [
-        trigger('btn-animate', [
-            transition('void => *', [
-                animate('1s ease', style({ opacity: 1 })),
-            ]),
-            transition('* => void', [
-                animate('1s ease', style({ opacity: 0, height: '0' }))
-            ])
-        ]),
-        trigger('in-out-animate', [
-            transition('void => *', [
-                style({ opacity: 0.2 }),
-                animate('1s ease', style({ opacity: 1 })),
-            ]),
-            transition('* => void', [
-                style({ opacity: 0.6 }),
-                animate('1s ease', style({ opacity: 0, height: '0' }))
-            ])
-        ]),
-        trigger('EnterLeave', [
-            state('flyIn', style({ transform: 'translateY(0)' })),
-            transition(':enter', [
-                style({ transform: 'translateY(0%)' }),
-                animate('1s ease-in-out')
-            ]),
-            transition(':leave', [
-                animate('.5s ease', style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
-            ])
-        ])
-    ]
+    styleUrls: ['./ts-login-signup.component.scss']
 })
+
 export class TsLoginSignupComponent implements OnInit {
     @Input() mode;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
-    showSocial = true;
-    show = false;
-    showPassword = false;
-    rdurl = 'http://' + this.apiService.betaHostName + 'marketplace';
-    ifSignIn = false;
-    ifUnverified = true;
-    ifSignUp = false;
-    showVerifyEmail = false;
-    showResetPassword = false;
+    showSocial:any = true;
+    show:any = false;
+    showPassword:any = false;
+    rdurl:any = 'http://' + this.apiService.betaHostName + 'marketplace';
+    isDefaultView:any = true;
+    isSignInView:any = false;
+    isSignUpView:any = false;
+    showVerifyEmail:any = false;
+    showResetPassword:any = false;
     isUserVerified: any;
-    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-    userTimezone = DateTime.local().zoneName;
-    loginForm = this.fb.group({
-        firstName: ['', Validators.required],
-        email: ['', Validators.required],
-        password: ['', Validators.required],
-        phoneNumber: ['', Validators.required]
-    });
-    captchaResponse = '';
-    currScreen: string;
-    correctPhoneNumber = null;
-    phoneError = false;
-    socialLoginMsg = false;
-    initializeTelInput;
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY:any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
+    userTimezone:any = DateTime.local().zoneName;
+    loginForm:any;
+    captchaResponse:any = '';
+    correctPhoneNumber:any = null;
+    phoneError:any = false;
+    socialLoginMsg:any = false;
+    initializeTelInput:any;
+    signInErrMessage: any = "";
+    resetPwdLinkSent: boolean = false;
 
     constructor(public apiService: ApiService,
         private http: HttpClient,
-        private fb: FormBuilder,
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
+        private tsLoginSignupService: TsLoginSignupService,
     ) { }
 
     ngOnInit() {
-        this.loginForm.get('firstName').disable();
+
+        this.loginForm = new FormGroup({
+          'fullName': new FormControl('',{ validators: Validators.required}),
+          'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)]}),
+          'password': new FormControl('',{ validators: Validators.required}),
+          'phoneNumber': new FormControl('',{ validators: Validators.required})
+        });
+
+        this.loginForm.get('fullName').disable();
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
-        this.currScreen = 'ifUnverified';
+
 
     }
 
@@ -97,9 +72,8 @@ export class TsLoginSignupComponent implements OnInit {
         this.closeDialog.emit(true);
     }
 
-    public resolveAndProceed(captchaResponse: string) {
+    public resolve(captchaResponse: string) {
         this.captchaResponse = captchaResponse;
-        this.signup();
     }
 
     password = () => {
@@ -107,47 +81,44 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     onLoginWithFB = () => {
-        const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithfacebook' +
-            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        const url = 'http://' + this.apiService.betaHostName
+        + '/api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
 
     onLoginWithGoogle = () => {
-        const url = 'http://' + this.apiService.betaHostName + 'api/user/signinwithgoogle' +
-            (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        const url = 'http://' + this.apiService.betaHostName
+        + '/api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
 
-    getEmailVerifyResponse = () => {
-        const params = new HttpParams({ fromString: `email=` + this.loginForm.value.email });
-        return this.http.get(this.apiService.API_SERVER + 'user/getusersignupdetails',
-            { params: params, headers: headers }).pipe(map(data => (data)));
-    }
-
     verifyEmail = () => {
-        this.getEmailVerifyResponse().subscribe(
+        if(!this.loginForm.controls.email.valid){
+          return;
+        }
+        this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email).subscribe(
             (retData: any) => {
                 const newData = JSON.parse(retData.data);
                 if (newData && newData.isExistingUser && newData.isManualSignup) {
                     this.loginForm.get('password').enable();
-                    this.ifSignIn = true;
-                    this.ifUnverified = false;
-                    this.ifSignUp = false;
+                    this.isSignInView = true;
+                    this.isSignUpView = false;
                     this.showSocial = false;
-                    this.currScreen = 'ifSignIn';
                     this.socialLoginMsg = false;
+                    this.isDefaultView = false;
+
                 } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                     this.socialLoginMsg = true;
                 } else {
-                    this.ifSignUp = true;
-                    this.ifSignIn = false;
-                    this.ifUnverified = false;
+                    this.isSignUpView = true;
+                    this.isSignInView = false;
                     this.showSocial = false;
-                    this.currScreen = 'ifSignUp';
-                    this.loginForm.get('firstName').enable();
+                    this.isDefaultView = false;
+                    this.socialLoginMsg = false;
+                    this.loginForm.get('fullName').enable();
                     this.loginForm.get('password').enable();
                     this.loginForm.get('phoneNumber').enable();
-                    this.socialLoginMsg = false;
+
                     this.initializeTelInput = setTimeout(() => {
                         this.initializeIntlTelInput();
                     }, 200);
@@ -171,9 +142,16 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     signIn = () => {
-        // alert('you have signed in');
-        this.postSignInCredentials().subscribe(
+        if (!this.loginForm.valid) {
+            return;
+        }
+
+        this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.emailId, this.loginForm.value.password).subscribe(
             (retData: any) => {
+                if(retData.result != "Success"){
+                  this.signInErrMessage = retData.data;
+                  return;
+                }
                 const tokenData = {
                     token: (retData.data)
                 };
@@ -192,99 +170,8 @@ export class TsLoginSignupComponent implements OnInit {
         );
     }
 
-    signup = () => {
+    signUp = () => {
         const self = this;
-        this.postSignupCredentials().toPromise().then(function (data) {
-            self.showVerifyEmail = true;
-            self.showSocial = false;
-            self.ifSignUp = false;
-            self.currScreen = 'showVerifyEmail';
-        });
-    }
-
-    forgotPassword = () => {
-        this.loginForm.get('password').disable();
-        this.showResetPassword = true;
-        this.showSocial = false;
-        this.ifSignIn = false;
-        this.currScreen = 'showResetPassword';
-    }
-
-    takeMeBack = () => {
-        if (this.showResetPassword) {
-            this.ifUnverified = true;
-            this.showResetPassword = false;
-            this.ifSignUp = false;
-            this.currScreen = 'ifUnverified';
-        } else if (this.ifSignIn) {
-            this.ifSignUp = false;
-            this.showResetPassword = false;
-            this.ifUnverified = true;
-            this.ifSignIn = false;
-            this.showSocial = true;
-            this.currScreen = 'ifUnverified';
-        } else if (this.ifSignUp) {
-            this.ifUnverified = true;
-            this.ifSignUp = false;
-            this.showSocial = true;
-            this.currScreen = 'ifUnverified';
-            this.loginForm.get('firstName').disable();
-            this.loginForm.get('password').disable();
-            this.loginForm.get('phoneNumber').disable();
-        } else if (this.showVerifyEmail) {
-            this.showVerifyEmail = false;
-            this.ifUnverified = true;
-            this.showSocial = true;
-            this.ifSignUp = false;
-            this.loginForm.get('firstName').disable();
-            this.loginForm.get('password').disable();
-            this.loginForm.get('phoneNumber').disable();
-            this.currScreen = 'ifUnverified';
-        }
-
-    }
-
-    postSignInCredentials = () => {
-        if (!this.loginForm.valid) {
-            return;
-        }
-        const loginObj = {
-            emailId: this.loginForm.value.email,
-            password: this.loginForm.value.password
-        };
-        const params = new HttpParams({
-            fromString: `emailId=` + this.loginForm.value.email + `&password=` + this.loginForm.value.password
-        });
-
-        return this.http.post(this.apiService.API_SERVER + 'user/loginwithtownscript',
-            loginObj, { params: params, headers: headers }).pipe(map(data => (data)));
-    }
-
-    resetPasswordCredentials = () => {
-        const forgotPassword = {
-            emailId: this.loginForm.value.email
-        };
-
-        return this.http.post(this.apiService.API_SERVER + 'verify/sendforgotpwdemail',
-            forgotPassword, { headers: headers }).pipe(map(data => (data)));
-    }
-
-    redirectToListings = () => {
-        window.open('/', '_self');
-    }
-
-    resetPassword = () => {
-        this.resetPasswordCredentials().subscribe(
-            (resp: any) => {
-                // console.log(resp);
-            },
-            (error: any) => {
-                // console.log(error);
-            }
-        );
-    }
-
-    postSignupCredentials = () => {
         if (!this.loginForm.valid) {
             return;
         }
@@ -297,7 +184,7 @@ export class TsLoginSignupComponent implements OnInit {
         }
 
         const formData = new FormData();
-        formData.append('name', this.loginForm.value.firstName);
+        formData.append('name', this.loginForm.value.fullName);
         formData.append('emailid', this.loginForm.value.email);
         formData.append('password', this.loginForm.value.password);
         formData.append('phone', this.correctPhoneNumber);
@@ -305,8 +192,66 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('reCaptcha', this.captchaResponse);
         formData.append('username', this.randomString(10, ''));
         formData.append('rdurl', this.rdurl);
-        return this.http.post(this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha',
-            formData, { headers: headers, responseType: 'text' });
+
+        this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
+            self.showVerifyEmail = true;
+            self.showSocial = false;
+            self.isSignUpView = false;
+        });
+    }
+
+    forgotPassword = () => {
+        this.loginForm.get('password').disable();
+        this.showResetPassword = true;
+        this.showSocial = false;
+        this.isSignInView = false;
+    }
+
+    goBack = () => {
+        if (this.showResetPassword) {
+            this.showResetPassword = false;
+            this.isSignUpView = false;
+            this.isSignInView = true;
+        } else if (this.isSignInView) {
+            this.isSignUpView = false;
+            this.showResetPassword = false;
+            this.isSignInView = false;
+            this.showSocial = true;
+            this.isDefaultView = true;
+        } else if (this.isSignUpView) {
+            this.isSignUpView = false;
+            this.showSocial = true;
+            this.isDefaultView = true;
+            this.loginForm.get('fullName').disable();
+            this.loginForm.get('password').disable();
+            this.loginForm.get('phoneNumber').disable();
+        } else if (this.showVerifyEmail) {
+            this.showVerifyEmail = false;
+            this.showSocial = true;
+            this.isSignUpView = false;
+            this.loginForm.get('fullName').disable();
+            this.loginForm.get('password').disable();
+            this.loginForm.get('phoneNumber').disable();
+        } else {
+          this.close();
+        }
+
+    }
+
+    redirectToListings = () => {
+        window.open('/', '_self');
+    }
+
+    resetPassword = () => {
+        this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
+            (resp: any) => {
+                this.resetPwdLinkSent = true;
+                console.log(resp);
+            },
+            (error: any) => {
+                console.log(error);
+            }
+        );
     }
 
     randomString = (len, an) => {
@@ -322,7 +267,7 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     resendVerifyEmail = () => {
-        this.resendVerifyEmailCredential().subscribe(
+        this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.emailId).subscribe(
             (retData: any) => {
                 alert('verification email has been sent');
             },
@@ -331,12 +276,11 @@ export class TsLoginSignupComponent implements OnInit {
             }
         );
     }
-    resendVerifyEmailCredential = () => {
-        const formData = new FormData();
-        formData.append('rdurl', this.rdurl);
-        formData.append('emailid', this.loginForm.value.email);
-        return this.http.post(this.apiService.API_SERVER + 'user/resendverificationcode',
-            formData, { headers: headers }).pipe(map(data => (data)));
+
+    togglePasswordDisplay = () => {
+      this.showPassword = !this.showPassword;
+      let pwdInput = <HTMLInputElement>document.getElementById('user-pwd');
+      pwdInput.type= this.showPassword ? "text":"password";
     }
 
 }

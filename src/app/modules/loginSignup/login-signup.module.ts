@@ -4,15 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TsFormsModule } from '@townscript/elements';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { HttpClientModule } from '@angular/common/http';
-import { MatRippleModule, MatSnackBarModule } from '@angular/material';
+import { MatRippleModule, MatSnackBarModule, MatInputModule } from '@angular/material';
 import { TsLoginSignupComponent } from './ts-login-signup/ts-login-signup.component';
 import { ApiService } from '../../shared/services/api-service';
 import { UserService } from '../../shared/services/user-service';
 import { CookieService } from '../../core/cookie.service';
 import { NotificationService } from '../../shared/services/notification.service';
-import { LoginTopContentComponent } from './ts-login-signup/login-top-content/login-top-content.component';
-import { AppPasswordDirective } from './ts-login-signup/ts-show-hide-directive';
 import { LoginModalComponent } from './ts-login-signup/login-modal/login-modal.component';
+import { EmailSentSVGComponent } from './ts-login-signup/email-sent-svg/email-sent-svg.component';
+import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service';
 
 @NgModule({
   imports: [
@@ -23,24 +23,25 @@ import { LoginModalComponent } from './ts-login-signup/login-modal/login-modal.c
     RecaptchaModule,
     HttpClientModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatInputModule
   ],
   declarations: [
     TsLoginSignupComponent,
-    LoginTopContentComponent,
-    AppPasswordDirective,
-    LoginModalComponent
+    LoginModalComponent,
+    EmailSentSVGComponent
   ],
   exports: [
     TsLoginSignupComponent,
-    LoginTopContentComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    EmailSentSVGComponent
   ],
   providers: [
     ApiService,
     CookieService,
     UserService,
-    NotificationService
+    NotificationService,
+    TsLoginSignupService
   ]
 })
 export class TsLoginSignupModule { }
