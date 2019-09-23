@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('ng-recaptcha'), require('@angular/animations'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar'), require('ngx-text-overflow-clamp')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'ng-recaptcha', '@angular/animations', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar', 'ngx-text-overflow-clamp'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.ngRecaptcha, global.ng.animations, global.elements, global.ng.material.core, global.ng.material['snack-bar'], global.ngxTextOverflowClamp));
-}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, ngRecaptcha, animations, elements, core$1, snackBar, ngxTextOverflowClamp) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('ng-recaptcha'), require('@angular/animations'), require('text-overflow-clamp'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'ng-recaptcha', '@angular/animations', 'text-overflow-clamp', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.ngRecaptcha, global.ng.animations, global.clampLibImported, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
+}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, ngRecaptcha, animations, clampLibImported, elements, core$1, snackBar) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1179,6 +1179,25 @@
         return RangeDatePipe;
     }());
 
+    var clampLib = clampLibImported;
+    var TextOverflowClampDirective = /** @class */ (function () {
+        function TextOverflowClampDirective(el) {
+            this.el = el;
+        }
+        TextOverflowClampDirective.prototype.ngAfterViewInit = function () {
+            clampLib(this.el.nativeElement, this.lines);
+        };
+        __decorate([
+            core.Input('clamp'),
+            __metadata("design:type", Number)
+        ], TextOverflowClampDirective.prototype, "lines", void 0);
+        TextOverflowClampDirective = __decorate([
+            core.Directive({ selector: '[clamp]' }),
+            __metadata("design:paramtypes", [core.ElementRef])
+        ], TextOverflowClampDirective);
+        return TextOverflowClampDirective;
+    }());
+
     var ShareEventModalComponent = /** @class */ (function () {
         function ShareEventModalComponent(dialogRef, data) {
             var _this = this;
@@ -1528,13 +1547,15 @@
                 declarations: [
                     RangeDatePipe,
                     FollowComponent,
+                    TextOverflowClampDirective
                 ],
                 imports: [
                     common.CommonModule
                 ],
                 exports: [
                     FollowComponent,
-                    RangeDatePipe
+                    RangeDatePipe,
+                    TextOverflowClampDirective
                 ],
                 providers: [TimeService, ApiService, UserService, FollowService]
             })
@@ -1551,7 +1572,6 @@
                     common.CommonModule,
                     elements.TsFormsModule,
                     SharedModule,
-                    ngxTextOverflowClamp.NgxTextOverflowClampModule
                 ],
                 declarations: [
                     TsListingCardComponent,
@@ -1591,6 +1611,7 @@
     exports.SearchComponent = SearchComponent;
     exports.ShareEventModalComponent = ShareEventModalComponent;
     exports.SharedModule = SharedModule;
+    exports.TextOverflowClampDirective = TextOverflowClampDirective;
     exports.TimeService = TimeService;
     exports.TsCardSkeletonComponent = TsCardSkeletonComponent;
     exports.TsControlValueAccessor = TsControlValueAccessor;

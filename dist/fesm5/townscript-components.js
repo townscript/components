@@ -11,10 +11,10 @@ import { debounceTime, map } from 'rxjs/operators';
 import { FormBuilder, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import { trigger, transition, animate, style, state } from '@angular/animations';
+import * as clampLibImported from 'text-overflow-clamp';
 import { TsFormsModule } from '@townscript/elements';
 import { MatRippleModule as MatRippleModule$1 } from '@angular/material/core';
 import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snack-bar';
-import { NgxTextOverflowClampModule } from 'ngx-text-overflow-clamp';
 
 var config = {
     baseUrl: "",
@@ -1150,6 +1150,25 @@ var RangeDatePipe = /** @class */ (function () {
     return RangeDatePipe;
 }());
 
+var clampLib = clampLibImported;
+var TextOverflowClampDirective = /** @class */ (function () {
+    function TextOverflowClampDirective(el) {
+        this.el = el;
+    }
+    TextOverflowClampDirective.prototype.ngAfterViewInit = function () {
+        clampLib(this.el.nativeElement, this.lines);
+    };
+    __decorate([
+        Input('clamp'),
+        __metadata("design:type", Number)
+    ], TextOverflowClampDirective.prototype, "lines", void 0);
+    TextOverflowClampDirective = __decorate([
+        Directive({ selector: '[clamp]' }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], TextOverflowClampDirective);
+    return TextOverflowClampDirective;
+}());
+
 var ShareEventModalComponent = /** @class */ (function () {
     function ShareEventModalComponent(dialogRef, data) {
         var _this = this;
@@ -1499,13 +1518,15 @@ var SharedModule = /** @class */ (function () {
             declarations: [
                 RangeDatePipe,
                 FollowComponent,
+                TextOverflowClampDirective
             ],
             imports: [
                 CommonModule
             ],
             exports: [
                 FollowComponent,
-                RangeDatePipe
+                RangeDatePipe,
+                TextOverflowClampDirective
             ],
             providers: [TimeService, ApiService, UserService, FollowService]
         })
@@ -1522,7 +1543,6 @@ var CardsModule = /** @class */ (function () {
                 CommonModule,
                 TsFormsModule,
                 SharedModule,
-                NgxTextOverflowClampModule
             ],
             declarations: [
                 TsListingCardComponent,
@@ -1543,5 +1563,5 @@ var CardsModule = /** @class */ (function () {
     return CardsModule;
 }());
 
-export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, FollowComponent, FollowService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, PlaceService, RangeDatePipe, SearchComponent, ShareEventModalComponent, SharedModule, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config };
+export { ApiService, AppPasswordDirective, BrowserService, CardsModule, CitySearchPopupComponent, CookieService, FollowComponent, FollowService, HamburgerMenuComponent, HeaderService, LayoutModule, LoginModalComponent, LoginTopContentComponent, NotificationService, PlaceService, RangeDatePipe, SearchComponent, ShareEventModalComponent, SharedModule, TextOverflowClampDirective, TimeService, TsCardSkeletonComponent, TsControlValueAccessor, TsFooterComponent, TsHeaderComponent, TsListingCardComponent, TsLoginSignupComponent, TsLoginSignupModule, UserMenuComponent, UserService, config };
 //# sourceMappingURL=townscript-components.js.map
