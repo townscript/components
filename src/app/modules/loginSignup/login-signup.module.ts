@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TsFormsModule } from '@townscript/elements';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { HttpClientModule } from '@angular/common/http';
-import { MatRippleModule, MatSnackBarModule, MatInputModule } from '@angular/material';
+import { MatRippleModule, MatSnackBarModule, MatInputModule, MatTooltipModule } from '@angular/material';
 import { TsLoginSignupComponent } from './ts-login-signup/ts-login-signup.component';
 import { ApiService } from '../../shared/services/api-service';
 import { UserService } from '../../shared/services/user-service';
@@ -24,7 +24,8 @@ import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service'
     HttpClientModule,
     MatRippleModule,
     MatSnackBarModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule,
   ],
   declarations: [
     TsLoginSignupComponent,

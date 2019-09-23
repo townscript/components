@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ɵSWITCH_COMPILE_DIRECTIVE__POST_R3__ } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ɵSWITCH_COMPILE_DIRECTIVE__POST_R3__, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '../../../shared/services/api-service';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
 import { CookieService } from '../../../core/cookie.service';
@@ -15,7 +14,8 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
 @Component({
     selector: 'app-ts-login-signup',
     templateUrl: './ts-login-signup.component.html',
-    styleUrls: ['./ts-login-signup.component.scss']
+    styleUrls: ['./ts-login-signup.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 
 export class TsLoginSignupComponent implements OnInit {
@@ -30,7 +30,7 @@ export class TsLoginSignupComponent implements OnInit {
     isDefaultView:any = true;
     isSignInView:any = false;
     isSignUpView:any = false;
-    showVerifyEmail:any = false;
+    isVerifyEmailView:any = false;
     showResetPassword:any = false;
     isUserVerified: any;
     CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY:any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
@@ -64,12 +64,14 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('fullName').disable();
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
-
-
     }
 
-    close() {
+    close = () => {
         this.closeDialog.emit(true);
+    }
+
+    clearErrors = () => {
+        this.socialLoginMsg = "";
     }
 
     public resolve(captchaResponse: string) {
@@ -194,7 +196,7 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('rdurl', this.rdurl);
 
         this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
-            self.showVerifyEmail = true;
+            self.isVerifyEmailView = true;
             self.showSocial = false;
             self.isSignUpView = false;
         });
@@ -225,8 +227,8 @@ export class TsLoginSignupComponent implements OnInit {
             this.loginForm.get('fullName').disable();
             this.loginForm.get('password').disable();
             this.loginForm.get('phoneNumber').disable();
-        } else if (this.showVerifyEmail) {
-            this.showVerifyEmail = false;
+        } else if (this.isVerifyEmailView) {
+            this.isVerifyEmailView = false;
             this.showSocial = true;
             this.isSignUpView = false;
             this.loginForm.get('fullName').disable();

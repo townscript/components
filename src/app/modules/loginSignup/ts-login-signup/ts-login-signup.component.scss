@@ -18,8 +18,8 @@ $ts-primary-blue    : #3782C4;
 @keyframes fadeInUp {
 	from {
 		opacity: 0;
-		-webkit-transform: translate3d(0, 100%, 0);
-		transform: translate3d(0, 100%, 0);
+		-webkit-transform: translate3d(0, 50%, 0);
+		transform: translate3d(0, 50%, 0);
 	}
 
 	to {
@@ -50,13 +50,23 @@ $ts-primary-blue    : #3782C4;
   }
 }
 
+.ts-login-tooltip {
+		background-color: $ts-primary-blue;
+		color: white;
+		font-size: 12px;
+		opacity: 0.98;
+		white-space: pre-line;
+}
+
 
 .login-signup-view{
 	max-height: 90vh;
+	min-width: 500px;
+	overflow: hidden;
   .fadeIn {
     .primary-header, .secondary-header{
-    	-webkit-animation-duration: 0.25s;
-    	animation-duration: 0.25s;
+    	-webkit-animation-duration: 0.4s;
+    	animation-duration: 0.4s;
     	-webkit-animation-fill-mode: both;
     	animation-fill-mode: both;
     	-webkit-animation-delay: 0s;
@@ -72,8 +82,8 @@ $ts-primary-blue    : #3782C4;
   .fadeInUp{
     .login-form{
       .form-group{
-        -webkit-animation-duration: 0.25s;
-        animation-duration: 0.25s;
+        -webkit-animation-duration: 0.4s;
+        animation-duration: 0.4s;
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
         -webkit-animation-name: fadeInUp;

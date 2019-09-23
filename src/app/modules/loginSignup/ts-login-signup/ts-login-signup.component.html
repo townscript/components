@@ -1,7 +1,7 @@
 <div class="login-signup-view p-2 px-5" id="login-signup-view">
   <div class="view-header">
-    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" (click)="goBack()">
-      <i class="mdi mdi-arrow-left"></i>
+    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1">
+      <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
       <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Let's get Started</div>
@@ -21,6 +21,11 @@
       <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Sign Up</div>
       <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">Welcome to Townscript</div>
     </div>
+
+    <div class="verify-email-header flex flex-col fadeIn" *ngIf="isVerifyEmailView">
+      <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">You're almost done</div>
+      <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">We just need to verify your e-mail</div>
+    </div>
   </div>
   <div class="view-body pt-5">
     <div class="default-view-body py-2 fadeInUp" *ngIf="isDefaultView">
@@ -30,33 +35,33 @@
                 <mat-form-field class="w-full">
                   <input formControlName="email" matInput
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-                    id="email" type="email" name="email" placeholder="Email">
+                    id="email" type="email" name="email" placeholder="Email" (ngModelChange)="clearErrors()">
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="socialLoginMsg">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="socialLoginMsg">
                   It seems you have signed up using Social Login.
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Email Id is required
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Please enter a valid email address
                 </p>
             </div>
         </div>
         <div class="form-group w-full text-center">
             <button
-              mat-raised-button (click)="verifyEmail()" [disabled]="!loginForm.controls.email.valid"
+               (click)="verifyEmail()" [disabled]="!loginForm.controls.email.valid"
               class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Continue
             </button>
         </div>
 
         <div class="form-group strike-through strike-through-margin">
-            <div class="form-group text-gray-700 text-base md:text-lg lg:text-xl">
+            <div class="text-gray-700 text-base md:text-lg lg:text-xl">
                 <span class="or-text">OR</span>
             </div>
         </div>
         <div class="form-group">
-            <button mat-raised-button
+            <button
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
                 (click)="onLoginWithGoogle()" ts-data-analytics prop-event="click" eventLabel="Login with Google"
                 prop-clicked-location="Sign In" matRipple>
@@ -71,7 +76,7 @@
             <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
         </div>
         <div class="form-group">
-            <button mat-raised-button
+            <button
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
                 (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
                 prop-clicked-location="Sign In" matRipple>
@@ -127,7 +132,7 @@
         <div class="w-full text-center form-group">
             <p class="text-sm text-red-500 text-left -mt-4" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
             <button
-              mat-raised-button (click)="signIn()" [disabled]="!loginForm.valid"
+               (click)="signIn()" [disabled]="!loginForm.valid"
               class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Sign In
             </button>
             <div class="text-sm text-center text-gray-700 p-1">
@@ -137,8 +142,8 @@
       </form>
     </div>
     <div class="reset-pwd-view-body py-2 fadeInUp" *ngIf="showResetPassword">
-      <form id="formId" [formGroup]="loginForm" class="w-full login-form" *ngIf="!resetPwdLinkSent">
-        <div class="form-group md:flex md:items-center ">
+      <form id="formId" [formGroup]="loginForm" class="w-full login-form">
+        <div class="form-group md:flex md:items-center" *ngIf="!resetPwdLinkSent">
             <div class="w-full">
                 <mat-form-field class="w-full">
                   <input formControlName="email" matInput
@@ -161,7 +166,7 @@
         </div>
         <div class="w-full text-center form-group">
             <button *ngIf="!resetPwdLinkSent"
-              mat-raised-button (click)="resetPassword()" [disabled]="!loginForm.controls.email.valid"
+               (click)="resetPassword()" [disabled]="!loginForm.controls.email.valid"
               class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Send Reset Password Link
             </button>
             <div (click)="resetPassword()" class="text-gray-700 text-sm text-center resend-email py-2 px-2 hover:underline cursor-pointer" *ngIf="resetPwdLinkSent">
@@ -238,7 +243,31 @@
         </div>
       </form>
     </div>
-    <div class="agreement my-2">
+
+    <div class="verify-email-view-body py-2 fadeInUp" *ngIf="isVerifyEmailView">
+      <form id="formId" [formGroup]="loginForm" class="w-full login-form">
+        <div class="link-sent fadeIn">
+          <div class="p-2 flex items-center justify-center -mt-8 primary-header">
+            <app-email-sent></app-email-sent>
+          </div>
+          <div class="p-2 text-green-600 text-sm text-center secondary-header">
+            Tap the link in the email we sent you at {{loginForm.value.email}}
+          </div>
+        </div>
+        <div class="w-full text-center form-group">
+            <button *ngIf="!resetPwdLinkSent"
+               (click)="resendVerifyEmail()" [disabled]="!loginForm.valid"
+              class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Resend Verification Email
+            </button>
+            <div class="text-gray-700 text-sm text-center why-verify py-2 px-2 hover:underline cursor-pointer"
+            matTooltip="Townscript sends all important communication regarding your events & account-related updates via e-mail. We just want to make sure you don’t miss these important information"
+            matTooltipClass="ts-login-tooltip">
+                Why verify?
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="agreement my-2" *ngIf="isDefaultView || isSignUpView">
         <div class="w-full hor-linear-grad my-2"></div>
         <p class="text-xs text-center p-2 text-gray-800 px-5">
           By continuing, you agree to Townscript's
