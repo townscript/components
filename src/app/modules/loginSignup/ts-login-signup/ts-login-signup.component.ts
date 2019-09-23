@@ -58,7 +58,7 @@ export class TsLoginSignupComponent implements OnInit {
           'fullName': new FormControl('',{ validators: Validators.required}),
           'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)]}),
           'password': new FormControl('',{ validators: Validators.required}),
-          'phoneNumber': new FormControl('',{ validators: Validators.required})
+          'phoneNumber': new FormControl('',{ validators: [Validators.required, Validators.pattern('[0-9]+')] })
         });
 
         this.loginForm.get('fullName').disable();
@@ -182,6 +182,7 @@ export class TsLoginSignupComponent implements OnInit {
         this.correctPhoneNumber = iti.getNumber();
 
         if (this.correctPhoneNumber === '') {
+            this.phoneError = true;
             return;
         }
 

@@ -105,13 +105,13 @@
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="email" type="email" name="email" placeholder="Email">
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="socialLoginMsg">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="socialLoginMsg">
                   It seems you have signed up using Social Login.
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Email Id is required
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Please enter a valid email address
                 </p>
             </div>
@@ -124,13 +124,13 @@
                       id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
                   <i class="text-lg mdi absolute right-0 text-gray-700" [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Password is required
                 </p>
             </div>
         </div>
         <div class="w-full text-center form-group">
-            <p class="text-sm text-red-500 text-left -mt-4" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
+            <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
             <button
                (click)="signIn()" [disabled]="!loginForm.valid"
               class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Sign In
@@ -150,10 +150,10 @@
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="email" type="email" name="email" placeholder="Email">
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Email Id is required
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Please enter a valid email address
                 </p>
             </div>
@@ -184,13 +184,13 @@
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                     id="email" type="email" name="email" placeholder="Email">
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="socialLoginMsg">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="socialLoginMsg">
                   It seems you have signed up using Social Login.
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Email Id is required
                 </p>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Please enter a valid email address
                 </p>
             </div>
@@ -203,13 +203,13 @@
                       id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
                   <i class="text-lg mdi absolute right-0 text-gray-700" [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                   Password is required
                 </p>
             </div>
         </div>
         <div class="form-group md:flex md:items-center ">
-            <div class="md:w-full">
+            <div class="w-full">
               <mat-form-field class="w-full relative">
                 <input formControlName="fullName" matInput
                   class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
@@ -218,17 +218,17 @@
             </div>
         </div>
         <div class="form-group md:flex md:items-center ">
-            <div class="md:w-full">
+            <div class="w-full">
               <mat-form-field class="w-full relative" floatLabel="always">
                 <input type="tel" formControlName="phoneNumber" matInput
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10"
                     id="phoneNumber" type="tel" placeholder="Phone no.">
-                <p class="text-sm text-red-500" *ngIf="phoneError">Please enter a valid Phone no.</p>
               </mat-form-field>
+              <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="phoneError || (loginForm.get('phoneNumber').hasError('pattern') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched))">Please enter a valid Phone no.</p>
             </div>
         </div>
         <div class="form-group md:flex md:items-center mb-3">
-            <div class="md:w-full">
+            <div class="w-full flex items-center justify-center md:justify-start">
                 <re-captcha
                   (resolved)="resolve($event)"
                   [siteKey]="CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY">
