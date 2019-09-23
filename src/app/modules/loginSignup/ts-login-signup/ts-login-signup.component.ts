@@ -1,6 +1,5 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ɵSWITCH_COMPILE_DIRECTIVE__POST_R3__, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ViewEncapsulation } from '@angular/core';
 import { ApiService } from '../../../shared/services/api-service';
-import { HttpClient } from '@angular/common/http';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -19,7 +18,7 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
 })
 
 export class TsLoginSignupComponent implements OnInit {
-    @Input() mode;
+    @Input() mode: any;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -45,7 +44,6 @@ export class TsLoginSignupComponent implements OnInit {
     resetPwdLinkSent: boolean = false;
 
     constructor(public apiService: ApiService,
-        private http: HttpClient,
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
@@ -127,6 +125,7 @@ export class TsLoginSignupComponent implements OnInit {
                 }
             },
             (error) => {
+              console.log('error ' + error);
             }
         );
 
@@ -168,6 +167,7 @@ export class TsLoginSignupComponent implements OnInit {
                 this.redirectToListings();
             },
             (error) => {
+              console.log(error);
             }
         );
     }
@@ -278,7 +278,7 @@ export class TsLoginSignupComponent implements OnInit {
                 this.notificationService.success('verification email has been sent' , 2000 ,'Dismiss');
             },
             (error: any) => {
-                // console.log('error');
+                console.log('error' + error);
             }
         );
     }
