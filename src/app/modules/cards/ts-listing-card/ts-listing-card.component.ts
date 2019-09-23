@@ -53,7 +53,7 @@ export class TsListingCardComponent implements OnInit {
     }
     // this.eventData = {
     //   "id": 1, "eventId": 87429,
-    //   "name": "first event",
+    //   "name": "first event with more content to test text clamp with more text",
     //   "shortName": "test-once-more-123442",
     //   "startTime": "2019-07-25T10:30:00.000+0000", "endTime": "2019-07-25T11:30:00.000+0000",
     //   "displayName": null, "shortDescription": null, "eventTimeZone": "Asia/Calcutta",
@@ -66,7 +66,8 @@ export class TsListingCardComponent implements OnInit {
     //   "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false,
     //   "paid": false, "onlineEvent": false, "organizerId": 3080, "pageViews": null,
     //   "organizerScore": null, "ticketsSold": 0, "roTicketsSold": null, "ticketsRemaining": 0,
-    //   "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false
+    //   "farDuration": null, "townscriptIR": null, "score": null, "recurrent": false,
+    //   "keywords": [{ "id": 165, "topicKeywordName": "testing", "topicKeywordCode": "testing", "topicId": 175, "weight": 1, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }, { "id": 165, "topicKeywordName": "testing", "topicKeywordCode": "testing", "topicId": 175, "weight": 1, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }, { "id": 141, "topicKeywordName": "party", "topicKeywordCode": "party", "topicId": 150, "weight": 2, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }]
     // };
 
     // this.topicData = {

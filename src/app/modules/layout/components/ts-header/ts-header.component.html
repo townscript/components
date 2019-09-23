@@ -22,7 +22,8 @@
 <nav class="ts-header-new w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block lg:w-1/6">
-            <img class="ts-logo" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
+            <img (click)="goToHomePage()" *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
+                src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
         </div>
         <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
@@ -30,19 +31,26 @@
             <!-- <app-hamburger-menu class="mr-3"></app-hamburger-menu> -->
             <!-- <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" /> -->
-            <i class="mdi mdi-map-marker color-blue text-2xl mr-2"></i>
-            <div #citySuggestions class="city-selection text-lg cursor-pointer w-full" (click)="cityPopupActive=true">
+            <div *ngIf="backState" (click)="goBack()"
+                class="rounded-full flex py-1 px-3 mr-1 justify-center items-center" matRipple>
+                <i class="mdi mdi-arrow-left text-2xl color-blue"></i>
+            </div>
+            <i *ngIf="Components.indexOf('mobileCitySearch')>-1 && !backState"
+                class="mdi mdi-map-marker color-blue text-2xl mr-2"></i>
+            <div *ngIf="Components.indexOf('mobileCitySearch')>-1" #citySuggestions
+                class="city-selection text-lg cursor-pointer w-full" (click)="cityPopupActive=true">
                 <div class="flex items-center w-full" matRipple>
-                    <span class="mr-1 text-gray-700 truncate">{{activeCity}}</span>
+                    <span class="mr-1 text-gray-700 truncate">{{activePlace}}</span>
                     <i class="mdi mdi-menu-down color-blue"></i>
                 </div>
-                <app-city-search-popup [(cityPopupActive)]="cityPopupActive" [(activeCity)]="activeCity"
+                <app-city-search-popup [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
                     [showArrow]="false" class="popup" *ngIf="cityPopupActive">
                 </app-city-search-popup>
             </div>
         </div>
         <div class="lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex">
-            <app-search class="w-full" [algoliaIndexName]="algoliaIndexName"></app-search>
+            <app-search *ngIf="Components.indexOf('eventSearch')>-1" class="w-full"
+                [algoliaIndexName]="algoliaIndexName"></app-search>
         </div>
         <div class="invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue">
             <!-- <i class="active text-xl mdi mdi-book-open mr-4"></i>
@@ -50,12 +58,13 @@
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
         <div class="lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
-            <div class="create-btn cursor-pointer flex h-full justify-center items-center">
+            <div *ngIf="Components.indexOf('createEventBtn')>-1"
+                class="create-btn cursor-pointer flex h-full justify-center items-center">
                 <span class="text-base mr-2">CREATE EVENT</span>
                 <i class="mdi mdi-ticket text-2xl"></i>
             </div>
         </div>
-        <div #userMenuEle
+        <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
             <div class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
@@ -73,10 +82,11 @@
 
         <!-- Mobile Menu -->
         <div class="sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center">
-            <div class="rounded-full flex items-center" matRipple (click)="navigateToMobileSearch()">
+            <div *ngIf="Components.indexOf('mobileSearch')>-1" class="rounded-full flex items-center" matRipple
+                (click)="navigateToMobileSearch()">
                 <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
             </div>
-            <div class="rounded-full flex items-center" matRipple>
+            <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>
                 <i class="mdi mdi-account text-2xl  ml-2 color-blue" matRipple (click)="openMyProfileComponent()"></i>
             </div>
         </div>

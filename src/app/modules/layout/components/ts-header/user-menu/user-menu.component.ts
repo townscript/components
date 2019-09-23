@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CookieService } from '../../../../../core/cookie.service';
 import { UserService } from '../../../../../shared/services/user-service';
 import { NotificationService } from '../../../../../shared/services/notification.service';
+import { config } from '../../../../../core/app-config';
 
 @Component({
     selector: 'app-user-menu',
@@ -14,6 +15,8 @@ export class UserMenuComponent implements OnInit {
     @Input("panelOpen2") panelOpen2: boolean = false;
     @Input("user") user: any;
     @Output("close") close = new EventEmitter();
+
+    s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
     constructor(private notificationService: NotificationService, private userService: UserService, private cookieService: CookieService) {
 

@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CardsModule } from './modules/cards/cards.module';
+import { PlaceService } from './modules/layout/components/ts-header/place.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { CardsModule } from './modules/cards/cards.module';
     ReactiveFormsModule,
     RecaptchaModule
   ],
-  providers: [],
+  providers: [PlaceService],
   bootstrap: [AppComponent],
   entryComponents: [TsLoginSignupComponent,
     LoginModalComponent

@@ -70,12 +70,12 @@
     </div>
     <div #citySuggestions class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container"
         [class.active]="cityPopupActive" (click)="cityPopupActive = true">
-        <div class="flex items-center w-10/12 mr-2 " [title]=" activeCity">
+        <div class="flex items-center w-10/12 mr-2 " [title]=" activePlace">
             <i class="mdi mdi-map-marker text-2xl color-blue"></i>
-            <span class="truncate">{{activeCity}}</span>
+            <span class="truncate">{{activePlace}}</span>
         </div>
         <i class="mdi mdi-chevron-down text-2xl"></i>
-        <app-city-search-popup class="popup" [(cityPopupActive)]="cityPopupActive" [(activeCity)]="activeCity"
+        <app-city-search-popup class="popup" [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
             *ngIf="cityPopupActive">
         </app-city-search-popup>
     </div>

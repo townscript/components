@@ -1,8 +1,7 @@
 <div class="user-menu  px-2 cursor-pointer">
     <div class="flex items-center border-b py-2 border-gray-300">
         <div class="mr-1 leading-none">
-            <img class="rounded-full mr-2" width="45"
-                [src]="'https://s3.ap-south-1.amazonaws.com/townscript-testing/images/'+user?.s3imagename" />
+            <img class="rounded-full mr-2" width="45" [src]="s3BucketUrl+'/images/'+user?.s3imagename" />
         </div>
         <div class="leading-tight">
             <span class="block text-lg text-gray-800">{{user?.user}}</span>

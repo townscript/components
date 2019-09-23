@@ -9,17 +9,25 @@
         <br>
     </div>
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <div id="card-container" class="max-w-sm flex-wrap mr-2">
+    <div style="width: 360px">
+        <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
+    </div>
+    <div class="lg:px-48">
+        <ts-listing-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listing-card>
+    </div>
+    <div id="card-container" class=" px-3 md:px-42 flex-wrap mr-2">
         <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
         <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
         <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
-        
+        <span>List</span>
+        <ts-listing-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listing-card>
+
     </div>
     <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
-    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
-    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
-    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
-    <ts-listing-card [type]="'regular'" [gridType]="'list'"  [eventData]="eventData"></ts-listing-card>
+
+    <ts-listing-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listing-card>
+    <ts-listing-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listing-card>
 
     <ts-listing-card [type]="'featured'" [eventData]="eventData"></ts-listing-card>
     <ts-listing-card [type]="'topic'" [eventData]="topicData"></ts-listing-card>
