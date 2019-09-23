@@ -89,7 +89,7 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     onLoginWithGoogle = () => {
-        const url = 'http://' + this.apiService.betaHostName
+        let url = 'http://' + this.apiService.betaHostName
         + '/api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         window.open(url, '_self');
     }
@@ -248,6 +248,9 @@ export class TsLoginSignupComponent implements OnInit {
     resetPassword = () => {
         this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
             (resp: any) => {
+                if(this.resetPwdLinkSent){
+                  this.notificationService.success('Reset Password Link has been sent' , 2000 ,'Dismiss');
+                }
                 this.resetPwdLinkSent = true;
                 console.log(resp);
             },
@@ -272,7 +275,7 @@ export class TsLoginSignupComponent implements OnInit {
     resendVerifyEmail = () => {
         this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.emailId).subscribe(
             (retData: any) => {
-                alert('verification email has been sent');
+                this.notificationService.success('verification email has been sent' , 2000 ,'Dismiss');
             },
             (error: any) => {
                 // console.log('error');
