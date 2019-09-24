@@ -4,8 +4,8 @@
       <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
-      <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Let's get started</div>
-      <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">Your one stop tool for organizing events</div>
+      <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">{{defaultHeader}}</div>
+      <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">{{defaultSubHeader}}</div>
     </div>
     <div class="sign-in-header flex flex-col fadeIn" *ngIf="isSignInView">
       <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Sign In</div>

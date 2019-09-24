@@ -19,6 +19,8 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
 
 export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
+    @Input() defaultHeader: any;
+    @Input() defaultSubHeader: any;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -56,6 +58,14 @@ export class TsLoginSignupComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+
+        if(this.defaultHeader == undefined){
+          this.defaultHeader = "Let's get started";
+        }
+
+        if(this.defaultSubHeader == undefined){
+          this.defaultSubHeader = "Your one stop tool for organizing events";
+        }
 
         this.loginForm = new FormGroup({
           'fullName': new FormControl('',{ validators: Validators.required}),
