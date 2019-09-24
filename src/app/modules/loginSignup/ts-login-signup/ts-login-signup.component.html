@@ -27,7 +27,7 @@
       <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">We just need to verify your e-mail</div>
     </div>
   </div>
-  <div class="view-body pt-5">
+  <div class="view-body pt-5">    
     <div class="default-view-body py-2 fadeInUp" *ngIf="isDefaultView">
       <form id="loginForm" [formGroup]="loginForm" class="w-full login-form">
         <div class="form-group md:flex md:items-center ">
@@ -267,6 +267,7 @@
             </button>
             <div class="text-gray-700 text-sm text-center why-verify py-2 px-2 hover:underline cursor-pointer"
             matTooltip="Townscript sends all important communication regarding your events & account-related updates via e-mail. We just want to make sure you don’t miss these important information"
+            matTooltipPosition="below"
             matTooltipClass="ts-login-tooltip">
                 Why verify?
             </div>
