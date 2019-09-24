@@ -126,6 +126,10 @@ $ts-primary-blue    : #3782C4;
     .blue-btn{
       background: $ts-primary-blue;
       color: white;
+      transition: all ease 0.15s;
+      &:hover{
+        background:#1369b5;
+      }
     }
     .default-view-body{
       .strike-through-margin {

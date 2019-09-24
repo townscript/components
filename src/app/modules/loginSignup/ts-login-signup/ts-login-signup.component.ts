@@ -19,35 +19,37 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
 
 export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
-    @Input() defaultHeader: any;
-    @Input() defaultSubHeader: any;
+    @Input() defaultHeader: any = 'Let\'s get started';
+    @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
-    showSocial:any = true;
-    show:any = false;
-    showPassword:any = false;
-    rdurl:any = 'http://' + this.apiService.betaHostName + 'marketplace';
-    isDefaultView:any = true;
-    isSignInView:any = false;
-    isSignUpView:any = false;
-    isVerifyEmailView:any = false;
-    showResetPassword:any = false;
-    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY:any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-    userTimezone:any = DateTime.local().zoneName;
-    loginForm:any;
-    captchaResponse:any = '';
-    correctPhoneNumber:any = null;
-    phoneError:any = false;
-    socialLoginMsg:any = false;
-    initializeTelInput:any;
-    signInErrMessage: any = "";
-    resetPwdLinkSent: boolean = false;
+    showSocial: any = true;
+    show: any = false;
+    showPassword: any = false;
+    rdurl: any = 'http://' + this.apiService.betaHostName + 'marketplace';
+    isDefaultView: any = true;
+    isSignInView: any = false;
+    isSignUpView: any = false;
+    isVerifyEmailView: any = false;
+    showResetPassword: any = false;
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
+    userTimezone: any = DateTime.local().zoneName;
+    loginForm: any;
+    captchaResponse: any = '';
+    correctPhoneNumber: any = null;
+    phoneError: any = false;
+    socialLoginMsg: any = false;
+    initializeTelInput: any;
+    signInErrMessage: any = '';
+    resetPwdLinkSent = false;
 
-    fbLoginURL: any;
-    googleLoginURL: any;
+    fbLoginURL: any = 'http://' + this.apiService.betaHostName
+        + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+    googleLoginURL: any = 'http://' + this.apiService.betaHostName
+        + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);;
     intlInput: any;
-    showLoader:boolean = false;
+    showLoader = false;
     loaderText: any;
 
     constructor(public apiService: ApiService,
@@ -58,31 +60,19 @@ export class TsLoginSignupComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.initForm();
+    }
 
-        if(this.defaultHeader == undefined){
-          this.defaultHeader = "Let's get started";
-        }
-
-        if(this.defaultSubHeader == undefined){
-          this.defaultSubHeader = "Your one stop tool for organizing events";
-        }
-
+    initForm = () => {
         this.loginForm = new FormGroup({
-          'fullName': new FormControl('',{ validators: Validators.required}),
-          'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)]}),
-          'password': new FormControl('',{ validators: Validators.required}),
-          'phoneNumber': new FormControl('',{ validators: Validators.required })
+            'fullName': new FormControl('', { validators: Validators.required }),
+            'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)] }),
+            'password': new FormControl('', { validators: Validators.required }),
+            'phoneNumber': new FormControl('', { validators: Validators.required })
         });
-
         this.loginForm.get('fullName').disable();
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
-
-        this.fbLoginURL = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-        this.googleLoginURL = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-
     }
 
     close = () => {
@@ -90,7 +80,7 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     clearErrors = () => {
-        this.socialLoginMsg = "";
+        this.socialLoginMsg = '';
     }
 
     resolve = (captchaResponse: string) => {
@@ -102,8 +92,8 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     verifyEmail = () => {
-        if(!this.loginForm.controls.email.valid){
-          return;
+        if (!this.loginForm.controls.email.valid) {
+            return;
         }
         this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email).subscribe(
             (retData: any) => {
@@ -134,7 +124,7 @@ export class TsLoginSignupComponent implements OnInit {
                 }
             },
             (error) => {
-              console.log('error ' + error);
+                console.log('error ' + error);
             }
         );
 
@@ -152,14 +142,14 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     validatePhoneNumber = () => {
-      if(!this.intlInput.isValidNumber()){
-        this.phoneError = true;
-        this.loginForm.controls.phoneNumber.setErrors({'valid' : false});
-        console.log(this.loginForm.controls.phoneNumber);
-      } else {
-        this.loginForm.controls.phoneNumber.setErrors();
-        this.phoneError = false;
-      }
+        if (!this.intlInput.isValidNumber()) {
+            this.phoneError = true;
+            this.loginForm.controls.phoneNumber.setErrors({ 'valid': false });
+            console.log(this.loginForm.controls.phoneNumber);
+        } else {
+            this.loginForm.controls.phoneNumber.setErrors();
+            this.phoneError = false;
+        }
     }
 
     signIn = () => {
@@ -170,9 +160,9 @@ export class TsLoginSignupComponent implements OnInit {
         this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.email, this.loginForm.value.password).subscribe(
             (retData: any) => {
                 this.showLoader = false;
-                if(retData.result != "Success"){
-                  this.signInErrMessage = retData.data;
-                  return;
+                if (retData.result != 'Success') {
+                    this.signInErrMessage = retData.data;
+                    return;
                 }
                 const tokenData = {
                     token: (retData.data)
@@ -185,10 +175,10 @@ export class TsLoginSignupComponent implements OnInit {
                 if (this.mode === 'dialog') {
                     this.close();
                 }
-                this.redirectToListings();
+                // this.redirectToListings();
             },
             (error) => {
-              console.log(error);
+                console.log(error);
             }
         );
     }
@@ -208,7 +198,7 @@ export class TsLoginSignupComponent implements OnInit {
         }
 
         this.showLoader = true;
-        this.loaderText = "Please wait while we are creating your account.";
+        this.loaderText = 'Please wait while we are creating your account.';
 
         const formData = new FormData();
         formData.append('name', this.loginForm.value.fullName);
@@ -261,23 +251,19 @@ export class TsLoginSignupComponent implements OnInit {
             this.loginForm.get('password').disable();
             this.loginForm.get('phoneNumber').disable();
         } else {
-          this.close();
+            this.close();
         }
 
     }
 
-    redirectToListings = () => {
-        window.open('/', '_self');
-    }
-
     resetPassword = () => {
         this.showLoader = true;
-        this.loaderText = "Sending Reset Password Link to " + this.loginForm.value.email;
+        this.loaderText = 'Sending Reset Password Link to ' + this.loginForm.value.email;
         this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
             (resp: any) => {
                 this.showLoader = false;
-                if(this.resetPwdLinkSent){
-                  this.notificationService.success('Reset Password Link has been sent' , 2000 ,'Dismiss');
+                if (this.resetPwdLinkSent) {
+                    this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
                 }
                 this.resetPwdLinkSent = true;
                 console.log(resp);
@@ -294,7 +280,7 @@ export class TsLoginSignupComponent implements OnInit {
         let str = '', i = 0;
         const min = an === 'a' ? 10 : 0;
         const max = an === 'n' ? 10 : 62;
-        while(i < len) {
+        while (i < len) {
             let r = Math.random() * (max - min) + min << 0;
             str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
             i++;
@@ -304,11 +290,11 @@ export class TsLoginSignupComponent implements OnInit {
 
     resendVerifyEmail = () => {
         this.showLoader = true;
-        this.loaderText = "Sending Verification email to " + this.loginForm.value.email;
+        this.loaderText = 'Sending Verification email to ' + this.loginForm.value.email;
         this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email).subscribe(
             (retData: any) => {
                 this.showLoader = false;
-                this.notificationService.success('Verification email has been sent' , 2000 ,'Dismiss');
+                this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
             },
             (error: any) => {
                 this.showLoader = false;
@@ -318,9 +304,9 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     togglePasswordDisplay = () => {
-      this.showPassword = !this.showPassword;
-      let pwdInput = <HTMLInputElement>document.getElementById('user-pwd');
-      pwdInput.type= this.showPassword ? "text":"password";
+        this.showPassword = !this.showPassword;
+        const pwdInput = <HTMLInputElement>document.getElementById('user-pwd');
+        pwdInput.type = this.showPassword ? 'text' : 'password';
     }
 
 }
