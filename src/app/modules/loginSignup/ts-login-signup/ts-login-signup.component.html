@@ -1,6 +1,6 @@
 <div class="login-signup-view px-5" id="login-signup-view">
   <div class="view-header">
-    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1">
+    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" *ngIf="mode == 'dialog'">
       <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
