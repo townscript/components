@@ -21,10 +21,10 @@ export * from './src/app/modules/layout/components/ts-header/city-search-popup/c
 
 
 // Login signup module components
-export * from './src/app/modules/loginSignup/ts-login-signup/ts-show-hide-directive';
 export * from './src/app/modules/loginSignup/ts-login-signup/ts-login-signup.component';
-export * from './src/app/modules/loginSignup/ts-login-signup/login-top-content/login-top-content.component';
 export * from './src/app/modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
+export * from './src/app/modules/loginSignup/ts-login-signup/email-sent-svg/email-sent-svg.component';
+export * from './src/app/modules/loginSignup/ts-login-signup/ts-login-signup.service';
 
 // Card module components
 export * from './src/app/shared/pipes/ts-date-range.pipe';
