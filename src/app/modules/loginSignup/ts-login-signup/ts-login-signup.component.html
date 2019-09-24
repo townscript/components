@@ -1,4 +1,4 @@
-<div class="login-signup-view p-2 px-5" id="login-signup-view">
+<div class="login-signup-view px-5" id="login-signup-view">
   <div class="view-header">
     <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1">
       <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
@@ -128,7 +128,7 @@
                       id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
                   <i class="text-lg mdi absolute right-0 text-gray-700" [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)">
                   Password is required
                 </p>
             </div>
@@ -227,7 +227,7 @@
         <div class="form-group md:flex md:items-center ">
             <div class="w-full">
               <mat-form-field class="w-full relative" floatLabel="always">
-                <input type="tel" formControlName="phoneNumber" matInput 
+                <input type="tel" formControlName="phoneNumber" matInput
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10"
                     id="phoneNumber" placeholder="Phone no." (ngModelChange)="validatePhoneNumber()">
               </mat-form-field>
@@ -260,7 +260,7 @@
           <div class="p-2 flex items-center justify-center -mt-8 primary-header">
             <app-email-sent></app-email-sent>
           </div>
-          <div class="p-2 text-green-600 text-sm text-center secondary-header">
+          <div class="p-4 text-green-600 text-sm text-center secondary-header">
             Tap the link in the email we sent you at {{loginForm.value.email}}
           </div>
         </div>
@@ -269,11 +269,11 @@
                (click)="resendVerifyEmail()" [disabled]="!loginForm.valid"
               class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Resend Verification Email
             </button>
-            <div class="text-gray-700 text-sm text-center why-verify py-2 px-2 hover:underline cursor-pointer"
-            matTooltip="Townscript sends all important communication regarding your events & account-related updates via e-mail. We just want to make sure you don’t miss these important information"
-            matTooltipPosition="below"
-            matTooltipClass="ts-login-tooltip">
-                Why verify?
+            <div class="text-gray-700 text-sm text-center why-verify px-2 hover:underline cursor-pointer">
+                <span
+                matTooltip="Townscript sends all important communication regarding your events & account-related updates via e-mail. We just want to make sure you don’t miss these important information"
+                matTooltipPosition="right"
+                matTooltipClass="ts-login-tooltip">Why verify?</span>
             </div>
         </div>
       </form>

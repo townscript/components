@@ -31,7 +31,6 @@ export class TsLoginSignupComponent implements OnInit {
     isSignUpView:any = false;
     isVerifyEmailView:any = false;
     showResetPassword:any = false;
-    isUserVerified: any;
     CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY:any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
     userTimezone:any = DateTime.local().zoneName;
     loginForm:any;
@@ -73,6 +72,7 @@ export class TsLoginSignupComponent implements OnInit {
         + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
         this.googleLoginURL = 'http://' + this.apiService.betaHostName
         + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+
     }
 
     close = () => {
