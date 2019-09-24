@@ -60,7 +60,7 @@ $ts-primary-blue    : #3782C4;
 
 
 .login-signup-view{
-	max-height: 90vh;	
+	max-height: 90vh;
 	overflow: hidden;
   .fadeIn {
     .primary-header, .secondary-header{
@@ -111,6 +111,11 @@ $ts-primary-blue    : #3782C4;
       }
     }
   }
+	.ts-loader{
+		circle{
+			stroke-width: 5%!important;
+		}
+	}
   .view-body{
     .blue-btn{
       background: $ts-primary-blue;

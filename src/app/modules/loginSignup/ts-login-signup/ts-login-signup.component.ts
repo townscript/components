@@ -46,6 +46,8 @@ export class TsLoginSignupComponent implements OnInit {
     fbLoginURL: any;
     googleLoginURL: any;
     intlInput: any;
+    showLoader:boolean = false;
+    loaderText: any;
 
     constructor(public apiService: ApiService,
         private cookieService: CookieService,
@@ -151,8 +153,10 @@ export class TsLoginSignupComponent implements OnInit {
         if (!this.loginForm.valid) {
             return;
         }
+        this.showLoader = true;
         this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.email, this.loginForm.value.password).subscribe(
             (retData: any) => {
+                this.showLoader = false;
                 if(retData.result != "Success"){
                   this.signInErrMessage = retData.data;
                   return;
@@ -190,6 +194,9 @@ export class TsLoginSignupComponent implements OnInit {
             return;
         }
 
+        this.showLoader = true;
+        this.loaderText = "Please wait while we are creating your account.";
+
         const formData = new FormData();
         formData.append('name', this.loginForm.value.fullName);
         formData.append('emailid', this.loginForm.value.email);
@@ -201,6 +208,7 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('rdurl', this.rdurl);
 
         this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
+            self.showLoader = false;
             self.isVerifyEmailView = true;
             self.showSocial = false;
             self.isSignUpView = false;
@@ -250,8 +258,11 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     resetPassword = () => {
+        this.showLoader = true;
+        this.loaderText = "Sending Reset Password Link to " + this.loginForm.value.email;
         this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
             (resp: any) => {
+                this.showLoader = false;
                 if(this.resetPwdLinkSent){
                   this.notificationService.success('Reset Password Link has been sent' , 2000 ,'Dismiss');
                 }
@@ -259,6 +270,7 @@ export class TsLoginSignupComponent implements OnInit {
                 console.log(resp);
             },
             (error: any) => {
+                this.showLoader = false;
                 console.log(error);
             }
         );
@@ -278,11 +290,15 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     resendVerifyEmail = () => {
+        this.showLoader = true;
+        this.loaderText = "Sending Verification email to " + this.loginForm.value.email;
         this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email).subscribe(
             (retData: any) => {
+                this.showLoader = false;
                 this.notificationService.success('Verification email has been sent' , 2000 ,'Dismiss');
             },
             (error: any) => {
+                this.showLoader = false;
                 console.log('error' + error);
             }
         );
