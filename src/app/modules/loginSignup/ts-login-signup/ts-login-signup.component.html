@@ -4,7 +4,7 @@
       <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
-      <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Let's get Started</div>
+      <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">Let's get started</div>
       <div class="secondary-header text-gray-600 text-xs md:text-sm lg:text-sm">Your one stop tool for organizing events</div>
     </div>
     <div class="sign-in-header flex flex-col fadeIn" *ngIf="isSignInView">
@@ -61,22 +61,22 @@
             </div>
         </div>
         <div class="form-group">
-            <button
+            <a [href]="googleLoginURL" target="_blank"
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
-                (click)="onLoginWithGoogle()" ts-data-analytics prop-event="click" eventLabel="Login with Google"
+                ts-data-analytics prop-event="click" eventLabel="Login with Google"
                 prop-clicked-location="Sign In" matRipple>
                 <div class="px-2">
                     <img class="logo"
                         src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png" />
                 </div>
-                <div class="text-sm">
+                <div class="text-sm text-gray-700">
                     <span class="no-margin">Continue with Google</span>
                 </div>
-            </button>
+            </a>
             <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
         </div>
         <div class="form-group">
-            <button
+            <a [href]="fbLoginURL" target="_top"
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
                 (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
                 prop-clicked-location="Sign In" matRipple>
@@ -84,10 +84,10 @@
                     <img class="logo"
                         src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png" />
                 </div>
-                <div class="text-sm">
+                <div class="text-sm text-gray-700">
                     <span class="no-margin">Continue with Facebook</span>
                 </div>
-            </button>
+            </a>
             <ng-container class="login-error" ng-if="fbError.length">
                 <i class="ion-android-alert"></i>
                 <p class="form-control--error" ng-bind="fbError"></p>
@@ -203,7 +203,7 @@
                       id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
                   <i class="text-lg mdi absolute right-0 text-gray-700" [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
                 </mat-form-field>
-                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+                <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)">
                   Password is required
                 </p>
             </div>
@@ -215,16 +215,22 @@
                   class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                   id="name" type="text" placeholder="Full Name">
               </mat-form-field>
+              <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="loginForm.get('fullName').hasError('required') && (loginForm.get('fullName').dirty || loginForm.get('fullName').touched)">
+                Full Name is required
+              </p>
             </div>
         </div>
         <div class="form-group md:flex md:items-center ">
             <div class="w-full">
               <mat-form-field class="w-full relative" floatLabel="always">
-                <input type="tel" formControlName="phoneNumber" matInput
+                <input type="tel" formControlName="phoneNumber" matInput [class.ng-invalid]="phoneError"
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10"
-                    id="phoneNumber" type="tel" placeholder="Phone no.">
+                    id="phoneNumber" placeholder="Phone no." (ngModelChange)="validatePhoneNumber()">
+                <mat-error class="text-xs text-red-500 mmb-2" *ngIf="loginForm.get('phoneNumber').hasError('required') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched)">
+                  Phone Number is required
+                </mat-error>
+                <mat-error class="text-xs text-red-500 mb-2" *ngIf="phoneError">Please enter a valid Phone no.</mat-error>
               </mat-form-field>
-              <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="phoneError || (loginForm.get('phoneNumber').hasError('pattern') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched))">Please enter a valid Phone no.</p>
             </div>
         </div>
         <div class="form-group md:flex md:items-center mb-3">

@@ -43,6 +43,10 @@ export class TsLoginSignupComponent implements OnInit {
     signInErrMessage: any = "";
     resetPwdLinkSent: boolean = false;
 
+    fbLoginURL: any;
+    googleLoginURL: any;
+    intlInput: any;
+
     constructor(public apiService: ApiService,
         private cookieService: CookieService,
         private userService: UserService,
@@ -56,12 +60,17 @@ export class TsLoginSignupComponent implements OnInit {
           'fullName': new FormControl('',{ validators: Validators.required}),
           'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)]}),
           'password': new FormControl('',{ validators: Validators.required}),
-          'phoneNumber': new FormControl('',{ validators: [Validators.required, Validators.pattern('[0-9]+')] })
+          'phoneNumber': new FormControl('',{ validators: Validators.required })
         });
 
         this.loginForm.get('fullName').disable();
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
+
+        this.fbLoginURL = 'http://' + this.apiService.betaHostName
+        + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        this.googleLoginURL = 'http://' + this.apiService.betaHostName
+        + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
     }
 
     close = () => {
@@ -72,24 +81,12 @@ export class TsLoginSignupComponent implements OnInit {
         this.socialLoginMsg = "";
     }
 
-    public resolve(captchaResponse: string) {
+    resolve = (captchaResponse: string) => {
         this.captchaResponse = captchaResponse;
     }
 
     password = () => {
         this.show = !this.show;
-    }
-
-    onLoginWithFB = () => {
-        const url = 'http://' + this.apiService.betaHostName
-        + '/api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-        window.open(url, '_self');
-    }
-
-    onLoginWithGoogle = () => {
-        let url = 'http://' + this.apiService.betaHostName
-        + '/api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-        window.open(url, '_self');
     }
 
     verifyEmail = () => {
@@ -135,18 +132,25 @@ export class TsLoginSignupComponent implements OnInit {
         // initialize intl tel
         const input = document.querySelector('#phoneNumber');
 
-        (<any>window).intlTelInput(input, {
+        this.intlInput = (<any>window).intlTelInput(input, {
             initialCountry: 'in',
             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
         });
 
     }
 
+    validatePhoneNumber = () => {
+      if(!this.intlInput.isValidNumber()){
+        this.phoneError = true;
+      } else {
+        this.phoneError = false;
+      }
+    }
+
     signIn = () => {
         if (!this.loginForm.valid) {
             return;
         }
-
         this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.emailId, this.loginForm.value.password).subscribe(
             (retData: any) => {
                 if(retData.result != "Success"){
@@ -265,9 +269,10 @@ export class TsLoginSignupComponent implements OnInit {
         let str = '', i = 0;
         const min = an === 'a' ? 10 : 0;
         const max = an === 'n' ? 10 : 62;
-        for (; i++ < len;) {
+        while(i < len) {
             let r = Math.random() * (max - min) + min << 0;
             str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
+            i++;
         }
         return str;
     }
@@ -275,7 +280,7 @@ export class TsLoginSignupComponent implements OnInit {
     resendVerifyEmail = () => {
         this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.emailId).subscribe(
             (retData: any) => {
-                this.notificationService.success('verification email has been sent' , 2000 ,'Dismiss');
+                this.notificationService.success('Verification email has been sent' , 2000 ,'Dismiss');
             },
             (error: any) => {
                 console.log('error' + error);
