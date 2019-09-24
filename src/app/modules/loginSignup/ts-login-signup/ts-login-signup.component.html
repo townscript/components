@@ -67,36 +67,37 @@
           </div>
         </div>
         <div class="form-group">
-          <a [href]="googleLoginURL" target="_blank"
-            class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
-            ts-data-analytics prop-event="click" eventLabel="Login with Google" prop-clicked-location="Sign In"
-            matRipple>
-            <div class="px-2">
-              <img class="logo" src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png" />
-            </div>
-            <div class="text-sm text-gray-700">
-              <span class="no-margin">Continue with Google</span>
-            </div>
-          </a>
-          <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
+            <a [href]="googleLoginURL" target="_self"
+                class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
+                ts-data-analytics prop-event="click" eventLabel="Login with Google"
+                prop-clicked-location="Sign In" matRipple>
+                <div class="px-2">
+                    <img class="logo"
+                        src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png" />
+                </div>
+                <div class="text-sm text-gray-700">
+                    <span class="no-margin">Continue with Google</span>
+                </div>
+            </a>
+            <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
         </div>
         <div class="form-group">
-          <a [href]="fbLoginURL" target="_top"
-            class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
-            (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
-            prop-clicked-location="Sign In" matRipple>
-            <div class="px-2">
-              <img class="logo"
-                src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png" />
-            </div>
-            <div class="text-sm text-gray-700">
-              <span class="no-margin">Continue with Facebook</span>
-            </div>
-          </a>
-          <ng-container class="login-error" ng-if="fbError.length">
-            <i class="ion-android-alert"></i>
-            <p class="form-control--error" ng-bind="fbError"></p>
-          </ng-container>
+            <a [href]="fbLoginURL" target="_self"
+                class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
+                (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
+                prop-clicked-location="Sign In" matRipple>
+                <div class="px-2">
+                    <img class="logo"
+                        src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png" />
+                </div>
+                <div class="text-sm text-gray-700">
+                    <span class="no-margin">Continue with Facebook</span>
+                </div>
+            </a>
+            <ng-container class="login-error" ng-if="fbError.length">
+                <i class="ion-android-alert"></i>
+                <p class="form-control--error" ng-bind="fbError"></p>
+            </ng-container>
         </div>
 
       </form>
@@ -253,10 +254,12 @@
           </div>
         </div>
         <div class="form-group md:flex md:items-center mb-3">
-          <div class="w-full flex items-center justify-center md:justify-start">
-            <re-captcha (resolved)="resolve($event)" [siteKey]="CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY">
-            </re-captcha>
-          </div>
+            <div class="w-full flex items-center justify-center md:justify-start">
+                <re-captcha
+                  (resolved)="resolve($event)"
+                  [siteKey]="captchaToken">
+                </re-captcha>
+            </div>
         </div>
         <div class="w-full text-center form-group">
           <button matRipple [disabled]="!loginForm.valid || phoneError" (click)="signUp()"

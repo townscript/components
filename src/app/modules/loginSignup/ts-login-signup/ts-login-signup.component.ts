@@ -21,33 +21,34 @@ export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
     @Input() defaultHeader: any = 'Let\'s get started';
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
+    @Input() captchaToken: any;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
-    showSocial: any = true;
-    show: any = false;
-    showPassword: any = false;
-    rdurl: any = 'http://' + this.apiService.betaHostName + 'marketplace';
-    isDefaultView: any = true;
-    isSignInView: any = false;
-    isSignUpView: any = false;
-    isVerifyEmailView: any = false;
-    showResetPassword: any = false;
-    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
-    userTimezone: any = DateTime.local().zoneName;
-    loginForm: any;
-    captchaResponse: any = '';
-    correctPhoneNumber: any = null;
-    phoneError: any = false;
-    socialLoginMsg: any = false;
-    initializeTelInput: any;
-    signInErrMessage: any = '';
-    resetPwdLinkSent = false;
+    showSocial:any = true;
+    show:any = false;
+    showPassword:any = false;
+    rdurl:any = 'http://' + this.apiService.betaHostName + 'marketplace';
+    isDefaultView:any = true;
+    isSignInView:any = false;
+    isSignUpView:any = false;
+    isVerifyEmailView:any = false;
+    showResetPassword:any = false;
 
-    fbLoginURL: any = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-    googleLoginURL: any = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);;
+    userTimezone:any = DateTime.local().zoneName;
+    loginForm:any;
+    captchaResponse:any = '';
+    correctPhoneNumber:any = null;
+    phoneError:any = false;
+    socialLoginMsg:any = false;
+    initializeTelInput:any;
+    signInErrMessage: any = "";
+    resetPwdLinkSent: boolean = false;
+
+    fbLoginURL: any = this.apiService.API_SERVER
+    + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+    googleLoginURL: any = this.apiService.API_SERVER
+    + 'user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
     intlInput: any;
     showLoader = false;
     loaderText: any;
