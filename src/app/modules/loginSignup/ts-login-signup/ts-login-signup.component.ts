@@ -151,7 +151,7 @@ export class TsLoginSignupComponent implements OnInit {
         if (!this.loginForm.valid) {
             return;
         }
-        this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.emailId, this.loginForm.value.password).subscribe(
+        this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.email, this.loginForm.value.password).subscribe(
             (retData: any) => {
                 if(retData.result != "Success"){
                   this.signInErrMessage = retData.data;
@@ -278,7 +278,7 @@ export class TsLoginSignupComponent implements OnInit {
     }
 
     resendVerifyEmail = () => {
-        this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.emailId).subscribe(
+        this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email).subscribe(
             (retData: any) => {
                 this.notificationService.success('Verification email has been sent' , 2000 ,'Dismiss');
             },
