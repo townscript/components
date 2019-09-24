@@ -1,70 +1,165 @@
-.container-background{
-    &::before {
-        color: white;
-        background: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 100' xmlns='http://www.w3.org/2000/svg'  preserveAspectRatio='none'><polygon points='0,110 0,50 300,0 300,300' width='100%' height='100%' style='fill:blue;'/></svg>");
-        background-size:contain;
-        width: 30%;
-        font-size: 2em;
-        padding: 4px 40px;
-  } 
-}
-.strike-through-margin {
-    margin: 30px 0 30px 0;
-    text-align: center;
-    border-bottom: 1px solid #dcdcdc;
-    line-height: 0.1em;
+$ts-primary-blue    : #3782C4;
 
-    span {
-        background-color: #fff;
-        padding: 3px 30px;
+
+/*==== FADE IN UP ===*/
+@-webkit-keyframes fadeInUp {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 100%, 0);
+		transform: translate3d(0, 100%, 0);
+	}
+
+	to {
+		opacity: 1;
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		-webkit-transform: translate3d(0, 50%, 0);
+		transform: translate3d(0, 50%, 0);
+	}
+
+	to {
+		opacity: 1;
+		-webkit-transform: none;
+		transform: none;
+	}
+}
+
+
+/*=== FADE IN  ===*/
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.ts-login-tooltip {
+		background-color: #666;
+		color: white;
+		font-size: 12px;
+		opacity: 0.98;
+		white-space: pre-line;
+}
+
+
+.login-signup-view{
+	max-height: 90vh;
+	overflow: hidden;
+  .fadeIn {
+    .primary-header, .secondary-header{
+    	-webkit-animation-duration: 0.4s;
+    	animation-duration: 0.4s;
+    	-webkit-animation-fill-mode: both;
+    	animation-fill-mode: both;
+    	-webkit-animation-delay: 0s;
+    	-moz-animation-delay: 0s;
+    	animation-delay: 0s;
+    	-webkit-animation-name: fadeIn;
+    	animation-name: fadeIn;
     }
-}
-
-.strike-through {
-    text-align: center;
-    border-bottom: 1px solid #dcdcdc;
-    line-height: 0.1em;
-    margin: 30px auto 30px auto
-}
-
-.strike-through span {
-    background-color: #fff;
-    padding: 3px 30px;
-}
-
-.hor-linear-grad {
-    border: 1px solid;
-    border-left: 0;
-    border-right: 0;
-    border-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(226, 226, 226, 1) 48%, rgba(255, 255, 255, 0) 100%);
-    border-image-slice: 1;
-}
-
-
-.iti__flag {background-image: url("../../../../../node_modules/intl-tel-input/build/img/flags.png");}
-
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  .iti__flag {background-image: url("../../../../../node_modules/intl-tel-input/build/img/flags@2x.png");}
-}
-
-#social-signin-container {
-    .logo {
-        width: 22px;
-        height: 22px;
+    .secondary-header{
+      animation-delay: 0.1s;
     }
+  }
+  .fadeInUp{
+    .login-form{
+      .form-group{
+        -webkit-animation-duration: 0.4s;
+        animation-duration: 0.4s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation-name: fadeInUp;
+        animation-name: fadeInUp;
+      }
+      .form-group:nth-child(1){
+        animation-delay: 0.1s;
+      }
+      .form-group:nth-child(2){
+        animation-delay: 0.2s;
+      }
+      .form-group:nth-child(3){
+        animation-delay: 0.3s;
+      }
+      .form-group:nth-child(4){
+        animation-delay: 0.4s;
+      }
+      .form-group:nth-child(5){
+        animation-delay: 0.5s;
+      }
+      .form-group:nth-child(6){
+        animation-delay: 0.6s;
+      }
+      .form-group:nth-child(7){
+        animation-delay: 0.7s;
+      }
+    }
+  }
+	.ts-loader{
+		-webkit-animation-duration: 0.2s;
+		animation-duration: 0.2s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+		-webkit-animation-name: fadeInUp;
+		animation-name: fadeInUp;
+		circle{
+			stroke-width: 5%!important;
+		}
+	}
+  .view-body{
+    .blue-btn{
+      background: $ts-primary-blue;
+      color: white;
+    }
+    .default-view-body{
+      .strike-through-margin {
+          margin: 30px 0 30px 0;
+          text-align: center;
+          border-bottom: 1px solid #dcdcdc;
+          line-height: 0.1em;
+          span {
+              background-color: #fff;
+              padding: 3px 30px;
+          }
+      }
 
-    // .fb-logo {
-    //     width: 26px;
-    //     height: 26px;
-    // }
-}
+      .strike-through {
+          text-align: center;
+          border-bottom: 1px solid #dcdcdc;
+          line-height: 0.1em;
+          margin: 30px auto 30px auto
+      }
 
-.mkt-content {
-    background-color: #f1f1f1;
-}
+      .strike-through span {
+          background-color: #fff;
+          padding: 3px 30px;
+      }
 
-.login-card-box {
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    max-width: 460px;
+      .logo{
+        height: auto;
+        width: 25px;
+      }
+    }
+    .hor-linear-grad {
+        height: 1px;
+        width: 100%;
+        background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(226, 226, 226, 1) 48%, rgba(255, 255, 255, 0) 100%);
+    }
+  }
 }
