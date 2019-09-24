@@ -18,8 +18,8 @@ export class CitySearchPopupComponent implements OnInit {
 
     @ViewChild('cityInput', { static: true }) cityInput: ElementRef;
     @Input() showArrow = true;
-    @Input() activeCity: string;
-    @Output() activeCityChange: EventEmitter<String> = new EventEmitter();
+    @Input() activePlace: string;
+    @Output() activePlaceChange: EventEmitter<String> = new EventEmitter();
     @Input() cityPopupActive: boolean;
     @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
 
@@ -68,9 +68,9 @@ export class CitySearchPopupComponent implements OnInit {
             const secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
             this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
         }
-        this.placeService.updatePlace(place.name);
-        this.activeCity = place.name;
-        this.activeCityChange.emit(place.name);
+        //this.placeService.updatePlace(place.name);
+        this.activePlace = place.name;
+        this.activePlaceChange.emit(place.name);
         this.cityPopupActive = false;
         this.cityPopupActiveChange.emit(false);
     }

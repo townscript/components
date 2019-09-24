@@ -19,10 +19,10 @@ export declare class SearchComponent implements OnInit {
     cityPopupActive: boolean;
     placeSearchResults: any;
     searchResults: any;
-    activeCity: any;
+    activePlace: any;
     cityQuery: string;
     cityQueryChanged: Subject<string>;
-    activeCityBackup: string;
+    activePlaceBackup: string;
     client: any;
     index: any;
     router: Router;

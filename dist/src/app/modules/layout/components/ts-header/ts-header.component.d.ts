@@ -7,6 +7,7 @@ export declare class TsHeaderComponent implements OnInit {
     private dialog;
     private userService;
     Components: Array<String>;
+    backState: boolean;
     source: string;
     algoliaIndexName: string;
     shadow: boolean;
@@ -15,7 +16,10 @@ export declare class TsHeaderComponent implements OnInit {
     user: any;
     router: any;
     userMenu: any;
+    activePlace: any;
     activeCity: any;
+    activeCountryCode: any;
+    homePageUrl: any;
     s3BucketUrl: any;
     cityPopupActive: boolean;
     constructor(placeService: PlaceService, dialog: MatDialog, userService: UserService);
@@ -23,5 +27,7 @@ export declare class TsHeaderComponent implements OnInit {
     openLogin(): void;
     navigateToMobileSearch(): void;
     openMyProfileComponent: () => void;
+    goBack: () => void;
+    goToHomePage: () => void;
     ngOnInit(): void;
 }

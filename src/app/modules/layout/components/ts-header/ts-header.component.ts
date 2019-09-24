@@ -13,16 +13,22 @@ import { PlaceService } from './place.service';
 })
 export class TsHeaderComponent implements OnInit {
 
-  @Input() Components: Array<String> = ["createEventBtn"];
-  @Input() source: string = "marketplace";
-  @Input() algoliaIndexName: string = "tsTesting";
-  @Input() shadow: boolean = true;
+  @Input() Components: Array<String> = ['icon', 'createEventBtn', 'eventSearch',
+    'userMenu', 'mobileSearch', 'mobileProfile', 'mobileCitySearch', 'mobileBack'];
+
+  @Input() backState = false;
+  @Input() source = 'marketplace';
+  @Input() algoliaIndexName = 'tsTesting';
+  @Input() shadow = true;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
   user: any;
   router = config.router;
   userMenu: any;
-  activeCity: any = "Pune";
+  activePlace: any;
+  activeCity: any;
+  activeCountryCode: any;
+  homePageUrl: any;
   s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
   cityPopupActive = false;
@@ -48,18 +54,28 @@ export class TsHeaderComponent implements OnInit {
   }
 
   navigateToMobileSearch() {
-    this.router.navigate(["/mobile/search"])
+    this.router.navigate(['/mobile/search']);
   }
   openMyProfileComponent = () => {
-    this.router.navigate(["/profile"])
+    this.router.navigate(['/profile']);
+  }
+  goBack = () => {
+    this.router.navigate(['../']);
+  }
+  goToHomePage = () => {
+    this.router.navigate([this.homePageUrl]);
   }
   ngOnInit() {
     this.userService.user.subscribe(data => {
       this.user = data;
     });
     this.placeService.place.subscribe(res => {
+      console.log("subs to", res);
       if (res) {
-        this.activeCity = res;
+        this.activePlace = JSON.parse(<any>res)['currentPlace'];
+        this.activeCity = JSON.parse(<any>res)['city'];
+        this.activeCountryCode = JSON.parse(<any>res)['country'];
+        this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
       }
     });
   }

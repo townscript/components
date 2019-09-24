@@ -25,7 +25,6 @@
     }
     .listing-container--content {
         background-color: rgb(238, 238, 238);
-        min-height: 195px;
         .bottom-purple-bar{
             transition: background 1s ease-out;
         }
@@ -56,6 +55,13 @@
     }
     .bottom-purple-bar .followed i{
         //color: #EB4B4B;
+    }
+}
+@media (min-width: $screen-sm-max){
+    .listing-container {
+        .listing-container--content{
+            min-height: 195px;
+        }   
     }
 }
 .topic-container {

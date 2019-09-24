@@ -1,12 +1,11 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
-import * as algoliaSearchImported from "algoliasearch";
+import * as algoliaSearchImported from 'algoliasearch';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
-import { DatePipe } from '@angular/common'
-import { HeaderService } from '../ts-header.service';
+import { DatePipe } from '@angular/common';
 import { config } from '../../../../../core/app-config';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { PlaceService } from '../place.service';
 
 const algoliasearch = algoliaSearchImported;
@@ -18,21 +17,21 @@ const algoliasearch = algoliaSearchImported;
 })
 export class SearchComponent implements OnInit {
 
-    @Input() algoliaIndexName: string = "tsTesting";
+    @Input() algoliaIndexName = 'tsTesting';
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
     searchText: string;
     searchTextChanged: Subject<string> = new Subject<string>();
-    searchActive: boolean = false;
-    citySearchActive: boolean = false;
-    cityPopupActive: boolean = false;
+    searchActive = false;
+    citySearchActive = false;
+    cityPopupActive = false;
     placeSearchResults: any;
     searchResults: any;
-    activeCity: any = "Pune";
+    activePlace: any = 'Pune';
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
-    activeCityBackup: string;
+    activePlaceBackup: string;
     client: any;
     index: any;
     router: Router = config.router;
@@ -42,7 +41,7 @@ export class SearchComponent implements OnInit {
     constructor(private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
-        this.client = algoliasearch("AT5UB8FMSR", "c7e946f5b740ef035bd824f69dcc1612");
+        this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
         this.index = this.client.initIndex(this.algoliaIndexName);
     }
     callAlgolia = (text) => {
@@ -51,26 +50,26 @@ export class SearchComponent implements OnInit {
             hitsPerPage: 6
         }).then((data) => {
             this.filterDataForSearchResult(data);
-        })
+        });
     }
     filterDataForSearchResult = (data) => {
-        let results = data.hits;
-        let interests = results.filter(ele => {
-            return ele.objType == "keyword" ||
-                ele.objType == "eventtype" ||
-                ele.objType == "category"
+        const results = data.hits;
+        const interests = results.filter(ele => {
+            return ele.objType == 'keyword' ||
+                ele.objType == 'eventtype' ||
+                ele.objType == 'category'
         });
-        let organizers = results.filter(ele => ele.objType == "organizer");
-        let events = results.filter(ele => ele.objType == "event");
+        const organizers = results.filter(ele => ele.objType == 'organizer');
+        const events = results.filter(ele => ele.objType == 'event');
 
         interests.map(interest => {
             interest.name = interest.name + ' Events';
-            interest.location = "PUNE";
+            interest.location = 'PUNE';
         });
 
         organizers.map(organizer => {
             if (!organizer.imageUrl) {
-                organizer.imageUrl = "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-organizer.png";
+                organizer.imageUrl = 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-organizer.png';
             }
             if (organizer.secondaryTextProperties && organizer.secondaryTextProperties.country) {
                 organizer.location = organizer.secondaryTextProperties.country;
@@ -79,7 +78,7 @@ export class SearchComponent implements OnInit {
 
         events.map(event => {
             if (!event.imageUrl) {
-                event.imageUrl = "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-event.png";
+                event.imageUrl = 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/search-empty-event.png';
             }
             if (event.secondaryTextProperties && event.secondaryTextProperties.city) {
                 event.location = event.secondaryTextProperties.city;
@@ -87,11 +86,11 @@ export class SearchComponent implements OnInit {
             if (event.secondaryTextProperties && event.secondaryTextProperties.startTime) {
                 let startDateTime = event.secondaryTextProperties.startTime;
                 startDateTime = this.timeService.convertDateToTimezone(startDateTime, event.secondaryTextProperties.eventTimeZone);
-                event.secondaryTextProperties.startTime = this.datepipe.transform(startDateTime, "d MMM yyyy, ' 'h:mma");
+                event.secondaryTextProperties.startTime = this.datepipe.transform(startDateTime, 'd MMM yyyy, \' \'h:mma');
             }
         });
 
-        this.searchResults = { "interests": interests, "organizers": organizers, "events": events }
+        this.searchResults = { 'interests': interests, 'organizers': organizers, 'events': events };
     }
 
     @HostListener('document:click', ['$event'])
@@ -104,21 +103,22 @@ export class SearchComponent implements OnInit {
         }
     }
     navigateToListing = (interest) => {
-        this.router.navigate(["../" + interest], { relativeTo: config.activatedRoute.parent });
+        this.router.navigate(['../' + interest], { relativeTo: config.activatedRoute.parent });
         this.searchActive = false;
     }
     navigateToEventPage = (eventCode) => {
-        this.router.navigate(["/e/" + eventCode]);
+        this.router.navigate(['/e/' + eventCode]);
         this.searchActive = false;
     }
     search = (text) => {
-        if (text != undefined && text.length > 0)
+        if (text !== undefined && text.length > 0) {
             this.searchTextChanged.next(text);
+        }
     }
     ngOnInit() {
         this.placeService.place.subscribe(res => {
             if (res) {
-                this.activeCity = res;
+                this.activePlace = JSON.parse(<any>res)['currentPlace'];
             }
         });
     }
