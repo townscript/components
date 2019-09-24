@@ -112,6 +112,12 @@ $ts-primary-blue    : #3782C4;
     }
   }
 	.ts-loader{
+		-webkit-animation-duration: 0.2s;
+		animation-duration: 0.2s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+		-webkit-animation-name: fadeInUp;
+		animation-name: fadeInUp;
 		circle{
 			stroke-width: 5%!important;
 		}

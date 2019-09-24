@@ -144,7 +144,10 @@ export class TsLoginSignupComponent implements OnInit {
     validatePhoneNumber = () => {
       if(!this.intlInput.isValidNumber()){
         this.phoneError = true;
+        this.loginForm.controls.phoneNumber.setErrors({'valid' : false});
+        console.log(this.loginForm.controls.phoneNumber);
       } else {
+        this.loginForm.controls.phoneNumber.setErrors();
         this.phoneError = false;
       }
     }

@@ -227,14 +227,14 @@
         <div class="form-group md:flex md:items-center ">
             <div class="w-full">
               <mat-form-field class="w-full relative" floatLabel="always">
-                <input type="tel" formControlName="phoneNumber" matInput [class.ng-invalid]="phoneError"
+                <input type="tel" formControlName="phoneNumber" matInput 
                     class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10"
                     id="phoneNumber" placeholder="Phone no." (ngModelChange)="validatePhoneNumber()">
-                <mat-error class="text-xs text-red-500 mmb-2" *ngIf="loginForm.get('phoneNumber').hasError('required') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched)">
-                  Phone Number is required
-                </mat-error>
-                <mat-error class="text-xs text-red-500 mb-2" *ngIf="phoneError">Please enter a valid Phone no.</mat-error>
               </mat-form-field>
+              <p class="text-xs text-red-500 mmb-2" *ngIf="loginForm.get('phoneNumber').hasError('required') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched)">
+                Phone Number is required
+              </p>
+              <p class="text-xs text-red-500 mb-2" *ngIf="phoneError">Please enter a valid Phone no.</p>
             </div>
         </div>
         <div class="form-group md:flex md:items-center mb-3">
