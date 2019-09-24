@@ -217,7 +217,9 @@ export class TsLoginSignupComponent implements OnInit {
             self.isSignUpView = false;
         });
     }
+    onLoginWithFB = () => {
 
+    }
     forgotPassword = () => {
         this.loginForm.get('password').disable();
         this.showResetPassword = true;
