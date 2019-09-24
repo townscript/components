@@ -4,5 +4,6 @@ export const config: any = {
   activatedRoute: "",
   betaHostName: "",
   s3BaseUrl: "",
-  s3Bucket: ""
+  s3Bucket: "",
+  token: ""
 };

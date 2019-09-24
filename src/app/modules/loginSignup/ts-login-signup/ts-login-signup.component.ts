@@ -21,6 +21,7 @@ export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
     @Input() defaultHeader: any;
     @Input() defaultSubHeader: any;
+    @Input() captchaToken: any;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -33,7 +34,7 @@ export class TsLoginSignupComponent implements OnInit {
     isSignUpView:any = false;
     isVerifyEmailView:any = false;
     showResetPassword:any = false;
-    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY:any = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
+
     userTimezone:any = DateTime.local().zoneName;
     loginForm:any;
     captchaResponse:any = '';
@@ -78,10 +79,10 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('password').disable();
         this.loginForm.get('phoneNumber').disable();
 
-        this.fbLoginURL = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-        this.googleLoginURL = 'http://' + this.apiService.betaHostName
-        + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        this.fbLoginURL =this.apiService.API_SERVER
+        + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        this.googleLoginURL =this.apiService.API_SERVER
+        + 'user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
 
     }
 

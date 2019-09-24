@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { ApiService } from 'src/app/shared/services/api-service';
+import { config } from '../../../core/app-config';
 
 @Injectable()
 export class TsLoginSignupService {
 
-    token: any;
-    headers = new HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NjUyNTA4ODc2MDUsIlVTRVJfSUQiOjAsImV4cCI6MTU3MzAyNjg4N30.gfDC_wGGN05zCxhLKRm2uY_QjypCiz5qfwm7U0PqkIrywoDGuGcgDa9d1Vo9ftprpZ78A62HY-w4kjfiLOKC7g');
+    token: any = config.token;
+    headers = new HttpHeaders().set('Authorization', this.token);
 
     constructor(public apiService: ApiService, private http: HttpClient) {
     }
