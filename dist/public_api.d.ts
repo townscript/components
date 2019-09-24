@@ -15,10 +15,10 @@ export * from './src/app/modules/layout/components/ts-header/user-menu/user-menu
 export * from './src/app/modules/layout/components/ts-header/search/search.component';
 export * from './src/app/modules/layout/components/ts-header/hamburger-menu/hamburger-menu.component';
 export * from './src/app/modules/layout/components/ts-header/city-search-popup/city-search-popup.component';
-export * from './src/app/modules/loginSignup/ts-login-signup/ts-show-hide-directive';
 export * from './src/app/modules/loginSignup/ts-login-signup/ts-login-signup.component';
-export * from './src/app/modules/loginSignup/ts-login-signup/login-top-content/login-top-content.component';
 export * from './src/app/modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
+export * from './src/app/modules/loginSignup/ts-login-signup/email-sent-svg/email-sent-svg.component';
+export * from './src/app/modules/loginSignup/ts-login-signup/ts-login-signup.service';
 export * from './src/app/shared/pipes/ts-date-range.pipe';
 export * from './src/app/shared/pipes/text-overflow.directive';
 export * from './src/app/modules/cards/ts-listing-card/share-event-modal/share-event-modal.component';

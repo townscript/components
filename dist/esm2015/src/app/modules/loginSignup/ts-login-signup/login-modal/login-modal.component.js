@@ -16,7 +16,7 @@ LoginModalComponent = tslib_1.__decorate([
         selector: 'app-login-modal',
         template: "<app-ts-login-signup [mode]=\"'dialog'\" (closeDialog)='close()'></app-ts-login-signup>",
         encapsulation: ViewEncapsulation.None,
-        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.mat-dialog-bkg-container{background:#414243;opacity:.7!important}@media (max-width:480px){.cdk-overlay-pane{height:100vh!important;max-width:100vw!important}}"]
+        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.mat-dialog-bkg-container{background:#414243;opacity:.7!important}@media (max-width:700px){.cdk-overlay-pane{height:100vh!important;width:100vw!important;max-width:100vw!important}}@media (min-width:700px){.cdk-overlay-pane{min-width:500px!important}}"]
     }),
     tslib_1.__metadata("design:paramtypes", [MatDialogRef])
 ], LoginModalComponent);

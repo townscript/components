@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('ng-recaptcha'), require('@angular/animations'), require('text-overflow-clamp'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'ng-recaptcha', '@angular/animations', 'text-overflow-clamp', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.ngRecaptcha, global.ng.animations, global.clampLibImported, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
-}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, ngRecaptcha, animations, clampLibImported, elements, core$1, snackBar) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('ng-recaptcha'), require('text-overflow-clamp'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'ng-recaptcha', 'text-overflow-clamp', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.ngRecaptcha, global.clampLibImported, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
+}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, ngRecaptcha, clampLibImported, elements, core$1, snackBar) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -370,7 +370,7 @@
                 selector: 'app-login-modal',
                 template: "<app-ts-login-signup [mode]=\"'dialog'\" (closeDialog)='close()'></app-ts-login-signup>",
                 encapsulation: core.ViewEncapsulation.None,
-                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.mat-dialog-bkg-container{background:#414243;opacity:.7!important}@media (max-width:480px){.cdk-overlay-pane{height:100vh!important;max-width:100vw!important}}"]
+                styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.mat-dialog-bkg-container{background:#414243;opacity:.7!important}@media (max-width:700px){.cdk-overlay-pane{height:100vh!important;width:100vw!important;max-width:100vw!important}}@media (min-width:700px){.cdk-overlay-pane{min-width:500px!important}}"]
             }),
             __metadata("design:paramtypes", [dialog.MatDialogRef])
         ], LoginModalComponent);
@@ -783,134 +783,165 @@
         return CitySearchPopupComponent;
     }());
 
-    var AppPasswordDirective = /** @class */ (function () {
-        function AppPasswordDirective(el) {
-            this.el = el;
-            this._shown = false;
-            this.setup();
-        }
-        AppPasswordDirective.prototype.toggle = function (span) {
-            this._shown = !this._shown;
-            if (this._shown) {
-                this.el.nativeElement.setAttribute('type', 'text');
-                span.innerHTML = 'Hide password';
-            }
-            else {
-                this.el.nativeElement.setAttribute('type', 'password');
-                span.innerHTML = 'Show password';
-            }
-        };
-        AppPasswordDirective.prototype.setup = function () {
-            var _this = this;
-            var parent = this.el.nativeElement.parentNode;
-            var span = document.createElement('span');
-            span.innerHTML = "Show password";
-            span.addEventListener('click', function (event) {
-                _this.toggle(span);
-            });
-            parent.appendChild(span);
-        };
-        AppPasswordDirective = __decorate([
-            core.Directive({
-                selector: '[appPassword]'
-            }),
-            __metadata("design:paramtypes", [core.ElementRef])
-        ], AppPasswordDirective);
-        return AppPasswordDirective;
-    }());
-
-    var headers = new http.HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9VU0VSIiwic3ViIjoidGVzdGluZ0B0b3duc2NyaXB0LmNvbSIsImF1ZGllbmNlIjoid2ViIiwiY3JlYXRlZCI6MTU2NjkwODg0NjE2MCwiVVNFUl9JRCI6NDkwNiwiZXhwIjoxNTc0Njg0ODQ2fQ.ge-O16ZPw9wHvjoJrmTKbJRhfOkvAdI57N_YBZ5yr_IwymKOhPAyQpD8vHxIqhJGJ4tfJ_jez4xh3vQoWwngZw');
-    var TsLoginSignupComponent = /** @class */ (function () {
-        function TsLoginSignupComponent(apiService, http$1, fb, cookieService, userService, notificationService) {
+    var TsLoginSignupService = /** @class */ (function () {
+        function TsLoginSignupService(apiService, http$1) {
             var _this = this;
             this.apiService = apiService;
             this.http = http$1;
-            this.fb = fb;
+            this.headers = new http.HttpHeaders().set('Authorization', 'eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NjUyNTA4ODc2MDUsIlVTRVJfSUQiOjAsImV4cCI6MTU3MzAyNjg4N30.gfDC_wGGN05zCxhLKRm2uY_QjypCiz5qfwm7U0PqkIrywoDGuGcgDa9d1Vo9ftprpZ78A62HY-w4kjfiLOKC7g');
+            this.getUserSignUpDetails = function (emailId) {
+                var params = new http.HttpParams({ fromString: "email=" + emailId });
+                return _this.http.get(_this.apiService.API_SERVER + 'user/getusersignupdetails', { params: params, headers: _this.headers });
+            };
+            this.loginWithTownscript = function (emailId, password) {
+                var formData = new FormData();
+                formData.set('emailId', emailId);
+                formData.set('password', password);
+                return _this.http.post(_this.apiService.API_SERVER + 'user/loginwithtownscript', formData, { headers: _this.headers });
+            };
+            this.registerWithTownscriptWithCaptcha = function (formData) {
+                return _this.http.post(_this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha', formData, { headers: _this.headers, responseType: 'text' });
+            };
+            this.sendForgotPwdEmail = function (emailId) {
+                var forgotPassword = new FormData();
+                forgotPassword.set('emailId', emailId);
+                return _this.http.post(_this.apiService.API_SERVER + 'verify/sendforgotpwdemail', forgotPassword, { headers: _this.headers });
+            };
+            this.resendVerificationCode = function (rdurl, emailId) {
+                var formData = new FormData();
+                formData.append('rdurl', rdurl);
+                formData.append('emailid', emailId);
+                return _this.http.post(_this.apiService.API_SERVER + 'user/resendverificationcode', formData, { headers: _this.headers });
+            };
+        }
+        TsLoginSignupService = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [ApiService, http.HttpClient])
+        ], TsLoginSignupService);
+        return TsLoginSignupService;
+    }());
+
+    var emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
+    var TsLoginSignupComponent = /** @class */ (function () {
+        function TsLoginSignupComponent(apiService, cookieService, userService, notificationService, tsLoginSignupService) {
+            var _this = this;
+            this.apiService = apiService;
             this.cookieService = cookieService;
             this.userService = userService;
             this.notificationService = notificationService;
+            this.tsLoginSignupService = tsLoginSignupService;
+            this.defaultHeader = 'Let\'s get started';
+            this.defaultSubHeader = 'Your one stop tool for organizing events';
             this.closeDialog = new core.EventEmitter();
             this.showSocial = true;
             this.show = false;
             this.showPassword = false;
             this.rdurl = 'http://' + this.apiService.betaHostName + 'marketplace';
-            this.ifSignIn = false;
-            this.ifUnverified = true;
-            this.ifSignUp = false;
-            this.showVerifyEmail = false;
+            this.isDefaultView = true;
+            this.isSignInView = false;
+            this.isSignUpView = false;
+            this.isVerifyEmailView = false;
             this.showResetPassword = false;
             this.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = '6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG';
             this.userTimezone = luxon.DateTime.local().zoneName;
-            this.loginForm = this.fb.group({
-                firstName: ['', forms.Validators.required],
-                email: ['', forms.Validators.required],
-                password: ['', forms.Validators.required],
-                phoneNumber: ['', forms.Validators.required]
-            });
             this.captchaResponse = '';
             this.correctPhoneNumber = null;
             this.phoneError = false;
             this.socialLoginMsg = false;
+            this.signInErrMessage = '';
+            this.resetPwdLinkSent = false;
+            this.fbLoginURL = 'http://' + this.apiService.betaHostName
+                + 'api/user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+            this.googleLoginURL = 'http://' + this.apiService.betaHostName
+                + 'api/user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+            this.showLoader = false;
+            this.initForm = function () {
+                _this.loginForm = new forms.FormGroup({
+                    'fullName': new forms.FormControl('', { validators: forms.Validators.required }),
+                    'email': new forms.FormControl('', { validators: [forms.Validators.required, forms.Validators.pattern(emailRegex)] }),
+                    'password': new forms.FormControl('', { validators: forms.Validators.required }),
+                    'phoneNumber': new forms.FormControl('', { validators: forms.Validators.required })
+                });
+                _this.loginForm.get('fullName').disable();
+                _this.loginForm.get('password').disable();
+                _this.loginForm.get('phoneNumber').disable();
+            };
+            this.close = function () {
+                _this.closeDialog.emit(true);
+            };
+            this.clearErrors = function () {
+                _this.socialLoginMsg = '';
+            };
+            this.resolve = function (captchaResponse) {
+                _this.captchaResponse = captchaResponse;
+            };
             this.password = function () {
                 _this.show = !_this.show;
             };
-            this.onLoginWithFB = function () {
-                var url = 'http://' + _this.apiService.betaHostName + 'api/user/signinwithfacebook' +
-                    (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
-                window.open(url, '_self');
-            };
-            this.onLoginWithGoogle = function () {
-                var url = 'http://' + _this.apiService.betaHostName + 'api/user/signinwithgoogle' +
-                    (_this.rdurl === undefined ? '' : '?rdurl=' + _this.rdurl);
-                window.open(url, '_self');
-            };
-            this.getEmailVerifyResponse = function () {
-                var params = new http.HttpParams({ fromString: "email=" + _this.loginForm.value.email });
-                return _this.http.get(_this.apiService.API_SERVER + 'user/getusersignupdetails', { params: params, headers: headers }).pipe(operators.map(function (data) { return (data); }));
-            };
             this.verifyEmail = function () {
-                _this.getEmailVerifyResponse().subscribe(function (retData) {
+                if (!_this.loginForm.controls.email.valid) {
+                    return;
+                }
+                _this.tsLoginSignupService.getUserSignUpDetails(_this.loginForm.value.email).subscribe(function (retData) {
                     var newData = JSON.parse(retData.data);
                     if (newData && newData.isExistingUser && newData.isManualSignup) {
                         _this.loginForm.get('password').enable();
-                        _this.ifSignIn = true;
-                        _this.ifUnverified = false;
-                        _this.ifSignUp = false;
+                        _this.isSignInView = true;
+                        _this.isSignUpView = false;
                         _this.showSocial = false;
-                        _this.currScreen = 'ifSignIn';
                         _this.socialLoginMsg = false;
+                        _this.isDefaultView = false;
                     }
                     else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                         _this.socialLoginMsg = true;
                     }
                     else {
-                        _this.ifSignUp = true;
-                        _this.ifSignIn = false;
-                        _this.ifUnverified = false;
+                        _this.isSignUpView = true;
+                        _this.isSignInView = false;
                         _this.showSocial = false;
-                        _this.currScreen = 'ifSignUp';
-                        _this.loginForm.get('firstName').enable();
+                        _this.isDefaultView = false;
+                        _this.socialLoginMsg = false;
+                        _this.loginForm.get('fullName').enable();
                         _this.loginForm.get('password').enable();
                         _this.loginForm.get('phoneNumber').enable();
-                        _this.socialLoginMsg = false;
                         _this.initializeTelInput = setTimeout(function () {
                             _this.initializeIntlTelInput();
                         }, 200);
                     }
                 }, function (error) {
+                    console.log('error ' + error);
                 });
             };
             this.initializeIntlTelInput = function () {
                 // initialize intl tel
                 var input = document.querySelector('#phoneNumber');
-                window.intlTelInput(input, {
+                _this.intlInput = window.intlTelInput(input, {
                     initialCountry: 'in',
                     utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
                 });
             };
+            this.validatePhoneNumber = function () {
+                if (!_this.intlInput.isValidNumber()) {
+                    _this.phoneError = true;
+                    _this.loginForm.controls.phoneNumber.setErrors({ 'valid': false });
+                    console.log(_this.loginForm.controls.phoneNumber);
+                }
+                else {
+                    _this.loginForm.controls.phoneNumber.setErrors();
+                    _this.phoneError = false;
+                }
+            };
             this.signIn = function () {
-                // alert('you have signed in');
-                _this.postSignInCredentials().subscribe(function (retData) {
+                if (!_this.loginForm.valid) {
+                    return;
+                }
+                _this.showLoader = true;
+                _this.tsLoginSignupService.loginWithTownscript(_this.loginForm.value.email, _this.loginForm.value.password).subscribe(function (retData) {
+                    _this.showLoader = false;
+                    if (retData.result != 'Success') {
+                        _this.signInErrMessage = retData.data;
+                        return;
+                    }
                     var tokenData = {
                         token: (retData.data)
                     };
@@ -921,91 +952,13 @@
                     if (_this.mode === 'dialog') {
                         _this.close();
                     }
-                    _this.redirectToListings();
+                    // this.redirectToListings();
                 }, function (error) {
+                    console.log(error);
                 });
             };
-            this.signup = function () {
+            this.signUp = function () {
                 var self = _this;
-                _this.postSignupCredentials().toPromise().then(function (data) {
-                    self.showVerifyEmail = true;
-                    self.showSocial = false;
-                    self.ifSignUp = false;
-                    self.currScreen = 'showVerifyEmail';
-                });
-            };
-            this.forgotPassword = function () {
-                _this.loginForm.get('password').disable();
-                _this.showResetPassword = true;
-                _this.showSocial = false;
-                _this.ifSignIn = false;
-                _this.currScreen = 'showResetPassword';
-            };
-            this.takeMeBack = function () {
-                if (_this.showResetPassword) {
-                    _this.ifUnverified = true;
-                    _this.showResetPassword = false;
-                    _this.ifSignUp = false;
-                    _this.currScreen = 'ifUnverified';
-                }
-                else if (_this.ifSignIn) {
-                    _this.ifSignUp = false;
-                    _this.showResetPassword = false;
-                    _this.ifUnverified = true;
-                    _this.ifSignIn = false;
-                    _this.showSocial = true;
-                    _this.currScreen = 'ifUnverified';
-                }
-                else if (_this.ifSignUp) {
-                    _this.ifUnverified = true;
-                    _this.ifSignUp = false;
-                    _this.showSocial = true;
-                    _this.currScreen = 'ifUnverified';
-                    _this.loginForm.get('firstName').disable();
-                    _this.loginForm.get('password').disable();
-                    _this.loginForm.get('phoneNumber').disable();
-                }
-                else if (_this.showVerifyEmail) {
-                    _this.showVerifyEmail = false;
-                    _this.ifUnverified = true;
-                    _this.showSocial = true;
-                    _this.ifSignUp = false;
-                    _this.loginForm.get('firstName').disable();
-                    _this.loginForm.get('password').disable();
-                    _this.loginForm.get('phoneNumber').disable();
-                    _this.currScreen = 'ifUnverified';
-                }
-            };
-            this.postSignInCredentials = function () {
-                if (!_this.loginForm.valid) {
-                    return;
-                }
-                var loginObj = {
-                    emailId: _this.loginForm.value.email,
-                    password: _this.loginForm.value.password
-                };
-                var params = new http.HttpParams({
-                    fromString: "emailId=" + _this.loginForm.value.email + "&password=" + _this.loginForm.value.password
-                });
-                return _this.http.post(_this.apiService.API_SERVER + 'user/loginwithtownscript', loginObj, { params: params, headers: headers }).pipe(operators.map(function (data) { return (data); }));
-            };
-            this.resetPasswordCredentials = function () {
-                var forgotPassword = {
-                    emailId: _this.loginForm.value.email
-                };
-                return _this.http.post(_this.apiService.API_SERVER + 'verify/sendforgotpwdemail', forgotPassword, { headers: headers }).pipe(operators.map(function (data) { return (data); }));
-            };
-            this.redirectToListings = function () {
-                window.open('/', '_self');
-            };
-            this.resetPassword = function () {
-                _this.resetPasswordCredentials().subscribe(function (resp) {
-                    // console.log(resp);
-                }, function (error) {
-                    // console.log(error);
-                });
-            };
-            this.postSignupCredentials = function () {
                 if (!_this.loginForm.valid) {
                     return;
                 }
@@ -1013,10 +966,13 @@
                 var iti = window.intlTelInputGlobals.getInstance(input);
                 _this.correctPhoneNumber = iti.getNumber();
                 if (_this.correctPhoneNumber === '') {
+                    _this.phoneError = true;
                     return;
                 }
+                _this.showLoader = true;
+                _this.loaderText = 'Please wait while we are creating your account.';
                 var formData = new FormData();
-                formData.append('name', _this.loginForm.value.firstName);
+                formData.append('name', _this.loginForm.value.fullName);
                 formData.append('emailid', _this.loginForm.value.email);
                 formData.append('password', _this.loginForm.value.password);
                 formData.append('phone', _this.correctPhoneNumber);
@@ -1024,50 +980,113 @@
                 formData.append('reCaptcha', _this.captchaResponse);
                 formData.append('username', _this.randomString(10, ''));
                 formData.append('rdurl', _this.rdurl);
-                return _this.http.post(_this.apiService.API_SERVER + 'user/registerwithtownscriptwithcaptcha', formData, { headers: headers, responseType: 'text' });
+                _this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
+                    self.showLoader = false;
+                    self.isVerifyEmailView = true;
+                    self.showSocial = false;
+                    self.isSignUpView = false;
+                });
+            };
+            this.onLoginWithFB = function () {
+            };
+            this.forgotPassword = function () {
+                _this.loginForm.get('password').disable();
+                _this.showResetPassword = true;
+                _this.showSocial = false;
+                _this.isSignInView = false;
+            };
+            this.goBack = function () {
+                if (_this.showResetPassword) {
+                    _this.showResetPassword = false;
+                    _this.isSignUpView = false;
+                    _this.isSignInView = true;
+                }
+                else if (_this.isSignInView) {
+                    _this.isSignUpView = false;
+                    _this.showResetPassword = false;
+                    _this.isSignInView = false;
+                    _this.showSocial = true;
+                    _this.isDefaultView = true;
+                }
+                else if (_this.isSignUpView) {
+                    _this.isSignUpView = false;
+                    _this.showSocial = true;
+                    _this.isDefaultView = true;
+                    _this.loginForm.get('fullName').disable();
+                    _this.loginForm.get('password').disable();
+                    _this.loginForm.get('phoneNumber').disable();
+                }
+                else if (_this.isVerifyEmailView) {
+                    _this.isVerifyEmailView = false;
+                    _this.showSocial = true;
+                    _this.isSignUpView = false;
+                    _this.loginForm.get('fullName').disable();
+                    _this.loginForm.get('password').disable();
+                    _this.loginForm.get('phoneNumber').disable();
+                }
+                else {
+                    _this.close();
+                }
+            };
+            this.resetPassword = function () {
+                _this.showLoader = true;
+                _this.loaderText = 'Sending Reset Password Link to ' + _this.loginForm.value.email;
+                _this.tsLoginSignupService.sendForgotPwdEmail(_this.loginForm.value.email).subscribe(function (resp) {
+                    _this.showLoader = false;
+                    if (_this.resetPwdLinkSent) {
+                        _this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
+                    }
+                    _this.resetPwdLinkSent = true;
+                    console.log(resp);
+                }, function (error) {
+                    _this.showLoader = false;
+                    console.log(error);
+                });
             };
             this.randomString = function (len, an) {
                 an = an && an.toLowerCase();
                 var str = '', i = 0;
                 var min = an === 'a' ? 10 : 0;
                 var max = an === 'n' ? 10 : 62;
-                for (; i++ < len;) {
+                while (i < len) {
                     var r = Math.random() * (max - min) + min << 0;
                     str += String.fromCharCode(r += r > 9 ? r < 36 ? 55 : 61 : 48);
+                    i++;
                 }
                 return str;
             };
             this.resendVerifyEmail = function () {
-                _this.resendVerifyEmailCredential().subscribe(function (retData) {
-                    alert('verification email has been sent');
+                _this.showLoader = true;
+                _this.loaderText = 'Sending Verification email to ' + _this.loginForm.value.email;
+                _this.tsLoginSignupService.resendVerificationCode(_this.rdurl, _this.loginForm.value.email).subscribe(function (retData) {
+                    _this.showLoader = false;
+                    _this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
                 }, function (error) {
-                    // console.log('error');
+                    _this.showLoader = false;
+                    console.log('error' + error);
                 });
             };
-            this.resendVerifyEmailCredential = function () {
-                var formData = new FormData();
-                formData.append('rdurl', _this.rdurl);
-                formData.append('emailid', _this.loginForm.value.email);
-                return _this.http.post(_this.apiService.API_SERVER + 'user/resendverificationcode', formData, { headers: headers }).pipe(operators.map(function (data) { return (data); }));
+            this.togglePasswordDisplay = function () {
+                _this.showPassword = !_this.showPassword;
+                var pwdInput = document.getElementById('user-pwd');
+                pwdInput.type = _this.showPassword ? 'text' : 'password';
             };
         }
         TsLoginSignupComponent.prototype.ngOnInit = function () {
-            this.loginForm.get('firstName').disable();
-            this.loginForm.get('password').disable();
-            this.loginForm.get('phoneNumber').disable();
-            this.currScreen = 'ifUnverified';
-        };
-        TsLoginSignupComponent.prototype.close = function () {
-            this.closeDialog.emit(true);
-        };
-        TsLoginSignupComponent.prototype.resolveAndProceed = function (captchaResponse) {
-            this.captchaResponse = captchaResponse;
-            this.signup();
+            this.initForm();
         };
         __decorate([
             core.Input(),
             __metadata("design:type", Object)
         ], TsLoginSignupComponent.prototype, "mode", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsLoginSignupComponent.prototype, "defaultHeader", void 0);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], TsLoginSignupComponent.prototype, "defaultSubHeader", void 0);
         __decorate([
             core.Output(),
             __metadata("design:type", Object)
@@ -1079,68 +1098,33 @@
         TsLoginSignupComponent = __decorate([
             core.Component({
                 selector: 'app-ts-login-signup',
-                template: "<section *ngIf=\"mode==='dialog'\" class=\"text-right\">\n    <i class=\"cursor-pointer mdi mdi-close text-2xl\" (click)=\"close()\"></i>\n</section>\n<section [ngClass]=\"(mode=='dialog') ?\n            ' bg-white container-background flex flex-row m-auto overflow:hidden'\n            :' flex flex-row m-auto overflow:hidden'\">\n    <div id=\"login-signup-container\" [ngClass]=\"(mode=='dialog') ? 'z-10 bg-white w-full p-6 m-auto md:m-2 lg:m-2'\n            : 'login-card-box z-10 bg-white max-w-sm w-full p-10'\">\n        <i *ngIf=\"!ifUnverified\" (click)=\"takeMeBack()\" class=\"cursor-pointer text-3xl mdi mdi-arrow-left\"></i>\n        <app-login-top-content [condition]=\"currScreen\"></app-login-top-content>\n        <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full\">\n            <div [@in-out-animate] *ngIf=\"!showVerifyEmail\" class=\"form-group md:flex md:items-center mb-1\">\n                <div class=\"md:w-full\">\n                    <ts-input-text formControlName=\"email\"\n                        class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                        id=\"user-email\" type=\"email\" name=\"email\" placeholder=\"Email\" autocomplete=\"user-email\"\n                        required></ts-input-text>\n                    <p class=\"text-sm text-red-500\" *ngIf=\"socialLoginMsg\">It seems you have signed up using Social\n                        Login.</p>\n                </div>\n\n            </div>\n            <div [@EnterLeave]=\"'flyIn'\">\n                <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <ts-input-text formControlName=\"firstName\"\n                            class=\" form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"name\" type=\"text\" placeholder=\"Name\" autocomplete=\"username\"></ts-input-text>\n                    </div>\n                </div>\n                <div  *ngIf=\"ifSignIn || ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <ts-input-text formControlName=\"password\" appPassword\n                            class=\"form-control bg-white border-gray-500 rounded py-2  text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"user-pwd\" [type]=\"'password'\" placeholder=\"Password\" autocomplete=\"current-password\">\n                        </ts-input-text>\n                    </div>\n                </div>\n                <div *ngIf=\"ifSignUp\" class=\"form-group md:flex md:items-center mb-1\">\n                    <div class=\"md:w-full\">\n                        <input type=\"tel\" value=\"phone_number\" formControlName=\"phoneNumber\"\n                            class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                            id=\"phoneNumber\" type=\"tel\" placeholder=\"Phone no.\" autocomplete=\"user-phone\">\n\n\n                        <p class=\"text-sm text-red-500\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"showVerifyEmail\" class=\"text-center\">\n                <img class=\"m-auto\" src=\"../../../../../assets/images/verify-email.png\">\n                <span class=\"text-sm\">Tap the link in the email we sent you at\n                    {{this.loginForm.value.email}}</span>\n            </div>\n            <div class=\"mt-5\">\n                <div [@btn-animate] *ngIf=\"ifUnverified\" class=\"w-full text-center\">\n                    <ts-button text=\"Continue\" [disabled]=\"!loginForm.valid\" (click)=\"verifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"ifSignIn\" class=\"w-full text-center\" >\n                    <ts-button text=\"Sign in\" [disabled]=\"!loginForm.valid\" (click)=\"signIn()\" class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"forgotPassword()\" class=\" text-sm text-center verify-email py-2 px-2\">\n                        Forgot Password?\n                    </a>\n                </div>\n                <div [@btn-animate] *ngIf=\"ifSignUp\" class=\"w-full text-center\">\n                    <ts-button text=\"Create your account\" [disabled]=\"!loginForm.valid || phoneError\"\n                        (click)=\"recaptchaRef.execute()\" class=\"w-full\">\n                    </ts-button>\n                </div>\n                <div *ngIf=\"showResetPassword\" class=\"md:w-full text-center\">\n                    <ts-button text=\"Send Reset Password Link\" [disabled]=\"!loginForm.valid\" (click)=\"resetPassword()\"\n                        class=\"w-full\">\n                    </ts-button>\n                    <a (click)=\"resetPassword()\" class=\" text-sm text-center resend-email py-2 px-2\">\n                        Resend Email\n                    </a>\n                </div>\n                <div *ngIf=\"showVerifyEmail\" class=\"md:w-full text-center py-2 my-2 \">\n                    <ts-button text=\"Resend Verification Email\" [disabled]=\"!loginForm.valid\"\n                        (click)=\"resendVerifyEmail()\" class=\"w-full\">\n                    </ts-button>\n                    <a class=\" text-sm text-center resend-email py-2 px-2\">\n                        Why verify?\n                    </a>\n                </div>\n\n            </div>\n            <div class=\"form-group\">\n                <re-captcha #recaptchaRef=\"reCaptcha\" (resolved)=\"resolveAndProceed($event)\"\n                    siteKey={{CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY}} size=\"invisible\"></re-captcha>\n            </div>\n        </form>\n        <section id=\"social-signin-container\" *ngIf=\"showSocial\">\n            <div class=\"strike-through strike-through-margin\">\n                <span>\n                    <strong class=\"or-text\">or</strong>\n                </span>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithGoogle()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Google\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\" matRipple>\n                        <img  class=\"logo\" \n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Google</span>\n                    </div>\n                </button>\n                <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n            </div>\n            <div class=\"form-group\">\n                <button mat-raised-button\n                    class=\"bg-white w-full p-2 flex flex-row border border-gray-400 rounded shadow mb-2 justify-center\"\n                    (click)=\"onLoginWithFB()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\"\n                    prop-clicked-location=\"Sign In\">\n                    <div class=\"px-2\">\n                        <img class=\"logo\"\n                            src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png\" />\n                    </div>\n                    <div class=\"text-sm\">\n                        <span class=\"no-margin\">Continue with Facebook</span>\n                    </div>\n                </button>\n                <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n                    <i class=\"ion-android-alert\"></i>\n                    <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n                </ng-container>\n            </div>\n        </section>\n        <div *ngIf=\"ifUnverified ||  ifSignUp\" class=\"agreement my-2 px-2\">\n            <div class=\"w-full hor-linear-grad m-4\"></div>\n            <p class=\"text-xs text-center\">By continuing, you agree to Townscript's <a class=\"text-blue-700\"\n                    href=\"/terms-and-conditions\">terms of service</a> and <a class=\"text-blue-700\"\n                    href=\"/privacy-policy\">privacy policy</a>.</p>\n        </div>\n    </div>\n    <div [ngClass]=\"(mode=='dialog') ? 'hidden' : 'ml-20 p-6 hidden md:block'\">\n        <div class=\"flex flex-col mt-4\">\n            <span class=\"text-2xl w-2/3 mb-4 text-gray-900\">\n                <strong>301,589 event organizers trust us.</strong>\n            </span>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Quick and easy event creation</p>\n                    <p class=\"text-sm text-gray-600\">Create your event page, it is easy and customizable.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Start selling tickets within minutes.</p>\n                    <p class=\"text-sm text-gray-600\">Link your bank account, verify identity details and start selling\n                        instantly.</p>\n                </span>\n            </div>\n            <div class=\"flex flex-column my-2\">\n                <i class=\"mdi mdi-check-circle color-blue mr-2 h-6 \"></i>\n                <span>\n                    <p class=\"\">Simple Integration with your website.</p>\n                    <p class=\"text-sm text-gray-600\">Easy to start selling tickets directly from your website and\n                        facebook without developers.</p>\n                </span>\n            </div>\n        </div>\n    </div>\n\n</section>",
-                animations: [
-                    animations.trigger('btn-animate', [
-                        animations.transition('void => *', [
-                            animations.animate('1s ease', animations.style({ opacity: 1 })),
-                        ]),
-                        animations.transition('* => void', [
-                            animations.animate('1s ease', animations.style({ opacity: 0, height: '0' }))
-                        ])
-                    ]),
-                    animations.trigger('in-out-animate', [
-                        animations.transition('void => *', [
-                            animations.style({ opacity: 0.2 }),
-                            animations.animate('1s ease', animations.style({ opacity: 1 })),
-                        ]),
-                        animations.transition('* => void', [
-                            animations.style({ opacity: 0.6 }),
-                            animations.animate('1s ease', animations.style({ opacity: 0, height: '0' }))
-                        ])
-                    ]),
-                    animations.trigger('EnterLeave', [
-                        animations.state('flyIn', animations.style({ transform: 'translateY(0)' })),
-                        animations.transition(':enter', [
-                            animations.style({ transform: 'translateY(0%)' }),
-                            animations.animate('1s ease-in-out')
-                        ]),
-                        animations.transition(':leave', [
-                            animations.animate('.5s ease', animations.style({ transform: 'translateY(-70%)', opacity: '0', height: 0 }))
-                        ])
-                    ])
-                ],
-                styles: [".container-background::before{color:#fff;background:url(\"data:image/svg+xml;utf8,<svg viewBox='0 0 200 100' xmlns='http://www.w3.org/2000/svg'  preserveAspectRatio='none'><polygon points='0,110 0,50 300,0 300,300' width='100%' height='100%' style='fill:blue;'/></svg>\") 0 0/contain;width:30%;font-size:2em;padding:4px 40px}.strike-through-margin{margin:30px 0;text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em}.strike-through-margin span{background-color:#fff;padding:3px 30px}.strike-through{text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em;margin:30px auto}.strike-through span{background-color:#fff;padding:3px 30px}.hor-linear-grad{border:1px solid;border-left:0;border-right:0;-webkit-border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));-webkit-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);-o-border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));border-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%);border-image-slice:1}.iti__flag{background-image:url(../../../../../node_modules/intl-tel-input/build/img/flags.png)}@media (-webkit-min-device-pixel-ratio:2),(min-resolution:192dpi){.iti__flag{background-image:url(../../../../../node_modules/intl-tel-input/build/img/flags@2x.png)}}#social-signin-container .logo{width:22px;height:22px}.mkt-content{background-color:#f1f1f1}.login-card-box{box-shadow:0 0 8px rgba(0,0,0,.25);border-radius:5px;max-width:460px}"]
+                template: "<div class=\"login-signup-view px-5\" id=\"login-signup-view\">\n  <div class=\"view-header\">\n    <div class=\"back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1\">\n      <i class=\"mdi mdi-arrow-left cursor-pointer\" (click)=\"goBack()\"></i>\n    </div>\n    <div class=\"initial-header flex flex-col fadeIn\" *ngIf=\"isDefaultView\">\n      <div class=\"primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold\">{{defaultHeader}}</div>\n      <div class=\"secondary-header text-gray-600 text-xs md:text-sm lg:text-sm\">{{defaultSubHeader}}</div>\n    </div>\n    <div class=\"sign-in-header flex flex-col fadeIn\" *ngIf=\"isSignInView\">\n      <div class=\"primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold\">Sign In</div>\n      <div class=\"secondary-header text-gray-600 text-xs md:text-sm lg:text-sm\">Welcome to Townscript</div>\n    </div>\n\n    <div class=\"forgot-pwd-header flex flex-col fadeIn\" *ngIf=\"showResetPassword\">\n      <div class=\"primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold\">Forgot Password?</div>\n      <div class=\"secondary-header text-gray-600 text-xs md:text-sm lg:text-sm\">Don\u2019t worry, we\u2019ll help you reset it\n      </div>\n    </div>\n\n    <div class=\"sign-up-header flex flex-col fadeIn\" *ngIf=\"isSignUpView\">\n      <div class=\"primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold\">Sign Up</div>\n      <div class=\"secondary-header text-gray-600 text-xs md:text-sm lg:text-sm\">Welcome to Townscript</div>\n    </div>\n\n    <div class=\"verify-email-header flex flex-col fadeIn\" *ngIf=\"isVerifyEmailView\">\n      <div class=\"primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold\">You're almost done</div>\n      <div class=\"secondary-header text-gray-600 text-xs md:text-sm lg:text-sm\">We just need to verify your e-mail</div>\n    </div>\n  </div>\n  <div class=\"ts-loader flex flex-col items-center justify-center p-10\" *ngIf=\"showLoader\">\n    <mat-spinner></mat-spinner>\n    <div class=\"py-5 text-gray-700 text-sm\">{{loaderText}}</div>\n  </div>\n  <div class=\"view-body pt-5\" *ngIf=\"!showLoader\">\n    <div class=\"default-view-body py-2 fadeInUp\" *ngIf=\"isDefaultView\">\n      <form id=\"loginForm\" [formGroup]=\"loginForm\" class=\"w-full login-form\">\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full\">\n              <input formControlName=\"email\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"email\" type=\"email\" name=\"email\" placeholder=\"Email\" (ngModelChange)=\"clearErrors()\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\" *ngIf=\"socialLoginMsg\">\n              It seems you have signed up using Social Login.\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Email Id is required\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Please enter a valid email address\n            </p>\n          </div>\n        </div>\n        <div class=\"form-group w-full text-center\">\n          <button matRipple (click)=\"verifyEmail()\" [disabled]=\"!loginForm.controls.email.valid\"\n            class=\"w-full blue-btn p-2 rounded shadow mb-2 font-semibold\">Continue\n          </button>\n        </div>\n\n        <div class=\"form-group strike-through strike-through-margin\">\n          <div class=\"text-gray-700 text-base md:text-lg lg:text-xl\">\n            <span class=\"or-text\">OR</span>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <a [href]=\"googleLoginURL\" target=\"_blank\"\n            class=\"bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center\"\n            ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Google\" prop-clicked-location=\"Sign In\"\n            matRipple>\n            <div class=\"px-2\">\n              <img class=\"logo\" src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png\" />\n            </div>\n            <div class=\"text-sm text-gray-700\">\n              <span class=\"no-margin\">Continue with Google</span>\n            </div>\n          </a>\n          <p class=\"form-control--error\" ng-if=\"googleError.length\" ng-bind=\"googleError\"></p>\n        </div>\n        <div class=\"form-group\">\n          <a [href]=\"fbLoginURL\" target=\"_top\"\n            class=\"bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center\"\n            (click)=\"onLoginWithFB()\" ts-data-analytics prop-event=\"click\" eventLabel=\"Login with Facebook\"\n            prop-clicked-location=\"Sign In\" matRipple>\n            <div class=\"px-2\">\n              <img class=\"logo\"\n                src=\"https://townscript-common-resources.s3.ap-south-1.amazonaws.com/facebook-min.png\" />\n            </div>\n            <div class=\"text-sm text-gray-700\">\n              <span class=\"no-margin\">Continue with Facebook</span>\n            </div>\n          </a>\n          <ng-container class=\"login-error\" ng-if=\"fbError.length\">\n            <i class=\"ion-android-alert\"></i>\n            <p class=\"form-control--error\" ng-bind=\"fbError\"></p>\n          </ng-container>\n        </div>\n\n      </form>\n    </div>\n    <div class=\"signin-view-body py-2 fadeInUp\" *ngIf=\"isSignInView\">\n      <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full login-form\">\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full\">\n              <input formControlName=\"email\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"email\" type=\"email\" name=\"email\" placeholder=\"Email\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\" *ngIf=\"socialLoginMsg\">\n              It seems you have signed up using Social Login.\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Email Id is required\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Please enter a valid email address\n            </p>\n          </div>\n        </div>\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full relative\">\n              <input formControlName=\"password\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"user-pwd\" [type]=\"'password'\" placeholder=\"Password\" autocomplete=\"current-password\">\n              <i class=\"text-lg mdi absolute right-0 text-gray-700\"\n                [ngClass]=\" showPassword ? 'mdi-eye-off' : 'mdi-eye'\" (click)=\"togglePasswordDisplay()\"></i>\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)\">\n              Password is required\n            </p>\n          </div>\n        </div>\n        <div class=\"w-full text-center form-group\">\n          <p class=\"text-xs text-red-500 -mt-3 mb-2\" *ngIf=\"signInErrMessage.length > 0\">{{signInErrMessage}}</p>\n          <button matRipple (click)=\"signIn()\" [disabled]=\"!loginForm.valid\"\n            class=\"w-full blue-btn p-2 rounded shadow mb-2 font-semibold\">Sign In\n          </button>\n          <div class=\"text-sm text-center text-gray-700 p-1\">\n            <span class=\"cursor-pointer hover:underline\" (click)=\"forgotPassword()\">Forgot Password?</span>\n          </div>\n        </div>\n      </form>\n    </div>\n    <div class=\"reset-pwd-view-body py-2 fadeInUp\" *ngIf=\"showResetPassword\">\n      <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full login-form\">\n        <div class=\"form-group md:flex md:items-center\" *ngIf=\"!resetPwdLinkSent\">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full\">\n              <input formControlName=\"email\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"email\" type=\"email\" name=\"email\" placeholder=\"Email\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Email Id is required\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Please enter a valid email address\n            </p>\n          </div>\n        </div>\n        <div class=\"link-sent fadeIn\" *ngIf=\"resetPwdLinkSent\">\n          <div class=\"p-2 flex items-center justify-center -mt-8 primary-header\">\n            <app-email-sent></app-email-sent>\n          </div>\n          <div class=\"p-2 text-green-600 text-sm text-center secondary-header\">Password reset link has been sent to\n            {{loginForm.value.email}}</div>\n        </div>\n        <div class=\"w-full text-center form-group\">\n          <button matRipple *ngIf=\"!resetPwdLinkSent\" (click)=\"resetPassword()\"\n            [disabled]=\"!loginForm.controls.email.valid\"\n            class=\"w-full blue-btn p-2 rounded shadow mb-2 font-semibold\">Send Reset Password Link\n          </button>\n          <div (click)=\"resetPassword()\"\n            class=\"text-gray-700 text-sm text-center resend-email py-2 px-2 hover:underline cursor-pointer\"\n            *ngIf=\"resetPwdLinkSent\">\n            Resend Email\n          </div>\n        </div>\n      </form>\n    </div>\n    <div class=\"signup-view-body py-2 fadeInUp\" *ngIf=\"isSignUpView\">\n      <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full login-form\">\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full\">\n              <input formControlName=\"email\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"email\" type=\"email\" name=\"email\" placeholder=\"Email\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\" *ngIf=\"socialLoginMsg\">\n              It seems you have signed up using Social Login.\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Email Id is required\n            </p>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('email').hasError('pattern') && (loginForm.get('email').dirty || loginForm.get('email').touched)\">\n              Please enter a valid email address\n            </p>\n          </div>\n        </div>\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full relative\">\n              <input formControlName=\"password\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"user-pwd\" [type]=\"'password'\" placeholder=\"Password\" autocomplete=\"current-password\">\n              <i class=\"text-lg mdi absolute right-0 text-gray-700\"\n                [ngClass]=\" showPassword ? 'mdi-eye-off' : 'mdi-eye'\" (click)=\"togglePasswordDisplay()\"></i>\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)\">\n              Password is required\n            </p>\n          </div>\n        </div>\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full relative\">\n              <input formControlName=\"fullName\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500\"\n                id=\"name\" type=\"text\" placeholder=\"Full Name\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 -mt-3 mb-2\"\n              *ngIf=\"loginForm.get('fullName').hasError('required') && (loginForm.get('fullName').dirty || loginForm.get('fullName').touched)\">\n              Full Name is required\n            </p>\n          </div>\n        </div>\n        <div class=\"form-group md:flex md:items-center \">\n          <div class=\"w-full\">\n            <mat-form-field class=\"w-full relative\" floatLabel=\"always\">\n              <input type=\"tel\" formControlName=\"phoneNumber\" matInput\n                class=\"form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10\"\n                id=\"phoneNumber\" placeholder=\"Phone no.\" (ngModelChange)=\"validatePhoneNumber()\">\n            </mat-form-field>\n            <p class=\"text-xs text-red-500 mmb-2\"\n              *ngIf=\"loginForm.get('phoneNumber').hasError('required') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched)\">\n              Phone Number is required\n            </p>\n            <p class=\"text-xs text-red-500 mb-2\" *ngIf=\"phoneError\">Please enter a valid Phone no.</p>\n          </div>\n        </div>\n        <div class=\"form-group md:flex md:items-center mb-3\">\n          <div class=\"w-full flex items-center justify-center md:justify-start\">\n            <re-captcha (resolved)=\"resolve($event)\" [siteKey]=\"CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY\">\n            </re-captcha>\n          </div>\n        </div>\n        <div class=\"w-full text-center form-group\">\n          <button matRipple [disabled]=\"!loginForm.valid || phoneError\" (click)=\"signUp()\"\n            class=\"w-full blue-btn p-2 rounded shadow mb-2 font-semibold\">\n            Create your account\n          </button>\n        </div>\n      </form>\n    </div>\n\n    <div class=\"verify-email-view-body py-2 fadeInUp\" *ngIf=\"isVerifyEmailView\">\n      <form id=\"formId\" [formGroup]=\"loginForm\" class=\"w-full login-form\">\n        <div class=\"link-sent fadeIn\">\n          <div class=\"p-2 flex items-center justify-center -mt-8 primary-header\">\n            <app-email-sent></app-email-sent>\n          </div>\n          <div class=\"p-4 text-green-600 text-sm text-center secondary-header\">\n            Tap the link in the email we sent you at {{loginForm.value.email}}\n          </div>\n        </div>\n        <div class=\"w-full text-center form-group\">\n          <button matRipple *ngIf=\"!resetPwdLinkSent\" (click)=\"resendVerifyEmail()\" [disabled]=\"!loginForm.valid\"\n            class=\"w-full blue-btn p-2 rounded shadow mb-2 font-semibold\">Resend Verification Email\n          </button>\n          <div class=\"text-gray-700 text-sm text-center why-verify px-2 hover:underline cursor-pointer\">\n            <span\n              matTooltip=\"Townscript sends all important communication regarding your events & account-related updates via e-mail. We just want to make sure you don\u2019t miss these important information\"\n              matTooltipPosition=\"right\" matTooltipClass=\"ts-login-tooltip\">Why verify?</span>\n          </div>\n        </div>\n      </form>\n    </div>\n    <div class=\"agreement my-2\" *ngIf=\"isDefaultView || isSignUpView\">\n      <div class=\"w-full hor-linear-grad my-2\"></div>\n      <p class=\"text-xs text-center p-2 text-gray-800 px-5\">\n        By continuing, you agree to Townscript's\n        <a class=\"text-blue-700\" href=\"/terms-and-conditions\">terms of service</a>\n        and\n        <a class=\"text-blue-700\" href=\"/privacy-policy\">privacy policy</a>.\n      </p>\n    </div>\n  </div>\n</div>",
+                encapsulation: core.ViewEncapsulation.None,
+                styles: ["@-webkit-keyframes fadeInUp{from{opacity:0;-webkit-transform:translate3d(0,100%,0);transform:translate3d(0,100%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@keyframes fadeInUp{from{opacity:0;-webkit-transform:translate3d(0,50%,0);transform:translate3d(0,50%,0)}to{opacity:1;-webkit-transform:none;transform:none}}@-webkit-keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.ts-login-tooltip{background-color:#666;color:#fff;font-size:12px;opacity:.98;white-space:pre-line}.login-signup-view{max-height:90vh;overflow:hidden}.login-signup-view .fadeIn .primary-header,.login-signup-view .fadeIn .secondary-header{-webkit-animation-duration:.4s;animation-duration:.4s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-delay:0s;animation-delay:0s;-webkit-animation-name:fadeIn;animation-name:fadeIn}.login-signup-view .fadeIn .secondary-header{-webkit-animation-delay:.1s;animation-delay:.1s}.login-signup-view .fadeInUp .login-form .form-group{-webkit-animation-duration:.4s;animation-duration:.4s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:fadeInUp;animation-name:fadeInUp}.login-signup-view .fadeInUp .login-form .form-group:nth-child(1){-webkit-animation-delay:.1s;animation-delay:.1s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(2){-webkit-animation-delay:.2s;animation-delay:.2s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(3){-webkit-animation-delay:.3s;animation-delay:.3s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(4){-webkit-animation-delay:.4s;animation-delay:.4s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(5){-webkit-animation-delay:.5s;animation-delay:.5s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(6){-webkit-animation-delay:.6s;animation-delay:.6s}.login-signup-view .fadeInUp .login-form .form-group:nth-child(7){-webkit-animation-delay:.7s;animation-delay:.7s}.login-signup-view .ts-loader{-webkit-animation-duration:.2s;animation-duration:.2s;-webkit-animation-fill-mode:both;animation-fill-mode:both;-webkit-animation-name:fadeInUp;animation-name:fadeInUp}.login-signup-view .ts-loader circle{stroke-width:5%!important}.login-signup-view .view-body .blue-btn{background:#3782c4;color:#fff;-webkit-transition:.15s;transition:.15s}.login-signup-view .view-body .blue-btn:hover{background:#1369b5}.login-signup-view .view-body .default-view-body .strike-through-margin{margin:30px 0;text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em}.login-signup-view .view-body .default-view-body .strike-through-margin span{background-color:#fff;padding:3px 30px}.login-signup-view .view-body .default-view-body .strike-through{text-align:center;border-bottom:1px solid #dcdcdc;line-height:.1em;margin:30px auto}.login-signup-view .view-body .default-view-body .strike-through span{background-color:#fff;padding:3px 30px}.login-signup-view .view-body .default-view-body .logo{height:auto;width:25px}.login-signup-view .view-body .hor-linear-grad{height:1px;width:100%;background-image:-webkit-gradient(linear,left top,left bottom,from(rgba(255,255,255,0)),color-stop(48%,#e2e2e2),to(rgba(255,255,255,0)));background-image:linear-gradient(to bottom,rgba(255,255,255,0) 0,#e2e2e2 48%,rgba(255,255,255,0) 100%)}"]
             }),
             __metadata("design:paramtypes", [ApiService,
-                http.HttpClient,
-                forms.FormBuilder,
                 CookieService,
                 UserService,
-                NotificationService])
+                NotificationService,
+                TsLoginSignupService])
         ], TsLoginSignupComponent);
         return TsLoginSignupComponent;
     }());
 
-    var LoginTopContentComponent = /** @class */ (function () {
-        function LoginTopContentComponent() {
+    var EmailSentSVGComponent = /** @class */ (function () {
+        function EmailSentSVGComponent() {
         }
-        LoginTopContentComponent.prototype.ngOnInit = function () {
-            console.log('whats the condition', this.condition);
+        EmailSentSVGComponent.prototype.ngOnInit = function () {
         };
-        __decorate([
-            core.Input(),
-            __metadata("design:type", String)
-        ], LoginTopContentComponent.prototype, "condition", void 0);
-        LoginTopContentComponent = __decorate([
+        EmailSentSVGComponent = __decorate([
             core.Component({
-                selector: 'app-login-top-content',
-                template: "<div *ngIf=\"condition == 'ifUnverified' \" class=\"pb-2\">\n        <p class=\"text-2xl text-gray-900\"><strong>Let's get started</strong></p>\n        <p class=\"text-base text-gray-500\">Your one stop tool for organizing events</p>\n</div>\n<div *ngIf=\"condition == 'ifSignUp'\" class=\"pb-2\">\n        <p class=\"text-2xl\"><strong>Sign up</strong></p>\n        <p class=\"text-base text-gray-500\">Welcome to Townscript</p>\n</div>\n<div *ngIf=\"condition == 'showVerifyEmail'\" class=\"pb-2\">\n        <p class=\"text-2xl\"><strong>You're almost done</strong></p>\n        <p class=\"text-base text-gray-500\">We just need to verify your e-mail</p>\n</div>\n<div *ngIf=\"condition == 'ifSignIn'\" class=\"pb-3\">\n        <p class=\"text-2xl\"><strong>Sign in</strong></p>\n</div>\n<div *ngIf=\"condition == 'showResetPassword'\" class=\"pb-3\">\n        <p class=\"text-2xl\"><strong>Forgot password</strong></p>\n        <p class=\"text-base text-gray-500\">Don't worry, we'll help you reset it</p>\n</div>",
-                styles: [""]
+                selector: 'app-email-sent',
+                template: "<svg width=\"224\" height=\"179\" viewBox=\"0 0 224 179\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<g id=\"undraw_envelope_n8lc\" clip-path=\"url(#clip0)\">\n<path id=\"Vector\" opacity=\"0.1\" d=\"M117.621 54.4782C104.642 54.079 92.2817 50.3503 80.4864 46.2705C68.6911 42.1907 56.9818 37.6782 44.3141 35.5171C36.1669 34.1272 26.8499 33.9307 20.2853 37.8162C13.967 41.5553 11.9268 48.0116 10.8294 54.0038C10.002 58.51 9.51688 63.2545 11.7801 67.4722C13.345 70.3983 16.1403 72.8625 18.069 75.6674C24.7784 85.4301 20.0368 97.4669 12.764 106.998C9.35257 111.468 5.39537 115.734 2.76245 120.493C0.129529 125.252 -1.08326 130.71 1.21517 135.558C3.49794 140.366 8.93788 143.984 14.8316 146.527C26.801 151.69 40.9065 153.167 54.6599 154.005C85.1048 155.857 115.714 155.05 146.241 154.252C157.537 153.955 168.885 153.654 179.999 152.099C186.171 151.236 192.542 149.867 197.018 146.561C202.706 142.364 204.114 135.255 200.304 129.993C193.911 121.164 176.244 118.972 171.766 109.497C169.305 104.283 171.833 98.4722 175.406 93.6358C183.074 83.2606 195.928 74.1584 196.605 62.2993C197.068 54.148 190.891 45.9967 181.337 42.1426C171.324 38.1025 157.438 38.6104 150.04 45.2986C142.448 52.1833 129.08 54.8398 117.621 54.4782Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_2\" opacity=\"0.1\" d=\"M94.2468 179C129.001 179 157.175 176.175 157.175 172.689C157.175 169.204 129.001 166.378 94.2468 166.378C59.4922 166.378 31.3181 169.204 31.3181 172.689C31.3181 176.175 59.4922 179 94.2468 179Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_3\" d=\"M36.6793 172.004C36.6793 172.004 33.8873 156.272 23.5243 148.476C19.1761 145.204 15.9945 140.755 14.605 135.688C13.9511 133.287 13.5321 130.829 13.354 128.348\" stroke=\"#535461\" stroke-width=\"2\" stroke-miterlimit=\"10\"/>\n<path id=\"Vector_4\" d=\"M6.85654 123.398C7.72228 125.083 13.5076 128.495 13.5076 128.495C13.5076 128.495 14.2348 122.121 13.3626 120.434C12.4904 118.746 10.3325 118.043 8.53175 118.861C6.73101 119.678 5.98431 121.71 6.85654 123.398Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_5\" d=\"M6.30472 135.191C8.01456 136.162 14.8409 136.076 14.8409 136.076C14.8409 136.076 11.7611 130.355 10.0577 129.384C8.35437 128.413 6.12724 128.925 5.09268 130.529C4.05812 132.133 4.59705 134.22 6.30472 135.191Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_6\" d=\"M14.7911 151.059C16.7867 151.087 22.6326 147.777 22.6326 147.777C22.6326 147.777 16.8992 144.298 14.9015 144.268C12.9038 144.238 11.2611 145.736 11.2221 147.611C11.1832 149.486 12.7934 151.025 14.7911 151.059Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_7\" d=\"M24.0893 161.699C26.0503 162.045 32.4091 159.708 32.4091 159.708C32.4091 159.708 27.3835 155.364 25.4248 155.024C23.466 154.684 21.5722 155.885 21.2043 157.736C20.8363 159.587 22.1263 161.354 24.0893 161.699Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_8\" d=\"M21.8406 133.291C21.1589 135.053 15.7804 139.005 15.7804 139.005C15.7804 139.005 14.3563 132.737 15.0381 130.975C15.7198 129.212 17.7955 128.301 19.6719 128.94C21.5484 129.58 22.5224 131.53 21.8406 133.291Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_9\" d=\"M32.5475 145.869C31.3355 147.361 24.9463 149.621 24.9463 149.621C24.9463 149.621 25.5956 143.239 26.799 141.75C27.4069 141.027 28.2665 140.559 29.2063 140.439C30.146 140.32 31.0965 140.557 31.8679 141.104C32.2424 141.36 32.5593 141.692 32.7986 142.076C33.038 142.461 33.1945 142.891 33.2584 143.338C33.3222 143.786 33.292 144.242 33.1697 144.678C33.0473 145.114 32.8355 145.519 32.5475 145.869Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_10\" d=\"M41.1661 159.436C40.2397 161.098 34.3505 164.34 34.3505 164.34C34.3505 164.34 33.8332 157.949 34.7596 156.287C35.6859 154.626 37.8698 153.984 39.6402 154.854C41.4107 155.723 42.0903 157.775 41.1661 159.436Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_11\" opacity=\"0.25\" d=\"M6.85654 123.398C7.72228 125.083 13.5076 128.495 13.5076 128.495C13.5076 128.495 14.2348 122.121 13.3626 120.434C12.4904 118.746 10.3325 118.043 8.53175 118.861C6.73101 119.678 5.98431 121.71 6.85654 123.398Z\" fill=\"black\"/>\n<path id=\"Vector_12\" opacity=\"0.25\" d=\"M6.30472 135.191C8.01456 136.162 14.8409 136.076 14.8409 136.076C14.8409 136.076 11.7611 130.355 10.0577 129.384C8.35437 128.413 6.12724 128.925 5.09268 130.529C4.05812 132.133 4.59705 134.22 6.30472 135.191Z\" fill=\"black\"/>\n<path id=\"Vector_13\" opacity=\"0.25\" d=\"M14.7911 151.059C16.7867 151.087 22.6326 147.777 22.6326 147.777C22.6326 147.777 16.8992 144.298 14.9015 144.268C12.9038 144.238 11.2611 145.736 11.2221 147.611C11.1832 149.486 12.7934 151.025 14.7911 151.059Z\" fill=\"black\"/>\n<path id=\"Vector_14\" opacity=\"0.25\" d=\"M24.0893 161.699C26.0503 162.045 32.4091 159.708 32.4091 159.708C32.4091 159.708 27.3835 155.364 25.4248 155.024C23.466 154.684 21.5722 155.885 21.2043 157.736C20.8363 159.587 22.1263 161.354 24.0893 161.699Z\" fill=\"black\"/>\n<path id=\"Vector_15\" opacity=\"0.25\" d=\"M21.8406 133.291C21.1589 135.053 15.7804 139.005 15.7804 139.005C15.7804 139.005 14.3563 132.737 15.0381 130.975C15.7198 129.212 17.7955 128.301 19.6719 128.94C21.5484 129.58 22.5224 131.53 21.8406 133.291Z\" fill=\"black\"/>\n<path id=\"Vector_16\" opacity=\"0.25\" d=\"M32.5475 145.869C31.3355 147.361 24.9463 149.621 24.9463 149.621C24.9463 149.621 25.5956 143.239 26.799 141.75C27.4069 141.027 28.2665 140.559 29.2063 140.439C30.146 140.32 31.0965 140.557 31.8679 141.104C32.2424 141.36 32.5593 141.692 32.7986 142.076C33.038 142.461 33.1945 142.891 33.2584 143.338C33.3222 143.786 33.292 144.242 33.1697 144.678C33.0473 145.114 32.8355 145.519 32.5475 145.869Z\" fill=\"black\"/>\n<path id=\"Vector_17\" opacity=\"0.25\" d=\"M41.1661 159.436C40.2397 161.098 34.3505 164.34 34.3505 164.34C34.3505 164.34 33.8332 157.949 34.7596 156.287C35.6859 154.626 37.8698 153.984 39.6402 154.854C41.4107 155.723 42.0903 157.775 41.1661 159.436Z\" fill=\"black\"/>\n<path id=\"Vector_18\" d=\"M36.3288 171.591C36.3288 171.591 40.5644 156.145 34.4566 145.073C31.894 140.428 30.9049 135.15 31.8226 129.989C32.2632 127.534 32.9409 125.128 33.8463 122.804\" stroke=\"#535461\" stroke-width=\"2\" stroke-miterlimit=\"10\"/>\n<path id=\"Vector_19\" d=\"M30.0414 115.806C30.1107 117.679 33.9221 122.998 33.9221 122.998C33.9221 122.998 37.3375 117.446 37.2682 115.572C37.1989 113.697 35.5259 112.231 33.5304 112.296C31.5348 112.36 29.97 113.931 30.0414 115.806Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_20\" d=\"M24.4486 126.379C25.5914 127.916 31.868 130.434 31.868 130.434C31.868 130.434 31.5217 124.033 30.379 122.494C29.801 121.748 28.9612 121.248 28.0277 121.091C27.0943 120.935 26.136 121.136 25.3447 121.652C24.9601 121.892 24.6296 122.209 24.3739 122.582C24.1181 122.955 23.9427 123.377 23.8586 123.821C23.7744 124.265 23.7834 124.721 23.885 125.161C23.9865 125.601 24.1784 126.016 24.4486 126.379Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_21\" d=\"M25.3575 144.109C27.1712 144.894 33.9457 144.094 33.9457 144.094C33.9457 144.094 30.2035 138.73 28.3898 137.944C26.576 137.159 24.429 137.901 23.5914 139.604C22.7538 141.306 23.5459 143.323 25.3575 144.109Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_22\" d=\"M29.2643 157.379C30.9113 158.442 37.7312 158.724 37.7312 158.724C37.7312 158.724 35.0085 152.846 33.3635 151.784C32.5708 151.271 31.6122 151.074 30.6798 151.234C29.7474 151.393 28.9101 151.898 28.3357 152.645C28.0659 153.01 27.8751 153.427 27.7754 153.869C27.6757 154.312 27.6693 154.77 27.7566 155.214C27.8438 155.659 28.0228 156.081 28.2823 156.454C28.5418 156.826 28.8762 157.141 29.2643 157.379Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_23\" d=\"M39.4712 130.553C38.0861 131.904 31.4631 133.474 31.4631 133.474C31.4631 133.474 32.8678 127.199 34.2508 125.847C34.9352 125.195 35.8416 124.823 36.7894 124.806C37.7372 124.788 38.6568 125.126 39.3652 125.753C39.7056 126.051 39.9802 126.416 40.1715 126.825C40.3628 127.234 40.4667 127.678 40.4766 128.13C40.4866 128.581 40.4024 129.029 40.2294 129.446C40.0563 129.863 39.7982 130.24 39.4712 130.553Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_24\" d=\"M43.8216 146.126C42.0707 147.027 35.2551 146.664 35.2551 146.664C35.2551 146.664 38.5947 141.067 40.3457 140.172C42.0967 139.276 44.2956 139.873 45.2544 141.517C46.2133 143.162 45.5813 145.224 43.8216 146.126Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_25\" d=\"M45.854 161.808C44.2892 162.975 37.5061 163.698 37.5061 163.698C37.5061 163.698 39.7917 157.656 41.3565 156.49C42.1171 155.928 43.0628 155.673 44.0044 155.775C44.9461 155.876 45.8145 156.328 46.4362 157.038C46.7302 157.382 46.9494 157.783 47.08 158.215C47.2105 158.647 47.2497 159.102 47.195 159.55C47.1403 159.998 46.993 160.43 46.7622 160.819C46.5314 161.207 46.2222 161.544 45.854 161.808Z\" fill=\"#6C63FF\"/>\n<path id=\"Vector_26\" d=\"M149.189 72.415C149.232 72.415 149.267 72.3803 149.267 72.3375C149.267 72.2947 149.232 72.26 149.189 72.26C149.146 72.26 149.111 72.2947 149.111 72.3375C149.111 72.3803 149.146 72.415 149.189 72.415Z\" fill=\"#E6E8EC\"/>\n<path id=\"Vector_27\" d=\"M108.12 46.1463L51.5203 82.6648L88.4572 148.917C88.6298 149.227 88.865 149.498 89.1481 149.713C89.4312 149.928 89.7561 150.082 90.1021 150.166L123.57 158.285C124.143 158.423 124.747 158.361 125.28 158.11C125.813 157.859 126.244 157.434 126.5 156.905L143.101 122.606L161.294 98.4186L118.12 47.6207C116.918 46.2078 115.24 45.2787 113.4 45.0073C111.559 44.736 109.682 45.1409 108.12 46.1463Z\" fill=\"#DCDFED\"/>\n<path id=\"Vector_28\" opacity=\"0.1\" d=\"M161.87 98.705L161.71 98.9203L151.053 113.09L150.86 113.346L143.677 122.896L129.478 152.236L129.08 153.057L127.076 157.196C126.82 157.725 126.388 158.151 125.854 158.402C125.32 158.653 124.715 158.714 124.141 158.575L90.6736 150.452C90.3275 150.369 90.0026 150.214 89.7195 150C89.4363 149.785 89.2011 149.514 89.0287 149.204L85.8103 143.442L85.2324 142.404L62.0024 100.72L61.8033 100.365L52.094 82.9512L53.2671 82.1936L62.1604 76.4573L62.366 76.3238L81.0942 64.24L82.2759 63.478L108.692 46.4327C110.254 45.4254 112.132 45.0192 113.973 45.2902C115.815 45.5613 117.494 46.4909 118.696 47.905L138.391 71.0869L139.257 72.1201L153.553 88.9394L153.63 89.0319L160.818 97.4867L161.723 98.5522L161.87 98.705Z\" fill=\"black\"/>\n<g id=\"Card-Link\">\n  <path id=\"Vector_29\" opacity=\"0.1\" d=\"M153.076 88.7455L151.332 100.799L150.806 104.437L150.505 112.186L150.481 112.791L148.916 153.278C148.901 153.654 148.803 154.022 148.63 154.355C148.456 154.689 148.211 154.981 147.911 155.211C147.612 155.44 147.265 155.601 146.896 155.683C146.527 155.764 146.145 155.764 145.776 155.682L128.907 151.937L128.725 151.896L85.4617 142.294L84.6674 142.118L60.8833 136.836L61.4287 100.433L61.446 99.2172L61.6105 88.1988L61.7923 76.0375L80.5205 63.9536L81.7022 63.1917C99.0734 64.9631 122.176 68.3704 137.826 70.8006L138.692 71.8337L152.977 88.653L153.076 88.7455Z\" fill=\"black\"/>\n<path id=\"Vector_30\" d=\"M155.052 74.4533L152.998 88.6594L151.115 101.669L150.589 105.298L150.288 113.047L148.7 154.139C148.685 154.515 148.587 154.883 148.413 155.216C148.24 155.55 147.994 155.842 147.695 156.072C147.395 156.301 147.049 156.462 146.68 156.544C146.311 156.625 145.928 156.625 145.559 156.543L128.508 152.757L85.2452 143.155L60.6667 137.697L61.2295 100.078L61.394 89.0598L61.5866 76.1709L61.7836 62.914C65.8482 62.7224 72.5361 63.155 80.5204 63.9536C98.398 65.738 122.769 69.3476 138.703 71.8337C148.46 73.3555 155.052 74.4533 155.052 74.4533Z\" fill=\"url(#paint0_linear)\"/>\n<path id=\"link\" d=\"M90.999 85.173L94.4661 87.0741L94.3299 88.2144L89.8331 85.4486L89.9345 84.5992L94.9572 82.9607L94.821 84.1011L90.999 85.173ZM97.0633 89.6869L95.9868 89.5601L97.0537 80.6236L98.1302 80.7504L97.0633 89.6869ZM99.9612 90.0283L98.8847 89.9015L99.6363 83.6064L100.713 83.7332L99.9612 90.0283ZM99.7483 81.9263C99.7692 81.7518 99.8391 81.6105 99.9582 81.5026C100.081 81.3952 100.247 81.3538 100.457 81.3785C100.666 81.4032 100.818 81.482 100.913 81.6151C101.007 81.7481 101.044 81.9019 101.023 82.0764C101.002 82.251 100.93 82.39 100.808 82.4936C100.685 82.5972 100.519 82.6366 100.31 82.6119C100.1 82.5872 99.9481 82.5103 99.8534 82.3812C99.7625 82.2525 99.7275 82.1008 99.7483 81.9263ZM103.459 84.0568L103.4 84.8521C103.953 84.3037 104.618 84.0752 105.394 84.1666C106.724 84.3234 107.306 85.153 107.138 86.6554L106.642 90.8153L105.565 90.6885L106.062 86.5228C106.113 86.0685 106.048 85.7206 105.868 85.4792C105.693 85.2382 105.389 85.0924 104.959 85.0417C104.61 85.0005 104.292 85.0575 104.006 85.2126C103.72 85.3677 103.485 85.5879 103.302 85.873L102.766 90.3587L101.69 90.2319L102.441 83.9368L103.459 84.0568ZM110.371 88.2987L109.611 88.9232L109.347 91.1341L108.271 91.0072L109.338 82.0707L110.414 82.1975L109.769 87.6025L110.428 86.978L112.636 85.1378L113.946 85.2921L111.182 87.6332L113.479 91.6208L112.216 91.472L110.371 88.2987ZM118.568 88.3854L114.902 86.4254L115.034 85.32L119.741 88.1046L119.639 88.9541L114.407 90.5737L114.54 89.4566L118.568 88.3854Z\" fill=\"white\"/>\n</g>\n<path id=\"Vector_31\" opacity=\"0.1\" d=\"M160.264 97.2004L151.115 101.662L104.424 124.435L61.3941 89.0684L52.6955 81.9072L51.5225 82.6649L61.2318 100.078L60.669 137.697L85.2475 143.155L88.4594 148.917C88.6317 149.227 88.8669 149.498 89.1501 149.713C89.4332 149.928 89.7581 150.082 90.1043 150.166L123.572 158.285C124.145 158.422 124.748 158.36 125.281 158.109C125.814 157.858 126.244 157.433 126.5 156.905L128.504 152.766L145.555 156.552C145.924 156.634 146.307 156.634 146.676 156.552C147.045 156.471 147.391 156.31 147.691 156.08C147.99 155.851 148.235 155.559 148.409 155.225C148.583 154.891 148.68 154.523 148.696 154.148L150.284 113.055L161.134 98.6339L161.164 98.2702L160.264 97.2004Z\" fill=\"black\"/>\n<path id=\"Vector_32\" d=\"M51.5204 82.6648L47.6614 148.386C47.6257 148.994 47.8088 149.595 48.178 150.081C48.5472 150.567 49.0783 150.907 49.6764 151.04L152.163 173.673C152.522 173.751 152.894 173.752 153.254 173.675C153.614 173.599 153.953 173.447 154.249 173.229C154.544 173.012 154.79 172.734 154.969 172.414C155.148 172.095 155.256 171.741 155.286 171.376L161.292 98.4186L104.424 126.157L51.5204 82.6648Z\" fill=\"#DCDFED\"/>\n<path id=\"Vector_33\" opacity=\"0.1\" d=\"M48.367 149.89L101.61 117.222C102.398 116.747 103.33 116.564 104.241 116.706C105.152 116.847 105.984 117.305 106.588 117.997L154.243 173.27C154.416 173.468 154.5 173.326 154.243 173.27L48.367 149.89C48.0639 149.823 48.1029 150.047 48.367 149.89Z\" fill=\"black\"/>\n<path id=\"Vector_34\" d=\"M48.7479 149.836L101.441 118.18C102.274 117.68 103.258 117.488 104.22 117.639C105.181 117.789 106.058 118.272 106.696 119.003L153.92 173.014C153.999 173.104 154.046 173.216 154.057 173.334C154.067 173.453 154.04 173.571 153.979 173.674C153.918 173.776 153.826 173.856 153.717 173.904C153.607 173.951 153.485 173.963 153.369 173.937L48.9189 150.872C48.8077 150.848 48.7063 150.791 48.6278 150.709C48.5494 150.627 48.4976 150.524 48.4792 150.412C48.4607 150.3 48.4765 150.186 48.5244 150.083C48.5724 149.98 48.6502 149.895 48.7479 149.836Z\" fill=\"#E3E5F1\"/>\n</g>\n<defs>\n<linearGradient id=\"paint0_linear\" x1=\"107.859\" y1=\"62.8689\" x2=\"107.859\" y2=\"156.605\" gradientUnits=\"userSpaceOnUse\">\n<stop stop-color=\"#2D9CDB\"/>\n<stop offset=\"1\" stop-color=\"#095783\"/>\n</linearGradient>\n<clipPath id=\"clip0\">\n<rect width=\"224\" height=\"179\" fill=\"white\"/>\n</clipPath>\n</defs>\n</svg>\n",
+                styles: ["@-webkit-keyframes open{0%{opacity:.2;-webkit-transform:translateY(10%);transform:translateY(10%)}70%{opacity:.9;-webkit-transform:translateY(-3%);transform:translateY(-3%)}100%{opacity:1;-webkit-transform:none;transform:none}}@keyframes open{0%{opacity:.2;-webkit-transform:translateY(10%);transform:translateY(10%)}70%{opacity:.9;-webkit-transform:translateY(-3%);transform:translateY(-3%)}100%{opacity:1;-webkit-transform:none;transform:none}}#Card-Link{-webkit-animation-name:open;animation-name:open;-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-iteration-count:1;animation-iteration-count:1;overflow:hidden}"]
             }),
             __metadata("design:paramtypes", [])
-        ], LoginTopContentComponent);
-        return LoginTopContentComponent;
+        ], EmailSentSVGComponent);
+        return EmailSentSVGComponent;
     }());
 
     var RangeDatePipe = /** @class */ (function () {
@@ -1472,24 +1456,27 @@
                     ngRecaptcha.RecaptchaModule,
                     http.HttpClientModule,
                     material.MatRippleModule,
-                    material.MatSnackBarModule
+                    material.MatSnackBarModule,
+                    material.MatInputModule,
+                    material.MatTooltipModule,
+                    material.MatProgressSpinnerModule
                 ],
                 declarations: [
                     TsLoginSignupComponent,
-                    LoginTopContentComponent,
-                    AppPasswordDirective,
-                    LoginModalComponent
+                    LoginModalComponent,
+                    EmailSentSVGComponent
                 ],
                 exports: [
                     TsLoginSignupComponent,
-                    LoginTopContentComponent,
-                    LoginModalComponent
+                    LoginModalComponent,
+                    EmailSentSVGComponent
                 ],
                 providers: [
                     ApiService,
                     CookieService,
                     UserService,
-                    NotificationService
+                    NotificationService,
+                    TsLoginSignupService
                 ]
             })
         ], TsLoginSignupModule);
@@ -1593,18 +1580,17 @@
     }());
 
     exports.ApiService = ApiService;
-    exports.AppPasswordDirective = AppPasswordDirective;
     exports.BrowserService = BrowserService;
     exports.CardsModule = CardsModule;
     exports.CitySearchPopupComponent = CitySearchPopupComponent;
     exports.CookieService = CookieService;
+    exports.EmailSentSVGComponent = EmailSentSVGComponent;
     exports.FollowComponent = FollowComponent;
     exports.FollowService = FollowService;
     exports.HamburgerMenuComponent = HamburgerMenuComponent;
     exports.HeaderService = HeaderService;
     exports.LayoutModule = LayoutModule;
     exports.LoginModalComponent = LoginModalComponent;
-    exports.LoginTopContentComponent = LoginTopContentComponent;
     exports.NotificationService = NotificationService;
     exports.PlaceService = PlaceService;
     exports.RangeDatePipe = RangeDatePipe;
@@ -1620,6 +1606,7 @@
     exports.TsListingCardComponent = TsListingCardComponent;
     exports.TsLoginSignupComponent = TsLoginSignupComponent;
     exports.TsLoginSignupModule = TsLoginSignupModule;
+    exports.TsLoginSignupService = TsLoginSignupService;
     exports.UserMenuComponent = UserMenuComponent;
     exports.UserService = UserService;
     exports.config = config;
