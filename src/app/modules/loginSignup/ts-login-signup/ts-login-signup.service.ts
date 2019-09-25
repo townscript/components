@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { ApiService } from 'src/app/shared/services/api-service';
+import { ApiService } from '../../../shared/services/api-service';
 import { config } from '../../../core/app-config';
 
 @Injectable()
