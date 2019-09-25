@@ -21,14 +21,14 @@ export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
     @Input() defaultHeader: any = 'Let\'s get started';
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
-    captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
+    @Input()rdurl:any;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
+    captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
     recaptchaRef: RecaptchaComponent;
     showSocial:any = true;
     show:any = false;
     showPassword:any = false;
-    rdurl:any = 'http://' + this.apiService.betaHostName + 'marketplace';
     isDefaultView:any = true;
     isSignInView:any = false;
     isSignUpView:any = false;
@@ -176,7 +176,9 @@ export class TsLoginSignupComponent implements OnInit {
                 if (this.mode === 'dialog') {
                     this.close();
                 }
-                // this.redirectToListings();
+                if(this.rdurl != undefined){
+                   window.open(this.rdurl, '_self');
+                }
             },
             (error) => {
                 console.log(error);
@@ -233,6 +235,7 @@ export class TsLoginSignupComponent implements OnInit {
             this.showResetPassword = false;
             this.isSignUpView = false;
             this.isSignInView = true;
+            this.loginForm.get('password').enable();
         } else if (this.isSignInView) {
             this.isSignUpView = false;
             this.showResetPassword = false;
