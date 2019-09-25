@@ -21,7 +21,7 @@ export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
     @Input() defaultHeader: any = 'Let\'s get started';
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
-    @Input() captchaToken: any;
+    captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
     @Output() closeDialog = new EventEmitter();
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;

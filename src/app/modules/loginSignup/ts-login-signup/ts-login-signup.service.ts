@@ -8,6 +8,7 @@ export class TsLoginSignupService {
 
     token: any = config.token;
     headers = new HttpHeaders().set('Authorization', this.token);
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = config.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
 
     constructor(public apiService: ApiService, private http: HttpClient) {
     }
