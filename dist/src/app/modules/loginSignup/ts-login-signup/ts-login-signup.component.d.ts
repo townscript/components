@@ -14,13 +14,13 @@ export declare class TsLoginSignupComponent implements OnInit {
     mode: any;
     defaultHeader: any;
     defaultSubHeader: any;
-    captchaToken: any;
+    rdurl: any;
     closeDialog: EventEmitter<{}>;
+    captchaToken: any;
     recaptchaRef: RecaptchaComponent;
     showSocial: any;
     show: any;
     showPassword: any;
-    rdurl: any;
     isDefaultView: any;
     isSignInView: any;
     isSignUpView: any;
