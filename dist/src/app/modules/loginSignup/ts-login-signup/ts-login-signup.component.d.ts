@@ -16,8 +16,8 @@ export declare class TsLoginSignupComponent implements OnInit {
     defaultSubHeader: any;
     rdurl: any;
     closeDialog: EventEmitter<{}>;
-    captchaToken: any;
     recaptchaRef: RecaptchaComponent;
+    captchaToken: any;
     showSocial: any;
     show: any;
     showPassword: any;
