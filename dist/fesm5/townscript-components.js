@@ -22,7 +22,11 @@ var config = {
     betaHostName: "",
     s3BaseUrl: "",
     s3Bucket: "",
-    token: ""
+    token: "",
+    //reCAPTCHA credentials
+    CAPTCHA_SITE_KEY: "6LeblCYTAAAAANcBoTHB41G0gBdbRARm-V8_mePB",
+    CAPTCHA_SECRET_KEY: "6LeblCYTAAAAACjO8dEZaP2Mud_gDiSxIE_ZiS_b",
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: "6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG",
 };
 
 var BrowserService = /** @class */ (function () {
@@ -761,6 +765,7 @@ var TsLoginSignupService = /** @class */ (function () {
         this.http = http;
         this.token = config.token;
         this.headers = new HttpHeaders().set('Authorization', this.token);
+        this.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = config.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
         this.getUserSignUpDetails = function (emailId) {
             var params = new HttpParams({ fromString: "email=" + emailId });
             return _this.http.get(_this.apiService.API_SERVER + 'user/getusersignupdetails', { params: params, headers: _this.headers });
@@ -804,6 +809,7 @@ var TsLoginSignupComponent = /** @class */ (function () {
         this.tsLoginSignupService = tsLoginSignupService;
         this.defaultHeader = 'Let\'s get started';
         this.defaultSubHeader = 'Your one stop tool for organizing events';
+        this.captchaToken = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
         this.closeDialog = new EventEmitter();
         this.showSocial = true;
         this.show = false;
@@ -1058,10 +1064,6 @@ var TsLoginSignupComponent = /** @class */ (function () {
         Input(),
         __metadata("design:type", Object)
     ], TsLoginSignupComponent.prototype, "defaultSubHeader", void 0);
-    __decorate([
-        Input(),
-        __metadata("design:type", Object)
-    ], TsLoginSignupComponent.prototype, "captchaToken", void 0);
     __decorate([
         Output(),
         __metadata("design:type", Object)

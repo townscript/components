@@ -22,7 +22,11 @@ const config = {
     betaHostName: "",
     s3BaseUrl: "",
     s3Bucket: "",
-    token: ""
+    token: "",
+    //reCAPTCHA credentials
+    CAPTCHA_SITE_KEY: "6LeblCYTAAAAANcBoTHB41G0gBdbRARm-V8_mePB",
+    CAPTCHA_SECRET_KEY: "6LeblCYTAAAAACjO8dEZaP2Mud_gDiSxIE_ZiS_b",
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: "6LcAq4QUAAAAABrOnp0xwsaRk7PgnCgmE-FDcbLG",
 };
 
 let BrowserService = class BrowserService {
@@ -732,6 +736,7 @@ let TsLoginSignupService = class TsLoginSignupService {
         this.http = http;
         this.token = config.token;
         this.headers = new HttpHeaders().set('Authorization', this.token);
+        this.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY = config.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
         this.getUserSignUpDetails = (emailId) => {
             const params = new HttpParams({ fromString: `email=` + emailId });
             return this.http.get(this.apiService.API_SERVER + 'user/getusersignupdetails', { params: params, headers: this.headers });
@@ -773,6 +778,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         this.tsLoginSignupService = tsLoginSignupService;
         this.defaultHeader = 'Let\'s get started';
         this.defaultSubHeader = 'Your one stop tool for organizing events';
+        this.captchaToken = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
         this.closeDialog = new EventEmitter();
         this.showSocial = true;
         this.show = false;
@@ -1028,10 +1034,6 @@ __decorate([
     Input(),
     __metadata("design:type", Object)
 ], TsLoginSignupComponent.prototype, "defaultSubHeader", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TsLoginSignupComponent.prototype, "captchaToken", void 0);
 __decorate([
     Output(),
     __metadata("design:type", Object)

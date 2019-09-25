@@ -5,6 +5,7 @@ export declare class TsLoginSignupService {
     private http;
     token: any;
     headers: HttpHeaders;
+    CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY: any;
     constructor(apiService: ApiService, http: HttpClient);
     getUserSignUpDetails: (emailId: any) => import("rxjs").Observable<Object>;
     loginWithTownscript: (emailId: any, password: any) => import("rxjs").Observable<Object>;
