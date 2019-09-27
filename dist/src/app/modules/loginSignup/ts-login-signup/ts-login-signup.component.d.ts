@@ -15,10 +15,10 @@ export declare class TsLoginSignupComponent implements OnInit {
     defaultHeader: any;
     defaultSubHeader: any;
     rdurl: any;
+    showSocial: any;
     closeDialog: EventEmitter<{}>;
     recaptchaRef: RecaptchaComponent;
     captchaToken: any;
-    showSocial: any;
     show: any;
     showPassword: any;
     isDefaultView: any;
@@ -52,7 +52,6 @@ export declare class TsLoginSignupComponent implements OnInit {
     validatePhoneNumber: () => void;
     signIn: () => void;
     signUp: () => void;
-    onLoginWithFB: () => void;
     forgotPassword: () => void;
     goBack: () => void;
     resetPassword: () => void;
