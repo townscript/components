@@ -56,7 +56,7 @@
           </div>
         </div>
         <div class="form-group w-full text-center">
-          <button matRipple (click)="verifyEmail()" [disabled]="!loginForm.controls.email.valid"
+          <button matRipple (click)="verifyEmail()" [ngClass]="!loginForm.controls.email.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Continue
           </button>
         </div>
@@ -84,7 +84,7 @@
         <div class="form-group">
             <a [href]="fbLoginURL" target="_self"
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
-                (click)="onLoginWithFB()" ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
+                ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
                 prop-clicked-location="Sign In" matRipple>
                 <div class="px-2">
                     <img class="logo"
@@ -141,7 +141,7 @@
         </div>
         <div class="w-full text-center form-group">
           <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
-          <button matRipple (click)="signIn()" [disabled]="!loginForm.valid"
+          <button matRipple (click)="signIn()" [ngClass]="!loginForm.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Sign In
           </button>
           <div class="text-sm text-center text-gray-700 p-1">
@@ -178,7 +178,7 @@
         </div>
         <div class="w-full text-center form-group">
           <button matRipple *ngIf="!resetPwdLinkSent" (click)="resetPassword()"
-            [disabled]="!loginForm.controls.email.valid"
+            [ngClass]="!loginForm.controls.email.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Send Reset Password Link
           </button>
           <div (click)="resetPassword()"
@@ -239,21 +239,21 @@
             </p>
           </div>
         </div>
-        <div class="form-group md:flex md:items-center ">
+        <div class="form-group md:flex md:items-center relative z-50">
           <div class="w-full">
-            <mat-form-field class="w-full relative" floatLabel="always">
+            <mat-form-field class="w-full relative z-50" floatLabel="always">
               <input type="tel" formControlName="phoneNumber" matInput
                 class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500 ml-10"
                 id="phoneNumber" placeholder="Phone no." (ngModelChange)="validatePhoneNumber()">
             </mat-form-field>
-            <p class="text-xs text-red-500 mmb-2"
+            <p class="text-xs text-red-500 mb-2 -mt-3"
               *ngIf="loginForm.get('phoneNumber').hasError('required') && (loginForm.get('phoneNumber').dirty || loginForm.get('phoneNumber').touched)">
               Phone Number is required
             </p>
-            <p class="text-xs text-red-500 mb-2" *ngIf="phoneError">Please enter a valid Phone no.</p>
+            <p class="text-xs text-red-500 mb-2 -mt-3" *ngIf="phoneError">Please enter a valid Phone no.</p>
           </div>
         </div>
-        <div class="form-group md:flex md:items-center mb-3">
+        <div class="form-group md:flex md:items-center mb-3 relative z-0">
             <div class="w-full flex items-center justify-center md:justify-start">
                 <re-captcha
                   (resolved)="resolve($event)"
@@ -261,8 +261,10 @@
                 </re-captcha>
             </div>
         </div>
-        <div class="w-full text-center form-group">
-          <button matRipple [disabled]="!loginForm.valid || phoneError" (click)="signUp()"
+        <div class="w-full text-center form-group relative z-0">
+          <button matRipple
+            [ngClass]="!loginForm.valid || phoneError || captchaResponse == undefined ? 'opacity-50 pointer-events-none': ''"
+            (click)="signUp()"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">
             Create your account
           </button>

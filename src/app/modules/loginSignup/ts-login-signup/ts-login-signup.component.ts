@@ -21,14 +21,14 @@ export class TsLoginSignupComponent implements OnInit {
     @Input() mode: any;
     @Input() defaultHeader: any = 'Let\'s get started';
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
-    @Input()rdurl:any;
+    @Input() rdurl:any;
+    @Input() showSocial:any = true;
     @Output() closeDialog = new EventEmitter();
-    
+
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
 
     captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
-    showSocial:any = true;
     show:any = false;
     showPassword:any = false;
     isDefaultView:any = true;
@@ -39,7 +39,7 @@ export class TsLoginSignupComponent implements OnInit {
 
     userTimezone:any = DateTime.local().zoneName;
     loginForm:any;
-    captchaResponse:any = '';
+    captchaResponse:any;
     correctPhoneNumber:any = null;
     phoneError:any = false;
     socialLoginMsg:any = false;
@@ -190,7 +190,7 @@ export class TsLoginSignupComponent implements OnInit {
 
     signUp = () => {
         const self = this;
-        if (!this.loginForm.valid) {
+        if (!this.loginForm.valid || this.captchaResponse == undefined) {
             return;
         }
         const input = document.querySelector('#phoneNumber');
@@ -213,7 +213,9 @@ export class TsLoginSignupComponent implements OnInit {
         formData.append('usertimezone', this.userTimezone);
         formData.append('reCaptcha', this.captchaResponse);
         formData.append('username', this.randomString(10, ''));
-        formData.append('rdurl', this.rdurl);
+        if(this.rdurl){
+          formData.append('rdurl', this.rdurl);
+        }
 
         this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
             self.showLoader = false;
@@ -222,9 +224,7 @@ export class TsLoginSignupComponent implements OnInit {
             self.isSignUpView = false;
         });
     }
-    onLoginWithFB = () => {
 
-    }
     forgotPassword = () => {
         this.loginForm.get('password').disable();
         this.showResetPassword = true;
@@ -255,6 +255,7 @@ export class TsLoginSignupComponent implements OnInit {
             this.isVerifyEmailView = false;
             this.showSocial = true;
             this.isSignUpView = false;
+            this.isDefaultView = true;
             this.loginForm.get('fullName').disable();
             this.loginForm.get('password').disable();
             this.loginForm.get('phoneNumber').disable();
