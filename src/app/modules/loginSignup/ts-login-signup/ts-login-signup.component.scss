@@ -62,6 +62,9 @@ $ts-primary-blue    : #3782C4;
 .login-signup-view{
 	max-height: 90vh;
 	overflow: hidden;
+	.color-blue {
+		color: $ts-primary-blue;
+	}
   .fadeIn {
     .primary-header, .secondary-header{
     	-webkit-animation-duration: 0.4s;

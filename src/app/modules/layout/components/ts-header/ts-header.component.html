@@ -19,7 +19,7 @@
     </div>
 </nav>
 
-<nav class="ts-header-new w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block lg:w-1/6">
             <img (click)="goToHomePage()" *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
@@ -92,6 +92,6 @@
         </div>
     </div>
 </nav>
-<nav class="ts-header-new w-screen flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
 
 </nav>

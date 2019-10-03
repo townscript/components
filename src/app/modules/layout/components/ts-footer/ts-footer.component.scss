@@ -1,12 +1,23 @@
 @import "../../../../../assets/scss/variables";
 footer{
-  background-color: #ebebeb;  
+  background-color: #ebebeb;
+
+  .mybookings{
+    font-size: 13px;
+    color: #683594;
+  }
+
   &.new-footer{
     background-color: #F7F7F7;
-    h5, a {
+    h5, a, .mybookings {
       color: #3e3e3e;
       text-decoration: none;
       margin-bottom: 0;
+    }
+    li{
+      &:hover{
+        text-decoration: underline;
+      }
     }
   }
   h5{
@@ -14,7 +25,7 @@ footer{
       font-weight: 600;
   }
   li,ul{margin-bottom: 0}
-  
+
   .content-footer{
     padding-bottom: 20px;
   }
@@ -30,7 +41,7 @@ footer{
     width: 165px;
   }
   .bookmyshow-logo{
-      width: 140px;  
+      width: 140px;
   }
   .mixpanel-button{
     padding: 0;position: relative;left: -71px;
@@ -61,7 +72,7 @@ footer{
       size: 13px;
       weight: 400;
     }
-  }  
+  }
   ul {
     &.social-list{
       list-style-type: none;
@@ -89,7 +100,7 @@ footer{
 }
 @media (min-width: $screen-sm-min){
 .ts {
-  
+
   &-footer {
 
     &__copyright {
@@ -168,7 +179,7 @@ footer {
                 background-size: auto 45px;
         background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/store.png');
         background-repeat: no-repeat;
-        display:block;      
+        display:block;
         width:150px;
         text-indent:-9999px;
         &.google-play-icon{
@@ -202,4 +213,3 @@ footer {
     }
   }
 }
-
