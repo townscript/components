@@ -1,15 +1,18 @@
 @import "../../../../../assets/scss/variables";
 footer{
   background-color: #ebebeb;
+
+  .mybookings{
+    font-size: 13px;
+    color: #683594;
+  }
+
   &.new-footer{
     background-color: #F7F7F7;
     h5, a, .mybookings {
       color: #3e3e3e;
       text-decoration: none;
       margin-bottom: 0;
-    }
-    .mybookings{
-      font-size: 13px;
     }
     li{
       &:hover{
