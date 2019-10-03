@@ -20,16 +20,16 @@ export class LoginModalComponent implements OnInit {
     }
 
   ngOnInit() {
-    if(this.data.header != undefined){
+    if(this.data != undefined && this.data.header != undefined){
       this.header = this.data.header;
     }
-    if(this.data.subHeader != undefined){
+    if(this.data != undefined && this.data.subHeader != undefined){
       this.subHeader = this.data.subHeader;
     }
-    if(this.data.rdurl != undefined){
+    if(this.data != undefined && this.data.rdurl != undefined){
       this.rdurl = this.data.rdUrl;
     }
-    if(this.data.showSocial != undefined){
+    if(this.data != undefined && this.data.showSocial != undefined){
       this.showSocial = this.data.showSocial;
     }
   }
