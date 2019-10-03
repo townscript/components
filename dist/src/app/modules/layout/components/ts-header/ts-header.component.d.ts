@@ -16,6 +16,7 @@ export declare class TsHeaderComponent implements OnInit {
     user: any;
     router: any;
     userMenu: any;
+    host: string;
     activePlace: any;
     activeCity: any;
     activeCountryCode: any;

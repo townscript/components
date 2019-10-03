@@ -25,7 +25,9 @@ export declare class SearchComponent implements OnInit {
     activePlaceBackup: string;
     client: any;
     index: any;
+    homeUrl: any;
     router: Router;
+    host: any;
     popularPlaces: string[];
     constructor(placeService: PlaceService, timeService: TimeService, datepipe: DatePipe);
     callAlgolia: (text: any) => void;
