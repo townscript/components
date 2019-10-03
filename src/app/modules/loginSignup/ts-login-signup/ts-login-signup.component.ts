@@ -190,6 +190,8 @@ export class TsLoginSignupComponent implements OnInit {
 
     signUp = () => {
         const self = this;
+        this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
+        this.loginForm.get('fullName').setValue(this.loginForm.get('fullName').value.trim());
         if (!this.loginForm.valid || this.captchaResponse == undefined) {
             return;
         }
@@ -267,6 +269,7 @@ export class TsLoginSignupComponent implements OnInit {
 
     resetPassword = () => {
         this.showLoader = true;
+        this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Reset Password Link to ' + this.loginForm.value.email;
         this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
             (resp: any) => {
@@ -299,6 +302,7 @@ export class TsLoginSignupComponent implements OnInit {
 
     resendVerifyEmail = () => {
         this.showLoader = true;
+        this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Verification email to ' + this.loginForm.value.email;
         this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email).subscribe(
             (retData: any) => {
