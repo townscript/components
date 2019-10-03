@@ -1,6 +1,6 @@
-<footer class="ts-footer text-center pt-32 pb-24" [class.new-footer]="source=='marketplace'">
+<footer class="ts-footer text-center pt-4 pb-4 md:pt-24 md:pb-20 lg:pt-32 lg:pb-24" [class.new-footer]="source=='marketplace'">
     <div class="ts-container content-footer">
-        <div class="flex mb-4">
+        <div class="flex md:mb-4">
             <div class="w-1/5 hidden-xs px-4">
                 <h5>ORGANISE EVENTS</h5>
                 <ul class="list-unstyled">
@@ -103,15 +103,22 @@
                     </li>
                 </ul>
             </div>
+            <div class="w-full block md:hidden">
+              <div class="flex flex-col justify-center items-center">
+                <div class="text-3xl text-gray-500 px-5 pr-32 mr-5">&ldquo;Live an</div>
+                <div class="text-4xl text-gray-500 font-semibold -mt-3 px-5 pl-12"><span class="text-purple-400">Event</span>ful life&rdquo;</div>
+                <img class="dance-illustration" src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png">
+              </div>
+            </div>
         </div>
     </div>
     <div class="ts-container">
-        <div class="brand-footer">
-            <div class="flex mb-4">
-                <div class="w-1/4">
+        <div class="brand-footer border-0 md:border-t pt-2 md:pt-4 lg:pt-8">
+            <div class="flex md:mb-4">
+                <div class="w-full flex flex-col items-center md:items-start md:w-1/4 ts-logo">
                     <img src="assets/images/ts-logoBMS.png" alt="Townscript Event Ticketing Logo"
                         title="Townscript Event Ticketing Logo" />
-                    <a class="ts-footer__copyright">Copyright@2019</a>
+                    <span class="ts-footer__copyright text-right pr-2 text-xs text-gray-800">Copyright@2019</span>
                     <!--<a href="mailto:service@townscript.com" target="_blank" class="ts-footer__mail hidden-xs">service@townscript.com</a>-->
                 </div>
                 <div class="w-2/3 linear-footer hidden-xs">
