@@ -19,7 +19,8 @@
     </div>
 </nav>
 
-<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow"
+    *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block lg:w-1/6">
             <img (click)="goToHomePage()" *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
@@ -58,11 +59,13 @@
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
         <div class="lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
-            <div *ngIf="Components.indexOf('createEventBtn')>-1"
-                class="create-btn cursor-pointer flex h-full justify-center items-center">
-                <span class="text-base mr-2">CREATE EVENT</span>
-                <i class="mdi mdi-ticket text-2xl"></i>
-            </div>
+            <a [href]="host+'dashboard/create-event'">
+                <div *ngIf="Components.indexOf('createEventBtn')>-1"
+                    class="create-btn cursor-pointer flex h-full justify-center items-center">
+                    <span class="text-base mr-2">CREATE EVENT</span>
+                    <i class="mdi mdi-ticket text-2xl"></i>
+                </div>
+            </a>
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">

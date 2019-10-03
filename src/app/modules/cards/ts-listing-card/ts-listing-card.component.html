@@ -50,7 +50,8 @@
                 </div>
                 <div [ngClass]="gridType=='list' ? 'hidden md:flex' : 'flex'">
                     <span class="pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline"
-                        *ngFor="let key of eventData.keywords">#{{key.topicKeywordName}}</span>
+                        *ngFor="let key of eventData.keywords"
+                        (click)="navigateToListing(key.topicKeywordCode)">#{{key.topicKeywordName}}</span>
                 </div>
             </div>
         </div>
