@@ -34,11 +34,24 @@ footer{
   }
   .brand-footer{
     //max-width: 1140px;
-    border-top: 1px solid lighten($ts-primary-color, 50%);
-    padding-top: 30px;
+    border-color: lighten($ts-primary-color, 50%);
   }
-  img {
+  img, .ts-footer__copyright {
     width: 165px;
+  }
+  .dance-illustration{
+    width: 200px;
+  }
+  .ts-logo{
+    filter: grayscale(100%);
+    opacity: 0.4;
+    img{
+      width: 120px;
+    }
+    .text-xs{
+      width: 120px;
+      font-size: 0.5em;
+    }
   }
   .bookmyshow-logo{
       width: 140px;
@@ -93,8 +106,6 @@ footer{
   &-footer {
     &__copyright {
       display: block;
-      //text-align: left;
-      text-indent: 50px;
     }
   }
 }
@@ -102,16 +113,9 @@ footer{
 .ts {
 
   &-footer {
-
-    &__copyright {
-      //display: block;
-      text-align: left;
-      //text-indent: 50px;
-    }
     &__mail {
       display: block;
       text-align: left;
-      text-indent: 50px;
       font-weight: bold;
       line-height: 36px;
     }
@@ -157,6 +161,10 @@ footer {
       }
     }
   }
+  .ts-logo{
+    filter: none;
+    opacity: 1;
+  }
   ul {
     &.social-list{
       list-style-type: none;
@@ -181,7 +189,6 @@ footer {
         background-repeat: no-repeat;
         display:block;
         width:150px;
-        text-indent:-9999px;
         &.google-play-icon{
           background-position: 0 0;
         }
