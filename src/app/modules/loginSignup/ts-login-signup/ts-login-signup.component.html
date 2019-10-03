@@ -173,7 +173,7 @@
           <div class="p-2 flex items-center justify-center -mt-8 primary-header">
             <app-email-sent></app-email-sent>
           </div>
-          <div class="p-2 text-green-600 text-sm text-center secondary-header">Password reset link has been sent to
+          <div class="p-2 text-gray-700 text-sm text-center secondary-header">Password reset link has been sent to
             {{loginForm.value.email}}</div>
         </div>
         <div class="w-full text-center form-group">
@@ -182,7 +182,7 @@
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Send Reset Password Link
           </button>
           <div (click)="resetPassword()"
-            class="text-gray-700 text-sm text-center resend-email py-2 px-2 hover:underline cursor-pointer"
+            class="color-blue font-semibold text-sm text-center resend-email py-2 px-2 hover:underline cursor-pointer"
             *ngIf="resetPwdLinkSent">
             Resend Email
           </div>
