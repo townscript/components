@@ -28,11 +28,12 @@
             <div class="md:flex text-xs ">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
-                    <span class="">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>
+                    <span
+                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>
                 </div>
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom"></i>
-                    <span class="font-323E48 font-bold">{{eventData.city}}</span>
+                    <span class="text-gray-700 font-bold">{{eventData.city}}</span>
                 </div>
                 <div *ngIf="goingCounter" class="mr-2">
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
@@ -49,7 +50,7 @@
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                 </div>
                 <div [ngClass]="gridType=='list' ? 'hidden md:flex' : 'flex'">
-                    <span class="pr-2 font-323E48 font-semibold text-sm sm:text-xs hover:text-gray-900 hover:underline"
+                    <span class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline"
                         *ngFor="let key of eventData.keywords"
                         (click)="navigateToListing(key.topicKeywordCode)">#{{key.topicKeywordName}}</span>
                 </div>
@@ -68,8 +69,8 @@
             <div class="flex items-center">
                 <span class="align-text-bottom price-container font-323E48 text-base font-semibold"
                     *ngIf="eventData.minimumTicketPrice">
-                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}}/- <span
-                        class="hidden md:inline">Onwards</span></span>
+                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}} <span
+                        class="hidden md:inline text-sm font-normal">onwards</span></span>
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
             </div>
@@ -92,7 +93,7 @@
             {{topicData.topicDescription}}
         </span>
         <div class="keywords m-2 flex">
-            <span class="font-bold cursor-pointer text-xs rounded-full px-2 mr-2 capitalize"
+            <span class="font-bold cursor-pointer text-gray-700 text-xs rounded-full px-2 mr-2 capitalize"
                 *ngFor="let key of topicData?.keywords">{{key.keyCode}}
                 <i class="align-middle mdi mdi-heart-outline text-2xl"></i>
             </span>

@@ -1,17 +1,13 @@
 <div class="user-menu  px-2 cursor-pointer">
     <a [href]="host+'dashboard/settings/my-profile'">
         <div class="flex items-center border-b py-2 border-gray-300">
-
             <div class="mr-1 leading-none">
                 <img class="rounded-full mr-2" width="45" [src]="s3BucketUrl+'/images/'+user?.s3imagename" />
             </div>
             <div class="leading-tight">
                 <span class="block text-lg text-gray-800">{{user?.user}}</span>
-
                 <span class="text-xs text-gray-600 whitespace-nowrap">View and edit profile</span>
-
             </div>
-
         </div>
     </a>
     <div class="menu mt-2 px-1">
