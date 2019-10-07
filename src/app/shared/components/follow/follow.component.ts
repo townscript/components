@@ -31,7 +31,7 @@ export class FollowComponent implements OnInit {
     constructor(private userService: UserService, private followService: FollowService, private dialog: MatDialog) { }
 
     ngOnInit() {
-        this.textCopy = this.text;
+        this.textCopy = JSON.parse(JSON.stringify(this.text));
         this.userService.user.subscribe(data => {
             this.user = data;
             if (this.user && this.user.userId) {

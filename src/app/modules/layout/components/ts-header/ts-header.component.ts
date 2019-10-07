@@ -18,7 +18,7 @@ export class TsHeaderComponent implements OnInit {
 
   @Input() backState = false;
   @Input() source = 'marketplace';
-  @Input() algoliaIndexName = 'tsTesting';
+  algoliaIndexName = config.algoliaIndexName;
   @Input() shadow = true;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;

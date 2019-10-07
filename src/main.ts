@@ -11,6 +11,7 @@ if (environment.production) {
 config.baseUrl = "https://www.tsdugout.in/";
 config.betaHostName = "beta.tsdugout.in/";
 config.token = "eyJhbGciOiJIUzUxMiJ9.eyJST0xFIjoiUk9MRV9DTElFTlQiLCJzdWIiOiJhcGlAdG93bnNjcmlwdC5jb20iLCJhdWRpZW5jZSI6IndlYiIsImNyZWF0ZWQiOjE1NjUyNTA4ODc2MDUsIlVTRVJfSUQiOjAsImV4cCI6MTU3MzAyNjg4N30.gfDC_wGGN05zCxhLKRm2uY_QjypCiz5qfwm7U0PqkIrywoDGuGcgDa9d1Vo9ftprpZ78A62HY-w4kjfiLOKC7g";
+config.algoliaIndexName = "tsTesting"
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
 
