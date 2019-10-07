@@ -9,7 +9,6 @@ export declare class TsHeaderComponent implements OnInit {
     Components: Array<String>;
     backState: boolean;
     source: string;
-    algoliaIndexName: any;
     shadow: boolean;
     citySuggestions: ElementRef;
     userMenuEle: ElementRef;
