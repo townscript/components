@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -17,7 +17,7 @@ const algoliasearch = algoliaSearchImported;
 })
 export class SearchComponent implements OnInit {
 
-    @Input() algoliaIndexName = 'tsTesting';
+    algoliaIndexName = config.algoliaIndexName;
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
