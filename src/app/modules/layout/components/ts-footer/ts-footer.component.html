@@ -42,7 +42,7 @@
             <div class="w-1/5 px-4 hidden-xs" *ngIf="source=='marketplace'">
                 <h5>POPULAR EVENTS</h5>
                 <ul class="list-unstyled blog-links">
-                    <li *ngFor="let event of popularEvents"><a [href]="event.url">{{event.title}}</a></li>
+                    <li *ngFor="let event of popularEvents"><a [href]="'e/'+event.shortName">{{event.name}}</a></li>
                 </ul>
             </div>
             <div class="w-1/5 px-4 hidden-xs">
