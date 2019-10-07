@@ -53,6 +53,7 @@
         s3BaseUrl: "",
         s3Bucket: "",
         token: "",
+        algoliaIndexName: "",
         //reCAPTCHA credentials
         CAPTCHA_SITE_KEY: "6LeblCYTAAAAANcBoTHB41G0gBdbRARm-V8_mePB",
         CAPTCHA_SECRET_KEY: "6LeblCYTAAAAACjO8dEZaP2Mud_gDiSxIE_ZiS_b",
@@ -429,7 +430,7 @@
                 'userMenu', 'mobileSearch', 'mobileProfile', 'mobileCitySearch', 'mobileBack'];
             this.backState = false;
             this.source = 'marketplace';
-            this.algoliaIndexName = 'tsTesting';
+            this.algoliaIndexName = config.algoliaIndexName;
             this.shadow = true;
             this.router = config.router;
             this.host = config.baseUrl;
@@ -490,10 +491,6 @@
             core.Input(),
             __metadata("design:type", Object)
         ], TsHeaderComponent.prototype, "source", void 0);
-        __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
-        ], TsHeaderComponent.prototype, "algoliaIndexName", void 0);
         __decorate([
             core.Input(),
             __metadata("design:type", Object)
@@ -1470,7 +1467,7 @@
         }
         FollowComponent.prototype.ngOnInit = function () {
             var _this = this;
-            this.textCopy = this.text;
+            this.textCopy = JSON.parse(JSON.stringify(this.text));
             this.userService.user.subscribe(function (data) {
                 _this.user = data;
                 if (_this.user && _this.user.userId) {

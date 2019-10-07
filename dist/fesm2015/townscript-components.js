@@ -23,6 +23,7 @@ const config = {
     s3BaseUrl: "",
     s3Bucket: "",
     token: "",
+    algoliaIndexName: "",
     //reCAPTCHA credentials
     CAPTCHA_SITE_KEY: "6LeblCYTAAAAANcBoTHB41G0gBdbRARm-V8_mePB",
     CAPTCHA_SECRET_KEY: "6LeblCYTAAAAACjO8dEZaP2Mud_gDiSxIE_ZiS_b",
@@ -379,7 +380,7 @@ let TsHeaderComponent = class TsHeaderComponent {
             'userMenu', 'mobileSearch', 'mobileProfile', 'mobileCitySearch', 'mobileBack'];
         this.backState = false;
         this.source = 'marketplace';
-        this.algoliaIndexName = 'tsTesting';
+        this.algoliaIndexName = config.algoliaIndexName;
         this.shadow = true;
         this.router = config.router;
         this.host = config.baseUrl;
@@ -440,10 +441,6 @@ __decorate([
     Input(),
     __metadata("design:type", Object)
 ], TsHeaderComponent.prototype, "source", void 0);
-__decorate([
-    Input(),
-    __metadata("design:type", Object)
-], TsHeaderComponent.prototype, "algoliaIndexName", void 0);
 __decorate([
     Input(),
     __metadata("design:type", Object)
@@ -1393,7 +1390,7 @@ let FollowComponent = class FollowComponent {
         };
     }
     ngOnInit() {
-        this.textCopy = this.text;
+        this.textCopy = JSON.parse(JSON.stringify(this.text));
         this.userService.user.subscribe(data => {
             this.user = data;
             if (this.user && this.user.userId) {
