@@ -28,6 +28,7 @@ export class TsFooterComponent implements OnInit {
     { title:'How to Sell Out Your Event Tickets within Minutes?' , url: 'http://blog.townscript.com/how-to-sell-out-your-event-tickets-wthin-minutes/'},
     { title:'5 Reasons You Need more than a Payment Gateway' , url: 'http://blog.townscript.com/5-reasons-you-need-more-than-a-payment-gateway-for-your-event/'}
   ];
+  @Input() popularCities: any;
 
   popularEventsData: any;
   countryCityMap: any;
@@ -74,19 +75,23 @@ export class TsFooterComponent implements OnInit {
         }
       });
     }
-
+    this.getPopularCities();
   }
 
-  async getCityFromCityCode(code) {
+  getCityFromCityCode = async (code: string): Promise<any> =>  {
     let res = await this.footerService.getCityFromCityCode(code);
     this.city = res['data'];
     this.getPopularEvents();
-  }
+  };
 
-  async getPopularEvents() {
+  getPopularEvents= async ():Promise<any> => {
     let res = await this.footerService.getPopularEvents(this.city.latitude, this.city.longitude);
     this.popularEvents = res.data.data;
-    console.log(this.popularEvents);
+  };
+
+  getPopularCities = async (): Promise<any> => {
+    const data = await this.footerService.getAllPopularCities();
+    this.popularCities = data['data'];    
   }
 
 }
