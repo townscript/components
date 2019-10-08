@@ -57,7 +57,11 @@ export class TsHeaderComponent implements OnInit {
     this.router.navigate(['/mobile/search']);
   }
   openMyProfileComponent = () => {
-    this.router.navigate(['/profile']);
+    if (this.userService.user.source['value'] != undefined) {
+      this.router.navigate(['/profile']);
+    } else {
+      this.openLogin();
+    }
   }
   goBack = () => {
     this.router.navigate(['../']);

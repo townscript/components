@@ -21,7 +21,7 @@ export class FollowComponent implements OnInit {
     @Input() followedText = 'Following';
     hover: any;
     @Input() type = 'button';
-    @Input() color = '#553c9a';
+    @Input() color = '#683592';
 
     followed = false;
 

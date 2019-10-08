@@ -21,7 +21,7 @@ export class CookieService {
   }
 
   public deleteCookie(name) {
-    this.setCookie(name, '', -1);
+    this.setCookie(name, '', -1, '/');
   }
 
   public setCookie(name: string, value: string, expireDays: number, path: string = '') {
