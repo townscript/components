@@ -15,10 +15,10 @@ footer{
       text-decoration: none;
       margin-bottom: 0;
     }
-    li{
-      &:hover{
-        text-decoration: underline;
-      }
+  }
+  li{
+    &:hover{
+      text-decoration: underline;
     }
   }
   h5{
