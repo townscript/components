@@ -58,7 +58,7 @@ footer{
       width: 140px;
   }
   .mixpanel-button{
-    padding: 0;position: relative;left: -71px;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -68,7 +68,7 @@ footer{
         display: block;
     }
     img{
-      width: 100px !important;
+      width: 115px !important;
     }
     text-align: center;
   }
