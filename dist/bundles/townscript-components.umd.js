@@ -1466,7 +1466,7 @@
                 }
                 else {
                     var dialogRef = _this.dialog.open(ShareEventModalComponent, {
-                        width: '500px',
+                        // width: '500px',
                         data: { event: _this.eventData }
                     });
                 }

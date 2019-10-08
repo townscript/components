@@ -1329,7 +1329,7 @@ let TsListingCardComponent = class TsListingCardComponent {
             }
             else {
                 const dialogRef = this.dialog.open(ShareEventModalComponent, {
-                    width: '500px',
+                    // width: '500px',
                     data: { event: this.eventData }
                 });
             }
