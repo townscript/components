@@ -8,7 +8,7 @@ export declare class SearchComponent implements OnInit {
     private placeService;
     private timeService;
     datepipe: DatePipe;
-    algoliaIndexName: string;
+    algoliaIndexName: any;
     cityInput: ElementRef;
     citySuggestions: ElementRef;
     searchResultsEle: ElementRef;
