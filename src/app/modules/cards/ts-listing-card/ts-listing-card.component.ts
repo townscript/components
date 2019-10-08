@@ -38,7 +38,7 @@ export class TsListingCardComponent implements OnInit {
       });
     } else {
       const dialogRef = this.dialog.open(ShareEventModalComponent, {
-        width: '450px',
+        width: '500px',
         data: { event: this.eventData }
       });
     }

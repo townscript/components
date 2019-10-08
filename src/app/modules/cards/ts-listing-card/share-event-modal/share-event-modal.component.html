@@ -1,32 +1,40 @@
 <div class="share-event-modal-container">
     <div class="flex items-center text-lg text-gray-800 justify-between">
-        <h2>Share Event</h2>
+        <h2 class="w-full text-center">Share Event</h2>
         <div class="rounded-full" matRipple (click)="close()">
             <i class="mdi mdi-close text-2xl cursor-pointer rounded-full"></i>
         </div>
     </div>
     <div class="px-2 py-2">
-        <div class="platforms flex items-center justify-between">
+        <div class="platforms flex flex-wrap items-center">
+            <a>
+                <div (click)="copyLink()" class="platform text-center cursor-pointer p-2 pr-4 flex-1">
+                    <i class="mdi mdi-content-copy block text-4xl text-gray-700" [class.text-purple-800]="copied"></i>
+                    <span class="text-gray-900 text-sm" *ngIf="!copied">Copy Link</span>
+                    <span class="text-purple-800 text-sm" *ngIf="copied">Copied!</span>
+                    <input type="text" class="hidden" id="event_link" [value]="baseUrl+'e/' + event.shortName" />
+                </div>
+            </a>
             <a [href]="shareLink?.whatsapp" target="_blank">
-                <div class="platform text-center cursor-pointer p-2 flex-1">
+                <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-whatsapp block text-4xl whatsapp"></i>
                     <span class="text-gray-700 text-sm">Whatsapp</span>
                 </div>
             </a>
             <a [href]="shareLink?.fb" target="_blank">
-                <div class="platform text-center cursor-pointer p-2 flex-1">
+                <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-facebook block text-4xl facebook"></i>
                     <span class="text-gray-700 text-sm">Facebook</span>
                 </div>
             </a>
             <a [href]="shareLink?.twitter" target="_blank">
-                <div class="platform text-center cursor-pointer p-2 flex-1">
+                <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-twitter block text-4xl twitter"></i>
                     <span class="text-gray-700 text-sm">Twitter</span>
                 </div>
             </a>
             <a [href]="shareLink?.linkedin" target="_blank">
-                <div class="platform text-center cursor-pointer p-2 flex-1">
+                <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-linkedin block text-4xl linkedin"></i>
                     <span class="text-gray-700 text-sm">LinkedIn</span>
                 </div>
