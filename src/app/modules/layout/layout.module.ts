@@ -20,6 +20,7 @@ import { TimeService } from '../../shared/services/time.service';
 import { ApiService } from '../../shared/services/api-service';
 import { TsLoginSignupModule } from '../loginSignup/login-signup.module';
 import { UserService } from '../../shared/services/user-service';
+import { FooterService } from './components/ts-footer/ts-footer.service';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { UserService } from '../../shared/services/user-service';
     ApiService,
     HeaderService,
     BrowserService,
-    UserService
+    UserService,
+    FooterService
   ]
 })
 export class LayoutModule { }

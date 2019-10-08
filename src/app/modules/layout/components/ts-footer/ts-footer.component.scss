@@ -11,6 +11,7 @@ footer{
     background-color: #F7F7F7;
     h5, a, .mybookings {
       color: #3e3e3e;
+      letter-spacing: 0.01em;
       text-decoration: none;
       margin-bottom: 0;
     }
@@ -96,6 +97,10 @@ footer{
         //float: left;
         margin-right: 10px;
         i{
+          transition: 0.2s all;          ;
+          &:hover{
+            color: #111;
+          }
           font-size: 17px;
         }
       }
@@ -189,6 +194,7 @@ footer {
         background-repeat: no-repeat;
         display:block;
         width:150px;
+        text-indent: -9999px;
         &.google-play-icon{
           background-position: 0 0;
         }
@@ -214,7 +220,6 @@ footer {
 .blog-links{
   li{
     line-height: 1.5;
-    margin-bottom: 18px;
     a{
       white-space: normal;
     }
