@@ -21,7 +21,11 @@ export class FooterService {
       return this.http.post(this.listingsUrl + 'event/radar', {}, {params: <HttpParams>params}).toPromise();
     }
 
-    getCityFromCityCode = (code: string) => {
+    getCityFromCityCode = (code: string):Promise<any> => {
       return this.http.get(this.listingsUrl + 'place/city?code='+code).toPromise();
+    }
+
+    getAllPopularCities = (): Promise<any> => {
+        return this.http.get(this.listingsUrl + 'city/popular').toPromise();
     }
 }
