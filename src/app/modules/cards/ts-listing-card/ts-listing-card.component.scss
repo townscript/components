@@ -46,8 +46,12 @@
     }
     i {
         color: #683592;
+        
     }
-    
+    .share:hover{
+        transition: all ease 0.15s;
+            font-size: 1.875rem;
+    }
 }
 :host ::ng-deep .listing-container:hover{
     .bottom-purple-bar i{

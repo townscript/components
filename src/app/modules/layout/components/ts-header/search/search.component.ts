@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -17,7 +17,7 @@ const algoliasearch = algoliaSearchImported;
 })
 export class SearchComponent implements OnInit {
 
-    @Input() algoliaIndexName = 'tsTesting';
+    algoliaIndexName = config.algoliaIndexName;
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
@@ -34,8 +34,9 @@ export class SearchComponent implements OnInit {
     activePlaceBackup: string;
     client: any;
     index: any;
+    homeUrl: any;
     router: Router = config.router;
-
+    host = config.baseUrl;
     popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
 
     constructor(private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
@@ -103,7 +104,8 @@ export class SearchComponent implements OnInit {
         }
     }
     navigateToListing = (interest) => {
-        this.router.navigate(['../' + interest], { relativeTo: config.activatedRoute.parent });
+        console.log(this.homeUrl + '/' + interest);
+        this.router.navigate([this.homeUrl + '/' + interest]);
         this.searchActive = false;
     }
     navigateToEventPage = (eventCode) => {
@@ -118,7 +120,9 @@ export class SearchComponent implements OnInit {
     ngOnInit() {
         this.placeService.place.subscribe(res => {
             if (res) {
-                this.activePlace = JSON.parse(<any>res)['currentPlace'];
+                const data = JSON.parse(<any>res);
+                this.activePlace = data['currentPlace'];
+                this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
             }
         });
     }

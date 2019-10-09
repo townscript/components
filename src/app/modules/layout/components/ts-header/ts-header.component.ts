@@ -18,13 +18,13 @@ export class TsHeaderComponent implements OnInit {
 
   @Input() backState = false;
   @Input() source = 'marketplace';
-  @Input() algoliaIndexName = 'tsTesting';
   @Input() shadow = true;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
   user: any;
   router = config.router;
   userMenu: any;
+  host: string = config.baseUrl;
   activePlace: any;
   activeCity: any;
   activeCountryCode: any;
@@ -57,7 +57,11 @@ export class TsHeaderComponent implements OnInit {
     this.router.navigate(['/mobile/search']);
   }
   openMyProfileComponent = () => {
-    this.router.navigate(['/profile']);
+    if (this.userService.user.source['value'] != undefined) {
+      this.router.navigate(['/profile']);
+    } else {
+      this.openLogin();
+    }
   }
   goBack = () => {
     this.router.navigate(['../']);

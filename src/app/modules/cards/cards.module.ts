@@ -24,6 +24,9 @@ import { SharedModule } from '../../shared/shared.module';
         ShareEventModalComponent,
         TsCardSkeletonComponent
     ],
+    entryComponents: [
+        ShareEventModalComponent
+    ],
     providers: [
         BrowserService
     ]

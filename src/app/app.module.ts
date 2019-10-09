@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { CardsModule } from './modules/cards/cards.module';
 import { PlaceService } from './modules/layout/components/ts-header/place.service';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { PlaceService } from './modules/layout/components/ts-header/place.servic
     AngularMaterialModule,
     HttpClientModule,
     ReactiveFormsModule,
-    RecaptchaModule
+    RecaptchaModule,
+    SharedModule
   ],
   providers: [PlaceService],
   bootstrap: [AppComponent],

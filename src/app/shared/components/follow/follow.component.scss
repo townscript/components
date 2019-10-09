@@ -1,11 +1,15 @@
 .follow-container{
     max-width: 10rem;
     text-align: center;
+    transition: all ease 0.1s;
     div{
         transition: all ease 0.1s;
     }
     div:active{
         transform: scale(0.9);
+    }
+    &:hover{
+        transform: scale(1.1);
     }
     @keyframes dhadkan{
         0%{

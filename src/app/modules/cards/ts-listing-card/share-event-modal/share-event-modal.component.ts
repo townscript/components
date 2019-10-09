@@ -13,6 +13,8 @@ export class ShareEventModalComponent implements OnInit {
     eventURL: any;
     eventName: any;
     shareLink: any = {};
+    baseUrl: any = config.baseUrl;
+    copied: any = false;
     constructor(public dialogRef: MatDialogRef<ShareEventModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -22,26 +24,36 @@ export class ShareEventModalComponent implements OnInit {
     }
     ngAfterViewInit() {
     }
+    copyLink = () => {
+        const copyText: any = document.getElementById('event_link');
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        this.copied = true;
+        setTimeout(() => {
+            this.copied = false;
+        }, 1000000);
+    }
     ngOnInit() {
         this.event = this.data.event;
-        this.eventURL = "https://www.townscript.com/e/" + this.event.shortName;
+        this.eventURL = 'https://www.townscript.com/e/' + this.event.shortName;
         this.eventName = this.event.name;
-        this.shareLink.fb = "https://www.facebook.com/sharer/sharer.php?s=100" +
-            "&p[url]=" + config.baseUrl + "e/" + this.event.shortName +
-            "&p[images][0]=" + config.baseUrl + "dashboard/images/organizer_login_files/logoforfb.png" +
-            "&p[title]=" + this.eventName +
-            "&p[summary]=" + "by townscript.com";
+        this.shareLink.fb = 'https://www.facebook.com/sharer/sharer.php?s=100' +
+            '&p[url]=' + config.baseUrl + 'e/' + this.event.shortName +
+            '&p[images][0]=' + config.baseUrl + 'dashboard/images/organizer_login_files/logoforfb.png' +
+            '&p[title]=' + this.eventName +
+            '&p[summary]=' + 'by townscript.com';
 
-        this.shareLink.twitter = "https://twitter.com/share" +
-            "?url=" + config.baseUrl + "e/" + this.event.shortName +
-            "&text=" + this.eventName + " is now live on Townscript!";
+        this.shareLink.twitter = 'https://twitter.com/share' +
+            '?url=' + config.baseUrl + 'e/' + this.event.shortName +
+            '&text=' + this.eventName + ' is now live on Townscript!';
 
-        this.shareLink.linkedin = "https://www.linkedin.com/shareArticle?mini=true" +
-            "&url=" + config.baseUrl + "e/" + this.event.shortName +
-            "&title=" + this.eventName;
+        this.shareLink.linkedin = 'https://www.linkedin.com/shareArticle?mini=true' +
+            '&url=' + config.baseUrl + 'e/' + this.event.shortName +
+            '&title=' + this.eventName;
 
-        this.shareLink.whatsapp = "https://web.whatsapp.com/send?" +
-            "text=" + config.baseUrl + "e/" + this.event.shortName;
+        this.shareLink.whatsapp = 'https://web.whatsapp.com/send?' +
+            'text=' + config.baseUrl + 'e/' + this.event.shortName;
     }
 
 }

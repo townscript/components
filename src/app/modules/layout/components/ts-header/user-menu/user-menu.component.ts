@@ -15,7 +15,7 @@ export class UserMenuComponent implements OnInit {
     @Input("panelOpen2") panelOpen2: boolean = false;
     @Input("user") user: any;
     @Output("close") close = new EventEmitter();
-
+    host = config.baseUrl;
     s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
     constructor(private notificationService: NotificationService, private userService: UserService, private cookieService: CookieService) {

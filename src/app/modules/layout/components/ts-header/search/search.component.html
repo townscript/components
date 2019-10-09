@@ -9,7 +9,7 @@
                 <li class="list-head">
                     INTERESTS
                 </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" (click)="navigateToListing(interest.name)"
+                <li class="p-2 text-xs font-bold cursor-pointer" (click)="navigateToListing(interest.urlCode)"
                     *ngFor="let interest of searchResults.interests">
                     <div class="flex items-center">
                         <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ interest.imageUrl +')'">
@@ -53,17 +53,19 @@
                     ORGANIZERS
                 </li>
                 <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let organizer of searchResults.organizers">
-                    <div class="flex items-center">
-                        <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ organizer.imageUrl +')'">
-                        </div>
-                        <div>
-                            <span class="mb-1 block">{{organizer.name | titlecase}} </span>
-                            <div class="flex items-center" *ngIf="organizer.location">
-                                <i class="mdi mdi-map-marker color-blue"></i>
-                                <small>{{organizer.location}}</small>
+                    <a [href]="host+'o/'+organizer.urlCode">
+                        <div class="flex items-center">
+                            <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ organizer.imageUrl +')'">
+                            </div>
+                            <div>
+                                <span class="mb-1 block">{{organizer.name | titlecase}} </span>
+                                <div class="flex items-center" *ngIf="organizer.location">
+                                    <i class="mdi mdi-map-marker color-blue"></i>
+                                    <small>{{organizer.location}}</small>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </li>
             </ul>
         </div>

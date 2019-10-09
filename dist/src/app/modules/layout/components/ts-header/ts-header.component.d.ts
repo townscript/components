@@ -9,13 +9,13 @@ export declare class TsHeaderComponent implements OnInit {
     Components: Array<String>;
     backState: boolean;
     source: string;
-    algoliaIndexName: string;
     shadow: boolean;
     citySuggestions: ElementRef;
     userMenuEle: ElementRef;
     user: any;
     router: any;
     userMenu: any;
+    host: string;
     activePlace: any;
     activeCity: any;
     activeCountryCode: any;

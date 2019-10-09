@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
 import { BrowserService } from '../../../core/browser.service';
 import { config } from '../../../core/app-config';
+import { PlaceService } from '../../layout/components/ts-header/place.service';
+import { first, take } from 'rxjs/operators';
 
 @Component({
   selector: 'ts-listing-card',
@@ -14,7 +16,10 @@ export class TsListingCardComponent implements OnInit {
   @Input() type;
   @Input() topicData;
   @Input() gridType;
+  router = config.router;
+
   urgencyMessage = false;
+  homeUrl: string;
   goingCounter = false;
   moreIcons = false;
   showRegularCard: boolean;
@@ -22,7 +27,7 @@ export class TsListingCardComponent implements OnInit {
   topicCard: boolean;
   defaultCardImageUrl: string = "https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/default-card.jpg";
 
-  constructor(public dialog: MatDialog, private browser: BrowserService) { }
+  constructor(public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
 
   shareEvent = () => {
     if (this.browser.isMobile() && window.navigator && window.navigator['share']) {
@@ -33,12 +38,14 @@ export class TsListingCardComponent implements OnInit {
       });
     } else {
       const dialogRef = this.dialog.open(ShareEventModalComponent, {
-        width: '450px',
+        // width: '500px',
         data: { event: this.eventData }
       });
     }
   }
-
+  navigateToListing = (code): void => {
+    this.router.navigate([this.homeUrl + '/' + code])
+  }
   ngOnInit() {
     switch (this.type) {
       case 'featured':
@@ -51,6 +58,10 @@ export class TsListingCardComponent implements OnInit {
         this.showRegularCard = true;
         break;
     }
+    this.placeService.place.pipe(take(1)).subscribe(res => {
+      const data = JSON.parse(<any>res);
+      this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+    });
     // this.eventData = {
     //   "id": 1, "eventId": 87429,
     //   "name": "first event with more content to test text clamp with more text",

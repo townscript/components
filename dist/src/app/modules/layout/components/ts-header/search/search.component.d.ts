@@ -8,7 +8,7 @@ export declare class SearchComponent implements OnInit {
     private placeService;
     private timeService;
     datepipe: DatePipe;
-    algoliaIndexName: string;
+    algoliaIndexName: any;
     cityInput: ElementRef;
     citySuggestions: ElementRef;
     searchResultsEle: ElementRef;
@@ -25,7 +25,9 @@ export declare class SearchComponent implements OnInit {
     activePlaceBackup: string;
     client: any;
     index: any;
+    homeUrl: any;
     router: Router;
+    host: any;
     popularPlaces: string[];
     constructor(placeService: PlaceService, timeService: TimeService, datepipe: DatePipe);
     callAlgolia: (text: any) => void;
