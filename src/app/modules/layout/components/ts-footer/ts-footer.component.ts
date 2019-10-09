@@ -34,6 +34,7 @@ export class TsFooterComponent implements OnInit {
   countryCityMap: any;
 
   myBookingsURL: string = "/dashboard/mybookings";
+  subObject: any;
 
   constructor(private dialog: MatDialog,
     private userService: UserService,
@@ -66,17 +67,6 @@ export class TsFooterComponent implements OnInit {
     this.dialog.open(LoginModalComponent, dialogConfig);
   }
 
-  ngOnInit() {
-    if(this.popularEvents == undefined || this.popularEvents.length == 0){
-      this.placeService.place.subscribe((res:any) => {
-        let data = JSON.parse(res);
-        if (data['city']) {
-          this.getCityFromCityCode(data['city']);
-        }
-      });
-    }
-    this.getPopularCities();
-  }
 
   getCityFromCityCode = async (code: string): Promise<any> =>  {
     let res = await this.footerService.getCityFromCityCode(code);
@@ -91,7 +81,24 @@ export class TsFooterComponent implements OnInit {
 
   getPopularCities = async (): Promise<any> => {
     const data = await this.footerService.getAllPopularCities();
-    this.popularCities = data['data'];    
+    this.popularCities = data['data'];
   }
 
+  ngOnInit() {
+    if(this.popularEvents == undefined || this.popularEvents.length == 0){
+      this.subObject = this.placeService.place.subscribe((res:any) => {
+        let data = JSON.parse(res);
+        if (data['city']) {
+          this.getCityFromCityCode(data['city']);
+        }
+      });
+    }
+    this.getPopularCities();
+  }
+
+  ngOnDestroy() {
+    if(this.subObject != undefined){
+      this.subObject.unsubscribe();
+    }
+  }
 }
