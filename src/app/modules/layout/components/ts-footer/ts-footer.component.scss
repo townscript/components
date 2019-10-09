@@ -46,8 +46,10 @@ footer{
   .ts-logo{
     filter: grayscale(100%);
     opacity: 0.4;
-    img{
-      width: 120px;
+    @media (max-width: $screen-md-min){
+      img{
+        width: 120px;
+      }
     }
     .text-xs{
       width: 120px;

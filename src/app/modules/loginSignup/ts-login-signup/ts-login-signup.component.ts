@@ -7,6 +7,7 @@ import { CookieService } from '../../../core/cookie.service';
 import { UserService } from '../../../shared/services/user-service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { TsLoginSignupService } from './ts-login-signup.service';
+import { PlaceService } from '../../layout/components/ts-header/place.service';
 
 const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
@@ -46,6 +47,7 @@ export class TsLoginSignupComponent implements OnInit {
     initializeTelInput: any;
     signInErrMessage: any = "";
     resetPwdLinkSent: boolean = false;
+    signUpErrMessage: any = "";
 
     fbLoginURL: any = this.apiService.API_SERVER
         + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
@@ -54,19 +56,32 @@ export class TsLoginSignupComponent implements OnInit {
     intlInput: any;
     showLoader = false;
     loaderText: any;
+    countryCode: any = "IN";
+    subObject: any;
 
     constructor(public apiService: ApiService,
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
         private tsLoginSignupService: TsLoginSignupService,
+        private placeService: PlaceService
     ) { }
 
     ngOnInit() {
         this.initForm();
+        this.subObject = this.placeService.place.subscribe((res:any) => {
+          let placeData = JSON.parse(res);
+          this.countryCode = placeData['country'];
+        });
     }
 
-    initForm = () => {
+    ngOnDestroy() {
+        if(this.subObject != undefined){
+          this.subObject.unsubscribe();
+        }
+    }
+
+    initForm = ():void => {
         this.loginForm = new FormGroup({
             'fullName': new FormControl('', { validators: Validators.required }),
             'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)] }),
@@ -78,73 +93,71 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('phoneNumber').disable();
     }
 
-    close = () => {
+    close = ():void => {
         this.closeDialog.emit(true);
     }
 
-    clearErrors = () => {
+    clearErrors = ():void => {
         this.socialLoginMsg = '';
     }
 
-    resolve = (captchaResponse: string) => {
+    resolve = (captchaResponse: string): void => {
         this.captchaResponse = captchaResponse;
     }
 
-    password = () => {
+    password = ():void => {
         this.show = !this.show;
     }
 
-    verifyEmail = () => {
+    verifyEmail = async ():Promise<any> => {
         if (!this.loginForm.controls.email.valid) {
             return;
         }
-        this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email).subscribe(
-            (retData: any) => {
-                const newData = JSON.parse(retData.data);
-                if (newData && newData.isExistingUser && newData.isManualSignup) {
-                    this.loginForm.get('password').enable();
-                    this.isSignInView = true;
-                    this.isSignUpView = false;
-                    this.showSocial = false;
-                    this.socialLoginMsg = false;
-                    this.isDefaultView = false;
+        let result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
+        let newData = result;
+        try{
+          result = JSON.parse(result.data);
 
-                } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
-                    this.socialLoginMsg = true;
-                } else {
-                    this.isSignUpView = true;
-                    this.isSignInView = false;
-                    this.showSocial = false;
-                    this.isDefaultView = false;
-                    this.socialLoginMsg = false;
-                    this.loginForm.get('fullName').enable();
-                    this.loginForm.get('password').enable();
-                    this.loginForm.get('phoneNumber').enable();
+        } catch(e){
 
-                    this.initializeTelInput = setTimeout(() => {
-                        this.initializeIntlTelInput();
-                    }, 200);
-                }
-            },
-            (error) => {
-                console.log('error ' + error);
-            }
-        );
+        }
+        if (newData && newData.isExistingUser && newData.isManualSignup) {
+            this.loginForm.get('password').enable();
+            this.isSignInView = true;
+            this.isSignUpView = false;
+            this.showSocial = false;
+            this.socialLoginMsg = false;
+            this.isDefaultView = false;
 
+        } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
+            this.socialLoginMsg = true;
+        } else {
+            this.isSignUpView = true;
+            this.isSignInView = false;
+            this.showSocial = false;
+            this.isDefaultView = false;
+            this.socialLoginMsg = false;
+            this.loginForm.get('fullName').enable();
+            this.loginForm.get('password').enable();
+            this.loginForm.get('phoneNumber').enable();
+
+            this.initializeTelInput = setTimeout(() => {
+                this.initializeIntlTelInput();
+            }, 200);
+        }
     }
 
-    initializeIntlTelInput = () => {
+    initializeIntlTelInput = (): void => {
         // initialize intl tel
         const input = document.querySelector('#phoneNumber');
-
         this.intlInput = (<any>window).intlTelInput(input, {
-            initialCountry: 'in',
+            initialCountry: this.countryCode,
             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
         });
 
     }
 
-    validatePhoneNumber = () => {
+    validatePhoneNumber = ():void => {
         if (!this.intlInput.isValidNumber()) {
             this.phoneError = true;
             this.loginForm.controls.phoneNumber.setErrors({ 'valid': false });
@@ -155,40 +168,34 @@ export class TsLoginSignupComponent implements OnInit {
         }
     }
 
-    signIn = () => {
+    signIn = async ():Promise<any> => {
         if (!this.loginForm.valid) {
             return;
         }
         this.showLoader = true;
-        this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.email, this.loginForm.value.password).subscribe(
-            (retData: any) => {
-                this.showLoader = false;
-                if (retData.result != 'Success') {
-                    this.signInErrMessage = retData.data;
-                    return;
-                }
-                const tokenData = {
-                    token: (retData.data)
-                };
+        const retData = await this.tsLoginSignupService.loginWithTownscript(this.loginForm.value.email, this.loginForm.value.password);
+        this.showLoader = false;
+        if (retData.result != 'Success') {
+            this.signInErrMessage = retData.data;
+            return;
+        }
+        const tokenData = {
+            token: (retData.data)
+        };
 
-                const userData = { ...retData.userDetails, ...tokenData };
-                this.userService.updateUser(userData);
-                this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90, '/');
-                this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
-                if (this.mode === 'dialog') {
-                    this.close();
-                }
-                if (this.rdurl != undefined) {
-                    window.open(this.rdurl, '_self');
-                }
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        const userData = { ...retData.userDetails, ...tokenData };
+        this.userService.updateUser(userData);
+        this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
+        this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
+        if (this.mode === 'dialog') {
+            this.close();
+        }
+        if(this.rdurl != undefined){
+           window.open(this.rdurl, '_self');
+        }
     }
 
-    signUp = () => {
+    signUp = async (): Promise<any>  => {
         const self = this;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loginForm.get('fullName').setValue(this.loginForm.get('fullName').value.trim());
@@ -218,23 +225,35 @@ export class TsLoginSignupComponent implements OnInit {
         if (this.rdurl) {
             formData.append('rdurl', this.rdurl);
         }
+        let data = await this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData);
+        try{
+          data = JSON.parse(data);
+        } catch(e){
 
-        this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData).toPromise().then(function (data) {
-            self.showLoader = false;
-            self.isVerifyEmailView = true;
-            self.showSocial = false;
-            self.isSignUpView = false;
-        });
+        }
+        if(data['result'] == "Error"){
+          self.showLoader = false;
+          self.signUpErrMessage = data['data'];
+          var _this = self;
+          setTimeout(function(){
+            _this.initializeIntlTelInput();
+          },200);
+          return;
+        }
+        self.showLoader = false;
+        self.isVerifyEmailView = true;
+        self.showSocial = false;
+        self.isSignUpView = false;
     }
 
-    forgotPassword = () => {
+    forgotPassword = ():void => {
         this.loginForm.get('password').disable();
         this.showResetPassword = true;
         this.showSocial = false;
         this.isSignInView = false;
     }
 
-    goBack = () => {
+    goBack = ():void => {
         if (this.showResetPassword) {
             this.showResetPassword = false;
             this.isSignUpView = false;
@@ -267,27 +286,19 @@ export class TsLoginSignupComponent implements OnInit {
 
     }
 
-    resetPassword = () => {
+    resetPassword = async (): Promise<any> => {
         this.showLoader = true;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Reset Password Link to ' + this.loginForm.value.email;
-        this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email).subscribe(
-            (resp: any) => {
-                this.showLoader = false;
-                if (this.resetPwdLinkSent) {
-                    this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
-                }
-                this.resetPwdLinkSent = true;
-                console.log(resp);
-            },
-            (error: any) => {
-                this.showLoader = false;
-                console.log(error);
-            }
-        );
+        let resp = await this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email);
+        this.showLoader = false;
+        if (this.resetPwdLinkSent) {
+            this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
+        }
+        this.resetPwdLinkSent = true;
     }
 
-    randomString = (len, an) => {
+    randomString = (len: number, an: string): string => {
         an = an && an.toLowerCase();
         let str = '', i = 0;
         const min = an === 'a' ? 10 : 0;
@@ -300,20 +311,13 @@ export class TsLoginSignupComponent implements OnInit {
         return str;
     }
 
-    resendVerifyEmail = () => {
+    resendVerifyEmail = async (): Promise<any> => {
         this.showLoader = true;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Verification email to ' + this.loginForm.value.email;
-        this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email).subscribe(
-            (retData: any) => {
-                this.showLoader = false;
-                this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
-            },
-            (error: any) => {
-                this.showLoader = false;
-                console.log('error' + error);
-            }
-        );
+        let retData = this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email);
+        this.showLoader = false;
+        this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
     }
 
     togglePasswordDisplay = () => {
