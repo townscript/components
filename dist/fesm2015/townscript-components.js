@@ -939,7 +939,7 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             let result = yield this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
             let newData = result;
             try {
-                result = JSON.parse(result.data);
+                newData = JSON.parse(result.data);
             }
             catch (e) {
             }

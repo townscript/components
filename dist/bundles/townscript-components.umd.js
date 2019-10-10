@@ -1072,7 +1072,7 @@
                             result = _a.sent();
                             newData = result;
                             try {
-                                result = JSON.parse(result.data);
+                                newData = JSON.parse(result.data);
                             }
                             catch (e) {
                             }
