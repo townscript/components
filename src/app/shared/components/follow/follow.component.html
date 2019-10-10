@@ -1,4 +1,4 @@
-<div class="follow-container rounded-full cursor-pointer" [class.flex]="type=='icon'" (click)="followedFn()"
+<div class="follow-container rounded-full cursor-pointer" [class.flex]="type=='icon'" (click)="followedFn($event)"
     (mouseover)="hover=true" (mouseleave)="hover=false" [class.followed]="followed">
     <div [style.background-color]="hover && type=='button' ? color : 'transparent'"
         [style.border-color]="type=='button' ? color : 'transparent'" [class.rounded-full]="type=='button'"
