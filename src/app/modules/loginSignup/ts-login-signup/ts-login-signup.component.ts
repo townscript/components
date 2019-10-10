@@ -113,10 +113,11 @@ export class TsLoginSignupComponent implements OnInit {
         if (!this.loginForm.controls.email.valid) {
             return;
         }
+        
         let result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
         let newData = result;
         try{
-          result = JSON.parse(result.data);
+          newData = JSON.parse(result.data);
 
         } catch(e){
 
