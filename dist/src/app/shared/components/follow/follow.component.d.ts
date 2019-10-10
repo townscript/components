@@ -23,5 +23,5 @@ export declare class FollowComponent implements OnInit {
     ngOnInit(): void;
     checkFollowStatus: () => void;
     openLogin: () => void;
-    followedFn: () => void;
+    followedFn: ($event: any) => void;
 }
