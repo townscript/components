@@ -67,7 +67,9 @@ export class FollowComponent implements OnInit {
         dialogConfig.backdropClass = 'mat-dialog-bkg-container';
         this.dialog.open(LoginModalComponent, dialogConfig);
     }
-    followedFn = () => {
+    followedFn = ($event: any) => {
+        $event.stopPropagation();
+                
         if (!this.loggedIn) {
             this.openLogin();
             return;
