@@ -17,7 +17,6 @@ import { SearchComponent } from './components/ts-header/search/search.component'
 import { CitySearchPopupComponent } from './components/ts-header/city-search-popup/city-search-popup.component';
 import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/hamburger-menu.component';
 import { TimeService } from '../../shared/services/time.service';
-import { ApiService } from '../../shared/services/api-service';
 import { TsLoginSignupModule } from '../loginSignup/login-signup.module';
 import { UserService } from '../../shared/services/user-service';
 import { FooterService } from './components/ts-footer/ts-footer.service';
@@ -51,7 +50,6 @@ import { FooterService } from './components/ts-footer/ts-footer.service';
   providers: [
     TimeService,
     DatePipe,
-    ApiService,
     HeaderService,
     BrowserService,
     UserService,

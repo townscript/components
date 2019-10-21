@@ -1,14 +1,10 @@
-import {
-    Directive,
-    ElementRef,
-    Input,
-    AfterViewInit
-} from '@angular/core';
+import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
 
 import * as clampLibImported from 'text-overflow-clamp';
 
 const clampLib = clampLibImported;
 
+// tslint:disable-next-line: directive-selector
 @Directive({ selector: '[clamp]' })
 export class TextOverflowClampDirective implements AfterViewInit {
     @Input('clamp') lines: number;

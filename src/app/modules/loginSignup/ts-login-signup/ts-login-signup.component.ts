@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ViewEncapsulation } from '@angular/core';
-import { ApiService } from '../../../shared/services/api-service';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { config } from '../../../core/app-config';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
 import { RecaptchaComponent } from 'ng-recaptcha';
@@ -18,48 +18,48 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
     encapsulation: ViewEncapsulation.None,
 })
 
-export class TsLoginSignupComponent implements OnInit {
+export class TsLoginSignupComponent implements OnInit, OnDestroy {
+
     @Input() mode: any;
     @Input() defaultHeader: any = 'Let\'s get started';
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
     @Input() rdurl: any;
     @Input() showSocial: any = true;
     @Output() closeDialog = new EventEmitter();
-
     @ViewChild('recaptchaRef', { read: true, static: true })
-    recaptchaRef: RecaptchaComponent;
-
     captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
-    show: any = false;
-    showPassword: any = false;
-    isDefaultView: any = true;
-    isSignInView: any = false;
-    isSignUpView: any = false;
-    isVerifyEmailView: any = false;
-    showResetPassword: any = false;
+
+    recaptchaRef: RecaptchaComponent;
+    show = false;
+    showPassword = false;
+    isDefaultView = true;
+    isSignInView = false;
+    isSignUpView = false;
+    isVerifyEmailView = false;
+    showResetPassword = false;
 
     userTimezone: any = DateTime.local().zoneName;
     loginForm: any;
     captchaResponse: any;
     correctPhoneNumber: any = null;
-    phoneError: any = false;
+    phoneError = false;
     socialLoginMsg: any = false;
     initializeTelInput: any;
-    signInErrMessage: any = "";
-    resetPwdLinkSent: boolean = false;
-    signUpErrMessage: any = "";
+    signInErrMessage = '';
+    resetPwdLinkSent = false;
+    signUpErrMessage = '';
 
-    fbLoginURL: any = this.apiService.API_SERVER
+    fbLoginURL = config.baseUrl + 'api/'
         + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-    googleLoginURL: any = this.apiService.API_SERVER
+    googlecxLoginURL = config.baseUrl + 'api/'
         + 'user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
     intlInput: any;
     showLoader = false;
     loaderText: any;
-    countryCode: any = "IN";
+    countryCode: any = 'IN';
     subObject: any;
 
-    constructor(public apiService: ApiService,
+    constructor(
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
@@ -69,19 +69,19 @@ export class TsLoginSignupComponent implements OnInit {
 
     ngOnInit() {
         this.initForm();
-        this.subObject = this.placeService.place.subscribe((res:any) => {
-          let placeData = JSON.parse(res);
-          this.countryCode = placeData['country'];
+        this.subObject = this.placeService.place.subscribe((res: any) => {
+            const placeData = JSON.parse(res);
+            this.countryCode = placeData['country'];
         });
     }
 
     ngOnDestroy() {
-        if(this.subObject != undefined){
-          this.subObject.unsubscribe();
+        if (this.subObject != undefined) {
+            this.subObject.unsubscribe();
         }
     }
 
-    initForm = ():void => {
+    initForm = (): void => {
         this.loginForm = new FormGroup({
             'fullName': new FormControl('', { validators: Validators.required }),
             'email': new FormControl('', { validators: [Validators.required, Validators.pattern(emailRegex)] }),
@@ -93,11 +93,11 @@ export class TsLoginSignupComponent implements OnInit {
         this.loginForm.get('phoneNumber').disable();
     }
 
-    close = ():void => {
+    close = (): void => {
         this.closeDialog.emit(true);
     }
 
-    clearErrors = ():void => {
+    clearErrors = (): void => {
         this.socialLoginMsg = '';
     }
 
@@ -105,21 +105,21 @@ export class TsLoginSignupComponent implements OnInit {
         this.captchaResponse = captchaResponse;
     }
 
-    password = ():void => {
+    password = (): void => {
         this.show = !this.show;
     }
 
-    verifyEmail = async ():Promise<any> => {
+    verifyEmail = async (): Promise<any> => {
         if (!this.loginForm.controls.email.valid) {
             return;
         }
-        
-        let result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
-        let newData = result;
-        try{
-          newData = JSON.parse(result.data);
 
-        } catch(e){
+        const result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
+        let newData = result;
+        try {
+            newData = JSON.parse(result.data);
+
+        } catch (e) {
 
         }
         if (newData && newData.isExistingUser && newData.isManualSignup) {
@@ -158,18 +158,17 @@ export class TsLoginSignupComponent implements OnInit {
 
     }
 
-    validatePhoneNumber = ():void => {
+    validatePhoneNumber = (): void => {
         if (!this.intlInput.isValidNumber()) {
             this.phoneError = true;
             this.loginForm.controls.phoneNumber.setErrors({ 'valid': false });
-            console.log(this.loginForm.controls.phoneNumber);
         } else {
             this.loginForm.controls.phoneNumber.setErrors();
             this.phoneError = false;
         }
     }
 
-    signIn = async ():Promise<any> => {
+    signIn = async (): Promise<any> => {
         if (!this.loginForm.valid) {
             return;
         }
@@ -191,12 +190,12 @@ export class TsLoginSignupComponent implements OnInit {
         if (this.mode === 'dialog') {
             this.close();
         }
-        if(this.rdurl != undefined){
-           window.open(this.rdurl, '_self');
+        if (this.rdurl != undefined) {
+            window.open(this.rdurl, '_self');
         }
     }
 
-    signUp = async (): Promise<any>  => {
+    signUp = async (): Promise<any> => {
         const self = this;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loginForm.get('fullName').setValue(this.loginForm.get('fullName').value.trim());
@@ -227,19 +226,19 @@ export class TsLoginSignupComponent implements OnInit {
             formData.append('rdurl', this.rdurl);
         }
         let data = await this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData);
-        try{
-          data = JSON.parse(data);
-        } catch(e){
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
 
         }
-        if(data['result'] == "Error"){
-          self.showLoader = false;
-          self.signUpErrMessage = data['data'];
-          var _this = self;
-          setTimeout(function(){
-            _this.initializeIntlTelInput();
-          },200);
-          return;
+        if (data['result'] == 'Error') {
+            self.showLoader = false;
+            self.signUpErrMessage = data['data'];
+            let _this = self;
+            setTimeout(function () {
+                _this.initializeIntlTelInput();
+            }, 200);
+            return;
         }
         self.showLoader = false;
         self.isVerifyEmailView = true;
@@ -247,14 +246,14 @@ export class TsLoginSignupComponent implements OnInit {
         self.isSignUpView = false;
     }
 
-    forgotPassword = ():void => {
+    forgotPassword = (): void => {
         this.loginForm.get('password').disable();
         this.showResetPassword = true;
         this.showSocial = false;
         this.isSignInView = false;
     }
 
-    goBack = ():void => {
+    goBack = (): void => {
         if (this.showResetPassword) {
             this.showResetPassword = false;
             this.isSignUpView = false;
@@ -291,7 +290,7 @@ export class TsLoginSignupComponent implements OnInit {
         this.showLoader = true;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Reset Password Link to ' + this.loginForm.value.email;
-        let resp = await this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email);
+        const resp = await this.tsLoginSignupService.sendForgotPwdEmail(this.loginForm.value.email);
         this.showLoader = false;
         if (this.resetPwdLinkSent) {
             this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
@@ -316,7 +315,7 @@ export class TsLoginSignupComponent implements OnInit {
         this.showLoader = true;
         this.loginForm.get('email').setValue(this.loginForm.get('email').value.trim());
         this.loaderText = 'Sending Verification email to ' + this.loginForm.value.email;
-        let retData = this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email);
+        const retData = this.tsLoginSignupService.resendVerificationCode(this.rdurl, this.loginForm.value.email);
         this.showLoader = false;
         this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
     }

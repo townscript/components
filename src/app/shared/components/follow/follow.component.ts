@@ -13,20 +13,20 @@ import { UserService } from '../../services/user-service';
 export class FollowComponent implements OnInit {
 
     @Input() text = 'Follow';
-    textCopy: any;
+    @Input() followedText = 'Following';
+    @Input() type = 'button';
+    @Input() color = '#683592';
+    @Input() followTypeId;
+    @Input() followType;
+
+    textCopy: string;
+    hovered: boolean;
     user: any;
     allFollowData: any;
     currentId: any;
     loggedIn = false;
-    @Input() followedText = 'Following';
-    hover: any;
-    @Input() type = 'button';
-    @Input() color = '#683592';
-
     followed = false;
 
-    @Input() followTypeId;
-    @Input() followType;
 
     constructor(private userService: UserService, private followService: FollowService, private dialog: MatDialog) { }
 
@@ -69,20 +69,17 @@ export class FollowComponent implements OnInit {
     }
     followedFn = ($event: any) => {
         $event.stopPropagation();
-                
         if (!this.loggedIn) {
             this.openLogin();
             return;
         }
         if (!this.followed) {
-            this.text = 'Following';
             this.followService.createFollowData(this.followType, this.followTypeId, this.user.userId).subscribe(res => {
                 this.followed = true;
                 this.text = this.followedText;
                 this.followService.getFollowData(this.user.userId);
             });
         } else {
-            this.text = 'Unfollowed';
             this.followService.unfollow(this.currentId).subscribe(res => {
                 this.followed = false;
                 this.text = this.textCopy;

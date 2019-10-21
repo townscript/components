@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimeService } from './services/time.service';
-import { ApiService } from './services/api-service';
-import { UserService } from './services/user-service';
-import { RangeDatePipe } from './pipes/ts-date-range.pipe';
+
+import { RangeDatePipe, TextOverflowClampDirective } from './pipes/index';
 import { FollowComponent } from './components/follow/follow.component';
-import { FollowService } from './services/follow.service';
-import { TextOverflowClampDirective } from './pipes/text-overflow.directive';
+import {
+    TimeService,
+    UserService,
+    FollowService
+} from './services/index';
 
 @NgModule({
     declarations: [
@@ -22,6 +23,6 @@ import { TextOverflowClampDirective } from './pipes/text-overflow.directive';
         RangeDatePipe,
         TextOverflowClampDirective
     ],
-    providers: [TimeService, ApiService, UserService, FollowService]
+    providers: [TimeService, UserService, FollowService]
 })
 export class SharedModule { }

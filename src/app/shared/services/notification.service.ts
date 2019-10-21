@@ -6,7 +6,7 @@ export class NotificationService {
     constructor(private snackBar: MatSnackBar) {
     }
 
-    success(message, duration, action) {
+    success = (message, duration, action): void => {
         const config = new MatSnackBarConfig();
         config.panelClass = ['ts-notification-success'];
         config.duration = duration;

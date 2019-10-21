@@ -6,7 +6,6 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule, MatSnackBarModule, MatInputModule, MatTooltipModule, MatProgressSpinnerModule } from '@angular/material';
 import { TsLoginSignupComponent } from './ts-login-signup/ts-login-signup.component';
-import { ApiService } from '../../shared/services/api-service';
 import { UserService } from '../../shared/services/user-service';
 import { CookieService } from '../../core/cookie.service';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -39,7 +38,6 @@ import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service'
     EmailSentSVGComponent
   ],
   providers: [
-    ApiService,
     CookieService,
     UserService,
     NotificationService,

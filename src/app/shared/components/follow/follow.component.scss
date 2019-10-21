@@ -1,5 +1,5 @@
 .follow-container{
-    max-width: 10rem;
+    max-width: 12rem;
     text-align: center;
     transition: all ease 0.1s;
     div{
@@ -27,25 +27,10 @@
         animation-iteration-count: 1;
         animation-duration: 0.2s;
     }
-    // &.followed{
-    //     div{
-    //         background: #553c9a;
-    //         i,span{
-    //             color:white;
-    //         }
-    //     }
-    // }
     .followed-heart{
             color:#EB4B4B;
     }
     div:hover{
-        //background: purple;
         color:rgb(194, 181, 181);
-        // span{
-        //     color: white;
-        // }
-        // i{
-        //     color:white;
-        // }
     }
 }

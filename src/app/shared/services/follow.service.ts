@@ -9,8 +9,9 @@ export class FollowService {
 
     baseUrl: String = config.baseUrl;
     apiServerUrl: String = this.baseUrl + 'api/';
-    user: any;
     listingsUrl: String = this.baseUrl + 'listings/';
+
+    user: any;
     private followData$: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
     followData = this.followData$.asObservable();
 
@@ -22,7 +23,7 @@ export class FollowService {
             }
         });
     }
-    createFollowData(type, typeId, userId) {
+    createFollowData = (type, typeId, userId) => {
         const data = {
             type: type,
             typeId: typeId,
@@ -30,15 +31,15 @@ export class FollowService {
         };
         return this.http.post(this.listingsUrl + 'followData/follow', data);
     }
-    getFollowData(id) {
+    getFollowData = (id) => {
         this.http.get(this.listingsUrl + 'followData/?userId=' + id).subscribe(res => {
             this.updateFollowData(res['data']);
         });
     }
-    unfollow(followDataId) {
+    unfollow = (followDataId) => {
         return this.http.post(this.listingsUrl + 'followData/unfollow/' + followDataId, {});
     }
-    updateFollowData(data): void {
+    updateFollowData = (data): void => {
         this.followData$.next(data);
     }
 
