@@ -140,7 +140,7 @@
           </div>
         </div>
         <div class="w-full text-center form-group">
-          <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
+          <p class="text-left text-sm text-red-500 -mt-3 mb-2" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
           <button matRipple (click)="signIn()" [ngClass]="!loginForm.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Sign In
           </button>
@@ -268,6 +268,7 @@
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">
             Create your account
           </button>
+          <p class="text-left text-sm -mt-1 text-red-500" *ngIf="signUpErrMessage.length > 0">{{signUpErrMessage}}</p>
         </div>
       </form>
     </div>

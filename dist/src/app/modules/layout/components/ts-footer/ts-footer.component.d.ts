@@ -18,13 +18,15 @@ export declare class TsFooterComponent implements OnInit {
     popularEventsData: any;
     countryCityMap: any;
     myBookingsURL: string;
+    subObject: any;
     constructor(dialog: MatDialog, userService: UserService, footerService: FooterService, placeService: PlaceService);
     openContactUs: () => void;
     openMyBooking: () => void;
     redirectToMyBookings: () => void;
     openLogin: () => void;
-    ngOnInit(): void;
     getCityFromCityCode: (code: string) => Promise<any>;
     getPopularEvents: () => Promise<any>;
     getPopularCities: () => Promise<any>;
+    ngOnInit(): void;
+    ngOnDestroy(): void;
 }

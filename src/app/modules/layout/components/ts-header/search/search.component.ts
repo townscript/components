@@ -65,7 +65,7 @@ export class SearchComponent implements OnInit {
 
         interests.map(interest => {
             interest.name = interest.name + ' Events';
-            interest.location = 'PUNE';
+            interest.location = this.activePlace;
         });
 
         organizers.map(organizer => {
