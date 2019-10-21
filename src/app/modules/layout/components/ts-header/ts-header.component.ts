@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LoginModalComponent } from '../../../loginSignup/ts-login-signup/login-modal/login-modal.component';
-import { UserService } from '../../../../shared/services/user-service';
-import { config } from '../../../../core/app-config';
+import { LoginModalComponent } from '@base/modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
+import { UserService } from '@base/shared/services/user-service';
+import { config } from '@base/core/app-config';
 import { PlaceService } from './place.service';
 
 @Component({
@@ -21,22 +21,23 @@ export class TsHeaderComponent implements OnInit {
   @Input() shadow = true;
   @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
   @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
+
   user: any;
   router = config.router;
   userMenu: any;
   host: string = config.baseUrl;
-  activePlace: any;
-  activeCity: any;
-  activeCountryCode: any;
-  homePageUrl: any;
+  activePlace: string;
+  activeCity: string;
+  activeCountryCode: string;
+  homePageUrl: string;
   s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
-
   cityPopupActive = false;
+
   constructor(private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
   }
 
   @HostListener('document:click', ['$event'])
-  clickout(event) {
+  clickout = (event) => {
     if (!this.citySuggestions.nativeElement.contains(event.target)) {
       this.cityPopupActive = false;
     }
@@ -45,7 +46,7 @@ export class TsHeaderComponent implements OnInit {
     }
   }
 
-  openLogin() {
+  openLogin = (): void => {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
@@ -53,28 +54,28 @@ export class TsHeaderComponent implements OnInit {
     this.dialog.open(LoginModalComponent, dialogConfig);
   }
 
-  navigateToMobileSearch() {
+  navigateToMobileSearch = (): void => {
     this.router.navigate(['/mobile/search']);
   }
-  openMyProfileComponent = () => {
+  openMyProfileComponent = (): void => {
     if (this.userService.user.source['value'] != undefined) {
       this.router.navigate(['/profile']);
     } else {
       this.openLogin();
     }
   }
-  goBack = () => {
+  goBack = (): void => {
     this.router.navigate(['../']);
   }
-  goToHomePage = () => {
+  goToHomePage = (): void => {
     this.router.navigate([this.homePageUrl]);
   }
+
   ngOnInit() {
     this.userService.user.subscribe(data => {
       this.user = data;
     });
     this.placeService.place.subscribe(res => {
-      console.log("subs to", res);
       if (res) {
         this.activePlace = JSON.parse(<any>res)['currentPlace'];
         this.activeCity = JSON.parse(<any>res)['city'];

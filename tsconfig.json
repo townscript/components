@@ -21,6 +21,9 @@
       "dom"
     ],
     "paths": {
+      "@base/*": [
+        "src/app/*"
+      ],
       "@townscript/components": [
         "dist/townscript/components"
       ],

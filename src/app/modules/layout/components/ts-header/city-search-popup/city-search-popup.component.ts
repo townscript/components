@@ -1,20 +1,17 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, HostListener, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, EventEmitter, Output, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { TimeService } from '../../../../../shared/services/time.service';
-import { DatePipe } from '@angular/common';
 import { HeaderService } from '../ts-header.service';
-import { Router } from '@angular/router';
-import { config } from '../../../../../core/app-config';
-import { PlaceService } from '../place.service';
-
+import { config } from '@base/core/app-config';
 
 @Component({
     selector: 'app-city-search-popup',
     templateUrl: './city-search-popup.component.html',
     styleUrls: ['./city-search-popup.component.scss']
 })
-export class CitySearchPopupComponent implements OnInit {
+export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     @ViewChild('cityInput', { static: true }) cityInput: ElementRef;
     @Input() showArrow = true;
@@ -37,12 +34,12 @@ export class CitySearchPopupComponent implements OnInit {
 
     popularPlaces: any;
 
-    constructor(private placeService: PlaceService, private headerService: HeaderService, private timeService: TimeService, public datepipe: DatePipe) {
+    constructor(private headerService: HeaderService, public datepipe: DatePipe) {
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
         if (this.router.url) {
-            this.urlArray = this.router.url.replace('/', '').split('/')
+            this.urlArray = this.router.url.replace('/', '').split('/');
         } else {
-            this.urlArray = ['in']
+            this.urlArray = ['in'];
         }
     }
     callSearchCity = (query) => {
@@ -52,6 +49,7 @@ export class CitySearchPopupComponent implements OnInit {
             this.cityLoading = false;
         });
     }
+
     placeChanged = (place) => {
         if (place.type === 'country') {
             this.router.navigate(['/' + place.twoDigitCode.toLowerCase()], { state: { place: place } });
@@ -68,25 +66,27 @@ export class CitySearchPopupComponent implements OnInit {
             const secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
             this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
         }
-        //this.placeService.updatePlace(place.name);
+        // this.placeService.updatePlace(place.name);
         this.activePlace = place.name;
         this.activePlaceChange.emit(place.name);
         this.cityPopupActive = false;
         this.cityPopupActiveChange.emit(false);
     }
+
     openCityPopup = () => {
         this.cityPopupActive = true;
         this.cityInput.nativeElement.focus();
     }
 
     searchCity = (text) => {
-        if (!text || text.length == 0) {
+        if (!text || text.length === 0) {
             this.placeSearchResults = [];
         }
         if (text != undefined && text.length > 0) {
             this.cityQueryChanged.next(text);
         }
     }
+
     getPopularPlaces = () => {
         this.headerService.getPopularCities(this.urlArray[0]).subscribe(res => {
             this.popularPlaces = res['data'].slice(0, 6).map(ele => {

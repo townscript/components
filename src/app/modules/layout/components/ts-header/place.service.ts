@@ -27,7 +27,6 @@ export class PlaceService {
     updatePlace(data): void {
         data = JSON.stringify(data);
         this.cookieService.setCookie('location', data, 100000000, '/');
-        console.log("sending to observable");
         this.currentPlace$.next(data);
     }
 }

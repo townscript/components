@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { TimeService } from '../../../../../shared/services/time.service';
-import { DatePipe } from '@angular/common';
-import { config } from '../../../../../core/app-config';
-import { Router } from '@angular/router';
+
+import { TimeService } from '@base/shared/services/time.service';
+import { config } from '@base/core/app-config';
 import { PlaceService } from '../place.service';
 
 const algoliasearch = algoliaSearchImported;
@@ -17,10 +18,11 @@ const algoliasearch = algoliaSearchImported;
 })
 export class SearchComponent implements OnInit {
 
-    algoliaIndexName = config.algoliaIndexName;
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
+
+    algoliaIndexName = config.algoliaIndexName;
     searchText: string;
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive = false;
@@ -28,16 +30,15 @@ export class SearchComponent implements OnInit {
     cityPopupActive = false;
     placeSearchResults: any;
     searchResults: any;
-    activePlace: any = 'Pune';
+    activePlace = 'Pune';
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
     activePlaceBackup: string;
     client: any;
     index: any;
-    homeUrl: any;
+    homeUrl: string;
     router: Router = config.router;
     host = config.baseUrl;
-    popularPlaces = ['Pune', 'Mumbai', 'Bangalore', 'New Delhi', 'Lucknow', 'Kanpur'];
 
     constructor(private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
@@ -45,6 +46,7 @@ export class SearchComponent implements OnInit {
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
         this.index = this.client.initIndex(this.algoliaIndexName);
     }
+
     callAlgolia = (text) => {
         this.index.search({
             query: text,
@@ -53,15 +55,16 @@ export class SearchComponent implements OnInit {
             this.filterDataForSearchResult(data);
         });
     }
+
     filterDataForSearchResult = (data) => {
         const results = data.hits;
         const interests = results.filter(ele => {
-            return ele.objType == 'keyword' ||
-                ele.objType == 'eventtype' ||
-                ele.objType == 'category'
+            return ele.objType === 'keyword' ||
+                ele.objType === 'eventtype' ||
+                ele.objType === 'category'
         });
-        const organizers = results.filter(ele => ele.objType == 'organizer');
-        const events = results.filter(ele => ele.objType == 'event');
+        const organizers = results.filter(ele => ele.objType === 'organizer');
+        const events = results.filter(ele => ele.objType === 'event');
 
         interests.map(interest => {
             interest.name = interest.name + ' Events';
@@ -103,20 +106,24 @@ export class SearchComponent implements OnInit {
             this.searchActive = false;
         }
     }
+
     navigateToListing = (interest) => {
         console.log(this.homeUrl + '/' + interest);
         this.router.navigate([this.homeUrl + '/' + interest]);
         this.searchActive = false;
     }
+
     navigateToEventPage = (eventCode) => {
         this.router.navigate(['/e/' + eventCode]);
         this.searchActive = false;
     }
+
     search = (text) => {
         if (text !== undefined && text.length > 0) {
             this.searchTextChanged.next(text);
         }
     }
+
     ngOnInit() {
         this.placeService.place.subscribe(res => {
             if (res) {
