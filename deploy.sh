@@ -1,9 +1,21 @@
 #!/bin/sh
-echo "Enter the commit message"
-if [ -z "$1" ]
-then
-  echo "Which folder do you want to deploy to GitHub Pages?"
-  git add dist && git commit -m "$1"
-  git subtree push --prefix dist origin library-angular8--force
-  exit 1
+
+build_and_push()
+{
+  echo "Enter Commit Message : " 
+    read commit
+    echo "Cleaning"
+    rm -rf ../components-lib/lib/*
+    echo "Building..."
+    npm run build && sudo cp -r dist/* ../components-lib/lib/
+    cd ../components-lib/ && git add . && git commit -m "$commit" && git push -u origin master
+    cat .git/refs/heads/master
+}
+
+if [ -d "../components-lib" ]; then
+    build_and_push
+else
+    cd ../ && git clone https://github.com/townscript/components-lib.git && cd components
+    build_and_push
 fi
+
