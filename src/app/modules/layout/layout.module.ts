@@ -10,17 +10,13 @@ import { BrowserService } from '../../core/browser.service';
 import { TimeService } from '../../shared/services/time.service';
 import { TsLoginSignupModule } from '../../modules/loginSignup/login-signup.module';
 import { UserService } from '../../shared/services/user-service';
-
-import {
-  TsHeaderComponent,
-  TsFooterComponent,
-  SearchComponent,
-  CitySearchPopupComponent,
-  FooterService,
-  HeaderService,
-  UserMenuComponent
-} from './components/index';
-
+import { TsHeaderComponent } from './components/ts-header/ts-header.component';
+import { TsFooterComponent } from './components/ts-footer/ts-footer.component';
+import { SearchComponent } from './components/ts-header/search/search.component';
+import { CitySearchPopupComponent } from './components/ts-header/city-search-popup/city-search-popup.component';
+import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
+import { HeaderService } from './components/ts-header/ts-header.service';
+import { FooterService } from './components/ts-footer/ts-footer.service';
 
 @NgModule({
   imports: [

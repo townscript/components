@@ -1,8 +1,8 @@
 import { OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { UserService } from '../../../../shared/services/index';
 import { FooterService } from './ts-footer.service';
 import { PlaceService } from '../ts-header/place.service';
+import { UserService } from '../../../../shared/services/user-service';
 export declare class TsFooterComponent implements OnInit, OnDestroy {
     private dialog;
     private userService;

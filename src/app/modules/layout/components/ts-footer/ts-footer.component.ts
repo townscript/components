@@ -1,9 +1,10 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginModalComponent } from '../../../loginSignup/ts-login-signup/login-modal/login-modal.component';
-import { UserService } from '../../../../shared/services/index';
+
 import { FooterService } from './ts-footer.service';
 import { PlaceService } from '../ts-header/place.service';
+import { UserService } from '../../../../shared/services/user-service';
 
 @Component({
   selector: 'ts-footer',
