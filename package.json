@@ -1,18 +1,6 @@
 {
   "name": "@townscript/components",
   "version": "1.0.30",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --aot --host 0.0.0.0",
-    "build": "npm run packagr",
-    "deploy": "sudo sh deploy.sh",
-    "localdeploy": "rm -r /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/* && cp -r ./dist/* /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/",
-    "postbuild": "scss-bundle -c scss-bundle.config.json",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json"
-  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.1.0",
@@ -64,7 +52,7 @@
     "typescript": "~3.4.5"
   },
   "description": "Townscript angular components",
-  "main": "index.js",
+  "main": "bundles/townscript-components.umd.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/townscript/components.git"
@@ -81,5 +69,14 @@
   "bugs": {
     "url": "https://github.com/townscript/components/issues"
   },
-  "homepage": "https://github.com/townscript/components#readme"
+  "homepage": "https://github.com/townscript/components#readme",
+  "module": "fesm5/townscript-components.js",
+  "es2015": "fesm2015/townscript-components.js",
+  "esm5": "esm5/townscript-components.js",
+  "esm2015": "esm2015/townscript-components.js",
+  "fesm5": "fesm5/townscript-components.js",
+  "fesm2015": "fesm2015/townscript-components.js",
+  "typings": "townscript-components.d.ts",
+  "metadata": "townscript-components.metadata.json",
+  "sideEffects": false
 }
