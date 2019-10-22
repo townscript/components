@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TsCardSkeletonComponent implements OnInit {
 
-  @Input() gridType: string = "list";
+  @Input() gridType = 'list';
   constructor() { }
 
   ngOnInit() {

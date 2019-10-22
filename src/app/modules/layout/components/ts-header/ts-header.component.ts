@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { LoginModalComponent } from '@base/modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
-import { UserService } from '@base/shared/services/user-service';
-import { config } from '@base/core/app-config';
+import { LoginModalComponent } from '../../../../modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
+import { UserService } from '../../../../shared/services/user-service';
+import { config } from '../../.././../core/app-config';
 import { PlaceService } from './place.service';
 
 @Component({

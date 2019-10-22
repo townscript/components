@@ -6,10 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { BrowserService } from '@base/core/browser.service';
-import { TimeService } from '@base/shared/services/time.service';
-import { TsLoginSignupModule } from '@base/modules/loginSignup/login-signup.module';
-import { UserService } from '@base/shared/services/user-service';
+import { BrowserService } from '../../core/browser.service';
+import { TimeService } from '../../shared/services/time.service';
+import { TsLoginSignupModule } from '../../modules/loginSignup/login-signup.module';
+import { UserService } from '../../shared/services/user-service';
 
 import {
   TsHeaderComponent,

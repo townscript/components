@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { TimeService } from '@base/shared/services/time.service';
-import { config } from '@base/core/app-config';
+import { TimeService } from '../../../../../shared/services/time.service';
+import { config } from '../../../../../core/app-config';
 import { PlaceService } from '../place.service';
 
 const algoliasearch = algoliaSearchImported;

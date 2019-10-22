@@ -51,7 +51,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
     fbLoginURL = config.baseUrl + 'api/'
         + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
-    googlecxLoginURL = config.baseUrl + 'api/'
+    googleLoginURL = config.baseUrl + 'api/'
         + 'user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
     intlInput: any;
     showLoader = false;

@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { CookieService } from '@base/core/cookie.service';
-import { UserService } from '@base/shared/services/user-service';
-import { NotificationService } from '@base/shared/services/notification.service';
-import { config } from '@base/core/app-config';
+import { CookieService } from '../../../../../core/cookie.service';
+import { UserService } from '../../../../../shared/services/user-service';
+import { NotificationService } from '../../../../../shared/services/notification.service';
+import { config } from '../../../../../core/app-config';
 
 @Component({
     selector: 'app-user-menu',

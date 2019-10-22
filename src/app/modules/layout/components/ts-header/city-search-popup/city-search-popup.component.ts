@@ -4,7 +4,7 @@ import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { HeaderService } from '../ts-header.service';
-import { config } from '@base/core/app-config';
+import { config } from '../../../../../core/app-config';
 
 @Component({
     selector: 'app-city-search-popup',

@@ -10,11 +10,12 @@ import { config } from '../../../../core/app-config';
 export class ShareEventModalComponent implements OnInit {
 
     event: any;
-    eventURL: any;
-    eventName: any;
+    eventURL: string;
+    eventName: string;
     shareLink: any = {};
-    baseUrl: any = config.baseUrl;
-    copied: any = false;
+    baseUrl: string = config.baseUrl;
+    copied = false;
+
     constructor(public dialogRef: MatDialogRef<ShareEventModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -22,8 +23,7 @@ export class ShareEventModalComponent implements OnInit {
     close = () => {
         this.dialogRef.close();
     }
-    ngAfterViewInit() {
-    }
+
     copyLink = () => {
         const copyText: any = document.getElementById('event_link');
         copyText.select();
@@ -34,6 +34,7 @@ export class ShareEventModalComponent implements OnInit {
             this.copied = false;
         }, 1000000);
     }
+
     ngOnInit() {
         this.event = this.data.event;
         this.eventURL = 'https://www.townscript.com/e/' + this.event.shortName;
