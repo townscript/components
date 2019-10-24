@@ -13,6 +13,6 @@ export class HeaderService {
         return this.http.get(this.baseUrl + 'listings/place/autocomplete?query=' + query);
     }
     getPopularCities(countryCode) {
-        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode);
+        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode).toPromise();
     }
 }

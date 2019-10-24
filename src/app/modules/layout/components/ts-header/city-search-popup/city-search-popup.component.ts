@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { HeaderService } from '../ts-header.service';
 import { config } from '../../../../../core/app-config';
+import { PlaceService } from '../place.service';
 
 @Component({
     selector: 'app-city-search-popup',
@@ -34,7 +35,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     popularPlaces: any;
 
-    constructor(private headerService: HeaderService, public datepipe: DatePipe) {
+    constructor(private placeService: PlaceService, private headerService: HeaderService, public datepipe: DatePipe) {
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
         if (this.router.url) {
             this.urlArray = this.router.url.replace('/', '').split('/');
@@ -87,13 +88,17 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         }
     }
 
-    getPopularPlaces = () => {
-        this.headerService.getPopularCities(this.urlArray[0]).subscribe(res => {
-            this.popularPlaces = res['data'].slice(0, 6).map(ele => {
-                ele.type = 'city';
-                ele.cityCode = ele.code;
-                return ele;
-            });
+    getPopularPlaces = async () => {
+        this.placeService.place.subscribe(async (res) => {
+            if (res) {
+                const country = JSON.parse(<any>res)['country'];
+                const data = await this.headerService.getPopularCities(country);
+                this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+                    ele.type = 'city';
+                    ele.cityCode = ele.code;
+                    return ele;
+                });
+            }
         });
     }
     ngAfterViewInit() {
