@@ -1358,7 +1358,7 @@
             this.transform = function (rangeDates, isRecurrent, args) {
                 if (rangeDates) {
                     // for Recurring events
-                    if (isRecurrent) {
+                    if (isRecurrent && args['startTime'] != undefined) {
                         var startTime = args['startTime'];
                         var freq = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
                         var freqLabel = 'Daily';
