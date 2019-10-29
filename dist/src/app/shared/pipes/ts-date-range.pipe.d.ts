@@ -1,4 +1,5 @@
 import { PipeTransform } from '@angular/core';
 export declare class RangeDatePipe implements PipeTransform {
-    transform: (rangeDates: any, args?: any) => any;
+    days: any;
+    transform: (rangeDates: any, isRecurrent?: any, args?: any) => any;
 }
