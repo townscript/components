@@ -31,7 +31,7 @@ export class RangeDatePipe implements PipeTransform {
               }
               return  freqLabel + ' | ' + startTime;
             } else {
-
+              // for other events or fallback 
               const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
               const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
               const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
