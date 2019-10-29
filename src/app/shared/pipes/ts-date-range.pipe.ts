@@ -12,26 +12,34 @@ export class RangeDatePipe implements PipeTransform {
         if (rangeDates) {
             // for Recurring events
             if(isRecurrent && args['startTime'] != undefined){
+
+
               const startTime = args['startTime'];
               const freq   = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
               let freqLabel = 'Daily';
-              if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
-                let byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
-                if(byDays.length > 2){
+              //custom date selected
+              if(args['recurrenceRuleArray'][0].indexOf("RDATE") > -1){
+                freqLabel = 'Multiple Dates';
+              } else {                
+                // predefined R Rule
+                if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
+                  let byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
+                  if(byDays.length > 2){
                     freqLabel = 'Multiple Dates';
-                } else {
-                  freqLabel = 'Every ';
-                  for(let index = 0;index < byDays.length; index++){
-                    freqLabel += this.days[byDays[index]];
-                    if(index < (byDays.length - 1)){
-                      freqLabel += ', ';
+                  } else {
+                    freqLabel = 'Every ';
+                    for(let index = 0;index < byDays.length; index++){
+                      freqLabel += this.days[byDays[index]];
+                      if(index < (byDays.length - 1)){
+                        freqLabel += ', ';
+                      }
                     }
                   }
                 }
               }
               return  freqLabel + ' | ' + startTime;
             } else {
-              // for other events or fallback 
+              // for other events or fallback
               const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
               const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
               const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
