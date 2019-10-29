@@ -11,7 +11,7 @@ export class RangeDatePipe implements PipeTransform {
     transform = (rangeDates: any, isRecurrent?: any ,args?: any): any => {
         if (rangeDates) {
             // for Recurring events
-            if(isRecurrent){
+            if(isRecurrent && args['startTime'] != undefined){
               const startTime = args['startTime'];
               const freq   = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
               let freqLabel = 'Daily';
