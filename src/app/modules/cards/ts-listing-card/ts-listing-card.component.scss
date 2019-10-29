@@ -1,5 +1,13 @@
 @import "../../../../assets/scss/variables";
 
+::ng-deep .ts-card-tooltip {
+		background-color: #666;
+		color: white;
+		font-size: 12px;
+		opacity: 0.98;
+		white-space: pre-line;
+}
+
 .listing-container {
     border: 1px solid rgba(0,0,0,0.13);
     border-radius: 5px;
