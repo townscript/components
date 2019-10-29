@@ -1362,17 +1362,24 @@
                         var startTime = args['startTime'];
                         var freq = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
                         var freqLabel = 'Daily';
-                        if (freq.toLowerCase() == 'Weekly'.toLowerCase()) {
-                            var byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
-                            if (byDays.length > 2) {
-                                freqLabel = 'Multiple Dates';
-                            }
-                            else {
-                                freqLabel = 'Every ';
-                                for (var index = 0; index < byDays.length; index++) {
-                                    freqLabel += _this.days[byDays[index]];
-                                    if (index < (byDays.length - 1)) {
-                                        freqLabel += ', ';
+                        //custom date selected
+                        if (args['recurrenceRuleArray'][0].indexOf("RDATE") > -1) {
+                            freqLabel = 'Multiple Dates';
+                        }
+                        else {
+                            // predefined R Rule
+                            if (freq.toLowerCase() == 'Weekly'.toLowerCase()) {
+                                var byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
+                                if (byDays.length > 2) {
+                                    freqLabel = 'Multiple Dates';
+                                }
+                                else {
+                                    freqLabel = 'Every ';
+                                    for (var index = 0; index < byDays.length; index++) {
+                                        freqLabel += _this.days[byDays[index]];
+                                        if (index < (byDays.length - 1)) {
+                                            freqLabel += ', ';
+                                        }
                                     }
                                 }
                             }
@@ -1380,7 +1387,7 @@
                         return freqLabel + ' | ' + startTime;
                     }
                     else {
-                        // for other events or fallback 
+                        // for other events or fallback
                         var date = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('dd'); });
                         var month = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('MMM'); });
                         var year = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('yy'); });
