@@ -1313,6 +1313,7 @@ var RangeDatePipe = /** @class */ (function () {
                     return freqLabel + ' | ' + startTime;
                 }
                 else {
+                    // for other events or fallback 
                     var date = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('dd'); });
                     var month = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('MMM'); });
                     var year = rangeDates.map(function (d) { return DateTime.fromISO(d).toFormat('yy'); });

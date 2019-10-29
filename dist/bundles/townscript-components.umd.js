@@ -1380,6 +1380,7 @@
                         return freqLabel + ' | ' + startTime;
                     }
                     else {
+                        // for other events or fallback 
                         var date = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('dd'); });
                         var month = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('MMM'); });
                         var year = rangeDates.map(function (d) { return luxon.DateTime.fromISO(d).toFormat('yy'); });
