@@ -905,27 +905,16 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
                 newData = JSON.parse(result.data);
             }
             catch (e) {
+                console.log("Exception while parsing api response : " + result);
             }
             if (newData && newData.isExistingUser && newData.isManualSignup) {
-                this.loginForm.get('password').enable();
-                this.isSignInView = true;
-                this.isSignUpView = false;
-                this.showSocial = false;
-                this.socialLoginMsg = false;
-                this.isDefaultView = false;
+                this.openSignInView();
             }
             else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                 this.socialLoginMsg = true;
             }
             else {
-                this.isSignUpView = true;
-                this.isSignInView = false;
-                this.showSocial = false;
-                this.isDefaultView = false;
-                this.socialLoginMsg = false;
-                this.loginForm.get('fullName').enable();
-                this.loginForm.get('password').enable();
-                this.loginForm.get('phoneNumber').enable();
+                this.openSignUpView();
                 this.initializeTelInput = setTimeout(() => {
                     this.initializeIntlTelInput();
                 }, 200);
@@ -990,6 +979,25 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             }
             this.showLoader = true;
             this.loaderText = 'Please wait while we are creating your account.';
+            let data = yield this.tsLoginSignupService.registerWithTownscriptWithCaptcha(this.getFormDataForRegister());
+            try {
+                data = JSON.parse(data);
+            }
+            catch (e) {
+                console.log("Exception while parsing api response : " + data);
+            }
+            if (data['result'] == 'Error') {
+                self.showLoader = false;
+                self.signUpErrMessage = data['data'];
+                let _this = self;
+                setTimeout(function () {
+                    _this.initializeIntlTelInput();
+                }, 200);
+                return;
+            }
+            self.openVerifyEmailView();
+        });
+        this.getFormDataForRegister = () => {
             const formData = new FormData();
             formData.append('name', this.loginForm.value.fullName);
             formData.append('emailid', this.loginForm.value.email);
@@ -1001,26 +1009,8 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             if (this.rdurl) {
                 formData.append('rdurl', this.rdurl);
             }
-            let data = yield this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData);
-            try {
-                data = JSON.parse(data);
-            }
-            catch (e) {
-            }
-            if (data['result'] == 'Error') {
-                self.showLoader = false;
-                self.signUpErrMessage = data['data'];
-                let _this = self;
-                setTimeout(function () {
-                    _this.initializeIntlTelInput();
-                }, 200);
-                return;
-            }
-            self.showLoader = false;
-            self.isVerifyEmailView = true;
-            self.showSocial = false;
-            self.isSignUpView = false;
-        });
+            return formData;
+        };
         this.forgotPassword = () => {
             this.loginForm.get('password').disable();
             this.showResetPassword = true;
@@ -1029,38 +1019,50 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         };
         this.goBack = () => {
             if (this.showResetPassword) {
-                this.showResetPassword = false;
-                this.isSignUpView = false;
-                this.isSignInView = true;
-                this.loginForm.get('password').enable();
+                this.openSignInView();
             }
-            else if (this.isSignInView) {
-                this.isSignUpView = false;
-                this.showResetPassword = false;
-                this.isSignInView = false;
-                this.showSocial = true;
-                this.isDefaultView = true;
-            }
-            else if (this.isSignUpView) {
-                this.isSignUpView = false;
-                this.showSocial = true;
-                this.isDefaultView = true;
-                this.loginForm.get('fullName').disable();
-                this.loginForm.get('password').disable();
-                this.loginForm.get('phoneNumber').disable();
-            }
-            else if (this.isVerifyEmailView) {
-                this.isVerifyEmailView = false;
-                this.showSocial = true;
-                this.isSignUpView = false;
-                this.isDefaultView = true;
-                this.loginForm.get('fullName').disable();
-                this.loginForm.get('password').disable();
-                this.loginForm.get('phoneNumber').disable();
+            else if (this.isSignInView || this.isSignUpView || this.isVerifyEmailView) {
+                this.openDefaultView();
             }
             else {
                 this.close();
             }
+        };
+        this.openSignInView = () => {
+            this.showResetPassword = false;
+            this.isSignUpView = false;
+            this.isSignInView = true;
+            this.loginForm.get('password').enable();
+            this.showSocial = false;
+            this.socialLoginMsg = false;
+            this.isDefaultView = false;
+        };
+        this.openSignUpView = () => {
+            this.isSignUpView = true;
+            this.isSignInView = false;
+            this.showSocial = false;
+            this.isDefaultView = false;
+            this.socialLoginMsg = false;
+            this.loginForm.get('fullName').enable();
+            this.loginForm.get('password').enable();
+            this.loginForm.get('phoneNumber').enable();
+        };
+        this.openDefaultView = () => {
+            this.isVerifyEmailView = false;
+            this.isSignUpView = false;
+            this.showResetPassword = false;
+            this.isSignInView = false;
+            this.showSocial = true;
+            this.isDefaultView = true;
+            this.loginForm.get('fullName').disable();
+            this.loginForm.get('password').disable();
+            this.loginForm.get('phoneNumber').disable();
+        };
+        this.openVerifyEmailView = () => {
+            this.isVerifyEmailView = true;
+            this.showLoader = false;
+            this.showSocial = false;
+            this.isSignUpView = false;
         };
         this.resetPassword = () => __awaiter(this, void 0, void 0, function* () {
             this.showLoader = true;

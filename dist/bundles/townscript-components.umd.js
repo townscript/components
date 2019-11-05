@@ -1050,27 +1050,16 @@
                                 newData = JSON.parse(result.data);
                             }
                             catch (e) {
+                                console.log("Exception while parsing api response : " + result);
                             }
                             if (newData && newData.isExistingUser && newData.isManualSignup) {
-                                this.loginForm.get('password').enable();
-                                this.isSignInView = true;
-                                this.isSignUpView = false;
-                                this.showSocial = false;
-                                this.socialLoginMsg = false;
-                                this.isDefaultView = false;
+                                this.openSignInView();
                             }
                             else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                                 this.socialLoginMsg = true;
                             }
                             else {
-                                this.isSignUpView = true;
-                                this.isSignInView = false;
-                                this.showSocial = false;
-                                this.isDefaultView = false;
-                                this.socialLoginMsg = false;
-                                this.loginForm.get('fullName').enable();
-                                this.loginForm.get('password').enable();
-                                this.loginForm.get('phoneNumber').enable();
+                                this.openSignUpView();
                                 this.initializeTelInput = setTimeout(function () {
                                     _this_1.initializeIntlTelInput();
                                 }, 200);
@@ -1132,7 +1121,7 @@
                 });
             }); };
             this.signUp = function () { return __awaiter(_this_1, void 0, void 0, function () {
-                var self, input, iti, formData, data, _this_2;
+                var self, input, iti, data, _this_2;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -1151,24 +1140,14 @@
                             }
                             this.showLoader = true;
                             this.loaderText = 'Please wait while we are creating your account.';
-                            formData = new FormData();
-                            formData.append('name', this.loginForm.value.fullName);
-                            formData.append('emailid', this.loginForm.value.email);
-                            formData.append('password', this.loginForm.value.password);
-                            formData.append('phone', this.correctPhoneNumber);
-                            formData.append('usertimezone', this.userTimezone);
-                            formData.append('reCaptcha', this.captchaResponse);
-                            formData.append('username', this.randomString(10, ''));
-                            if (this.rdurl) {
-                                formData.append('rdurl', this.rdurl);
-                            }
-                            return [4 /*yield*/, this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData)];
+                            return [4 /*yield*/, this.tsLoginSignupService.registerWithTownscriptWithCaptcha(this.getFormDataForRegister())];
                         case 1:
                             data = _a.sent();
                             try {
                                 data = JSON.parse(data);
                             }
                             catch (e) {
+                                console.log("Exception while parsing api response : " + data);
                             }
                             if (data['result'] == 'Error') {
                                 self.showLoader = false;
@@ -1179,14 +1158,25 @@
                                 }, 200);
                                 return [2 /*return*/];
                             }
-                            self.showLoader = false;
-                            self.isVerifyEmailView = true;
-                            self.showSocial = false;
-                            self.isSignUpView = false;
+                            self.openVerifyEmailView();
                             return [2 /*return*/];
                     }
                 });
             }); };
+            this.getFormDataForRegister = function () {
+                var formData = new FormData();
+                formData.append('name', _this_1.loginForm.value.fullName);
+                formData.append('emailid', _this_1.loginForm.value.email);
+                formData.append('password', _this_1.loginForm.value.password);
+                formData.append('phone', _this_1.correctPhoneNumber);
+                formData.append('usertimezone', _this_1.userTimezone);
+                formData.append('reCaptcha', _this_1.captchaResponse);
+                formData.append('username', _this_1.randomString(10, ''));
+                if (_this_1.rdurl) {
+                    formData.append('rdurl', _this_1.rdurl);
+                }
+                return formData;
+            };
             this.forgotPassword = function () {
                 _this_1.loginForm.get('password').disable();
                 _this_1.showResetPassword = true;
@@ -1195,38 +1185,50 @@
             };
             this.goBack = function () {
                 if (_this_1.showResetPassword) {
-                    _this_1.showResetPassword = false;
-                    _this_1.isSignUpView = false;
-                    _this_1.isSignInView = true;
-                    _this_1.loginForm.get('password').enable();
+                    _this_1.openSignInView();
                 }
-                else if (_this_1.isSignInView) {
-                    _this_1.isSignUpView = false;
-                    _this_1.showResetPassword = false;
-                    _this_1.isSignInView = false;
-                    _this_1.showSocial = true;
-                    _this_1.isDefaultView = true;
-                }
-                else if (_this_1.isSignUpView) {
-                    _this_1.isSignUpView = false;
-                    _this_1.showSocial = true;
-                    _this_1.isDefaultView = true;
-                    _this_1.loginForm.get('fullName').disable();
-                    _this_1.loginForm.get('password').disable();
-                    _this_1.loginForm.get('phoneNumber').disable();
-                }
-                else if (_this_1.isVerifyEmailView) {
-                    _this_1.isVerifyEmailView = false;
-                    _this_1.showSocial = true;
-                    _this_1.isSignUpView = false;
-                    _this_1.isDefaultView = true;
-                    _this_1.loginForm.get('fullName').disable();
-                    _this_1.loginForm.get('password').disable();
-                    _this_1.loginForm.get('phoneNumber').disable();
+                else if (_this_1.isSignInView || _this_1.isSignUpView || _this_1.isVerifyEmailView) {
+                    _this_1.openDefaultView();
                 }
                 else {
                     _this_1.close();
                 }
+            };
+            this.openSignInView = function () {
+                _this_1.showResetPassword = false;
+                _this_1.isSignUpView = false;
+                _this_1.isSignInView = true;
+                _this_1.loginForm.get('password').enable();
+                _this_1.showSocial = false;
+                _this_1.socialLoginMsg = false;
+                _this_1.isDefaultView = false;
+            };
+            this.openSignUpView = function () {
+                _this_1.isSignUpView = true;
+                _this_1.isSignInView = false;
+                _this_1.showSocial = false;
+                _this_1.isDefaultView = false;
+                _this_1.socialLoginMsg = false;
+                _this_1.loginForm.get('fullName').enable();
+                _this_1.loginForm.get('password').enable();
+                _this_1.loginForm.get('phoneNumber').enable();
+            };
+            this.openDefaultView = function () {
+                _this_1.isVerifyEmailView = false;
+                _this_1.isSignUpView = false;
+                _this_1.showResetPassword = false;
+                _this_1.isSignInView = false;
+                _this_1.showSocial = true;
+                _this_1.isDefaultView = true;
+                _this_1.loginForm.get('fullName').disable();
+                _this_1.loginForm.get('password').disable();
+                _this_1.loginForm.get('phoneNumber').disable();
+            };
+            this.openVerifyEmailView = function () {
+                _this_1.isVerifyEmailView = true;
+                _this_1.showLoader = false;
+                _this_1.showSocial = false;
+                _this_1.isSignUpView = false;
             };
             this.resetPassword = function () { return __awaiter(_this_1, void 0, void 0, function () {
                 var resp;
