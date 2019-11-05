@@ -26,10 +26,13 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     @Input() rdurl: any;
     @Input() showSocial: any = true;
     @Output() closeDialog = new EventEmitter();
+
+
     @ViewChild('recaptchaRef', { read: true, static: true })
+    recaptchaRef: RecaptchaComponent;
+
     captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
 
-    recaptchaRef: RecaptchaComponent;
     show = false;
     showPassword = false;
     isDefaultView = true;
