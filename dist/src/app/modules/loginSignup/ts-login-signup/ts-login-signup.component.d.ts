@@ -17,8 +17,8 @@ export declare class TsLoginSignupComponent implements OnInit, OnDestroy {
     rdurl: any;
     showSocial: any;
     closeDialog: EventEmitter<{}>;
-    captchaToken: any;
     recaptchaRef: RecaptchaComponent;
+    captchaToken: any;
     show: boolean;
     showPassword: boolean;
     isDefaultView: boolean;

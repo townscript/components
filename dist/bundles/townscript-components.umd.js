@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('text-overflow-clamp'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar'), require('ng-recaptcha')) :
-    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'text-overflow-clamp', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar', 'ng-recaptcha'], factory) :
-    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.clampLibImported, global.elements, global.ng.material.core, global.ng.material['snack-bar'], global.ngRecaptcha));
-}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, clampLibImported, elements, core$1, snackBar, ngRecaptcha) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/material'), require('luxon'), require('rxjs'), require('@angular/common'), require('@angular/common/http'), require('@angular/material/dialog'), require('algoliasearch'), require('rxjs/operators'), require('@angular/forms'), require('ng-recaptcha'), require('text-overflow-clamp'), require('@townscript/elements'), require('@angular/material/core'), require('@angular/material/snack-bar')) :
+    typeof define === 'function' && define.amd ? define('@townscript/components', ['exports', '@angular/core', '@angular/material', 'luxon', 'rxjs', '@angular/common', '@angular/common/http', '@angular/material/dialog', 'algoliasearch', 'rxjs/operators', '@angular/forms', 'ng-recaptcha', 'text-overflow-clamp', '@townscript/elements', '@angular/material/core', '@angular/material/snack-bar'], factory) :
+    (global = global || self, factory((global.townscript = global.townscript || {}, global.townscript.components = {}), global.ng.core, global.ng.material, global.luxon, global.rxjs, global.ng.common, global.ng.common.http, global.ng.material.dialog, global.algoliaSearchImported, global.rxjs.operators, global.ng.forms, global.ngRecaptcha, global.clampLibImported, global.elements, global.ng.material.core, global.ng.material['snack-bar']));
+}(this, function (exports, core, material, luxon, rxjs, common, http, dialog, algoliaSearchImported, operators, forms, ngRecaptcha, clampLibImported, elements, core$1, snackBar) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1319,8 +1319,8 @@
         ], TsLoginSignupComponent.prototype, "closeDialog", void 0);
         __decorate([
             core.ViewChild('recaptchaRef', { read: true, static: true }),
-            __metadata("design:type", Object)
-        ], TsLoginSignupComponent.prototype, "captchaToken", void 0);
+            __metadata("design:type", ngRecaptcha.RecaptchaComponent)
+        ], TsLoginSignupComponent.prototype, "recaptchaRef", void 0);
         TsLoginSignupComponent = __decorate([
             core.Component({
                 selector: 'app-ts-login-signup',

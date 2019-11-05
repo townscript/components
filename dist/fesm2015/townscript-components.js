@@ -9,11 +9,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
 import { debounceTime, take } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import * as clampLibImported from 'text-overflow-clamp';
 import { TsFormsModule } from '@townscript/elements';
 import { MatRippleModule as MatRippleModule$1 } from '@angular/material/core';
 import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snack-bar';
-import { RecaptchaModule } from 'ng-recaptcha';
 
 const config = {
     baseUrl: '',
@@ -1140,8 +1140,8 @@ __decorate([
 ], TsLoginSignupComponent.prototype, "closeDialog", void 0);
 __decorate([
     ViewChild('recaptchaRef', { read: true, static: true }),
-    __metadata("design:type", Object)
-], TsLoginSignupComponent.prototype, "captchaToken", void 0);
+    __metadata("design:type", RecaptchaComponent)
+], TsLoginSignupComponent.prototype, "recaptchaRef", void 0);
 TsLoginSignupComponent = __decorate([
     Component({
         selector: 'app-ts-login-signup',
