@@ -9,11 +9,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import * as algoliaSearchImported from 'algoliasearch';
 import { debounceTime, take } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha';
 import * as clampLibImported from 'text-overflow-clamp';
 import { TsFormsModule } from '@townscript/elements';
 import { MatRippleModule as MatRippleModule$1 } from '@angular/material/core';
 import { MatSnackBarModule as MatSnackBarModule$1 } from '@angular/material/snack-bar';
-import { RecaptchaModule } from 'ng-recaptcha';
 
 const config = {
     baseUrl: '',
@@ -191,11 +191,28 @@ FollowService = __decorate([
     __metadata("design:paramtypes", [HttpClient, UserService])
 ], FollowService);
 
+// This file can be replaced during build by using the `fileReplacements` array.
+// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
+// The list of file replacements can be found in `angular.json`.
+const environment = {
+    production: false,
+    IPINFO_ACCESS_TOKEN: 'a27cfbcc77e854',
+};
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
 let PlaceService = class PlaceService {
-    constructor(cookieService, document, platformId) {
+    constructor(cookieService, document, platformId, http) {
         this.cookieService = cookieService;
         this.document = document;
         this.platformId = platformId;
+        this.http = http;
         this.currentPlace$ = new BehaviorSubject(null);
         this.place = this.currentPlace$.asObservable();
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
@@ -205,6 +222,13 @@ let PlaceService = class PlaceService {
             if (location != null && location.length > 0) {
                 this.updatePlace(JSON.parse(location));
             }
+            else {
+                this.getLocationFromIpInfo().then(ipInfoData => {
+                    console.log(ipInfoData);
+                    const data = { 'city': ipInfoData['city'], 'country': ipInfoData['countryCode'].toLowerCase(), 'currentPlace': ipInfoData['city'] };
+                    this.updatePlace(data);
+                });
+            }
         }
     }
     updatePlace(data) {
@@ -212,15 +236,42 @@ let PlaceService = class PlaceService {
         this.cookieService.setCookie('location', data, 100000000, '/');
         this.currentPlace$.next(data);
     }
+    getLocationFromIpInfo() {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (isPlatformBrowser(this.platformId)) {
+                const localData = localStorage.getItem('ipInfoData');
+                let ipInfoData;
+                if (!localData) {
+                    console.log('Calling ip info!');
+                    const ipInfoJson = yield this.getJsonFromIpInfo();
+                    ipInfoData = {
+                        'lat': ipInfoJson['loc'].split(',')[0],
+                        'lng': ipInfoJson['loc'].split(',')[1],
+                        'country': ipInfoJson['countryCode'].toLowerCase(),
+                        'city': ipInfoJson['city'].toLowerCase()
+                    };
+                    localStorage.setItem('ipInfoData', JSON.stringify(ipInfoData));
+                }
+                else {
+                    ipInfoData = JSON.parse(localData);
+                }
+                return ipInfoData;
+            }
+        });
+    }
+    getJsonFromIpInfo() {
+        return this.http.get('//ipinfo.io/json?token=' + environment.IPINFO_ACCESS_TOKEN + '').toPromise();
+    }
 };
-PlaceService.ngInjectableDef = ɵɵdefineInjectable({ factory: function PlaceService_Factory() { return new PlaceService(ɵɵinject(CookieService), ɵɵinject(DOCUMENT), ɵɵinject(PLATFORM_ID)); }, token: PlaceService, providedIn: "root" });
+PlaceService.ngInjectableDef = ɵɵdefineInjectable({ factory: function PlaceService_Factory() { return new PlaceService(ɵɵinject(CookieService), ɵɵinject(DOCUMENT), ɵɵinject(PLATFORM_ID), ɵɵinject(HttpClient)); }, token: PlaceService, providedIn: "root" });
 PlaceService = __decorate([
     Injectable({
         providedIn: 'root'
     }),
     __param(1, Inject(DOCUMENT)),
     __param(2, Inject(PLATFORM_ID)),
-    __metadata("design:paramtypes", [CookieService, Object, InjectionToken])
+    __metadata("design:paramtypes", [CookieService, Object, InjectionToken,
+        HttpClient])
 ], PlaceService);
 
 let HeaderService = class HeaderService {
@@ -233,7 +284,7 @@ let HeaderService = class HeaderService {
         };
     }
     getPopularCities(countryCode) {
-        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode);
+        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode).toPromise();
     }
 };
 HeaderService = __decorate([
@@ -444,12 +495,28 @@ let TsHeaderComponent = class TsHeaderComponent {
                 this.userMenu = false;
             }
         };
-        this.openLogin = () => {
+        this.openLogin = (callback) => {
             const dialogConfig = new MatDialogConfig();
             dialogConfig.disableClose = false;
             dialogConfig.autoFocus = true;
             dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-            this.dialog.open(LoginModalComponent, dialogConfig);
+            const loginDialog = this.dialog.open(LoginModalComponent, dialogConfig);
+            if (callback) {
+                loginDialog.afterClosed().subscribe(result => {
+                    callback();
+                });
+            }
+        };
+        this.navigateToDashboard = () => {
+            window.location.href = this.host + 'dashboard/create-event';
+        };
+        this.createEventClick = () => {
+            if (this.userService.user.source['value'] != undefined) {
+                this.navigateToDashboard();
+            }
+            else {
+                this.openLogin(this.navigateToDashboard);
+            }
         };
         this.navigateToMobileSearch = () => {
             this.router.navigate(['/mobile/search']);
@@ -514,7 +581,7 @@ __decorate([
 TsHeaderComponent = __decorate([
     Component({
         selector: 'ts-header',
-        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new max-w-full w-screen fixed flex items-center\" [class.shadow]=\"shadow\"\n    *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img (click)=\"goToHomePage()\" *ngIf=\"Components.indexOf('icon')>-1\" class=\"ts-logo cursor-pointer\"\n                src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 max-50 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <!-- <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" /> -->\n            <div *ngIf=\"backState\" (click)=\"goBack()\"\n                class=\"rounded-full flex py-1 px-3 mr-1 justify-center items-center\" matRipple>\n                <i class=\"mdi mdi-arrow-left text-2xl color-blue\"></i>\n            </div>\n            <i *ngIf=\"Components.indexOf('mobileCitySearch')>-1 && !backState\"\n                class=\"mdi mdi-map-marker color-blue text-2xl mr-2\"></i>\n            <div *ngIf=\"Components.indexOf('mobileCitySearch')>-1\" #citySuggestions\n                class=\"city-selection text-lg cursor-pointer w-full\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center w-full\" matRipple>\n                    <span class=\"mr-1 text-gray-700 truncate\">{{activePlace}}</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [(cityPopupActive)]=\"cityPopupActive\" [(activePlace)]=\"activePlace\"\n                    [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search *ngIf=\"Components.indexOf('eventSearch')>-1\" class=\"w-full\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8\">\n            <a [href]=\"host+'dashboard/create-event'\">\n                <div *ngIf=\"Components.indexOf('createEventBtn')>-1\"\n                    class=\"create-btn cursor-pointer flex h-full justify-center items-center\">\n                    <span class=\"text-base mr-2\">CREATE EVENT</span>\n                    <i class=\"mdi mdi-ticket text-2xl\"></i>\n                </div>\n            </a>\n        </div>\n        <div #userMenuEle *ngIf=\"Components.indexOf('userMenu')>-1\"\n            class=\"position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer px-2\" (click)=\"openLogin()\" *ngIf=\"!user\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user\" matRipple>\n                <img class=\"rounded-full mr-2\" width=\"36\" [src]=\"s3BucketUrl+'/images/'+user?.s3imagename\" />\n                <i class=\"mdi mdi-chevron-down text-xl text-gray-700\" [class.rotate-180]=\"userMenu\"></i>\n                <!-- <span>{{user.user}}</span> -->\n            </div>\n            <div class=\"user-menu position-absolute shadow-md px-2 enter-slide-bottom\" *ngIf=\"userMenu\">\n                <app-user-menu [user]=\"user\" (close)=\"userMenu=!userMenu\"></app-user-menu>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n\n        <!-- Mobile Menu -->\n        <div class=\"sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center\">\n            <div *ngIf=\"Components.indexOf('mobileSearch')>-1\" class=\"rounded-full flex items-center\" matRipple\n                (click)=\"navigateToMobileSearch()\">\n                <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            </div>\n            <div *ngIf=\"Components.indexOf('mobileProfile')>-1\" class=\"rounded-full flex items-center\" matRipple>\n                <i class=\"mdi mdi-account text-2xl  ml-2 color-blue\" matRipple (click)=\"openMyProfileComponent()\"></i>\n            </div>\n        </div>\n    </div>\n</nav>\n<nav class=\"ts-header-new max-w-full w-screen flex items-center\" [class.shadow]=\"shadow\" *ngIf=\"source=='marketplace'\">\n\n</nav>",
+        template: "<nav class=\"ts-header flex align-items-center\" *ngIf=\"source!='marketplace'\">\n    <div class=\"container flex align-items-center\">\n        <div class=\"navbar-header\">\n            <a class=\"navbar-brand flex align-items-center\" href=\"/\">\n                <img src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                    title=\"Townscript Event Ticketing Logo\" />\n            </a>\n        </div>\n        <div id=\"navbar\" class=\"nav-right hidden-xs\">\n            <ul>\n                <li>\n                    <a href=\"/signup\" ts-data-analytics prop-event=\"click\" eventLabel=\"Get Started\"\n                        prop-clicked-location=\"Animated Header\">\n                        <!-- <ts-button text=\"Create Event\"></ts-button> -->\n                    </a>\n                </li>\n            </ul>\n        </div>\n    </div>\n</nav>\n\n<nav class=\"ts-header-new max-w-full w-screen fixed flex items-center\" [class.shadow]=\"shadow\"\n    *ngIf=\"source=='marketplace'\">\n    <div class=\"ts-container flex items-center w-full\">\n        <div class=\"hidden md:block lg:w-1/6\">\n            <img (click)=\"goToHomePage()\" *ngIf=\"Components.indexOf('icon')>-1\" class=\"ts-logo cursor-pointer\"\n                src=\"assets/images/ts-logo.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" />\n        </div>\n        <div class=\"sm:w-1/4 max-50 flex md:hidden lg:hidden items-center\">\n            <!-- <i class=\"mdi mdi-menu mr-3 text-3xl color-blue\"></i> -->\n            <!-- <app-hamburger-menu class=\"mr-3\"></app-hamburger-menu> -->\n            <!-- <img class=\"ts-logo mr-3\" src=\"assets/images/ts-icon.svg\" alt=\"Townscript Event Ticketing Logo\"\n                title=\"Townscript Event Ticketing Logo\" /> -->\n            <div *ngIf=\"backState\" (click)=\"goBack()\"\n                class=\"rounded-full flex py-1 px-3 mr-1 justify-center items-center\" matRipple>\n                <i class=\"mdi mdi-arrow-left text-2xl color-blue\"></i>\n            </div>\n            <i *ngIf=\"Components.indexOf('mobileCitySearch')>-1 && !backState\"\n                class=\"mdi mdi-map-marker color-blue text-2xl mr-2\"></i>\n            <div *ngIf=\"Components.indexOf('mobileCitySearch')>-1\" #citySuggestions\n                class=\"city-selection text-lg cursor-pointer w-full\" (click)=\"cityPopupActive=true\">\n                <div class=\"flex items-center w-full\" matRipple>\n                    <span class=\"mr-1 text-gray-700 truncate\">{{activePlace}}</span>\n                    <i class=\"mdi mdi-menu-down color-blue\"></i>\n                </div>\n                <app-city-search-popup [(cityPopupActive)]=\"cityPopupActive\" [(activePlace)]=\"activePlace\"\n                    [showArrow]=\"false\" class=\"popup\" *ngIf=\"cityPopupActive\">\n                </app-city-search-popup>\n            </div>\n        </div>\n        <div class=\"lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex\">\n            <app-search *ngIf=\"Components.indexOf('eventSearch')>-1\" class=\"w-full\"></app-search>\n        </div>\n        <div class=\"invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue\">\n            <!-- <i class=\"active text-xl mdi mdi-book-open mr-4\"></i>\n            <i class=\"mdi mdi-map-legend mr-4\"></i>\n            <i class=\"mdi mdi-calendar-today mr-4\"></i> -->\n        </div>\n        <div class=\"lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8\">\n            <div *ngIf=\"Components.indexOf('createEventBtn')>-1\" (click)=\"createEventClick()\"\n                class=\"create-btn cursor-pointer flex h-full justify-center items-center\">\n                <span class=\"text-base mr-2\">CREATE EVENT</span>\n                <i class=\"mdi mdi-ticket text-2xl\"></i>\n            </div>\n        </div>\n        <div #userMenuEle *ngIf=\"Components.indexOf('userMenu')>-1\"\n            class=\"position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center\">\n            <div class=\"flex items-center cursor-pointer px-2\" (click)=\"openLogin()\" *ngIf=\"!user\" matRipple>\n                <i class=\"mdi mdi-account-circle text-4xl mr-2 color-blue\"></i>\n                <span>Login | Signup</span>\n            </div>\n            <div class=\"flex items-center cursor-pointer\" (click)=\"userMenu=!userMenu\" *ngIf=\"user\" matRipple>\n                <img class=\"rounded-full mr-2\" width=\"36\" [src]=\"s3BucketUrl+'/images/'+user?.s3imagename\" />\n                <i class=\"mdi mdi-chevron-down text-xl text-gray-700\" [class.rotate-180]=\"userMenu\"></i>\n                <!-- <span>{{user.user}}</span> -->\n            </div>\n            <div class=\"user-menu position-absolute shadow-md px-2 enter-slide-bottom\" *ngIf=\"userMenu\">\n                <app-user-menu [user]=\"user\" (close)=\"userMenu=!userMenu\"></app-user-menu>\n            </div>\n            <!-- <ts-button text=\"Login | Signup\" class=\"text-base\"></ts-button> -->\n        </div>\n\n        <!-- Mobile Menu -->\n        <div class=\"sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center\">\n            <div *ngIf=\"Components.indexOf('mobileSearch')>-1\" class=\"rounded-full flex items-center\" matRipple\n                (click)=\"navigateToMobileSearch()\">\n                <i class=\"mdi mdi-magnify text-2xl ml-2 mr-2 color-blue\"></i>\n            </div>\n            <div *ngIf=\"Components.indexOf('mobileProfile')>-1\" class=\"rounded-full flex items-center\" matRipple>\n                <i class=\"mdi mdi-account text-2xl  ml-2 color-blue\" matRipple (click)=\"openMyProfileComponent()\"></i>\n            </div>\n        </div>\n    </div>\n</nav>\n<nav class=\"ts-header-new max-w-full w-screen flex items-center\" [class.shadow]=\"shadow\" *ngIf=\"source=='marketplace'\">\n\n</nav>",
         styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.ts-header{min-height:85px;background-color:#fff;width:100%;position:fixed;top:0;z-index:1000;box-shadow:0 15px 40px -20px rgba(40,44,63,.2)}.ts-header .container{display:-webkit-box;display:flex;width:100%;padding:0 10%}.ts-header .container .navbar-header .navbar-brand img{width:165px}.ts-header .container .nav-right{margin-left:auto}.ts-header .container .nav-right li,.ts-header .container .nav-right ul{margin-bottom:0}.ts-header-new{min-height:56px;background-color:#f7f7f7;top:0;z-index:1000}.ts-header-new .shadow{box-shadow:0 2px 4px 0 rgba(0,0,0,.11)}.ts-header-new .ts-logo{height:28px}.ts-header-new .popup{position:absolute;top:90%;width:100%;left:0}.ts-header-new .max-50{max-width:50%}@media (min-width:991px){.ts-container{padding:0 80px!important}.ts-header-new{min-height:68px}.ts-header-new .ts-logo{height:35px}.ts-header-new .view-type i{opacity:.8;padding:3px 9px}.ts-header-new .view-type i.active{opacity:1;background:#3782c4;border-radius:50%;color:#fff;box-shadow:0 0 5px 0 #8ec0ec}.ts-header-new .create-btn{width:100%;min-width:200px;border-radius:20.5px;color:#fff;white-space:nowrap;background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);box-shadow:0 2px 4px 0 #d4b1f0;-webkit-transition:.1s;transition:.1s}.ts-header-new .create-btn:hover{box-shadow:0 4px 6px 0 #d4b1f0;-webkit-transform:translateY(-2px);transform:translateY(-2px)}.ts-header-new .user-menu{position:absolute;top:145%;width:142%;left:-42%;background:#fff}.ts-header-new .user-menu:before{content:\" \";width:0;height:0;position:absolute;top:-11px;left:84%;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:15px solid #fff;-webkit-filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09));filter:drop-shadow(0 -2px 1px rgba(0, 0, 0, .09))}}:host ::ng-deep .mat-button-wrapper{font-size:16px!important}"]
     }),
     __metadata("design:paramtypes", [PlaceService, MatDialog, UserService])
@@ -687,7 +754,8 @@ SearchComponent = __decorate([
 ], SearchComponent);
 
 let CitySearchPopupComponent = class CitySearchPopupComponent {
-    constructor(headerService, datepipe) {
+    constructor(placeService, headerService, datepipe) {
+        this.placeService = placeService;
         this.headerService = headerService;
         this.datepipe = datepipe;
         this.showArrow = true;
@@ -737,15 +805,19 @@ let CitySearchPopupComponent = class CitySearchPopupComponent {
                 this.cityQueryChanged.next(text);
             }
         };
-        this.getPopularPlaces = () => {
-            this.headerService.getPopularCities(this.urlArray[0]).subscribe(res => {
-                this.popularPlaces = res['data'].slice(0, 6).map(ele => {
-                    ele.type = 'city';
-                    ele.cityCode = ele.code;
-                    return ele;
-                });
-            });
-        };
+        this.getPopularPlaces = () => __awaiter(this, void 0, void 0, function* () {
+            this.placeService.place.subscribe((res) => __awaiter(this, void 0, void 0, function* () {
+                if (res) {
+                    const country = JSON.parse(res)['country'];
+                    const data = yield this.headerService.getPopularCities(country);
+                    this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+                        ele.type = 'city';
+                        ele.cityCode = ele.code;
+                        return ele;
+                    });
+                }
+            }));
+        });
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
         if (this.router.url) {
             this.urlArray = this.router.url.replace('/', '').split('/');
@@ -792,7 +864,7 @@ CitySearchPopupComponent = __decorate([
         template: "<div class=\"city-suggestions enter-slide-bottom\" [class.arrow]=\"showArrow\">\n    <div class=\"suggestions-container\">\n        <ul>\n            <li [class.active]=\"citySearchActive\" class=\"p-2 capitalize cursor-pointer flex items-center truncate\">\n                <i class=\"mdi mdi-magnify mr-2\"></i>\n                <input #cityInput autocomplete=\"off\" id=\"cityInput\" type=\"text\" placeholder=\"Type here to search...\"\n                    [(ngModel)]=\"cityQuery\" (ngModelChange)=\"searchCity($event)\" (focus)=\"citySearchActive=true\"\n                    class=\"w-full bg-transparent text-sm\" />\n                <i *ngIf=\"cityLoading\" class=\"mdi mdi-loading mdi-spin\"></i>\n            </li>\n            <li matRipple (click)=\"placeChanged(place);\"\n                class=\"p-2 capitalize cursor-pointer flex items-center truncate\"\n                *ngFor=\"let place of placeSearchResults\">\n                <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                <span class=\"text-sm flex items-end truncate\">\n                    <span class=\"mr-1 whitespace-no-wrap\">{{place.name}} </span>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.city && place?.city.length>0 && place?.type!='city'\">\n                        {{place.city}},\n                    </small>\n                    <small class=\"text-2xs text-gray-600\"\n                        *ngIf=\"place.country && place?.country.length>0 && place?.type!='country'\">{{place.country}}\n                    </small>\n                    <small class=\"text-2xs truncate text-gray-600\">{{place.secondaryText}}</small>\n                </span>\n            </li>\n            <ng-container matRipple *ngIf=\"!placeSearchResults || placeSearchResults.length==0\">\n                <li (click)=\"placeChanged(city);\" class=\"p-2 px-4 cursor-pointer capitalize\"\n                    *ngFor=\"let city of popularPlaces\">\n                    <i class=\"mdi mdi-map-marker text-base mr-1 color-blue\"></i>\n                    <span class=\"text-base\">{{city.name}}</span>\n                </li>\n            </ng-container>\n        </ul>\n    </div>\n</div>",
         styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.city-suggestions{width:100%;background:#fafafa;position:absolute;box-shadow:0 5px 10px 0 rgba(0,0,0,.15)}.city-suggestions .mdi-spin::before{-webkit-animation-duration:.5s;animation-duration:.5s}.city-suggestions li.active,.city-suggestions li:hover{background:#ededed}.city-suggestions.arrow{border-top:3px solid #3782c4}.city-suggestions.arrow:before{content:\" \";width:10px;position:absolute;top:-7px;left:88%;height:10px;-webkit-filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));filter:drop-shadow(0 -5px 10px rgba(0, 0, 0, .15));background:#ededed;-webkit-transform:rotate(45deg);transform:rotate(45deg);border-top:3px solid #3782c4;border-left:3px solid #3782c4}@media (min-width:991px){.city-suggestions{width:140%;left:-40%}}"]
     }),
-    __metadata("design:paramtypes", [HeaderService, DatePipe])
+    __metadata("design:paramtypes", [PlaceService, HeaderService, DatePipe])
 ], CitySearchPopupComponent);
 
 let TsLoginSignupService = class TsLoginSignupService {
@@ -900,27 +972,16 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
                 newData = JSON.parse(result.data);
             }
             catch (e) {
+                console.log("Exception while parsing api response : " + result);
             }
             if (newData && newData.isExistingUser && newData.isManualSignup) {
-                this.loginForm.get('password').enable();
-                this.isSignInView = true;
-                this.isSignUpView = false;
-                this.showSocial = false;
-                this.socialLoginMsg = false;
-                this.isDefaultView = false;
+                this.openSignInView();
             }
             else if (newData && newData.isExistingUser && !newData.isManualSignup) {
                 this.socialLoginMsg = true;
             }
             else {
-                this.isSignUpView = true;
-                this.isSignInView = false;
-                this.showSocial = false;
-                this.isDefaultView = false;
-                this.socialLoginMsg = false;
-                this.loginForm.get('fullName').enable();
-                this.loginForm.get('password').enable();
-                this.loginForm.get('phoneNumber').enable();
+                this.openSignUpView();
                 this.initializeTelInput = setTimeout(() => {
                     this.initializeIntlTelInput();
                 }, 200);
@@ -985,6 +1046,25 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             }
             this.showLoader = true;
             this.loaderText = 'Please wait while we are creating your account.';
+            let data = yield this.tsLoginSignupService.registerWithTownscriptWithCaptcha(this.getFormDataForRegister());
+            try {
+                data = JSON.parse(data);
+            }
+            catch (e) {
+                console.log("Exception while parsing api response : " + data);
+            }
+            if (data['result'] == 'Error') {
+                self.showLoader = false;
+                self.signUpErrMessage = data['data'];
+                let _this = self;
+                setTimeout(function () {
+                    _this.initializeIntlTelInput();
+                }, 200);
+                return;
+            }
+            self.openVerifyEmailView();
+        });
+        this.getFormDataForRegister = () => {
             const formData = new FormData();
             formData.append('name', this.loginForm.value.fullName);
             formData.append('emailid', this.loginForm.value.email);
@@ -996,26 +1076,8 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
             if (this.rdurl) {
                 formData.append('rdurl', this.rdurl);
             }
-            let data = yield this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData);
-            try {
-                data = JSON.parse(data);
-            }
-            catch (e) {
-            }
-            if (data['result'] == 'Error') {
-                self.showLoader = false;
-                self.signUpErrMessage = data['data'];
-                let _this = self;
-                setTimeout(function () {
-                    _this.initializeIntlTelInput();
-                }, 200);
-                return;
-            }
-            self.showLoader = false;
-            self.isVerifyEmailView = true;
-            self.showSocial = false;
-            self.isSignUpView = false;
-        });
+            return formData;
+        };
         this.forgotPassword = () => {
             this.loginForm.get('password').disable();
             this.showResetPassword = true;
@@ -1024,38 +1086,50 @@ let TsLoginSignupComponent = class TsLoginSignupComponent {
         };
         this.goBack = () => {
             if (this.showResetPassword) {
-                this.showResetPassword = false;
-                this.isSignUpView = false;
-                this.isSignInView = true;
-                this.loginForm.get('password').enable();
+                this.openSignInView();
             }
-            else if (this.isSignInView) {
-                this.isSignUpView = false;
-                this.showResetPassword = false;
-                this.isSignInView = false;
-                this.showSocial = true;
-                this.isDefaultView = true;
-            }
-            else if (this.isSignUpView) {
-                this.isSignUpView = false;
-                this.showSocial = true;
-                this.isDefaultView = true;
-                this.loginForm.get('fullName').disable();
-                this.loginForm.get('password').disable();
-                this.loginForm.get('phoneNumber').disable();
-            }
-            else if (this.isVerifyEmailView) {
-                this.isVerifyEmailView = false;
-                this.showSocial = true;
-                this.isSignUpView = false;
-                this.isDefaultView = true;
-                this.loginForm.get('fullName').disable();
-                this.loginForm.get('password').disable();
-                this.loginForm.get('phoneNumber').disable();
+            else if (this.isSignInView || this.isSignUpView || this.isVerifyEmailView) {
+                this.openDefaultView();
             }
             else {
                 this.close();
             }
+        };
+        this.openSignInView = () => {
+            this.showResetPassword = false;
+            this.isSignUpView = false;
+            this.isSignInView = true;
+            this.loginForm.get('password').enable();
+            this.showSocial = false;
+            this.socialLoginMsg = false;
+            this.isDefaultView = false;
+        };
+        this.openSignUpView = () => {
+            this.isSignUpView = true;
+            this.isSignInView = false;
+            this.showSocial = false;
+            this.isDefaultView = false;
+            this.socialLoginMsg = false;
+            this.loginForm.get('fullName').enable();
+            this.loginForm.get('password').enable();
+            this.loginForm.get('phoneNumber').enable();
+        };
+        this.openDefaultView = () => {
+            this.isVerifyEmailView = false;
+            this.isSignUpView = false;
+            this.showResetPassword = false;
+            this.isSignInView = false;
+            this.showSocial = true;
+            this.isDefaultView = true;
+            this.loginForm.get('fullName').disable();
+            this.loginForm.get('password').disable();
+            this.loginForm.get('phoneNumber').disable();
+        };
+        this.openVerifyEmailView = () => {
+            this.isVerifyEmailView = true;
+            this.showLoader = false;
+            this.showSocial = false;
+            this.isSignUpView = false;
         };
         this.resetPassword = () => __awaiter(this, void 0, void 0, function* () {
             this.showLoader = true;
@@ -1133,8 +1207,8 @@ __decorate([
 ], TsLoginSignupComponent.prototype, "closeDialog", void 0);
 __decorate([
     ViewChild('recaptchaRef', { read: true, static: true }),
-    __metadata("design:type", Object)
-], TsLoginSignupComponent.prototype, "captchaToken", void 0);
+    __metadata("design:type", RecaptchaComponent)
+], TsLoginSignupComponent.prototype, "recaptchaRef", void 0);
 TsLoginSignupComponent = __decorate([
     Component({
         selector: 'app-ts-login-signup',
@@ -1165,24 +1239,57 @@ EmailSentSVGComponent = __decorate([
 
 let RangeDatePipe = class RangeDatePipe {
     constructor() {
-        this.transform = (rangeDates, args) => {
+        this.days = { 'SU': 'Sun', 'MO': 'Mon', 'TU': 'Tue', 'WE': 'Wed', 'TH': 'Thu', 'FR': 'Fri', 'SA': 'Sat' };
+        this.transform = (rangeDates, isRecurrent, args) => {
             if (rangeDates) {
-                const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
-                const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
-                const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
-                const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
-                if (year[0] !== year[1]) {
-                    return month[0] + ' ' + date[0] + '\'' + year[0] + ' - ' + month[1] + ' ' + date[1] + '\'' + year[1] + ' | ' + time;
-                }
-                else {
-                    if ((date[0] === date[1]) && (month[0] === month[1])) {
-                        return month[0] + ' ' + date[0] + ' | ' + time;
-                    }
-                    else if ((month[0] !== month[1])) {
-                        return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+                // for Recurring events
+                if (isRecurrent && args['startTime'] != undefined) {
+                    const startTime = args['startTime'];
+                    const freq = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
+                    let freqLabel = 'Daily';
+                    //custom date selected
+                    if (args['recurrenceRuleArray'][0].indexOf("RDATE") > -1) {
+                        freqLabel = 'Multiple Dates';
                     }
                     else {
-                        return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                        // predefined R Rule
+                        if (freq.toLowerCase() == 'Weekly'.toLowerCase()) {
+                            let byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
+                            if (byDays.length > 2) {
+                                freqLabel = 'Multiple Dates';
+                            }
+                            else {
+                                freqLabel = 'Every ';
+                                for (let index = 0; index < byDays.length; index++) {
+                                    freqLabel += this.days[byDays[index]];
+                                    if (index < (byDays.length - 1)) {
+                                        freqLabel += ', ';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return freqLabel + ' | ' + startTime;
+                }
+                else {
+                    // for other events or fallback
+                    const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
+                    const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
+                    const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
+                    const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+                    if (year[0] !== year[1]) {
+                        return month[0] + ' ' + date[0] + '\'' + year[0] + ' - ' + month[1] + ' ' + date[1] + '\'' + year[1] + ' | ' + time;
+                    }
+                    else {
+                        if ((date[0] === date[1]) && (month[0] === month[1])) {
+                            return month[0] + ' ' + date[0] + ' | ' + time;
+                        }
+                        else if ((month[0] !== month[1])) {
+                            return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+                        }
+                        else {
+                            return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                        }
                     }
                 }
             }
@@ -1366,8 +1473,8 @@ __decorate([
 TsListingCardComponent = __decorate([
     Component({
         selector: 'ts-listing-card',
-        template: "<div class=\"listing-container cursor-pointer\"\n    [ngClass]=\"gridType=='list' ? 'rounded  my-4 mx-auto  flex' :'bg-white lg:flex lg:flex-col my-1 rounded w-full'\">\n    <div class=\"flex-none overflow-hidden text-center event-image\"\n        [ngClass]=\"gridType=='list' ? 'h-auto w-4/12 lg:w-2/5' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '\"\n        [style.background-image]=\"eventData.cardImageUrl?'url(' + eventData.cardImageUrl + ')':'url(' + defaultCardImageUrl + ')'\">\n    </div>\n    <div class=\"flex flex-col justify-between leading-normal listing-container--content\" [ngClass]=\"gridType=='list' ?' w-8/12  md:w-full'\n                     : ' w-full'\">\n        <div class=\"px-2 md:px-4 pt-3 pb-1\">\n            <div class=\"flex flex-row justify-between align-items-center\">\n                <span *ngIf=\"urgencyMessage \" class=\"text-md bg-orange-500 rounded text-md px-2 mr-2\">Featured</span>\n                <span *ngIf=\"urgencyMessage\" class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span *ngIf=\"urgencyMessage\" class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-base md:text-xl mb-1\" [clamp]=\"2\">{{eventData.name | titlecase}}\n            </div>\n            <div class=\"md:flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom\"></i>\n                    <span\n                        class=\"text-gray-700 font-bold\">{{[eventData.startTime, eventData.endTime] | dateRange}}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom\"></i>\n                    <span class=\"text-gray-700 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <!-- <div *ngIf=\"featuredCard\" class=\"text-sm\">Heres goes some 2 line data which describes about the event.</div> -->\n            <div class=\"py-2 pr-2 flex justify-between\">\n                <div *ngIf=\"moreIcons\" id=\"set-of-icons\" class=\"flex\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                </div>\n                <div [ngClass]=\"gridType=='list' ? 'hidden md:flex' : 'flex'\">\n                    <span class=\"pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                        *ngFor=\"let key of eventData.keywords\"\n                        (click)=\"navigateToListing(key.topicKeywordCode)\">#{{key.topicKeywordName}}</span>\n                </div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\">\n            <div class=\"text-sm flex items-center\">\n                <app-follow type=\"icon\" [followTypeId]=\"eventData.id\" [followType]=\"'EVENT'\" color=\"#553c9a\"\n                    (click)=\"$event.stopPropagation()\"></app-follow>\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <div class=\"px-2 rounded-full\" matRipple>\n                    <i class=\"mdi mdi-share-variant text-2xl share\" (click)=\"shareEvent();$event.stopPropagation()\"></i>\n                </div>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold\"\n                    *ngIf=\"eventData.minimumTicketPrice\">\n                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}} <span\n                        class=\"hidden md:inline text-sm font-normal\">onwards</span></span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>",
-        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}.listing-container{border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato}.listing-container:hover{box-shadow:0 2px 8px 0 rgba(0,0,0,.2)}.listing-container:hover .bottom-purple-bar{box-shadow:0 2px 8px 0 rgba(0,0,0,.2);background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);border-radius:0 0 4px;-webkit-transition:1.3s;transition:1.3s}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .event-image{background-size:100% 100%}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:background 1s ease-out;transition:background 1s ease-out}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container .listing-container--featured-content{background-color:#fff}.listing-container .listing-container--featured-content .bottom-purple-bar{-webkit-transition:1s ease-in;transition:1s ease-in}.listing-container .listing-container--featured-content .price-container{font-size:15px}.listing-container i{color:#683592}.listing-container .share:hover{-webkit-transition:.15s;transition:.15s;font-size:1.875rem}:host ::ng-deep .listing-container:hover .bottom-purple-bar i{color:#fff}@media (min-width:991px){.listing-container .listing-container--content{min-height:195px}}.topic-container{font-family:Lato;min-height:460px}.topic-container .subTitle{color:#263240}.topic-container .keywords,.topic-container i{color:#683592}.topic-container .keywords span{border:1.57px solid #683592}"]
+        template: "<div class=\"listing-container cursor-pointer\"\n    [ngClass]=\"gridType=='list' ? 'rounded  my-4 mx-auto  flex' :'bg-white lg:flex lg:flex-col my-1 rounded w-full'\">\n    <div class=\"relative flex-none overflow-hidden text-center event-image\"\n        [ngClass]=\"gridType=='list' ? 'h-auto w-4/12 lg:w-2/5' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '\"\n        [style.background-image]=\"eventData.cardImageUrl?'url(' + eventData.cardImageUrl + ')':'url(' + defaultCardImageUrl + ')'\">\n        <i class=\"top-0 right-0 pt-2 pr-2 text-white absolute mdi mdi-checkbox-marked-circle ml-1 pt-1 text-lg\"\n          *ngIf=\"eventData?.organizerIsTrusted\"\n          matTooltip=\"VERIFIED\"\n          matTooltipPosition=\"above\"\n          matTooltipClass=\"ts-card-tooltip\"></i>\n    </div>\n    <div class=\"flex flex-col justify-between leading-normal listing-container--content\" [ngClass]=\"gridType=='list' ?' w-8/12  md:w-full'\n                     : ' w-full'\">\n        <div class=\"px-2 md:px-4 pt-3 pb-1\">\n            <div class=\"flex flex-row justify-between align-items-center\">\n                <span *ngIf=\"urgencyMessage \" class=\"text-md bg-orange-500 rounded text-md px-2 mr-2\">Featured</span>\n                <span *ngIf=\"urgencyMessage\" class=\"text-xs text-red-400\">Booked 20 times in the last 24 hrs</span>\n                <span *ngIf=\"urgencyMessage\" class=\"bg-white rounded-l-full px-2\">\n                    <i class=\"material-icons align-bottom pr-1 hidden\">remove_red_eye</i>\n                    <strong class=\"text-xs\">12 Viewing right now</strong>\n                </span>\n            </div>\n            <div class=\"font-303030 capitalize text-base md:text-xl mb-1\" [clamp]=\"2\">{{eventData.name | titlecase}}\n            </div>\n            <div class=\"md:flex text-xs \">\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom\"></i>\n                    <span\n                        class=\"text-gray-700 font-bold\">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRuleArray': eventData.recurrenceRuleArray} }}</span>\n                </div>\n                <div class=\"mr-2 flex items-center\">\n                    <i class=\"mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom\"></i>\n                    <span class=\"text-gray-700 font-bold\">{{eventData.city}}</span>\n                </div>\n                <div *ngIf=\"goingCounter\" class=\"mr-2\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <span class=\"font-323E48 font-bold\">700</span>\n                </div>\n            </div>\n            <!-- <div *ngIf=\"featuredCard\" class=\"text-sm\">Heres goes some 2 line data which describes about the event.</div> -->\n            <div class=\"py-2 pr-2 flex justify-between\">\n                <div *ngIf=\"moreIcons\" id=\"set-of-icons\" class=\"flex\">\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                    <i class=\"material-icons pr-1  align-bottom text-purple-900\">supervisor_account</i>\n                </div>\n                <div [ngClass]=\"gridType=='list' ? 'hidden md:flex' : 'flex'\">\n                    <span class=\"pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline\"\n                        *ngFor=\"let key of eventData?.keywords\"\n                        (click)=\"navigateToListing(key.topicKeywordCode)\">#{{key.topicKeywordName}}</span>\n                </div>\n            </div>\n        </div>\n        <div\n            class=\"h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none\"  *ngIf=\"eventData\">\n            <div class=\"text-sm flex items-center\">\n                <app-follow type=\"icon\" [followTypeId]=\"eventData.id\" [followType]=\"'EVENT'\" color=\"#553c9a\"\n                    (click)=\"$event.stopPropagation()\"></app-follow>\n                <!-- <i class=\"mdi mdi-heart-outline text-2xl mr-2\"></i> -->\n                <div class=\"px-2 rounded-full\" matRipple>\n                    <i class=\"mdi mdi-share-variant text-2xl share\" (click)=\"shareEvent();$event.stopPropagation()\"></i>\n                </div>\n            </div>\n            <div class=\"flex items-center\">\n                <span class=\"align-text-bottom price-container font-323E48 text-base font-semibold\"\n                    *ngIf=\"eventData.minimumTicketPrice\">\n                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}} <span\n                        class=\"hidden md:inline text-sm font-normal\">onwards</span></span>\n                <span *ngIf=\"!eventData.minimumTicketPrice \">Free</span>\n                <i class=\"mdi mdi-arrow-right text-2xl ml-2\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n",
+        styles: [".color-blue{color:#3782c4}.background-blue{background:#3782c4}::ng-deep .ts-card-tooltip{background-color:#666;color:#fff;font-size:12px;opacity:.98;white-space:pre-line}.listing-container{border:1px solid rgba(0,0,0,.13);border-radius:5px;font-family:Lato,sans-serif}.listing-container:hover{box-shadow:0 2px 8px 0 rgba(0,0,0,.2)}.listing-container:hover .bottom-purple-bar{box-shadow:0 2px 8px 0 rgba(0,0,0,.2);background:linear-gradient(138.55deg,#a165c4 0,#4d2370 100%);border-radius:0 0 4px;-webkit-transition:1.3s;transition:1.3s}.listing-container:hover .bottom-purple-bar i,.listing-container:hover .bottom-purple-bar span{color:#fff!important}.listing-container .event-image{background-size:100% 100%}.listing-container .font-323E48{color:#323e48}.listing-container .font-303030{color:#303030}.listing-container .listing-container--content{background-color:#eee}.listing-container .listing-container--content .bottom-purple-bar{-webkit-transition:background 1s ease-out;transition:background 1s ease-out}.listing-container .listing-container--content .price-container{font-size:15px}.listing-container .listing-container--featured-content{background-color:#fff}.listing-container .listing-container--featured-content .bottom-purple-bar{-webkit-transition:1s ease-in;transition:1s ease-in}.listing-container .listing-container--featured-content .price-container{font-size:15px}.listing-container i{color:#683592}.listing-container .share:hover{-webkit-transition:.15s;transition:.15s;font-size:1.875rem}:host ::ng-deep .listing-container:hover .bottom-purple-bar i{color:#fff}@media (min-width:991px){.listing-container .listing-container--content{min-height:195px}}.topic-container{font-family:Lato;min-height:460px}.topic-container .subTitle{color:#263240}.topic-container .keywords,.topic-container i{color:#683592}.topic-container .keywords span{border:1.57px solid #683592}"]
     }),
     __metadata("design:paramtypes", [MatDialog, BrowserService, PlaceService])
 ], TsListingCardComponent);
@@ -1580,6 +1687,7 @@ CardsModule = __decorate([
             CommonModule,
             TsFormsModule,
             SharedModule,
+            MatTooltipModule,
         ],
         declarations: [
             TsListingCardComponent,

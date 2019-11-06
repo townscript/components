@@ -17,8 +17,8 @@ export declare class TsLoginSignupComponent implements OnInit, OnDestroy {
     rdurl: any;
     showSocial: any;
     closeDialog: EventEmitter<{}>;
-    captchaToken: any;
     recaptchaRef: RecaptchaComponent;
+    captchaToken: any;
     show: boolean;
     showPassword: boolean;
     isDefaultView: boolean;
@@ -56,8 +56,13 @@ export declare class TsLoginSignupComponent implements OnInit, OnDestroy {
     validatePhoneNumber: () => void;
     signIn: () => Promise<any>;
     signUp: () => Promise<any>;
+    getFormDataForRegister: () => FormData;
     forgotPassword: () => void;
     goBack: () => void;
+    openSignInView: () => void;
+    openSignUpView: () => void;
+    openDefaultView: () => void;
+    openVerifyEmailView: () => void;
     resetPassword: () => Promise<any>;
     randomString: (len: number, an: string) => string;
     resendVerifyEmail: () => Promise<any>;
