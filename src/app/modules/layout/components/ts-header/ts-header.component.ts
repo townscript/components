@@ -46,14 +46,29 @@ export class TsHeaderComponent implements OnInit {
     }
   }
 
-  openLogin = (): void => {
+  openLogin = (callback?): void => {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = false;
     dialogConfig.autoFocus = true;
     dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-    this.dialog.open(LoginModalComponent, dialogConfig);
+    const loginDialog = this.dialog.open(LoginModalComponent, dialogConfig);
+    if (callback) {
+      loginDialog.afterClosed().subscribe(result => {
+        callback();
+      });
+    }
   }
 
+  navigateToDashboard = () => {
+    window.location.href = this.host + 'dashboard/create-event';
+  }
+  createEventClick = () => {
+    if (this.userService.user.source['value'] != undefined) {
+      this.navigateToDashboard();
+    } else {
+      this.openLogin(this.navigateToDashboard);
+    }
+  }
   navigateToMobileSearch = (): void => {
     this.router.navigate(['/mobile/search']);
   }
