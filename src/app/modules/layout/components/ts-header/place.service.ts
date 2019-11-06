@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID, InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../../../../core/cookie.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { environment } from 'src/environments/environment';
+import { environment } from './../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
