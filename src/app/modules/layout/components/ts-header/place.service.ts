@@ -26,7 +26,7 @@ export class PlaceService {
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
                   console.log(ipInfoData)
-                  const data = { 'city': ipInfoData['city'], 'country': ipInfoData['country'].toLowerCase(), 'currentPlace': ipInfoData['city'] };
+                  const data = { 'city': ipInfoData['city'], 'country': ipInfoData['countryCode'].toLowerCase(), 'currentPlace': ipInfoData['city'] };
                   this.updatePlace(data);
                 });
             }
@@ -49,7 +49,7 @@ export class PlaceService {
                 ipInfoData = {
                     'lat': ipInfoJson['loc'].split(',')[0],
                     'lng': ipInfoJson['loc'].split(',')[1],
-                    'country': ipInfoJson['country'].toLowerCase(),
+                    'country': ipInfoJson['countryCode'].toLowerCase(),
                     'city': ipInfoJson['city'].toLowerCase()
                 };
                 localStorage.setItem('ipInfoData', JSON.stringify(ipInfoData));
