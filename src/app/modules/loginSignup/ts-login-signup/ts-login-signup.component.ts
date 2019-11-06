@@ -26,10 +26,13 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     @Input() rdurl: any;
     @Input() showSocial: any = true;
     @Output() closeDialog = new EventEmitter();
+
+
     @ViewChild('recaptchaRef', { read: true, static: true })
+    recaptchaRef: RecaptchaComponent;
+
     captchaToken: any = this.tsLoginSignupService.CAPTCHA_SITE_INVISIBLE_CAPTCHA_KEY;
 
-    recaptchaRef: RecaptchaComponent;
     show = false;
     showPassword = false;
     isDefaultView = true;
@@ -113,35 +116,19 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         if (!this.loginForm.controls.email.valid) {
             return;
         }
-
         const result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
         let newData = result;
         try {
             newData = JSON.parse(result.data);
-
         } catch (e) {
-
+            console.log("Exception while parsing api response : "+ result);
         }
         if (newData && newData.isExistingUser && newData.isManualSignup) {
-            this.loginForm.get('password').enable();
-            this.isSignInView = true;
-            this.isSignUpView = false;
-            this.showSocial = false;
-            this.socialLoginMsg = false;
-            this.isDefaultView = false;
-
+            this.openSignInView();
         } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
             this.socialLoginMsg = true;
         } else {
-            this.isSignUpView = true;
-            this.isSignInView = false;
-            this.showSocial = false;
-            this.isDefaultView = false;
-            this.socialLoginMsg = false;
-            this.loginForm.get('fullName').enable();
-            this.loginForm.get('password').enable();
-            this.loginForm.get('phoneNumber').enable();
-
+            this.openSignUpView();
             this.initializeTelInput = setTimeout(() => {
                 this.initializeIntlTelInput();
             }, 200);
@@ -210,10 +197,29 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             this.phoneError = true;
             return;
         }
-
         this.showLoader = true;
         this.loaderText = 'Please wait while we are creating your account.';
 
+        let data = await this.tsLoginSignupService.registerWithTownscriptWithCaptcha(this.getFormDataForRegister());
+        try {
+            data = JSON.parse(data);
+        } catch (e) {
+            console.log("Exception while parsing api response : "+ data);
+        }
+
+        if (data['result'] == 'Error') {
+            self.showLoader = false;
+            self.signUpErrMessage = data['data'];
+            let _this = self;
+            setTimeout(function () {
+                _this.initializeIntlTelInput();
+            }, 200);
+            return;
+        }
+        self.openVerifyEmailView();
+    }
+
+    getFormDataForRegister = (): FormData => {
         const formData = new FormData();
         formData.append('name', this.loginForm.value.fullName);
         formData.append('emailid', this.loginForm.value.email);
@@ -225,25 +231,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         if (this.rdurl) {
             formData.append('rdurl', this.rdurl);
         }
-        let data = await this.tsLoginSignupService.registerWithTownscriptWithCaptcha(formData);
-        try {
-            data = JSON.parse(data);
-        } catch (e) {
-
-        }
-        if (data['result'] == 'Error') {
-            self.showLoader = false;
-            self.signUpErrMessage = data['data'];
-            let _this = self;
-            setTimeout(function () {
-                _this.initializeIntlTelInput();
-            }, 200);
-            return;
-        }
-        self.showLoader = false;
-        self.isVerifyEmailView = true;
-        self.showSocial = false;
-        self.isSignUpView = false;
+        return formData;
     }
 
     forgotPassword = (): void => {
@@ -255,35 +243,52 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
     goBack = (): void => {
         if (this.showResetPassword) {
-            this.showResetPassword = false;
-            this.isSignUpView = false;
-            this.isSignInView = true;
-            this.loginForm.get('password').enable();
-        } else if (this.isSignInView) {
-            this.isSignUpView = false;
-            this.showResetPassword = false;
-            this.isSignInView = false;
-            this.showSocial = true;
-            this.isDefaultView = true;
-        } else if (this.isSignUpView) {
-            this.isSignUpView = false;
-            this.showSocial = true;
-            this.isDefaultView = true;
-            this.loginForm.get('fullName').disable();
-            this.loginForm.get('password').disable();
-            this.loginForm.get('phoneNumber').disable();
-        } else if (this.isVerifyEmailView) {
-            this.isVerifyEmailView = false;
-            this.showSocial = true;
-            this.isSignUpView = false;
-            this.isDefaultView = true;
-            this.loginForm.get('fullName').disable();
-            this.loginForm.get('password').disable();
-            this.loginForm.get('phoneNumber').disable();
+          this.openSignInView();
+        } else if (this.isSignInView || this.isSignUpView || this.isVerifyEmailView) {
+            this.openDefaultView();
         } else {
             this.close();
         }
+    }
 
+    openSignInView = (): void => {
+        this.showResetPassword = false;
+        this.isSignUpView = false;
+        this.isSignInView = true;
+        this.loginForm.get('password').enable();
+        this.showSocial = false;
+        this.socialLoginMsg = false;
+        this.isDefaultView = false;
+    }
+
+    openSignUpView = (): void => {
+        this.isSignUpView = true;
+        this.isSignInView = false;
+        this.showSocial = false;
+        this.isDefaultView = false;
+        this.socialLoginMsg = false;
+        this.loginForm.get('fullName').enable();
+        this.loginForm.get('password').enable();
+        this.loginForm.get('phoneNumber').enable();
+    }
+
+    openDefaultView = (): void => {
+        this.isVerifyEmailView = false;
+        this.isSignUpView = false;
+        this.showResetPassword = false;
+        this.isSignInView = false;
+        this.showSocial = true;
+        this.isDefaultView = true;
+        this.loginForm.get('fullName').disable();
+        this.loginForm.get('password').disable();
+        this.loginForm.get('phoneNumber').disable();
+    }
+
+    openVerifyEmailView = (): void => {
+        this.isVerifyEmailView = true;
+        this.showLoader = false;
+        this.showSocial = false;
+        this.isSignUpView = false;
     }
 
     resetPassword = async (): Promise<any> => {
@@ -320,7 +325,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.notificationService.success('Verification email has been sent', 2000, 'Dismiss');
     }
 
-    togglePasswordDisplay = () => {
+    togglePasswordDisplay = (): void => {
         this.showPassword = !this.showPassword;
         const pwdInput = <HTMLInputElement>document.getElementById('user-pwd');
         pwdInput.type = this.showPassword ? 'text' : 'password';
