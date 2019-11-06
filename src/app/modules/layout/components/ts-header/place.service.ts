@@ -49,7 +49,7 @@ export class PlaceService {
                 ipInfoData = {
                     'lat': ipInfoJson['loc'].split(',')[0],
                     'lng': ipInfoJson['loc'].split(',')[1],
-                    'countryCode': ipInfoJson['country'].toLowerCase(),
+                    'country': ipInfoJson['country'].toLowerCase(),
                     'city': ipInfoJson['city'].toLowerCase()
                 };
                 localStorage.setItem('ipInfoData', JSON.stringify(ipInfoData));
