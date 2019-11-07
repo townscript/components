@@ -41,7 +41,7 @@ export class PlaceService {
 
     async getLocationFromIpInfo() {
         if (isPlatformBrowser(this.platformId)) {
-            const localData = localStorage.getItem('ipInfoData');
+            const localData = localStorage.getItem('ipinfo_data');
             let ipInfoData;
             if (!localData) {
                 console.log('Calling ip info!');
@@ -52,7 +52,7 @@ export class PlaceService {
                     'countryCode': ipInfoJson['country'].toLowerCase(),
                     'city': ipInfoJson['city'].toLowerCase()
                 };
-                localStorage.setItem('ipInfoData', JSON.stringify(ipInfoData));
+                localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
             } else {
                 ipInfoData = JSON.parse(localData);
             }
