@@ -1,0 +1,81 @@
+
+@-webkit-keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: none;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+    transform: none;
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+svg{
+  position: relative;
+}
+
+path{
+	-webkit-animation-duration: 0.4s;
+	animation-duration: 0.4s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-delay: 0s;
+	-moz-animation-delay: 0s;
+	animation-delay: 0s;
+	-webkit-animation-name: fadeInAnimation;
+	animation-name: fadeInAnimation;
+  transform-origin: center;
+}
+
+@keyframes fill {
+  from {
+    height: 0px;
+  }
+
+  to {
+
+  }
+}
+
+.left-line {
+	-webkit-animation-duration: 0.2s;
+	animation-duration: 0.2s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-delay: 0.25s;
+	-moz-animation-delay: 0.25s;
+	animation-delay: 0.25s;
+	-webkit-animation-name: fill;
+	animation-name: fill;
+}
+
+.right-line {
+	-webkit-animation-duration: 0.5s;
+	animation-duration: 0.5s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-delay: 0.4s;
+	-moz-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+	-webkit-animation-name: fill;
+	animation-name: fill;
+}
