@@ -11,8 +11,8 @@ import { config } from '../../../../../core/app-config';
 })
 export class UserMenuComponent implements OnInit {
 
-    @Input() panelOpen1 = false;
-    @Input() panelOpen2 = false;
+    @Input() panelOpen1 = true;
+    @Input() panelOpen2 = true;
     @Input() user: any;
     @Output() close = new EventEmitter();
 
@@ -26,7 +26,7 @@ export class UserMenuComponent implements OnInit {
         this.close.emit();
         this.cookieService.deleteCookie('townscript-user');
         this.userService.updateUser(null);
-        this.notificationService.success('You are logged out successfully!', 2000, 'Dismiss');
+        window.location.reload();
     }
     ngOnInit() { }
 

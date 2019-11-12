@@ -12,6 +12,7 @@ import { NotificationService } from '../../shared/services/notification.service'
 import { LoginModalComponent } from './ts-login-signup/login-modal/login-modal.component';
 import { EmailSentSVGComponent } from './ts-login-signup/email-sent-svg/email-sent-svg.component';
 import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service';
+import { ConfirmationSVGComponent } from './ts-login-signup/confirmation-svg/confirmation-svg.component';
 
 @NgModule({
   imports: [
@@ -30,12 +31,14 @@ import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service'
   declarations: [
     TsLoginSignupComponent,
     LoginModalComponent,
-    EmailSentSVGComponent
+    EmailSentSVGComponent,
+    ConfirmationSVGComponent
   ],
   exports: [
     TsLoginSignupComponent,
     LoginModalComponent,
-    EmailSentSVGComponent
+    EmailSentSVGComponent,
+    ConfirmationSVGComponent
   ],
   providers: [
     CookieService,

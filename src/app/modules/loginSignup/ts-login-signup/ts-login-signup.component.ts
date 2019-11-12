@@ -61,6 +61,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     loaderText: any;
     countryCode: any = 'IN';
     subObject: any;
+    showConfirmation: boolean = false;
+    baseUrl: any = this.tsLoginSignupService.baseUrl;
 
     constructor(
         private cookieService: CookieService,
@@ -166,6 +168,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             this.signInErrMessage = retData.data;
             return;
         }
+        this.showConfirmation = true;
+        this.loaderText = "You're successfully logged in.";
         const tokenData = {
             token: (retData.data)
         };
@@ -173,10 +177,13 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         const userData = { ...retData.userDetails, ...tokenData };
         this.userService.updateUser(userData);
         this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
-        this.notificationService.success('Congrats! You are signed in', 2000, 'Dismiss');
-        if (this.mode === 'dialog') {
+
+        setTimeout(()=> {
+          if (this.mode === 'dialog') {
             this.close();
-        }
+          }
+        },1400);
+
         if (this.rdurl != undefined) {
             window.open(this.rdurl, '_self');
         }
