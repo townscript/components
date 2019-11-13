@@ -143,7 +143,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         const input = document.querySelector('#phoneNumber');
         this.intlInput = (<any>window).intlTelInput(input, {
             initialCountry: this.countryCode,
-            preferredCountries: ["in", "id"],
+            preferredCountries: ["in", "id", "sg", "my"],
             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
         });
 
