@@ -22,7 +22,7 @@
             </div>
             <div class="font-303030 capitalize text-base md:text-lg mb-1" [clamp]="2">{{eventData.name | titlecase}}
             </div>
-            <div class="md:flex text-xs ">
+            <div class="md:flex text-xs md:flex-wrap">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
                     <span
@@ -65,7 +65,7 @@
             <div class="flex items-center z-50">
                 <span class="align-text-bottom price-container font-323E48 text-base font-semibold"
                     *ngIf="eventData.minimumTicketPrice">
-                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}} <span
+                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}} <span
                         class="hidden md:inline text-sm font-normal">onwards</span></span>
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
