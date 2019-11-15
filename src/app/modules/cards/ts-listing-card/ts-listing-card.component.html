@@ -22,7 +22,7 @@
             </div>
             <div class="font-303030 capitalize text-base md:text-lg mb-1" [clamp]="2">{{eventData.name | titlecase}}
             </div>
-            <div class="md:flex text-xs md:flex-wrap">
+            <div class="md:flex text-xs md:flex-wrap" [ngClass]="gridType=='list' ? '' : 'flex flex-wrap'">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
                     <span
