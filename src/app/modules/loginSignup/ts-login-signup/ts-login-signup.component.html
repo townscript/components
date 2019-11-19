@@ -1,7 +1,7 @@
 <div class="login-signup-view px-5" id="login-signup-view">
   <div class="view-header">
-    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" *ngIf="mode == 'dialog'">
-      <i class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
+    <div  class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" *ngIf="mode == 'dialog'">
+      <i appDataAnalytics eventLabel="login-back" clickLocation="" class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
       <div class="primary-header text-gray-800 text-lg md:text-xl lg:text-2xl font-semibold">{{defaultHeader}}</div>
@@ -41,9 +41,9 @@
     <div class="default-view-body py-2 fadeInUp" *ngIf="isDefaultView">
       <form id="loginForm" [formGroup]="loginForm" class="w-full login-form">
         <div class="form-group md:flex md:items-center ">
-          <div class="w-full">
+          <div class="w-full" >
             <mat-form-field class="w-full">
-              <input formControlName="email" matInput
+              <input  formControlName="email" matInput
                 class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="email" type="email" name="email" placeholder="Email" (ngModelChange)="clearErrors()">
             </mat-form-field>
@@ -61,7 +61,7 @@
           </div>
         </div>
         <div class="form-group w-full text-center">
-          <button matRipple (click)="verifyEmail()" [ngClass]="!loginForm.controls.email.valid ? 'opacity-50 pointer-events-none': ''"
+          <button appDataAnalytics eventLabel="login-continue" clickLocation="" matRipple (click)="verifyEmail()" [ngClass]="!loginForm.controls.email.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Continue
           </button>
         </div>
@@ -72,10 +72,10 @@
           </div>
         </div>
         <div class="form-group">
-            <a [href]="googleLoginURL" target="_self"
+            <a appDataAnalytics [eventLabel]="'login-google'" [clickLocation]="" [href]="googleLoginURL" target="_self"
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
-                ts-data-analytics prop-event="click" eventLabel="Login with Google"
-                prop-clicked-location="Sign In" matRipple>
+                 
+                 matRipple>
                 <div class="px-2">
                     <img class="logo"
                         src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/google-min.png" />
@@ -87,7 +87,7 @@
             <p class="form-control--error" ng-if="googleError.length" ng-bind="googleError"></p>
         </div>
         <div class="form-group">
-            <a [href]="fbLoginURL" target="_self"
+            <a appDataAnalytics eventLabel="login-facebook" clickLocation="" [href]="fbLoginURL" target="_self"
                 class="bg-white w-full p-2 flex border border-gray-400 rounded shadow mb-2 items-center justify-center"
                 ts-data-analytics prop-event="click" eventLabel="Login with Facebook"
                 prop-clicked-location="Sign In" matRipple>
@@ -135,7 +135,7 @@
               <input formControlName="password" matInput autofocus
                 class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
-              <i class="text-lg mdi absolute right-0 text-gray-700"
+              <i appDataAnalytics eventLabel="login-show-pass" clickLocation="" class="text-lg mdi absolute right-0 text-gray-700"
                 [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
             </mat-form-field>
             <p class="text-xs text-red-500 -mt-3 mb-2"
@@ -146,10 +146,10 @@
         </div>
         <div class="w-full text-center form-group">
           <p class="text-left text-sm text-red-500 -mt-3 mb-2" *ngIf="signInErrMessage.length > 0">{{signInErrMessage}}</p>
-          <button matRipple (click)="signIn()" [ngClass]="!loginForm.valid ? 'opacity-50 pointer-events-none': ''"
+          <button appDataAnalytics eventLabel="login-signin" clickLocation="" matRipple (click)="signIn()" [ngClass]="!loginForm.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Sign In
           </button>
-          <div class="text-sm text-center text-gray-700 p-1">
+          <div appDataAnalytics eventLabel="login-forgot" clickLocation="" class="text-sm text-center text-gray-700 p-1">
             <span class="cursor-pointer hover:underline" (click)="forgotPassword()">Forgot Password?</span>
           </div>
         </div>
@@ -182,7 +182,7 @@
             {{loginForm.value.email}}</div>
         </div>
         <div class="w-full text-center form-group">
-          <button matRipple *ngIf="!resetPwdLinkSent" (click)="resetPassword()"
+          <button appDataAnalytics eventLabel="login-reset-btn" clickLocation="" matRipple *ngIf="!resetPwdLinkSent" (click)="resetPassword()"
             [ngClass]="!loginForm.controls.email.valid ? 'opacity-50 pointer-events-none': ''"
             class="w-full blue-btn p-2 rounded shadow mb-2 font-semibold">Send Reset Password Link
           </button>
@@ -222,7 +222,7 @@
               <input formControlName="password" matInput autofocus
                 class="form-control bg-white border-gray-500 rounded py-2 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                 id="user-pwd" [type]="'password'" placeholder="Password" autocomplete="current-password">
-              <i class="text-lg mdi absolute right-0 text-gray-700"
+              <i appDataAnalytics eventLabel="login-show-pass" clickLocation="" class="text-lg mdi absolute right-0 text-gray-700"
                 [ngClass]=" showPassword ? 'mdi-eye-off' : 'mdi-eye'" (click)="togglePasswordDisplay()"></i>
             </mat-form-field>
             <p class="text-xs text-red-500 -mt-3 mb-2"
@@ -304,9 +304,9 @@
       <div class="w-full hor-linear-grad my-2"></div>
       <p class="text-xs text-center p-2 text-gray-800 px-5">
         By continuing, you agree to Townscript's
-        <a class="text-blue-700" href="{{baseUrl}}terms-and-conditions">terms of service</a>
+        <a appDataAnalytics eventLabel="login-terms" clickLocation="" class="text-blue-700" href="{{baseUrl}}terms-and-conditions">terms of service</a>
         and
-        <a class="text-blue-700" href="{{baseUrl}}privacy-policy">privacy policy</a>.
+        <a appDataAnalytics eventLabel="login-policy" clickLocation="" class="text-blue-700" href="{{baseUrl}}privacy-policy">privacy policy</a>.
       </p>
     </div>
   </div>

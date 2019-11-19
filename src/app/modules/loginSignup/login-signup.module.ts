@@ -13,6 +13,8 @@ import { LoginModalComponent } from './ts-login-signup/login-modal/login-modal.c
 import { EmailSentSVGComponent } from './ts-login-signup/email-sent-svg/email-sent-svg.component';
 import { TsLoginSignupService } from './ts-login-signup/ts-login-signup.service';
 import { ConfirmationSVGComponent } from './ts-login-signup/confirmation-svg/confirmation-svg.component';
+import { SharedModule } from '../../shared/shared.module';
+import { DataCollectorService } from '../../shared/services/analytics/data-collector.service';
 
 @NgModule({
   imports: [
@@ -26,7 +28,8 @@ import { ConfirmationSVGComponent } from './ts-login-signup/confirmation-svg/con
     MatSnackBarModule,
     MatInputModule,
     MatTooltipModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SharedModule
   ],
   declarations: [
     TsLoginSignupComponent,
@@ -44,7 +47,9 @@ import { ConfirmationSVGComponent } from './ts-login-signup/confirmation-svg/con
     CookieService,
     UserService,
     NotificationService,
-    TsLoginSignupService
+    TsLoginSignupService,
+    DataCollectorService
   ]
 })
-export class TsLoginSignupModule { }
+export class TsLoginSignupModule {
+}

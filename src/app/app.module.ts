@@ -16,6 +16,8 @@ import { TsFormsModule } from '@townscript/elements';
 import { CardsModule } from './modules/cards/cards.module';
 import { PlaceService } from './modules/layout/components/ts-header/place.service';
 import { SharedModule } from './shared/shared.module';
+import { DataCollectorService, initializeDataCollector } from './shared/services/analytics/data-collector.service'
+import { TsLoginSignupModule } from './modules/loginSignup/login-signup.module' 
 
 @NgModule({
   declarations: [
@@ -32,9 +34,10 @@ import { SharedModule } from './shared/shared.module';
     HttpClientModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    SharedModule
+    SharedModule,
+    TsLoginSignupModule
   ],
-  providers: [PlaceService],
+  providers: [PlaceService, DataCollectorService],
   bootstrap: [AppComponent],
   entryComponents: [TsLoginSignupComponent,
     LoginModalComponent

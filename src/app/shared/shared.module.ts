@@ -7,13 +7,16 @@ import { TextOverflowClampDirective } from './pipes/text-overflow.directive';
 import { TimeService } from './services/time.service';
 import { UserService } from './services/user-service';
 import { FollowService } from './services/follow.service';
+import { DataAnalyticsDirective } from './directives/analytics/data-analytics.directive';
+import { DataCollectorService } from './services/analytics/data-collector.service';
 
 
 @NgModule({
     declarations: [
         RangeDatePipe,
         FollowComponent,
-        TextOverflowClampDirective
+        TextOverflowClampDirective,
+        DataAnalyticsDirective
     ],
     imports: [
         CommonModule
@@ -21,8 +24,9 @@ import { FollowService } from './services/follow.service';
     exports: [
         FollowComponent,
         RangeDatePipe,
-        TextOverflowClampDirective
+        TextOverflowClampDirective,
+        DataAnalyticsDirective
     ],
-    providers: [TimeService, UserService, FollowService]
+    providers: [TimeService, UserService, FollowService, DataCollectorService]
 })
 export class SharedModule { }

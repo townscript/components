@@ -1,7 +1,7 @@
 <nav class="ts-header flex align-items-center" *ngIf="source!='marketplace'">
     <div class="container flex align-items-center">
         <div class="navbar-header">
-            <a class="navbar-brand flex align-items-center" href="/">
+            <a appDataAnalytics  eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center" href="/">
                 <img src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                     title="Townscript Event Ticketing Logo" />
             </a>
@@ -23,7 +23,7 @@
     *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block lg:w-1/6">
-            <img (click)="goToHomePage()" *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
+            <img appDataAnalytics  eventLabel="logo" clickLocation="" (click)="goToHomePage()" *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
                 src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                 title="Townscript Event Ticketing Logo" />
         </div>
@@ -44,9 +44,10 @@
                     <span class="mr-1 text-gray-700 truncate">{{activePlace}}</span>
                     <i class="mdi mdi-menu-down color-blue"></i>
                 </div>
-                <app-city-search-popup [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
+                <app-city-search-popup appDataAnalytics  eventLabel="location-dropdown-search" clickLocation="" [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
                     [showArrow]="false" class="popup" *ngIf="cityPopupActive">
                 </app-city-search-popup>
+
             </div>
         </div>
         <div class="lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex">
@@ -58,7 +59,7 @@
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
         <div class="lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
-            <div *ngIf="Components.indexOf('createEventBtn')>-1" (click)="createEventClick()"
+            <div appDataAnalytics  eventLabel="create-event" clickLocation="" (click)="createEventClick()" *ngIf="Components.indexOf('createEventBtn')>-1"
                 class="create-btn cursor-pointer flex h-full justify-center items-center">
                 <span class="text-base mr-2">CREATE EVENT</span>
                 <i class="mdi mdi-ticket text-2xl"></i>
@@ -66,7 +67,7 @@
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
-            <div class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
+            <div appDataAnalytics  eventLabel="login-signup" clickLocation="" class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
                 <span>Login | Signup</span>
             </div>
