@@ -1,6 +1,6 @@
 <div class="login-signup-view px-5" id="login-signup-view">
-  <div class="view-header">
-    <div  class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" *ngIf="mode == 'dialog'">
+  <div class="view-header" *ngIf="!showLoader && !showConfirmation">
+    <div class="back-button text-gray-700 text-xl md:text-2xl lg:text-3xl -ml-1" *ngIf="mode == 'dialog'">
       <i appDataAnalytics eventLabel="login-back" clickLocation="" class="mdi mdi-arrow-left cursor-pointer" (click)="goBack()"></i>
     </div>
     <div class="initial-header flex flex-col fadeIn" *ngIf="isDefaultView">
@@ -34,8 +34,10 @@
   </div>
   <div class="confirmation flex flex-col items-center justify-center p-10" *ngIf="showConfirmation">
     <app-confirmation-svg></app-confirmation-svg>
-    <div class="pt-5 text-gray-700 text-lg md:text-xl lg:text-2xl font-semibold">Yayy!</div>
-    <div class=" text-gray-700 text-xs md:text-sm">{{loaderText}}</div>
+    <div class="pt-5 text-gray-700 text-lg lg:text-xl font-semibold flex flex-wrap items-center justify-center">
+      <div>Welcome back,    </div>
+      <div>{{userName.length > 15? '':' '+userName}}</div>
+    </div>
   </div>
   <div class="view-body pt-5" *ngIf="!showLoader && !showConfirmation">
     <div class="default-view-body py-2 fadeInUp" *ngIf="isDefaultView">
@@ -285,7 +287,7 @@
             <app-email-sent></app-email-sent>
           </div>
           <div class="p-4 text-gray-700 text-sm text-center secondary-header">
-            Tap the link in the email we sent you at {{loginForm.value.email}}
+            We have sent a verification link on {{loginForm.value.email}}.<br> Please click the link to activate your account.
           </div>
         </div>
         <div class="w-full text-center form-group">

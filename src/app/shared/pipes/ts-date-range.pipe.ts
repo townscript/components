@@ -15,15 +15,15 @@ export class RangeDatePipe implements PipeTransform {
 
 
               const startTime = args['startTime'];
-              const freq   = args['recurrenceRuleArray'][0].split(';')[0].split('=')[1];
+              const freq   = args['recurrenceRule'].split(';')[0].split('=')[1];
               let freqLabel = 'Daily';
               //custom date selected
-              if(args['recurrenceRuleArray'][0].indexOf("RDATE") > -1){
+              if(args['recurrenceRule'].indexOf("RDATE") > -1){
                 freqLabel = 'Multiple Dates';
               } else {                
                 // predefined R Rule
                 if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
-                  let byDays = args['recurrenceRuleArray'][0].split(';')[2].split('=')[1].split(',');
+                  let byDays = args['recurrenceRule'].split(';')[2].split('=')[1].split(',');
                   if(byDays.length > 2){
                     freqLabel = 'Multiple Dates';
                   } else {

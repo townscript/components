@@ -1,4 +1,4 @@
-<div class="listing-container cursor-pointer"
+<div class="listing-container cursor-pointer overflow-hidden"
     [ngClass]="gridType=='list' ? 'rounded  my-4 mx-auto  flex' :'bg-white lg:flex lg:flex-col my-1 rounded w-full'">
     <div class="relative flex-none overflow-hidden text-center event-image"
         [ngClass]="gridType=='list' ? 'h-auto w-4/12 lg:w-2/5' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '"
@@ -9,7 +9,7 @@
           matTooltipPosition="above"
           matTooltipClass="ts-card-tooltip"></i>
     </div>
-    <div class="flex flex-col justify-between leading-normal listing-container--content" [ngClass]="gridType=='list' ?' w-8/12  md:w-full'
+    <div class="flex flex-col justify-between leading-normal listing-container--content overflow-hidden" [ngClass]="gridType=='list' ?' w-8/12  md:w-full'
                      : ' w-full'">
         <div class="px-2 md:px-4 pt-3 pb-1">
             <div class="flex flex-row justify-between align-items-center">
@@ -20,13 +20,13 @@
                     <strong class="text-xs">12 Viewing right now</strong>
                 </span>
             </div>
-            <div class="font-303030 capitalize text-base md:text-xl mb-1" [clamp]="2">{{eventData.name | titlecase}}
+            <div class="font-303030 capitalize text-base md:text-lg mb-1" [clamp]="2">{{eventData.name | titlecase}}
             </div>
-            <div class="md:flex text-xs ">
+            <div class="md:flex text-xs md:flex-wrap" [ngClass]="gridType=='list' ? '' : 'flex flex-wrap'">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
                     <span
-                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRuleArray': eventData.recurrenceRuleArray} }}</span>
+                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} }}</span>
                 </div>
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom"></i>
@@ -45,16 +45,16 @@
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                 </div>
-                <div [ngClass]="gridType=='list' ? 'hidden md:flex' : 'flex'">
+                <div class="overflow-hidden" [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
                     <span appDataAnalytics  eventLabel="keyword" clickLocation="" class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline"
-                        *ngFor="let key of eventData?.keywords"
+                        *ngFor="let key of eventData?.keywords| slice:0:3"
                         (click)="navigateToListing(key.topicKeywordCode)">#{{key.topicKeywordName}}</span>
                 </div>
             </div>
         </div>
         <div
-            class="h-10 bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"  *ngIf="eventData">
-            <div class="text-sm flex items-center">
+            class="h-10 relative bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"  *ngIf="eventData">
+            <div class="text-sm flex items-center z-50">
                 <app-follow type="icon" [followTypeId]="eventData.id" [followType]="'EVENT'" color="#553c9a"
                     (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
@@ -62,10 +62,10 @@
                     <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share" (click)="shareEvent();$event.stopPropagation()"></i>
                 </div>
             </div>
-            <div class="flex items-center">
+            <div class="flex items-center z-50">
                 <span class="align-text-bottom price-container font-323E48 text-base font-semibold"
                     *ngIf="eventData.minimumTicketPrice">
-                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency}} <span
+                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}} <span
                         class="hidden md:inline text-sm font-normal">onwards</span></span>
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>

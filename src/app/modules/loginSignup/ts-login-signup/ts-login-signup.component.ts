@@ -63,6 +63,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     subObject: any;
     showConfirmation: boolean = false;
     baseUrl: any = this.tsLoginSignupService.baseUrl;
+    userName: any;
 
     constructor(
         private cookieService: CookieService,
@@ -142,6 +143,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         const input = document.querySelector('#phoneNumber');
         this.intlInput = (<any>window).intlTelInput(input, {
             initialCountry: this.countryCode,
+            preferredCountries: ["in", "id", "sg", "my"],
             utilScripts: '../../../../../../node_modules/intl-tel-input/build/js/utils.js'
         });
 
@@ -169,12 +171,13 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             return;
         }
         this.showConfirmation = true;
-        this.loaderText = "You're successfully logged in.";
         const tokenData = {
             token: (retData.data)
         };
 
         const userData = { ...retData.userDetails, ...tokenData };
+        this.userName = userData.user;
+        console.log(this.userName);
         this.userService.updateUser(userData);
         this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
 
