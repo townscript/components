@@ -32,8 +32,6 @@ export class DataAnalyticsDirective implements OnInit {
         if(this.eventLabel){
           this.dataCollectorService.sendClickDataToKinesis(this.eventLabel, this.clickLocation);
         }
-        
-
     } catch (e) {
       console.log('exception occurred');
       console.log(e);
