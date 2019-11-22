@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TsFormsModule } from '@townscript/elements';
-import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -25,7 +24,6 @@ import { DataCollectorService } from '../../shared/services/analytics/data-colle
     CommonModule,
     SharedModule,
     FormsModule,
-    HttpClientModule,
     MatRippleModule,
     MatSnackBarModule,
     TsLoginSignupModule,

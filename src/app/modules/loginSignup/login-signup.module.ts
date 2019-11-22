@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TsFormsModule } from '@townscript/elements';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { HttpClientModule } from '@angular/common/http';
 import { MatRippleModule, MatSnackBarModule, MatInputModule, MatTooltipModule, MatProgressSpinnerModule } from '@angular/material';
 import { TsLoginSignupComponent } from './ts-login-signup/ts-login-signup.component';
 import { UserService } from '../../shared/services/user-service';
@@ -23,7 +22,6 @@ import { DataCollectorService } from '../../shared/services/analytics/data-colle
     TsFormsModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    HttpClientModule,
     MatRippleModule,
     MatSnackBarModule,
     MatInputModule,
