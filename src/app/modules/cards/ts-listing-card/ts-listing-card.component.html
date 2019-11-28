@@ -46,9 +46,11 @@
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                 </div>
                 <div class="overflow-hidden" [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
-                    <span class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline"
-                        *ngFor="let key of eventData?.keywords| slice:0:3"
-                        (click)="navigateToListing(key.topicKeywordCode)">#{{key.topicKeywordName}}</span>
+                    <a *ngFor="let key of eventData?.keywords| slice:0:3" [routerLink]="homeUrl + '/' + key.topicKeywordCode">
+                      <span class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
+                        #{{key.topicKeywordName}}
+                      </span>
+                    </a>
                 </div>
             </div>
         </div>
