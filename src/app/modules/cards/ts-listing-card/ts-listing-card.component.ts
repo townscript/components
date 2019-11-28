@@ -23,7 +23,7 @@ export class TsListingCardComponent implements OnInit {
   homeUrl: string;
   goingCounter = false;
   moreIcons = false;
-  defaultCardImageUrl = config.s3BaseUrl + 'townscript-common-resources/ListingsStatic/default-card.jpg';  
+  defaultCardImageUrl = config.s3BaseUrl + 'townscript-common-resources/ListingsStatic/default-card.jpg';
 
   constructor(public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
 
@@ -40,10 +40,6 @@ export class TsListingCardComponent implements OnInit {
         data: { event: this.eventData }
       });
     }
-  }
-
-  navigateToListing = (code): void => {
-    this.router.navigate([this.homeUrl + '/' + code]);
   }
 
   ngOnInit() {
@@ -69,7 +65,7 @@ export class TsListingCardComponent implements OnInit {
     //   'farDuration': null, 'townscriptIR': null, 'score': null, 'recurrent': false,
     //   'keywords': [{ 'id': 165, 'topicKeywordName': 'testing', 'topicKeywordCode': 'testing', 'topicId': 175, 'weight': 1, 'topicKeywordPageTitle': null, 'topicKeywordPageDescription': null }, { 'id': 165, 'topicKeywordName': 'testing', 'topicKeywordCode': 'testing', 'topicId': 175, 'weight': 1, 'topicKeywordPageTitle': null, 'topicKeywordPageDescription': null }, { 'id': 141, 'topicKeywordName': 'party', 'topicKeywordCode': 'party', 'topicId': 150, 'weight': 2, 'topicKeywordPageTitle': null, 'topicKeywordPageDescription': null }]
     // };
-
+    //
     // this.topicData = {
     //   cardImageUrl: 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/category/748x220/marathon1.jpg',
     //   name: 'Marathons in Pune',

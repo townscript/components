@@ -69,6 +69,7 @@ export class FollowComponent implements OnInit {
     }
     followedFn = ($event: any) => {
         $event.stopPropagation();
+        $event.preventDefault();
         if (!this.loggedIn) {
             this.openLogin();
             return;
