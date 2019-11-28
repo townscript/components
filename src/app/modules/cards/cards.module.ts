@@ -15,12 +15,7 @@ import { RouterModule } from '@angular/router';
         CommonModule,
         TsFormsModule,
         SharedModule,
-        MatTooltipModule,
-        RouterModule.forRoot(
-        [
-
-        ]
-        )
+        MatTooltipModule,                
     ],
     declarations: [
         TsListingCardComponent,
