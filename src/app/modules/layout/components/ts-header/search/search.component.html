@@ -1,7 +1,7 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
     <div #searchResultsEle class="w-2/3 p-2 flex items-center relative left-section">
         <i class="mdi mdi-magnify text-2xl color-blue p-2"></i>
-        <input [(ngModel)]="searchText" (ngModelChange)="search($event)"
+        <input appDataAnalytics eventLabel="search" clickLocation="" [(ngModel)]="searchText" (ngModelChange)="search($event)"
             (focus)="searchActive = true;citySearchActive=false" class="text-sm w-full h-full bg-transparent  p-2"
             type="text" placeholder="Search for an Event, Interest or Organizer" />
         <div class="suggestions enter-slide-bottom w-full p-2 absolute" *ngIf="searchResults && searchActive">
@@ -70,7 +70,7 @@
             </ul>
         </div>
     </div>
-    <div #citySuggestions class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container"
+    <div appDataAnalytics eventLabel="location" clickLocation="" #citySuggestions class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container"
         [class.active]="cityPopupActive" (click)="cityPopupActive = true">
         <div class="flex items-center w-10/12 mr-2 " [title]=" activePlace">
             <i class="mdi mdi-map-marker text-2xl color-blue"></i>

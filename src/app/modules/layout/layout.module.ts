@@ -16,10 +16,13 @@ import { CitySearchPopupComponent } from './components/ts-header/city-search-pop
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 import { HeaderService } from './components/ts-header/ts-header.service';
 import { FooterService } from './components/ts-footer/ts-footer.service';
+import { SharedModule } from '../../shared/shared.module';
+import { DataCollectorService } from '../../shared/services/analytics/data-collector.service';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     MatRippleModule,
     MatSnackBarModule,
@@ -46,7 +49,8 @@ import { FooterService } from './components/ts-footer/ts-footer.service';
     HeaderService,
     BrowserService,
     UserService,
-    FooterService
+    FooterService,
+    DataCollectorService
   ]
 })
 export class LayoutModule { }

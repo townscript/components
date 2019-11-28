@@ -47,7 +47,7 @@
                 </div>
                 <div class="overflow-hidden" [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
                     <a *ngFor="let key of eventData?.keywords| slice:0:3" [routerLink]="homeUrl + '/' + key.topicKeywordCode">
-                      <span class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
+                      <span appDataAnalytics  eventLabel="keyword" clickLocation="" class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
                         #{{key.topicKeywordName}}
                       </span>
                     </a>
@@ -60,8 +60,8 @@
                 <app-follow type="icon" [followTypeId]="eventData.id" [followType]="'EVENT'" color="#553c9a"
                     (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
-                <div class="px-2 rounded-full" matRipple>
-                    <i class="mdi mdi-share-variant text-2xl share" (click)="shareEvent();$event.stopPropagation()"></i>
+                <div  class="px-2 rounded-full" matRipple>
+                    <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share" (click)="shareEvent();$event.stopPropagation()"></i>
                 </div>
             </div>
             <div class="flex items-center z-50">
