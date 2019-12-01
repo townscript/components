@@ -8,13 +8,14 @@ import { TsListingCardComponent } from './ts-listing-card/ts-listing-card.compon
 import { ShareEventModalComponent } from './ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsCardSkeletonComponent } from './ts-card-skeleton/ts-card-skeleton.component';
 import { MatTooltipModule } from '@angular/material';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
         CommonModule,
         TsFormsModule,
         SharedModule,
-        MatTooltipModule,
+        MatTooltipModule,                
     ],
     declarations: [
         TsListingCardComponent,
