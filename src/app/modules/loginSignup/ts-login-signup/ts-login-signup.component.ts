@@ -313,11 +313,11 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.resetPwdLinkSent = true;
 
 
-        if(sessionStorage.getItem('email')){
-          sessionStorage.removeItem('email');
+        if(localStorage.getItem('email')){
+          localStorage.removeItem('email');
         }
 
-        sessionStorage.setItem('email',this.loginForm.get('email').value.trim());
+        localStorage.setItem('email',this.loginForm.get('email').value.trim());
     }
 
     randomString = (len: number, an: string): string => {
