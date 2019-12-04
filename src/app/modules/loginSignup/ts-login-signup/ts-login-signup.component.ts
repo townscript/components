@@ -179,7 +179,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.userName = userData.user;
         console.log(this.userName);
         this.userService.updateUser(userData);
-        this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
+        // this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
 
         setTimeout(()=> {
           if (this.mode === 'dialog') {
@@ -311,6 +311,13 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             this.notificationService.success('Reset Password Link has been sent', 2000, 'Dismiss');
         }
         this.resetPwdLinkSent = true;
+
+
+        if(sessionStorage.getItem('email')){
+          sessionStorage.removeItem('email');
+        }
+
+        sessionStorage.setItem('email',this.loginForm.get('email').value.trim());
     }
 
     randomString = (len: number, an: string): string => {
