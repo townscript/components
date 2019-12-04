@@ -8,6 +8,7 @@ import { debounceTime } from 'rxjs/operators';
 import { TimeService } from '../../../../../shared/services/time.service';
 import { config } from '../../../../../core/app-config';
 import { PlaceService } from '../place.service';
+import { HeaderService } from '../ts-header.service';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -39,8 +40,9 @@ export class SearchComponent implements OnInit {
     homeUrl: string;
     router: Router = config.router;
     host = config.baseUrl;
+    popularPlaces: any;
 
-    constructor(private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
+    constructor(private headerService: HeaderService, private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
@@ -61,7 +63,7 @@ export class SearchComponent implements OnInit {
         const interests = results.filter(ele => {
             return ele.objType === 'keyword' ||
                 ele.objType === 'eventtype' ||
-                ele.objType === 'category'
+                ele.objType === 'category';
         });
         const organizers = results.filter(ele => ele.objType === 'organizer');
         const events = results.filter(ele => ele.objType === 'event');
@@ -123,8 +125,22 @@ export class SearchComponent implements OnInit {
             this.searchTextChanged.next(text);
         }
     }
-
+    getPopularPlaces = async () => {
+        this.placeService.place.subscribe(async (res) => {
+            if (res) {
+                const country = JSON.parse(<any>res)['country'];
+                const data = await this.headerService.getPopularCities(country);
+                this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+                    ele.type = 'city';
+                    ele.cityCode = ele.code;
+                    return ele;
+                });
+                console.log(this.popularPlaces);
+            }
+        });
+    }
     ngOnInit() {
+        this.getPopularPlaces();
         this.placeService.place.subscribe(res => {
             if (res) {
                 const data = JSON.parse(<any>res);

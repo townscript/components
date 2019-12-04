@@ -77,8 +77,8 @@
             <span class="truncate">{{activePlace}}</span>
         </div>
         <i class="mdi mdi-chevron-down text-2xl"></i>
-        <app-city-search-popup class="popup" [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
-            *ngIf="cityPopupActive">
+        <app-city-search-popup [popularPlaces]="popularPlaces" class="popup" [(cityPopupActive)]="cityPopupActive"
+            [(activePlace)]="activePlace" *ngIf="cityPopupActive">
         </app-city-search-popup>
     </div>
 </div>
