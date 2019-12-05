@@ -82,7 +82,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        if (this.subObject != undefined) {
+        if (this.subObject !== undefined) {
             this.subObject.unsubscribe();
         }
     }
@@ -116,15 +116,18 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     }
 
     verifyEmail = async (): Promise<any> => {
+        this.showLoader = true;
         if (!this.loginForm.controls.email.valid) {
+            this.showLoader = false;
             return;
         }
         const result = await this.tsLoginSignupService.getUserSignUpDetails(this.loginForm.value.email);
         let newData = result;
         try {
+            this.showLoader = false;
             newData = JSON.parse(result.data);
         } catch (e) {
-            console.log("Exception while parsing api response : "+ result);
+            console.log("Exception while parsing api response : " + result);
         }
         if (newData && newData.isExistingUser && newData.isManualSignup) {
             this.openSignInView();
@@ -181,11 +184,11 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.userService.updateUser(userData);
         // this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
 
-        setTimeout(()=> {
-          if (this.mode === 'dialog') {
-            this.close();
-          }
-        },1400);
+        setTimeout(() => {
+            if (this.mode === 'dialog') {
+                this.close();
+            }
+        }, 1400);
 
         if (this.rdurl != undefined) {
             window.open(this.rdurl, '_self');
@@ -214,7 +217,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         try {
             data = JSON.parse(data);
         } catch (e) {
-            console.log("Exception while parsing api response : "+ data);
+            console.log("Exception while parsing api response : " + data);
         }
 
         if (data['result'] == 'Error') {
@@ -253,7 +256,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
     goBack = (): void => {
         if (this.showResetPassword) {
-          this.openSignInView();
+            this.openSignInView();
         } else if (this.isSignInView || this.isSignUpView || this.isVerifyEmailView) {
             this.openDefaultView();
         } else {
@@ -313,11 +316,11 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.resetPwdLinkSent = true;
 
 
-        if(localStorage.getItem('email')){
-          localStorage.removeItem('email');
+        if (localStorage.getItem('email')) {
+            localStorage.removeItem('email');
         }
 
-        localStorage.setItem('email',this.loginForm.get('email').value.trim());
+        localStorage.setItem('email', this.loginForm.get('email').value.trim());
     }
 
     randomString = (len: number, an: string): string => {
