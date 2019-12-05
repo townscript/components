@@ -12,7 +12,7 @@
                     <i class="mdi mdi-content-copy block text-4xl text-gray-700" [class.text-purple-800]="copied"></i>
                     <span class="text-gray-900 text-sm block" *ngIf="!copied">Copy Link</span>
                     <span class="text-purple-800 text-sm block" *ngIf="copied">Copied!</span>
-                    <input type="text" class="hidden" id="event_link" [value]="baseUrl+'e/' + event.shortName" />
+                    <input type="text" class="copy_input" id="event_link" [value]="baseUrl+'e/' + event.shortName" />
                 </div>
             </a>
             <a [href]="shareLink?.whatsapp" target="_blank">
