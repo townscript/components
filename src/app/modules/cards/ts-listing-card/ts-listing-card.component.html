@@ -4,10 +4,8 @@
         [ngClass]="gridType=='list' ? 'h-auto w-4/12 lg:w-2/5' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '"
         [style.background-image]="eventData.cardImageUrl?'url(' + eventData.cardImageUrl + ')':'url(' + defaultCardImageUrl + ')'">
         <i class="top-0 right-0 pt-2 pr-2 text-white absolute mdi mdi-checkbox-marked-circle ml-1 pt-1 text-lg"
-          *ngIf="eventData?.organizerIsTrusted"
-          matTooltip="VERIFIED"
-          matTooltipPosition="above"
-          matTooltipClass="ts-card-tooltip"></i>
+            *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
+            matTooltipClass="ts-card-tooltip"></i>
     </div>
     <div class="flex flex-col justify-between leading-normal listing-container--content overflow-hidden" [ngClass]="gridType=='list' ?' w-8/12  md:w-full'
                      : ' w-full'">
@@ -45,30 +43,33 @@
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                     <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
                 </div>
-                <div class="overflow-hidden" [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
+                <div class="overflow-hidden"
+                    [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
                     <a *ngFor="let key of eventData?.keywords| slice:0:3" [href]="homeUrl + '/' + key.topicKeywordCode">
-                      <span appDataAnalytics  eventLabel="keyword" clickLocation="" class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
-                        #{{key.topicKeywordName}}
-                      </span>
+                        <span appDataAnalytics eventLabel="keyword" clickLocation=""
+                            class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
+                            #{{key.topicKeywordName}}
+                        </span>
                     </a>
                 </div>
             </div>
         </div>
-        <div
-            class="h-10 relative bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"  *ngIf="eventData">
+        <div class="h-10 relative bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"
+            *ngIf="eventData">
             <div class="text-sm flex items-center z-50">
                 <app-follow type="icon" [followTypeId]="eventData.id" [followType]="'EVENT'" color="#553c9a"
                     (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
-                <div  class="px-2 rounded-full" matRipple>
-                    <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share" (click)="shareEvent();$event.stopPropagation()"></i>
+                <div class="px-2 rounded-full" matRipple>
+                    <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share"
+                        (click)="$event.stopPropagation();shareEvent()"></i>
                 </div>
             </div>
             <div class="flex items-center z-50">
                 <span class="align-text-bottom price-container font-323E48 text-base font-semibold"
                     *ngIf="eventData.minimumTicketPrice">
-                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}} <span
-                        class="hidden md:inline text-sm font-normal">onwards</span></span>
+                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}}
+                    <span class="hidden md:inline text-sm font-normal">onwards</span></span>
                 <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
                 <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
             </div>
