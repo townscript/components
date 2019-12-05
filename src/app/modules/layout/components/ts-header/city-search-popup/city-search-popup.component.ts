@@ -65,7 +65,10 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         }
         if (place.type === 'unstructured') {
             const name = place.name.replace(/,/g, '').replace(/ /g, '-');
-            const secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
+            let secondaryText = '';
+            if (place.secondaryText) {
+                secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
+            }
             this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
         }
         // this.placeService.updatePlace(place.name);
