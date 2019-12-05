@@ -18,6 +18,7 @@ export class FollowComponent implements OnInit {
     @Input() color = '#683592';
     @Input() followTypeId;
     @Input() followType;
+    @Output() status: any = new EventEmitter<any>();
 
     textCopy: string;
     hovered: boolean;
@@ -42,6 +43,11 @@ export class FollowComponent implements OnInit {
             }
         });
     }
+
+    emitFollowStatus = (): void => {
+        this.status.emit(this.followed);
+    }
+
     checkFollowStatus = () => {
         if (!this.followTypeId || !this.followType) {
             return;
@@ -57,6 +63,7 @@ export class FollowComponent implements OnInit {
                 if (this.followed) {
                     this.text = this.followedText;
                 }
+                this.emitFollowStatus();
             }
         });
     }
