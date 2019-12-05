@@ -5,6 +5,7 @@ import { LoginModalComponent } from '../../../../modules/loginSignup/ts-login-si
 import { UserService } from '../../../../shared/services/user-service';
 import { config } from '../../.././../core/app-config';
 import { PlaceService } from './place.service';
+import { HeaderService } from './ts-header.service';
 
 @Component({
   selector: 'ts-header',
@@ -32,8 +33,9 @@ export class TsHeaderComponent implements OnInit {
   homePageUrl: string;
   s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
   cityPopupActive = false;
+  popularPlaces: any;
 
-  constructor(private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
+  constructor(private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
   }
 
   @HostListener('document:click', ['$event'])
@@ -86,10 +88,25 @@ export class TsHeaderComponent implements OnInit {
     this.router.navigate([this.homePageUrl]);
   }
 
+  getPopularPlaces = async () => {
+    this.placeService.place.subscribe(async (res) => {
+      if (res) {
+        const country = JSON.parse(<any>res)['country'];
+        const data = await this.headerService.getPopularCities(country);
+        this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+          ele.type = 'city';
+          ele.cityCode = ele.code;
+          return ele;
+        });
+        console.log(this.popularPlaces);
+      }
+    });
+  }
   ngOnInit() {
     this.userService.user.subscribe(data => {
       this.user = data;
     });
+    this.getPopularPlaces();
     this.placeService.place.subscribe(res => {
       if (res) {
         this.activePlace = JSON.parse(<any>res)['currentPlace'];

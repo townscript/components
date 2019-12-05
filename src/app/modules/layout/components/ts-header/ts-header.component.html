@@ -1,7 +1,8 @@
 <nav class="ts-header flex align-items-center" *ngIf="source!='marketplace'">
     <div class="container flex align-items-center">
         <div class="navbar-header">
-            <a appDataAnalytics  eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center" href="/">
+            <a appDataAnalytics eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center"
+                href="/">
                 <img src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                     title="Townscript Event Ticketing Logo" />
             </a>
@@ -46,8 +47,9 @@
                     <span class="mr-1 text-gray-700 truncate">{{activePlace}}</span>
                     <i class="mdi mdi-menu-down color-blue"></i>
                 </div>
-                <app-city-search-popup appDataAnalytics  eventLabel="location-dropdown-search" clickLocation="" [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace"
-                    [showArrow]="false" class="popup" *ngIf="cityPopupActive">
+                <app-city-search-popup appDataAnalytics eventLabel="location-dropdown-search" clickLocation=""
+                    [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace" [showArrow]="false"
+                    class="popup" *ngIf="cityPopupActive">
                 </app-city-search-popup>
 
             </div>
@@ -69,7 +71,8 @@
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
-            <div appDataAnalytics  eventLabel="login-signup" clickLocation="" class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
+            <div appDataAnalytics eventLabel="login-signup" clickLocation=""
+                class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
                 <span>Login | Signup</span>
             </div>

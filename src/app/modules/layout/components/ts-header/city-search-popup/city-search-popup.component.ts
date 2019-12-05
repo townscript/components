@@ -20,7 +20,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     @Output() activePlaceChange: EventEmitter<String> = new EventEmitter();
     @Input() cityPopupActive: boolean;
     @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
-
+    @Input() popularPlaces: any;
 
     citySearchActive = true;
     placeSearchResults: any;
@@ -33,7 +33,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     cityLoading = false;
     index: any;
 
-    popularPlaces: any;
+
 
     constructor(private placeService: PlaceService, private headerService: HeaderService, public datepipe: DatePipe) {
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
@@ -53,18 +53,22 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     placeChanged = (place) => {
         if (place.type === 'country') {
-            this.router.navigate(['/' + place.twoDigitCode.toLowerCase() + '/' + place.country.toLowerCase()], { state: { place: place } });
+            this.router.navigate(['/' + place.twoDigitCode.toLowerCase() +
+                '/' + place.country.split(' ').join('-').toLowerCase()], { state: { place: place } });
         }
         if (place.type === 'city') {
             this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode], { state: { place: place } });
         }
         if (place.type === 'locality') {
-            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode + '/' + place.localityCode],
+            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.localityCode + '--' + place.cityCode],
                 { state: { place: place } });
         }
         if (place.type === 'unstructured') {
             const name = place.name.replace(/,/g, '').replace(/ /g, '-');
-            const secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
+            let secondaryText = '';
+            if (place.secondaryText) {
+                secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
+            }
             this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
         }
         // this.placeService.updatePlace(place.name);
@@ -88,25 +92,11 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         }
     }
 
-    getPopularPlaces = async () => {
-        this.placeService.place.subscribe(async (res) => {
-            if (res) {
-                const country = JSON.parse(<any>res)['country'];
-                const data = await this.headerService.getPopularCities(country);
-                this.popularPlaces = data['data'].slice(0, 6).map(ele => {
-                    ele.type = 'city';
-                    ele.cityCode = ele.code;
-                    return ele;
-                });
-            }
-        });
-    }
     ngAfterViewInit() {
         this.citySearchActive = true;
         this.cityInput.nativeElement.focus();
-        this.getPopularPlaces();
     }
     ngOnInit() {
-
+        console.log(this.popularPlaces);
     }
 }
