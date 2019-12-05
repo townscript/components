@@ -53,7 +53,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     placeChanged = (place) => {
         if (place.type === 'country') {
-            this.router.navigate(['/' + place.twoDigitCode.toLowerCase()], { state: { place: place } });
+            this.router.navigate(['/' + place.twoDigitCode.toLowerCase() + '/' + place.country.toLowerCase()], { state: { place: place } });
         }
         if (place.type === 'city') {
             this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode], { state: { place: place } });
@@ -96,5 +96,3 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         console.log(this.popularPlaces);
     }
 }
-
-
