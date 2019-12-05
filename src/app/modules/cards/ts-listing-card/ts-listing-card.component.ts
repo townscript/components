@@ -27,7 +27,9 @@ export class TsListingCardComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
 
-  shareEvent = () => {
+  shareEvent = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
     if (this.browser.isMobile() && window.navigator && window.navigator['share']) {
       window.navigator['share']({
         title: this.eventData.name,

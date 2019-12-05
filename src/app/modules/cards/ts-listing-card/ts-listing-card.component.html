@@ -60,9 +60,9 @@
                 <app-follow type="icon" [followTypeId]="eventData.id" [followType]="'EVENT'" color="#553c9a"
                     (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
-                <div class="px-2 rounded-full" matRipple>
+                <div class="px-2 rounded-full" matRipple (click)="$event.stopPropagation()">
                     <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share"
-                        (click)="$event.stopPropagation();shareEvent()"></i>
+                        (click)="shareEvent($event)"></i>
                 </div>
             </div>
             <div class="flex items-center z-50">
