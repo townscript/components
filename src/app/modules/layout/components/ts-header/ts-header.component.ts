@@ -97,13 +97,8 @@ export class TsHeaderComponent implements OnInit {
   getPopularPlaces = async () => {
     this.placeService.place.subscribe(async (res) => {
       if (res) {
-        let country = '';
-        try {
-          country = JSON.parse(<any>res)['country'];
-        } catch (e) {
-          country = this.urlArray[0];
-        }
-        const data = await this.headerService.getPopularCities(country);
+        const country = JSON.parse(<any>res)['country'];
+        const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
         this.popularPlaces = data['data'].slice(0, 6).map(ele => {
           ele.type = 'city';
           ele.cityCode = ele.code;
