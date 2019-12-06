@@ -25,6 +25,7 @@ export class TsHeaderComponent implements OnInit {
 
   user: any;
   router = config.router;
+  urlArray;
   userMenu: any;
   host: string = config.baseUrl;
   activePlace: string;
@@ -36,6 +37,11 @@ export class TsHeaderComponent implements OnInit {
   popularPlaces: any;
 
   constructor(private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
+    if (this.router.url) {
+      this.urlArray = this.router.url.replace('/', '').split('/');
+    } else {
+      this.urlArray = ['in'];
+    }
   }
 
   @HostListener('document:click', ['$event'])
@@ -91,7 +97,12 @@ export class TsHeaderComponent implements OnInit {
   getPopularPlaces = async () => {
     this.placeService.place.subscribe(async (res) => {
       if (res) {
-        const country = JSON.parse(<any>res)['country'];
+        let country = '';
+        try {
+          country = JSON.parse(<any>res)['country'];
+        } catch (e) {
+          country = this.urlArray[0];
+        }
         const data = await this.headerService.getPopularCities(country);
         this.popularPlaces = data['data'].slice(0, 6).map(ele => {
           ele.type = 'city';

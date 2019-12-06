@@ -39,6 +39,7 @@ export class SearchComponent implements OnInit {
     index: any;
     homeUrl: string;
     router: Router = config.router;
+    urlArray;
     host = config.baseUrl;
     popularPlaces: any;
 
@@ -47,6 +48,11 @@ export class SearchComponent implements OnInit {
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
         this.index = this.client.initIndex(this.algoliaIndexName);
+        if (this.router.url) {
+            this.urlArray = this.router.url.replace('/', '').split('/');
+        } else {
+            this.urlArray = ['in'];
+        }
     }
 
     callAlgolia = (text) => {
@@ -128,7 +134,12 @@ export class SearchComponent implements OnInit {
     getPopularPlaces = async () => {
         this.placeService.place.subscribe(async (res) => {
             if (res) {
-                const country = JSON.parse(<any>res)['country'];
+                let country = '';
+                try {
+                    country = JSON.parse(<any>res)['country'];
+                } catch (e) {
+                    country = this.urlArray[0];
+                }
                 const data = await this.headerService.getPopularCities(country);
                 this.popularPlaces = data['data'].slice(0, 6).map(ele => {
                     ele.type = 'city';
