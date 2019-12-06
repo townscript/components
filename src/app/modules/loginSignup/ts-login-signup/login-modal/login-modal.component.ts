@@ -6,7 +6,7 @@ import { TsLoginSignupComponent } from '../ts-login-signup.component';
   selector: 'app-login-modal',
   templateUrl: './login-modal.component.html',
   styleUrls: ['./login-modal.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  //encapsulation: ViewEncapsulation.None
 })
 export class LoginModalComponent implements OnInit {
 
