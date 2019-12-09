@@ -103,7 +103,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     if (this.popularEvents == undefined || this.popularEvents.length == 0) {
       this.subObject = this.placeService.place.subscribe((res: any) => {
         const data = JSON.parse(res);
-        if (data != undefined && data.length > 0) {
+        if (data != undefined && Object.keys(data).length > 0) {
           if(data['city']){
             this.getCityFromCityCode(data['city']);
           } else {

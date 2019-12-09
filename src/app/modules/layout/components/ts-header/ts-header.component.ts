@@ -114,11 +114,14 @@ export class TsHeaderComponent implements OnInit {
     });
     this.getPopularPlaces();
     this.placeService.place.subscribe(res => {
-      if (res) {
-        this.activePlace = JSON.parse(<any>res)['currentPlace'];
-        this.activeCity = JSON.parse(<any>res)['city'];
-        this.activeCountryCode = JSON.parse(<any>res)['country'];
-        this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
+      let data = JSON.parse(<any>res);
+      if (Object.keys(data).length > 0) {
+        this.activePlace = data['currentPlace'];
+        this.activeCity = data['city'];
+        this.activeCountryCode = data['country'];
+        if(this.activeCountryCode != undefined && this.activeCity != undefined){
+          this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
+        }
       }
     });
   }
