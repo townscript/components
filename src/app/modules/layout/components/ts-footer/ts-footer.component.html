@@ -1,16 +1,24 @@
-<footer class="ts-footer text-center pt-8 pb-4 md:pt-24 md:pb-12 lg:pt-32 lg:pb-16" [class.new-footer]="source=='marketplace'">
+<footer class="ts-footer text-center pt-8 pb-4 md:pt-24 md:pb-12 lg:pt-32 lg:pb-16"
+    [class.new-footer]="source=='marketplace'">
     <div class="ts-container content-footer">
         <div class="flex md:mb-4">
             <div class="w-1/5 hidden-xs px-4">
                 <h5>ORGANISE EVENTS</h5>
                 <ul class="list-unstyled">
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/conference-registration">Conferences</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/workshops-and-trainings">Workshops and Trainings</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/college-fest-payment-portal">College Festivals</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/marathon-cycling-trips-treks-registration">Sports and Fitness Events</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/entertainment-events-ticketing">Entertainment Events</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/meetup-registration">Meetups and Reunions</a></li>
-                    <li appDataAnalytics eventLabel="organize-events" clickLocation="" ><a href="/i/treks-trips-registration">Treks and Trips</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/conference-registration">Conferences</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/workshops-and-trainings">Workshops and Trainings</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/college-fest-payment-portal">College Festivals</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/marathon-cycling-trips-treks-registration">Sports and Fitness Events</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/entertainment-events-ticketing">Entertainment Events</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/meetup-registration">Meetups and Reunions</a></li>
+                    <li appDataAnalytics eventLabel="organize-events" clickLocation=""><a
+                            href="/i/treks-trips-registration">Treks and Trips</a></li>
                     <!-- <li><a href="/i/fundraising-crowdfunding">Fundraisings</a></li> -->
                 </ul>
             </div>
@@ -21,34 +29,44 @@
 				<li><a href="/mumbai/new-year-party">New Year Parties In Mumbai</a></li>
 				<li><a href="/delhi/new-year-party">New Year Parties In Delhi</a></li>
 				<li><a href="/bangalore/new-year-party">New Year Parties In Bangalore</a></li>-->
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""  ><a
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
                             href="http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-">
                             List of Countries supported by Townscript</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/sell-event-tickets-online">Sell Event Tickets Online</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/event-management-software">Event Management Software</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/event-registration-software">Event Registration Software</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/conference-management-system">Conference management System</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/event-planning-software">Event Planning Software</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/online-event-ticketing">Online Event Ticketing</a></li>
-                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a href="/i/corporate-event-management">Corporate Event Management</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/sell-event-tickets-online">Sell Event Tickets Online</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/event-management-software">Event Management Software</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/event-registration-software">Event Registration Software</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/conference-management-system">Conference management System</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/event-planning-software">Event Planning Software</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/online-event-ticketing">Online Event Ticketing</a></li>
+                    <li appDataAnalytics eventLabel="popular-searches" clickLocation=""><a
+                            href="/i/corporate-event-management">Corporate Event Management</a></li>
                 </ul>
             </div>
             <div class="w-1/5 px-4 hidden-xs" *ngIf="source=='landingPages'">
                 <h5>RECENT BLOGS</h5>
                 <ul class="list-unstyled blog-links">
-                    <li appDataAnalytics eventLabel="recent-blogs" clickLocation="" *ngFor="let blog of recentBlogs"><a [href]="blog.url">{{blog.title}}</a></li>
+                    <li appDataAnalytics eventLabel="recent-blogs" clickLocation="" *ngFor="let blog of recentBlogs"><a
+                            [href]="blog.url">{{blog.title}}</a></li>
                 </ul>
             </div>
             <div class="w-1/5 px-4 hidden-xs" *ngIf="source=='marketplace'">
                 <h5>POPULAR EVENTS</h5>
                 <ul class="list-unstyled blog-links">
-                    <li appDataAnalytics eventLabel="popular-events" clickLocation="" *ngFor="let event of popularEvents"><a [href]="'e/'+event.shortName">{{event.name}}</a></li>
+                    <li appDataAnalytics eventLabel="popular-events" clickLocation=""
+                        *ngFor="let event of popularEvents"><a [href]="'e/'+event.shortName">{{event.name}}</a></li>
                 </ul>
             </div>
             <div class="w-1/5 px-4 hidden-xs">
                 <h5>POPULAR READS</h5>
                 <ul class="list-unstyled blog-links">
-                    <li appDataAnalytics eventLabel="popular-reads" clickLocation="" *ngFor="let read of popularReads"><a [href]="read.url" target="_blank">{{read.title}}</a></li>
+                    <li appDataAnalytics eventLabel="popular-reads" clickLocation="" *ngFor="let read of popularReads">
+                        <a [href]="read.url" target="_blank">{{read.title}}</a></li>
                 </ul>
             </div>
             <div class="w-1/5 hidden-xs pl-12">
@@ -104,11 +122,13 @@
                 </ul>
             </div>
             <div class="w-full block md:hidden">
-              <div class="flex flex-col justify-center items-center">
-                <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
-                <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span class="text-purple-300">Event</span>ful life&rdquo;</div>
-                <img class="dance-illustration" src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png">
-              </div>
+                <div class="flex flex-col justify-center items-center">
+                    <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
+                    <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span
+                            class="text-purple-300">Event</span>ful life&rdquo;</div>
+                    <img class="dance-illustration"
+                        [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png'">
+                </div>
             </div>
         </div>
     </div>
@@ -116,7 +136,7 @@
         <div class="brand-footer border-0 md:border-t pt-2 md:pt-4 lg:pt-8">
             <div class="flex md:mb-4">
                 <div class="w-full flex flex-col items-center md:items-start md:w-1/5 px-4 ts-logo">
-                    <img src="assets/images/ts-logoBMS.png" alt="Townscript Event Ticketing Logo"
+                    <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
                         title="Townscript Event Ticketing Logo" />
                     <span class="ts-footer__copyright text-right pr-2 text-xs text-gray-800">Copyright@2019</span>
                     <!--<a href="mailto:service@townscript.com" target="_blank" class="ts-footer__mail hidden-xs">service@townscript.com</a>-->
@@ -126,21 +146,29 @@
                     <br>
                     <ul class="list-linear">
                         <!-- <li><a href="#">Features</a></li> -->
-                        <li appDataAnalytics eventLabel="learn-more-pricing" clickLocation=""><a href="/pricing">Pricing</a></li>
+                        <li appDataAnalytics eventLabel="learn-more-pricing" clickLocation=""><a
+                                href="/pricing">Pricing</a></li>
                         <li><a href="/how-it-works" ts-data-analytics prop-event="click" eventLabel="How It Works"
                                 prop-clicked-location="Footer">How it works</a></li>
                         <!-- <li><a href="#">Mobile Apps</a></li> -->
-                        <li appDataAnalytics eventLabel="learn-more-api" clickLocation=""><a href="//townscript-api.readme.io/" target="_blank">APIs for Developers</a></li>
-                        <li appDataAnalytics eventLabel="learn-more-policies" clickLocation=""><a href="/terms-and-conditions">Policies</a></li>
-                        <li appDataAnalytics eventLabel="learn-more-privacy" clickLocation=""><a href="/privacy-policy">Privacy</a></li>
-                        <li appDataAnalytics eventLabel="learn-more-support" clickLocation=""><a href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a></li>
+                        <li appDataAnalytics eventLabel="learn-more-api" clickLocation=""><a
+                                href="//townscript-api.readme.io/" target="_blank">APIs for Developers</a></li>
+                        <li appDataAnalytics eventLabel="learn-more-policies" clickLocation=""><a
+                                href="/terms-and-conditions">Policies</a></li>
+                        <li appDataAnalytics eventLabel="learn-more-privacy" clickLocation=""><a
+                                href="/privacy-policy">Privacy</a></li>
+                        <li appDataAnalytics eventLabel="learn-more-support" clickLocation=""><a
+                                href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a>
+                        </li>
                     </ul>
                     <div class="linear-footer hidden-xs" *ngIf="source=='marketplace'">
                         <h5>POPULAR CITIES</h5>
                         <br>
                         <ul class="list-linear">
-                            <li appDataAnalytics eventLabel="popular-cities" clickLocation="" *ngFor="let city of popularCities">
-                                <div><a href="/{{city.countryCode + '/' + city.name | lowercase}}">{{city.name}}</a></div>
+                            <li appDataAnalytics eventLabel="popular-cities" clickLocation=""
+                                *ngFor="let city of popularCities">
+                                <div><a href="/{{city.countryCode + '/' + city.name | lowercase}}">{{city.name}}</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -148,20 +176,27 @@
                         <h5>ABOUT</h5>
                         <br>
                         <ul class="list-linear">
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="/about-us">About us</a></li>
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="/contact-us">Contact us</a></li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation="" href="/about-us">About us</a>
+                            </li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation="" href="/contact-us">Contact
+                                    us</a></li>
                             <!-- <li><a href="#">Career</a></li> -->
                             <!-- <li><a href="#">Media</a></li> -->
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="http://blog.townscript.com" target="_blank">Blog</a></li>
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="http://eventmagazine.townscript.com/" target="_blank">Event Magazine</a></li>
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="https://productblog.townscript.com/" target="_blank">Product Diary</a></li>
-                            <li><a  appDataAnalytics eventLabel="about-us" clickLocation="" href="/sitemap" target="_blank">Sitemap</a></li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation=""
+                                    href="http://blog.townscript.com" target="_blank">Blog</a></li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation=""
+                                    href="http://eventmagazine.townscript.com/" target="_blank">Event Magazine</a></li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation=""
+                                    href="https://productblog.townscript.com/" target="_blank">Product Diary</a></li>
+                            <li><a appDataAnalytics eventLabel="about-us" clickLocation="" href="/sitemap"
+                                    target="_blank">Sitemap</a></li>
                         </ul>
                     </div>
                 </div>
-                <div appDataAnalytics eventLabel="g2-crowd" clickLocation="" class="mixpanel-button align-text hidden-xs px-10 pt-8 mx-2">
+                <div appDataAnalytics eventLabel="g2-crowd" clickLocation=""
+                    class="mixpanel-button align-text hidden-xs px-10 pt-8 mx-2">
                     <a href="https://www.g2crowd.com/products/townscript/reviews" target="_blank">
-                        <img src="https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png"
+                        <img [lazyLoad]="'https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png'"
                             alt="G2Crowd Townscript Reviews" width="100">
                         <span>72 Reviews</span>
                     </a>

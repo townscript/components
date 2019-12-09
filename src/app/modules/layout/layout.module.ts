@@ -18,6 +18,8 @@ import { HeaderService } from './components/ts-header/ts-header.service';
 import { FooterService } from './components/ts-footer/ts-footer.service';
 import { SharedModule } from '../../shared/shared.module';
 import { DataCollectorService } from '../../shared/services/analytics/data-collector.service';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+
 
 @NgModule({
   imports: [
@@ -27,7 +29,8 @@ import { DataCollectorService } from '../../shared/services/analytics/data-colle
     MatRippleModule,
     MatSnackBarModule,
     TsLoginSignupModule,
-    TsFormsModule
+    TsFormsModule,
+    LazyLoadImageModule
   ],
   declarations: [
     TsHeaderComponent,

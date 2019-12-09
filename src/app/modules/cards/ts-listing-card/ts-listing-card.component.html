@@ -2,7 +2,8 @@
     [ngClass]="gridType=='list' ? 'rounded  my-4 mx-auto  flex' :'bg-white lg:flex lg:flex-col my-1 rounded w-full'">
     <div class="relative flex-none overflow-hidden text-center event-image"
         [ngClass]="gridType=='list' ? 'h-auto w-4/12 lg:w-2/5' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '"
-        [style.background-image]="eventData.cardImageUrl?'url(' + eventData.cardImageUrl + ')':'url(' + defaultCardImageUrl + ')'">
+        [defaultImage]="defaultCardImageUrl"
+        [lazyLoad]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl">
         <i class="top-0 right-0 pt-2 pr-2 text-white absolute mdi mdi-checkbox-marked-circle ml-1 pt-1 text-lg"
             *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
             matTooltipClass="ts-card-tooltip"></i>
