@@ -103,8 +103,7 @@ export class TsHeaderComponent implements OnInit {
           ele.type = 'city';
           ele.cityCode = ele.code;
           return ele;
-        });
-        console.log(this.popularPlaces);
+        });        
       }
     });
   }
