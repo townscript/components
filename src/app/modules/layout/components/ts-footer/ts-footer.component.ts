@@ -90,7 +90,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     if(country != undefined){
       filter['country'] = country;
     }
-    const res = await this.footerService.getPopularEvents(this.city.latitude, this.city.longitude, filter);
+    const res = await this.footerService.getPopularEvents(this.city.latitude ? this.city.latitude : undefined, this.city.longitude ? this.city.longitude : undefined, filter);
     this.popularEvents = res.data.data;
   }
 
