@@ -20,7 +20,7 @@ export class RangeDatePipe implements PipeTransform {
               //custom date selected
               if(args['recurrenceRule'].indexOf("RDATE") > -1){
                 freqLabel = 'Multiple Dates';
-              } else {                
+              } else {
                 // predefined R Rule
                 if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
                   let byDays = args['recurrenceRule'].split(';')[2].split('=')[1].split(',');
@@ -44,15 +44,18 @@ export class RangeDatePipe implements PipeTransform {
               const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
               const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
               const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+
+              const currYear = new Date().getUTCFullYear()% 100;
               if (year[0] !== year[1]) {
                 return month[0] + ' ' + date[0] + '\'' + year[0] + ' - ' + month[1] + ' ' + date[1] + '\'' + year[1] + ' | ' + time;
               } else {
+                const yearSt = (year[0] - currYear) != 0 ? " '"+year[0] : '';
                 if ((date[0] === date[1]) && (month[0] === month[1])) {
-                  return month[0] + ' ' + date[0] + ' | ' + time;
+                  return month[0] + ' ' + date[0] + yearSt +' | ' + time;
                 } else if ((month[0] !== month[1])) {
-                  return month[0] + ' ' + date[0] + ' - ' + month[1] + ' ' + date[1] + ' | ' + time;
+                  return month[0] + ' ' + date[0] + yearSt + ' - ' + month[1] + ' ' + date[1] + yearSt + ' | ' + time;
                 } else {
-                  return month[0] + ' ' + date[0] + ' - ' + date[1] + ' | ' + time;
+                  return month[0] + ' ' + date[0] + ' - ' + date[1] + yearSt + ' | ' + time;
                 }
               }
             }
