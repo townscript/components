@@ -85,8 +85,12 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     this.getPopularEvents();
   }
 
-  getPopularEvents = async (): Promise<any> => {
-    const res = await this.footerService.getPopularEvents(this.city.latitude, this.city.longitude);
+  getPopularEvents = async (country?: string): Promise<any> => {
+    let filter : any = {'minScore': 0 };
+    if(country != undefined){
+      filter['country'] = country;
+    }
+    const res = await this.footerService.getPopularEvents(this.city.latitude, this.city.longitude, filter);
     this.popularEvents = res.data.data;
   }
 
@@ -99,8 +103,12 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     if (this.popularEvents == undefined || this.popularEvents.length == 0) {
       this.subObject = this.placeService.place.subscribe((res: any) => {
         const data = JSON.parse(res);
-        if (data != undefined) {
-          this.getCityFromCityCode(data['city']);
+        if (data != undefined && data.length > 0) {
+          if(data['city']){
+            this.getCityFromCityCode(data['city']);
+          } else {
+            this.getPopularEvents(data['currentPlace']);
+          }
         }
       });
     }

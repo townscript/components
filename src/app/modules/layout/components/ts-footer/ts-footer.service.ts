@@ -1,4 +1,4 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { config } from '../../../../core/app-config';
 
@@ -10,15 +10,14 @@ export class FooterService {
     constructor(private http: HttpClient) {
     }
 
-    getPopularEvents = (lat: any, long: any): Promise<any> => {
+    getPopularEvents = (lat: any, long: any, filter?: any): Promise<any> => {
       const params: Object = new Object();
-        params['lat'] = lat;
-        params['lng'] = long;
+        params['lat'] = lat ? lat : 1;
+        params['lng'] = long ? long : 2;
         params['radarDistance'] = 50;
         params['page'] = 0;
-        params['size'] = 8;
-        params['minScore'] = 0;
-      return this.http.post(this.listingsUrl + 'event/radar', {}, {params: <HttpParams>params}).toPromise();
+        params['size'] = 8;        
+      return this.http.post(this.listingsUrl + 'event/radar', filter ? filter : {}, {params: <HttpParams>params}).toPromise();
     }
 
     getCityFromCityCode = (code: string):Promise<any> => {
