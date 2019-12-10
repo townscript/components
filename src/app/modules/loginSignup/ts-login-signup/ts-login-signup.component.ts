@@ -99,8 +99,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         this.loginForm.get('phoneNumber').disable();
     }
 
-    close = (): void => {
-        this.closeDialog.emit(true);
+    close = (signedIn): void => {
+        this.closeDialog.emit(signedIn);
     }
 
     clearErrors = (): void => {
@@ -186,7 +186,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
         setTimeout(() => {
             if (this.mode === 'dialog') {
-                this.close();
+                this.close(true);
             }
         }, 1400);
 
@@ -260,7 +260,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         } else if (this.isSignInView || this.isSignUpView || this.isVerifyEmailView) {
             this.openDefaultView();
         } else {
-            this.close();
+            this.close(false);
         }
     }
 

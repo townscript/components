@@ -34,7 +34,7 @@ export class LoginModalComponent implements OnInit {
     }
   }
 
-  close = (): void => {
-    this.dialogRef.close();
+  close = (event): void => {
+    this.dialogRef.close(event);
   }
 }

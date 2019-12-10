@@ -67,18 +67,24 @@ export class FollowComponent implements OnInit {
             }
         });
     }
-    openLogin = () => {
+    openLogin = ($event) => {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-        this.dialog.open(LoginModalComponent, dialogConfig);
+        const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
+        dialogRef.afterClosed().subscribe(isSignedIn => {
+            if (isSignedIn) {
+                this.loggedIn = true;
+                this.followedFn($event);
+            }
+        });
     }
     followedFn = ($event: any) => {
         $event.stopPropagation();
         $event.preventDefault();
         if (!this.loggedIn) {
-            this.openLogin();
+            this.openLogin($event);
             return;
         }
         if (!this.followed) {
