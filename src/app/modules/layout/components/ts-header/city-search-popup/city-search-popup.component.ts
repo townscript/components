@@ -96,7 +96,6 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         this.citySearchActive = true;
         this.cityInput.nativeElement.focus();
     }
-    ngOnInit() {
-        console.log(this.popularPlaces);
+    ngOnInit() {        
     }
 }
