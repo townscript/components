@@ -19,13 +19,16 @@ export class UserMenuComponent implements OnInit {
     host = config.baseUrl;
     s3BucketUrl = config.s3BaseUrl + config.s3Bucket;
 
-    constructor(private notificationService: NotificationService, private userService: UserService, private cookieService: CookieService) {
+    constructor(private notificationService: NotificationService,
+       private userService: UserService,
+       private cookieService: CookieService) {
 
     }
     logout = () => {
-        this.close.emit({logout: true});
+        this.close.emit();
         this.cookieService.deleteCookie('townscript-user');
         this.userService.updateUser(null);        
+        window.location.reload();
     }
     ngOnInit() { }
 
