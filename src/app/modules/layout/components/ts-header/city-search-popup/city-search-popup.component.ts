@@ -52,15 +52,17 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     placeChanged = (place) => {
+        let tsType = this.urlArray[this.urlArray.length-1];
+        const tsTypeUrl = tsType.length > 0 ? '/' + tsType.toLowerCase() : '';
         if (place.type === 'country') {
             this.router.navigate(['/' + place.twoDigitCode.toLowerCase() +
-                '/' + place.country.split(' ').join('-').toLowerCase()], { state: { place: place } });
+                '/' + place.country.split(' ').join('-').toLowerCase() + tsTypeUrl], { state: { place: place } });
         }
         if (place.type === 'city') {
-            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode], { state: { place: place } });
+            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode + tsTypeUrl], { state: { place: place } });
         }
         if (place.type === 'locality') {
-            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.localityCode + '--' + place.cityCode],
+            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.localityCode + '--' + place.cityCode + tsTypeUrl],
                 { state: { place: place } });
         }
         if (place.type === 'unstructured') {
@@ -69,7 +71,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
             if (place.secondaryText) {
                 secondaryText = place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
             }
-            this.router.navigate(['/s/' + name + '--' + secondaryText], { state: { place: place } });
+            this.router.navigate(['/s/' + name + '--' + secondaryText + tsTypeUrl], { state: { place: place } });
         }
         // this.placeService.updatePlace(place.name);
         this.activePlace = place.name;
@@ -96,6 +98,6 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         this.citySearchActive = true;
         this.cityInput.nativeElement.focus();
     }
-    ngOnInit() {        
+    ngOnInit() {
     }
 }
