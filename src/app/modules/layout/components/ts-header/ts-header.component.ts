@@ -103,7 +103,7 @@ export class TsHeaderComponent implements OnInit {
           ele.type = 'city';
           ele.cityCode = ele.code;
           return ele;
-        });        
+        });
       }
     });
   }
@@ -114,11 +114,11 @@ export class TsHeaderComponent implements OnInit {
     this.getPopularPlaces();
     this.placeService.place.subscribe(res => {
       let data = JSON.parse(<any>res);
-      if (Object.keys(data).length > 0) {
+      if (data && Object.keys(data).length > 0) {
         this.activePlace = data['currentPlace'];
         this.activeCity = data['city'];
         this.activeCountryCode = data['country'];
-        if(this.activeCountryCode != undefined && this.activeCity != undefined){
+        if (this.activeCountryCode != undefined && this.activeCity != undefined) {
           this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
         }
       }
