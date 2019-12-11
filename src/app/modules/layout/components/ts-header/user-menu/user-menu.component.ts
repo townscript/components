@@ -25,10 +25,9 @@ export class UserMenuComponent implements OnInit {
 
     }
     logout = () => {
-        this.close.emit();
+        this.close.emit({logout: true});
         this.cookieService.deleteCookie('townscript-user');
-        this.userService.updateUser(null);        
-        window.location.reload();
+        this.userService.updateUser(null);
     }
     ngOnInit() { }
 
