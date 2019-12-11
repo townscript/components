@@ -12,8 +12,8 @@
     </a>
     <div class="menu mt-2 px-1">
         <ts-panel [disable]="false">
-            <ts-panel-header (click)="panelOpen1=!panelOpen1">
-                <div appDataAnalytics  eventLabel="organizing" clickLocation="" class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
+            <ts-panel-header>
+                <div (click)="panelOpen1=!panelOpen1" appDataAnalytics  eventLabel="organizing" clickLocation="" class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
                     [class.border-dashed]="panelOpen1" matRipple>
                     <span class="text-gray-700">
                         Organizing Events
@@ -51,8 +51,8 @@
             </ts-panel-body>
         </ts-panel>
         <ts-panel [disable]="false">
-            <ts-panel-header (click)="panelOpen2=!panelOpen2">
-                <div appDataAnalytics  eventLabel="attending" clickLocation="" class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
+            <ts-panel-header>
+                <div  (click)="panelOpen2=!panelOpen2" appDataAnalytics  eventLabel="attending" clickLocation="" class="px-1 py-2 flex items-center border-b  border-gray-300 justify-between"
                     [class.border-dashed]="panelOpen2" matRipple>
                     <span class="text-gray-700">
                         Attending Events

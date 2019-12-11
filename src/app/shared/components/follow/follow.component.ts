@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { LoginModalComponent } from '../../../modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { FollowService } from '../../services/follow.service';
@@ -10,7 +10,7 @@ import { UserService } from '../../services/user-service';
     templateUrl: './follow.component.html',
     styleUrls: ['./follow.component.scss']
 })
-export class FollowComponent implements OnInit {
+export class FollowComponent implements OnInit, OnChanges {
 
     @Input() text = 'Follow';
     @Input() followedText = 'Following';
@@ -100,6 +100,12 @@ export class FollowComponent implements OnInit {
                 this.followService.getFollowData(this.user.userId);
             });
         }
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['followTypeId'] || changes['followType']) {
+        this.checkFollowStatus();
+      }
     }
 
 }
