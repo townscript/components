@@ -117,7 +117,11 @@ export class SearchComponent implements OnInit {
 
     navigateToListing = (interest: string) => {
         let listingUrl = this.urlArray[0]+ '/'+this.urlArray[1];
-        this.router.navigate([listingUrl + '/' + interest]);
+        if(this.urlArray && this.urlArray.length > 1){
+          this.router.navigate([this.homeUrl + '/' + interest]);
+        } else {
+          this.router.navigate([listingUrl + '/' + interest]);
+        }
         this.searchActive = false;
     }
 
