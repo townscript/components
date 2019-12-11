@@ -25,7 +25,7 @@ export class UserService {
     }
 
     updateUser(data): void {
-        this.user$ = new BehaviorSubject<Object>(null);
+        // this.user$ = new BehaviorSubject<Object>(null);
         this.user$.next(data);
     }
 }
