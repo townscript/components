@@ -87,7 +87,11 @@ export class TsHeaderComponent implements OnInit {
       this.openLogin();
     }
   }
-  
+  closeMyProfile = (event): void => {
+    this.userMenu=!this.userMenu;
+    if(event && event['logout'])
+      window.location.reload();
+  }
   goBack = (): void => {
     this.router.navigate(['../']);
   }
