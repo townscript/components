@@ -83,7 +83,7 @@
                 <!-- <span>{{user.user}}</span> -->
             </div>
             <div class="user-menu position-absolute shadow-md px-2 enter-slide-bottom" *ngIf="userMenu">
-                <app-user-menu [user]="user" (close)="userMenu=!userMenu"></app-user-menu>
+                <app-user-menu [user]="user" (close)="closeMyProfileComponent($event)"></app-user-menu>
             </div>
             <!-- <ts-button text="Login | Signup" class="text-base"></ts-button> -->
         </div>

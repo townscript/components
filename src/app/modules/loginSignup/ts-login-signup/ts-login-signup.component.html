@@ -35,9 +35,8 @@
   <div class="confirmation flex flex-col items-center justify-center p-10" *ngIf="showConfirmation">
     <app-confirmation-svg></app-confirmation-svg>
     <div class="pt-5 text-gray-700 text-lg lg:text-xl font-semibold flex flex-wrap items-center justify-center">
-      <div>Welcome back</div>
+      <div>Welcome back{{userName?.length <= 15 ? ',': ''}}</div>
       <div *ngIf="userName?.length <= 15">
-        ,
         <span class="ml-1">{{userName}}</span>
       </div>
       !
