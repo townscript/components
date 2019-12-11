@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { LoginModalComponent } from '../../../modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { FollowService } from '../../services/follow.service';
@@ -10,7 +10,7 @@ import { UserService } from '../../services/user-service';
     templateUrl: './follow.component.html',
     styleUrls: ['./follow.component.scss']
 })
-export class FollowComponent implements OnInit, OnChanges {
+export class FollowComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() text = 'Follow';
     @Input() followedText = 'Following';
@@ -27,6 +27,7 @@ export class FollowComponent implements OnInit, OnChanges {
     currentId: any;
     loggedIn = false;
     followed = false;
+    subObject: any;
 
 
     constructor(private userService: UserService, private followService: FollowService, private dialog: MatDialog) { }
@@ -52,7 +53,7 @@ export class FollowComponent implements OnInit, OnChanges {
         if (!this.followTypeId || !this.followType) {
             return;
         }
-        this.followService.followData.subscribe(res => {
+        this.subObject = this.followService.followData.subscribe(res => {
             if (res) {
                 this.allFollowData = res;
                 this.followed = this.allFollowData.map(ele => ele.typeId).indexOf(this.followTypeId) > -1;
@@ -106,6 +107,13 @@ export class FollowComponent implements OnInit, OnChanges {
       if (changes['followTypeId'] || changes['followType']) {
         this.checkFollowStatus();
       }
+    }
+
+
+    ngOnDestroy() {
+        if (this.subObject !== undefined) {
+            this.subObject.unsubscribe();
+        }
     }
 
 }
