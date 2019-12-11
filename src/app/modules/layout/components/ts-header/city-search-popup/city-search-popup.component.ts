@@ -52,7 +52,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     placeChanged = (place) => {
-        let tsType = this.urlArray[this.urlArray.length-1];
+        let tsType = this.urlArray[2];
         const tsTypeUrl = tsType.length > 0 ? '/' + tsType.toLowerCase() : '';
         if (place.type === 'country') {
             this.router.navigate(['/' + place.twoDigitCode.toLowerCase() +
