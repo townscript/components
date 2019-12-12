@@ -6,6 +6,7 @@ import { UserService } from '../../../../shared/services/user-service';
 import { config } from '../../.././../core/app-config';
 import { PlaceService } from './place.service';
 import { HeaderService } from './ts-header.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'ts-header',
@@ -81,11 +82,18 @@ export class TsHeaderComponent implements OnInit {
     this.router.navigate(['/mobile/search']);
   }
   openMyProfileComponent = (): void => {
-    if (this.userService.user.source['value'] != undefined) {
-      this.router.navigate(['/profile']);
-    } else {
-      this.openLogin();
-    }
+    // if (this.userService.user.source['value'] != undefined) {
+    //   this.router.navigate(['/profile']);
+    // } else {
+    //   this.openLogin();
+    // }
+    this.userService.user.pipe(take(1)).subscribe(data => {
+      if (data != undefined) {
+        this.router.navigate(['/profile']);
+      } else {
+        this.openLogin();
+      }
+    });
   }
   closeMyProfile = (event): void => {
     this.userMenu=!this.userMenu;
