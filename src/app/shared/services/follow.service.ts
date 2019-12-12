@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { UserService } from '../services/user-service';
 import { config } from '../../core/app-config';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Injectable()
 export class FollowService {
@@ -15,12 +16,21 @@ export class FollowService {
     private followData$: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
     followData = this.followData$.asObservable();
 
-    constructor(private http: HttpClient, private userService: UserService) {
+    constructor(private http: HttpClient, private userService: UserService,
+    private router: Router) {
         this.userService.user.subscribe(data => {
             this.user = data;
             if (this.user && this.user.userId) {
                 this.getFollowData(this.user.userId);
             }
+
+            this.router.events.subscribe((ev) => {
+              if (ev instanceof NavigationEnd) {
+                if (this.user && this.user.userId) {
+                    this.getFollowData(this.user.userId);
+                }
+              }
+            });
         });
     }
     createFollowData = (type, typeId, userId) => {
@@ -39,7 +49,7 @@ export class FollowService {
     unfollow = (followDataId) => {
         return this.http.post(this.listingsUrl + 'followData/unfollow/' + followDataId, {});
     }
-    updateFollowData = (data): void => {        
+    updateFollowData = (data): void => {
         this.followData$.next(data);
     }
 
