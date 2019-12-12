@@ -26,7 +26,9 @@ export class PlaceService {
                 this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
-                    const data = { 'city': ipInfoData['city'], 'country': ipInfoData['countryCode'].toLowerCase(), 'currentPlace': ipInfoData['city'] };
+                    const data = { 'city': ipInfoData['city'],
+                      'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in', 
+                      'currentPlace': ipInfoData['city'] };
                     this.updatePlace(data);
                 });
             }
