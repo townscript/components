@@ -8,6 +8,7 @@ import { UserService } from '../../../shared/services/user-service';
 import { NotificationService } from '../../../shared/services/notification.service';
 import { TsLoginSignupService } from './ts-login-signup.service';
 import { PlaceService } from '../../layout/components/ts-header/place.service';
+import { UtilityService } from '../../../shared/services/utilities.service';
 
 const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
@@ -66,6 +67,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     userName: any;
 
     constructor(
+        private utilityService: UtilityService,
         private cookieService: CookieService,
         private userService: UserService,
         private notificationService: NotificationService,
@@ -76,8 +78,10 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.initForm();
         this.subObject = this.placeService.place.subscribe((res: any) => {
-            const placeData = JSON.parse(res);
-            this.countryCode = placeData['country'];
+            if (this.utilityService.IsJsonString(res)) {
+                const placeData = JSON.parse(res);
+                this.countryCode = placeData['country'];
+            }
         });
     }
 

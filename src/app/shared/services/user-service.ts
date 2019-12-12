@@ -2,8 +2,7 @@ import { Injectable, Inject, PLATFORM_ID, InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../../core/cookie.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-
-
+import { UtilityService } from './utilities.service';
 
 @Injectable()
 export class UserService {
@@ -12,13 +11,15 @@ export class UserService {
     documentIsAccessible: boolean;
     user = this.user$.asObservable();
 
-    constructor(private cookieService: CookieService, @Inject(DOCUMENT) private document: any,
+    constructor(private utilityService: UtilityService, private cookieService: CookieService, @Inject(DOCUMENT) private document: any,
         @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>) {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
         if (this.documentIsAccessible) {
             const user = this.cookieService.getCookie('townscript-user');
             console.log('got user from cookie');
-            if (user != null && user.length > 0) {
+            if (user != null && user.length > 0 &&
+                this.utilityService.IsJsonString(user) &&
+                this.utilityService.IsJsonString((JSON.parse(user)))) {
                 this.updateUser(JSON.parse(JSON.parse(user)));
             }
         }

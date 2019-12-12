@@ -9,6 +9,7 @@ import { UserService } from './services/user-service';
 import { FollowService } from './services/follow.service';
 import { DataAnalyticsDirective } from './directives/analytics/data-analytics.directive';
 import { DataCollectorService } from './services/analytics/data-collector.service';
+import { UtilityService } from './services/utilities.service';
 
 
 @NgModule({
@@ -27,6 +28,6 @@ import { DataCollectorService } from './services/analytics/data-collector.servic
         TextOverflowClampDirective,
         DataAnalyticsDirective
     ],
-    providers: [TimeService, UserService, FollowService, DataCollectorService]
+    providers: [TimeService, UserService, FollowService, DataCollectorService, UtilityService]
 })
 export class SharedModule { }

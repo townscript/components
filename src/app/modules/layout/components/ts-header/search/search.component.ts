@@ -9,6 +9,7 @@ import { TimeService } from '../../../../../shared/services/time.service';
 import { config } from '../../../../../core/app-config';
 import { PlaceService } from '../place.service';
 import { HeaderService } from '../ts-header.service';
+import { UtilityService } from '../../../../../shared/services/utilities.service';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -43,7 +44,7 @@ export class SearchComponent implements OnInit {
     host = config.baseUrl;
     popularPlaces: any;
 
-    constructor(private headerService: HeaderService, private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
+    constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
@@ -116,11 +117,11 @@ export class SearchComponent implements OnInit {
     }
 
     navigateToListing = (interest: string) => {
-        let listingUrl = this.urlArray[0]+ '/'+this.urlArray[1];
-        if(this.urlArray && this.urlArray.length > 1){
-          this.router.navigate([listingUrl + '/' + interest]);
+        let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
+        if (this.urlArray && this.urlArray.length > 1) {
+            this.router.navigate([listingUrl + '/' + interest]);
         } else {
-          this.router.navigate([this.homeUrl + '/' + interest]);
+            this.router.navigate([this.homeUrl + '/' + interest]);
         }
         this.searchActive = false;
     }
@@ -138,13 +139,15 @@ export class SearchComponent implements OnInit {
     getPopularPlaces = async () => {
         this.placeService.place.subscribe(async (res) => {
             if (res) {
-                const country = JSON.parse(<any>res)['country'];
-                const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
-                this.popularPlaces = data['data'].slice(0, 6).map(ele => {
-                    ele.type = 'city';
-                    ele.cityCode = ele.code;
-                    return ele;
-                });
+                if (this.utilityService.IsJsonString(res)) {
+                    const country = JSON.parse(<any>res)['country'];
+                    const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
+                    this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+                        ele.type = 'city';
+                        ele.cityCode = ele.code;
+                        return ele;
+                    });
+                }
             }
         });
     }
@@ -152,12 +155,14 @@ export class SearchComponent implements OnInit {
         this.getPopularPlaces();
         this.placeService.place.subscribe(res => {
             if (res) {
-                const data = JSON.parse(<any>res);
-                if(data['currentPlace'] != undefined){
-                  this.activePlace = data['currentPlace'];
-                }
-                if(data['country'] != undefined && data['city'] != undefined){
-                  this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+                if (this.utilityService.IsJsonString(res)) {
+                    const data = JSON.parse(<any>res);
+                    if (data['currentPlace'] != undefined) {
+                        this.activePlace = data['currentPlace'];
+                    }
+                    if (data['country'] != undefined && data['city'] != undefined) {
+                        this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+                    }
                 }
             }
         });

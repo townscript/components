@@ -5,6 +5,7 @@ import { LoginModalComponent } from '../../../loginSignup/ts-login-signup/login-
 import { FooterService } from './ts-footer.service';
 import { PlaceService } from '../ts-header/place.service';
 import { UserService } from '../../../../shared/services/user-service';
+import { UtilityService } from '../../../../shared/services/utilities.service';
 
 @Component({
   selector: 'ts-footer',
@@ -51,7 +52,8 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog,
     private userService: UserService,
     private footerService: FooterService,
-    private placeService: PlaceService) {
+    private placeService: PlaceService,
+    private utilityService: UtilityService) {
   }
 
   openContactUs = () => {
@@ -86,8 +88,8 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   }
 
   getPopularEvents = async (country?: string): Promise<any> => {
-    let filter : any = {'minScore': 0 };
-    if(country != undefined){
+    let filter: any = { 'minScore': 0 };
+    if (country != undefined) {
       filter['country'] = country;
     }
     const res = await this.footerService.getPopularEvents(this.city ? this.city.latitude : undefined, this.city ? this.city.longitude : undefined, filter);
@@ -102,12 +104,14 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     if (this.popularEvents == undefined || this.popularEvents.length == 0) {
       this.subObject = this.placeService.place.subscribe((res: any) => {
-        const data = JSON.parse(res);
-        if (data != undefined && Object.keys(data).length > 0) {
-          if(data['city']){
-            this.getCityFromCityCode(data['city']);
-          } else {
-            this.getPopularEvents(data['currentPlace']);
+        if (this.utilityService.IsJsonString(res)) {
+          const data = JSON.parse(res);
+          if (data != undefined && Object.keys(data).length > 0) {
+            if (data['city']) {
+              this.getCityFromCityCode(data['city']);
+            } else {
+              this.getPopularEvents(data['currentPlace']);
+            }
           }
         }
       });

@@ -4,6 +4,7 @@ import { CookieService } from '../../../../core/cookie.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { environment } from './../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { UtilityService } from '../../../../shared/services/utilities.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,14 +15,14 @@ export class PlaceService {
     documentIsAccessible: boolean;
     place = this.currentPlace$.asObservable();
 
-    constructor(private cookieService: CookieService, @Inject(DOCUMENT) private document: any,
+    constructor(private utilityService: UtilityService, private cookieService: CookieService, @Inject(DOCUMENT) private document: any,
         @Inject(PLATFORM_ID) private platformId: InjectionToken<Object>,
         private http: HttpClient) {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
         if (this.documentIsAccessible) {
             const location = this.cookieService.getCookie('location');
             console.log('got location from cookie' + location);
-            if (location != null && location.length > 0) {
+            if (location != null && location.length > 0 && this.utilityService.IsJsonString(location)) {
                 this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
@@ -55,7 +56,9 @@ export class PlaceService {
                 };
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
             } else {
-                ipInfoData = JSON.parse(localData);
+                if (this.utilityService.IsJsonString(localData)) {
+                    ipInfoData = JSON.parse(localData);
+                }
             }
             return ipInfoData;
         }

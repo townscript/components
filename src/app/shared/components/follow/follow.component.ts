@@ -104,9 +104,9 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-      if (changes['followTypeId'] || changes['followType']) {
-        this.checkFollowStatus();
-      }
+        if (changes['followTypeId'] || changes['followType']) {
+            this.checkFollowStatus();
+        }
     }
 
 

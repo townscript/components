@@ -5,6 +5,7 @@ import { ShareEventModalComponent } from './share-event-modal/share-event-modal.
 import { BrowserService } from '../../../core/browser.service';
 import { config } from '../../../core/app-config';
 import { PlaceService } from '../../layout/components/ts-header/place.service';
+import { UtilityService } from '../../../shared/services/utilities.service';
 
 @Component({
   selector: 'ts-listing-card',
@@ -25,7 +26,7 @@ export class TsListingCardComponent implements OnInit {
   moreIcons = false;
   defaultCardImageUrl = config.s3BaseUrl + 'townscript-common-resources/ListingsStatic/default-card.jpg';
 
-  constructor(public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
+  constructor(public utilityService: UtilityService, public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
 
   shareEvent = (event) => {
     event.stopPropagation();
@@ -46,8 +47,10 @@ export class TsListingCardComponent implements OnInit {
 
   ngOnInit() {
     this.placeService.place.pipe(take(1)).subscribe(res => {
-      const data = JSON.parse(<any>res);
-      this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+      if (this.utilityService.IsJsonString(res)) {
+        const data = JSON.parse(<any>res);
+        this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+      }
     });
 
 

@@ -7,6 +7,7 @@ import { config } from '../../.././../core/app-config';
 import { PlaceService } from './place.service';
 import { HeaderService } from './ts-header.service';
 import { take } from 'rxjs/operators';
+import { UtilityService } from '../../../../shared/services/utilities.service';
 
 @Component({
   selector: 'ts-header',
@@ -37,7 +38,7 @@ export class TsHeaderComponent implements OnInit {
   cityPopupActive = false;
   popularPlaces: any;
 
-  constructor(private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
+  constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
     if (this.router.url) {
       this.urlArray = this.router.url.replace('/', '').split('/');
     } else {
@@ -96,8 +97,8 @@ export class TsHeaderComponent implements OnInit {
     });
   }
   closeMyProfile = (event): void => {
-    this.userMenu=!this.userMenu;
-    if(event && event['logout'])
+    this.userMenu = !this.userMenu;
+    if (event && event['logout'])
       window.location.reload();
   }
   goBack = (): void => {
@@ -110,13 +111,15 @@ export class TsHeaderComponent implements OnInit {
   getPopularPlaces = async () => {
     this.placeService.place.subscribe(async (res) => {
       if (res) {
-        const country = JSON.parse(<any>res)['country'];
-        const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
-        this.popularPlaces = data['data'].slice(0, 6).map(ele => {
-          ele.type = 'city';
-          ele.cityCode = ele.code;
-          return ele;
-        });
+        if (this.utilityService.IsJsonString(res)) {
+          const country = JSON.parse(<any>res)['country'];
+          const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
+          this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+            ele.type = 'city';
+            ele.cityCode = ele.code;
+            return ele;
+          });
+        }
       }
     });
   }
@@ -126,13 +129,15 @@ export class TsHeaderComponent implements OnInit {
     });
     this.getPopularPlaces();
     this.placeService.place.subscribe(res => {
-      let data = JSON.parse(<any>res);
-      if (data && Object.keys(data).length > 0) {
-        this.activePlace = data['currentPlace'];
-        this.activeCity = data['city'];
-        this.activeCountryCode = data['country'];
-        if (this.activeCountryCode != undefined && this.activeCity != undefined) {
-          this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
+      if (this.utilityService.IsJsonString(res)) {
+        let data = JSON.parse(<any>res);
+        if (data && Object.keys(data).length > 0) {
+          this.activePlace = data['currentPlace'];
+          this.activeCity = data['city'];
+          this.activeCountryCode = data['country'];
+          if (this.activeCountryCode != undefined && this.activeCity != undefined) {
+            this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
+          }
         }
       }
     });
