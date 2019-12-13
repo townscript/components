@@ -47,7 +47,7 @@
                 <div class="overflow-hidden"
                     [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
                     <a *ngFor="let key of eventData?.keywords| slice:0:3"
-                        [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + interest : homeUrl + '/' + key.topicKeywordCode">
+                        [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
                         <span appDataAnalytics eventLabel="keyword" clickLocation=""
                             class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
                             #{{key.topicKeywordName}}
