@@ -25,8 +25,18 @@ export class TsListingCardComponent implements OnInit {
   goingCounter = false;
   moreIcons = false;
   defaultCardImageUrl = config.s3BaseUrl + 'townscript-common-resources/ListingsStatic/default-card.jpg';
+  urlArray;
 
-  constructor(public utilityService: UtilityService, public dialog: MatDialog, private browser: BrowserService, private placeService: PlaceService) { }
+  constructor(public utilityService: UtilityService,
+    public dialog: MatDialog,
+    private browser: BrowserService,
+    private placeService: PlaceService) {
+      if (this.router.url) {
+          this.urlArray = this.router.url.replace('/', '').split('/');
+      } else {
+          this.urlArray = ['in'];
+      }
+  }
 
   shareEvent = (event) => {
     event.stopPropagation();
