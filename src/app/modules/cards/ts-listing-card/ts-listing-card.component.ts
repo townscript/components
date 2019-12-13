@@ -31,11 +31,15 @@ export class TsListingCardComponent implements OnInit {
     public dialog: MatDialog,
     private browser: BrowserService,
     private placeService: PlaceService) {
-      if (this.router.url) {
-          this.urlArray = this.router.url.replace('/', '').split('/');
-      } else {
-          this.urlArray = ['in'];
-      }
+      this.buildUrlArray();
+  }
+
+  buildUrlArray = (): void => {
+    if (this.router.url) {
+        this.urlArray = this.router.url.replace('/', '').split('/');
+    } else {
+        this.urlArray = ['in'];
+    }
   }
 
   shareEvent = (event) => {

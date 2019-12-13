@@ -49,11 +49,15 @@ export class SearchComponent implements OnInit {
             debounceTime(300)).subscribe(text => this.callAlgolia(text));
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
         this.index = this.client.initIndex(this.algoliaIndexName);
-        if (this.router.url) {
-            this.urlArray = this.router.url.replace('/', '').split('/');
-        } else {
-            this.urlArray = ['in'];
-        }
+        this.buildUrlArray();
+    }
+
+    buildUrlArray = (): void => {
+      if (this.router.url) {
+          this.urlArray = this.router.url.replace('/', '').split('/');
+      } else {
+          this.urlArray = ['in'];
+      }
     }
 
     callAlgolia = (text) => {
@@ -117,6 +121,7 @@ export class SearchComponent implements OnInit {
     }
 
     navigateToListing = (interest: string) => {
+        this.buildUrlArray();
         let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
         if (this.urlArray && this.urlArray.length > 1) {
             this.router.navigate([listingUrl + '/' + interest]);

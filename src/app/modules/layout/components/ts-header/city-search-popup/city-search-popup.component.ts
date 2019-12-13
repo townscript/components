@@ -37,12 +37,17 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     constructor(private placeService: PlaceService, private headerService: HeaderService, public datepipe: DatePipe) {
         this.cityQueryChanged.pipe(debounceTime(300)).subscribe(text => this.callSearchCity(text));
-        if (this.router.url) {
-            this.urlArray = this.router.url.replace('/', '').split('/');
-        } else {
-            this.urlArray = ['in'];
-        }
+        this.buildUrlArray();
     }
+
+    buildUrlArray = (): void => {
+      if (this.router.url) {
+          this.urlArray = this.router.url.replace('/', '').split('/');
+      } else {
+          this.urlArray = ['in'];
+      }
+    }
+
     callSearchCity = (query) => {
         this.cityLoading = true;
         this.headerService.getplaceSearchResults(query).subscribe(res => {

@@ -39,6 +39,10 @@ export class TsHeaderComponent implements OnInit {
   popularPlaces: any;
 
   constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
+    this.buildUrlArray();
+  }
+
+  buildUrlArray = (): void => {
     if (this.router.url) {
       this.urlArray = this.router.url.replace('/', '').split('/');
     } else {
