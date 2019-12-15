@@ -49,8 +49,7 @@ export class FollowService {
     unfollow = (followDataId) => {
         return this.http.post(this.listingsUrl + 'followData/unfollow/' + followDataId, {});
     }
-    updateFollowData = (data): void => {
-        this.followData = new BehaviorSubject<Object>({});
+    updateFollowData = (data): void => {        
         this.followData$.next(data);
     }
 
