@@ -7,7 +7,7 @@ import { UtilityService } from './utilities.service';
 @Injectable()
 export class UserService {
 
-    private user$: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+    private user$: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
     documentIsAccessible: boolean;
     user = this.user$.asObservable();
 
@@ -26,9 +26,10 @@ export class UserService {
     }
 
     updateUser(data): void {
-        if(data)
-          this.user$.next(data);
-        else
-          this.user$ = new BehaviorSubject<Object>(null);
+        if (data) {
+            this.user$.next(data);
+        } else {
+            this.user$ = new BehaviorSubject<Object>({});
+        }
     }
 }

@@ -13,11 +13,11 @@ export class FollowService {
     listingsUrl: String = this.baseUrl + 'listings/';
 
     user: any;
-    private followData$: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+    private followData$: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
     followData = this.followData$.asObservable();
 
     constructor(private http: HttpClient, private userService: UserService,
-    private router: Router) {
+        private router: Router) {
         this.userService.user.subscribe(data => {
             this.user = data;
             if (this.user && this.user.userId) {
@@ -25,11 +25,11 @@ export class FollowService {
             }
 
             this.router.events.subscribe((ev) => {
-              if (ev instanceof NavigationEnd) {
-                if (this.user && this.user.userId) {
-                    this.getFollowData(this.user.userId);
+                if (ev instanceof NavigationEnd) {
+                    if (this.user && this.user.userId) {
+                        this.getFollowData(this.user.userId);
+                    }
                 }
-              }
             });
         });
     }
@@ -50,6 +50,7 @@ export class FollowService {
         return this.http.post(this.listingsUrl + 'followData/unfollow/' + followDataId, {});
     }
     updateFollowData = (data): void => {
+        this.followData = new BehaviorSubject<Object>({});
         this.followData$.next(data);
     }
 

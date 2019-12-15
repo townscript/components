@@ -5,7 +5,7 @@ export class CookieService {
 
   constructor() { }
 
-  public getCookie(name: string): string {
+  public getCookie(name: string): string | null {
     const ca: Array<string> = document.cookie.split(';');
     const caLen: number = ca.length;
     const cookieName = `${name}=`;

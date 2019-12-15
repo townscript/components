@@ -63,7 +63,9 @@ export class TsListingCardComponent implements OnInit {
     this.placeService.place.pipe(take(1)).subscribe(res => {
       if (this.utilityService.IsJsonString(res)) {
         const data = JSON.parse(<any>res);
-        this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+        if (data && data['country'] && data['city']) {
+          this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
+        }
       }
     });
 

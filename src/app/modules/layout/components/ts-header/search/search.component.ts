@@ -165,7 +165,7 @@ export class SearchComponent implements OnInit {
                     if (data['currentPlace'] != undefined) {
                         this.activePlace = data['currentPlace'];
                     }
-                    if (data['country'] != undefined && data['city'] != undefined) {
+                    if (data && data['country'] && data['city']) {
                         this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
                     }
                 }

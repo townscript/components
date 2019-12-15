@@ -6,9 +6,9 @@ import { UserService } from '../user-service';
 @Injectable()
 export class DataCollectorService {
   constructor(private userService: UserService) { }
-  user:any;
+  user: any;
 
-  initKinesisDataCollector = (awsAccessKeyId:string, awsSecretAccessKey:string, awsRegion:string, awsKinesisStreamName:string, recordForKinesis:boolean ) => {
+  initKinesisDataCollector = (awsAccessKeyId: string, awsSecretAccessKey: string, awsRegion: string, awsKinesisStreamName: string, recordForKinesis: boolean) => {
     try {
       const dataPipelineConfig: Configuration = {
         accessKeyId: awsAccessKeyId,
@@ -26,13 +26,15 @@ export class DataCollectorService {
 
   sendPageViewDataToKinesis = () => {
     try {
-      let loggedInUserId = null;
+      let loggedInUserId: string | null = null;
       this.userService.user.subscribe(data => {
         this.user = data;
         if (this.user && this.user.userId) {
-            loggedInUserId = this.user.userId;
+          loggedInUserId = this.user.userId;
         }
-        DataProducer.callPageView(loggedInUserId);
+        if (loggedInUserId) {
+          DataProducer.callPageView(loggedInUserId);
+        }
       });
     } catch (e) {
       console.log('there was exception in sending data from booking flow' + e);
@@ -41,20 +43,22 @@ export class DataCollectorService {
 
   sendClickDataToKinesis = (eventLabel: string, clickedLocation: string) => {
     try {
-      let loggedInUserId = null;
+      let loggedInUserId: string | null = null;
       this.userService.user.subscribe(data => {
         this.user = data;
         if (this.user && this.user.userId) {
-            loggedInUserId = this.user.userId;
+          loggedInUserId = this.user.userId;
         }
-        DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
+        if (loggedInUserId) {
+          DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
+        }
       });
     } catch (e) {
       console.log('exception while sending the click stream data from marketplace' + e);
     }
-  }  
+  }
 }
 
-export function initializeDataCollector(awsAccessKeyId:string, awsSecretAccessKey:string, awsRegion:string, awsKinesisStreamName:string, recordForKinesis:boolean ,dataCollectorService: DataCollectorService) {
+export function initializeDataCollector(awsAccessKeyId: string, awsSecretAccessKey: string, awsRegion: string, awsKinesisStreamName: string, recordForKinesis: boolean, dataCollectorService: DataCollectorService) {
   return () => dataCollectorService.initKinesisDataCollector(awsAccessKeyId, awsSecretAccessKey, awsRegion, awsKinesisStreamName, recordForKinesis);
 }

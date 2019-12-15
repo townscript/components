@@ -11,7 +11,7 @@ import { UtilityService } from '../../../../shared/services/utilities.service';
 })
 export class PlaceService {
 
-    private currentPlace$: BehaviorSubject<Object> = new BehaviorSubject<Object>(null);
+    private currentPlace$: BehaviorSubject<Object> = new BehaviorSubject<Object>({});
     documentIsAccessible: boolean;
     place = this.currentPlace$.asObservable();
 
