@@ -49,7 +49,7 @@
                 </div>
                 <app-city-search-popup appDataAnalytics eventLabel="location-dropdown-search" clickLocation=""
                     [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace" [showArrow]="false"
-                    class="popup" *ngIf="cityPopupActive">
+                    class="popup" *ngIf="cityPopupActive" [popularPlaces]="popularPlaces">
                 </app-city-search-popup>
 
             </div>
