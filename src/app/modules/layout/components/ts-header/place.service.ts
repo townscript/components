@@ -27,9 +27,10 @@ export class PlaceService {
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
                     const data = { 'city': ipInfoData['city'],
-                      'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in', 
+                      'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in',
                       'currentPlace': ipInfoData['city'] };
-                    this.updatePlace(data);
+                    if(this.cookieService.getCookie('location') != null)
+                      this.updatePlace(data);
                 });
             }
         }
