@@ -11,7 +11,7 @@ export class RangeDatePipe implements PipeTransform {
     transform = (rangeDates: any, isRecurrent?: any ,args?: any): any => {
         if (rangeDates) {
             // for Recurring events
-            if(isRecurrent && args['startTime'] != undefined){
+            if(isRecurrent && args['startTime'] && args['recurrenceRule']){
 
 
               const startTime = args['startTime'];
