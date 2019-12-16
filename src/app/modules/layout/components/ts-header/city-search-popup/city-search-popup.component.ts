@@ -42,7 +42,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     buildUrlArray = (): void => {
       if (this.router.url) {
-          this.urlArray = this.router.url.replace('/', '').split('/');
+          this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
       } else {
           this.urlArray = ['in'];
       }
