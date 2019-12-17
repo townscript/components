@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../../core/app-config';
-import { UtilityService } from '@base/shared/services/utilities.service';
+import { UtilityService } from './../../../../shared/services/utilities.service';
 
 declare const FB: any;
 
