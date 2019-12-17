@@ -106,7 +106,7 @@ export class TsHeaderComponent implements OnInit {
       window.location.reload();
   }
   goBack = (): void => {
-    this.router.navigate(['../']);
+    this.router.navigate([this.homePageUrl]);
   }
   goToHomePage = (): void => {
     this.router.navigate([this.homePageUrl]);
