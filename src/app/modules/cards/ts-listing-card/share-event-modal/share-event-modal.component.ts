@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../../core/app-config';
+import { UtilityService } from '@base/shared/services/utilities.service';
+
+declare const FB: any;
 
 @Component({
     selector: 'app-share-event-modal',
@@ -17,9 +20,11 @@ export class ShareEventModalComponent implements OnInit {
     copied = false;
 
     constructor(public dialogRef: MatDialogRef<ShareEventModalComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any) {
-
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private utilityService: UtilityService) {
+          this.utilityService.addFBSDK();
     }
+
     close = () => {
         this.dialogRef.close();
     }
@@ -35,15 +40,22 @@ export class ShareEventModalComponent implements OnInit {
         }, 1000000);
     }
 
+    shareOnFB = (): void => {
+        setTimeout(() => {
+            FB.ui(
+                {
+                    method: 'feed',
+                    name: this.event.name,
+                    link: `${this.baseUrl}/e/${this.event.shortName}`,
+                    picture: this.event.absoluteMobileImageUrl
+                });
+        });
+    }
+
     ngOnInit() {
         this.event = this.data.event;
         this.eventURL = 'https://www.townscript.com/e/' + this.event.shortName;
         this.eventName = this.event.name;
-        this.shareLink.fb = 'https://www.facebook.com/sharer/sharer.php?s=100' +
-            '&p[url]=' + config.baseUrl + 'e/' + this.event.shortName +
-            '&p[images][0]=' + config.baseUrl + 'dashboard/images/organizer_login_files/logoforfb.png' +
-            '&p[title]=' + this.eventName +
-            '&p[summary]=' + 'by townscript.com';
 
         this.shareLink.twitter = 'https://twitter.com/share' +
             '?url=' + config.baseUrl + 'e/' + this.event.shortName +
