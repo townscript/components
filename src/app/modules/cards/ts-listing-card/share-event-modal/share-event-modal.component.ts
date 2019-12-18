@@ -45,7 +45,7 @@ export class ShareEventModalComponent implements OnInit {
         setTimeout(() => {
             FB.ui(
                 {
-                    method: 'feed',
+                    method: 'share',
                     name: this.event.name,
                     link: `${this.baseUrl}/e/${this.event.shortName}`,
                     picture: this.imageLink
