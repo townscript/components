@@ -9,6 +9,7 @@ import { NotificationService } from '../../../shared/services/notification.servi
 import { TsLoginSignupService } from './ts-login-signup.service';
 import { PlaceService } from '../../layout/components/ts-header/place.service';
 import { UtilityService } from '../../../shared/services/utilities.service';
+import { ActivatedRoute } from '@angular/router';
 
 const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$';
 
@@ -72,7 +73,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private notificationService: NotificationService,
         private tsLoginSignupService: TsLoginSignupService,
-        private placeService: PlaceService
+        private placeService: PlaceService,
+        private activatedRoute: ActivatedRoute
     ) { }
 
     ngOnInit() {
@@ -82,6 +84,10 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
                 const placeData = JSON.parse(res);
                 this.countryCode = placeData['country'];
             }
+        });
+        this.activatedRoute.queryParams.subscribe(params => {
+          if(params['rdurl'])
+            this.rdurl = params['rdurl'];
         });
     }
 
