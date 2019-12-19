@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   IPINFO_ACCESS_TOKEN: 'a27cfbcc77e854',
+  FB_APP_ID:  '303059286557418', 
 };
 
 /*

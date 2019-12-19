@@ -21,12 +21,12 @@
                     <span class="text-gray-700 text-sm block">Whatsapp</span>
                 </div>
             </a>
-            <a [href]="shareLink?.fb" target="_blank">
+            <div (click)="shareOnFB()">
                 <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-facebook block text-4xl facebook"></i>
                     <span class="text-gray-700 text-sm block">Facebook</span>
                 </div>
-            </a>
+            </div>
             <a [href]="shareLink?.twitter" target="_blank">
                 <div class="platform text-center cursor-pointer py-2 px-4 flex-1">
                     <i class="mdi mdi-twitter block text-4xl twitter"></i>

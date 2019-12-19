@@ -123,7 +123,7 @@ export class SearchComponent implements OnInit {
     navigateToListing = (interest: string) => {
         this.buildUrlArray();
         let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
-        if (this.urlArray && this.urlArray.length > 1) {
+        if (this.urlArray && this.urlArray.length > 1 && this.urlArray[0] != 'e') {
             this.router.navigate([listingUrl + '/' + interest]);
         } else {
             this.router.navigate([this.homeUrl + '/' + interest]);
