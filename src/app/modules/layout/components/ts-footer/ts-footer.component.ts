@@ -138,7 +138,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     },
     {
       'name': 'New Year Parties in Thane',
-      'url': 'https://www.townscript.com/thane--mumbai/new-year-party'
+      'url': 'https://www.townscript.com/in/thane/new-year-party'
     },
     {
       'name': 'New Year Parties in Dehradun',
