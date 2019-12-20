@@ -2,9 +2,9 @@ import { Injectable, Inject, PLATFORM_ID, InjectionToken } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CookieService } from '../../../../core/cookie.service';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { environment } from './../../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UtilityService } from '../../../../shared/services/utilities.service';
+import { config } from './../../../../core/app-config';
 
 @Injectable({
     providedIn: 'root'
@@ -68,6 +68,6 @@ export class PlaceService {
     }
 
     getJsonFromIpInfo() {
-        return this.http.get('//ipinfo.io/json?token=' + environment.IPINFO_ACCESS_TOKEN + '').toPromise();
+        return this.http.get('//ipinfo.io/json?token=' + config.IPINFO_ACCESS_TOKEN + '').toPromise();
     }
 }
