@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from './../../../environments/environment';
+import { config } from './../../core/app-config';
 
 @Injectable()
 export class UtilityService {
 
-    FB_APP_ID = environment.FB_APP_ID;
+    FB_APP_ID = config.FB_APP_ID;
 
     constructor() {
     }
