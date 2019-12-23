@@ -4,7 +4,7 @@ import { config } from './../../core/app-config';
 @Injectable()
 export class UtilityService {
 
-    FB_APP_ID = config.FB_APP_ID;
+    FB_APP_ID: any;
 
     constructor() {
     }
@@ -19,6 +19,7 @@ export class UtilityService {
     }
 
     addFBSDK = () => {
+        this.FB_APP_ID = config.FB_APP_ID;
         var that = this;
         (function (d, s, id) {
             var js, fjs = d.getElementsByTagName(s)[0];
