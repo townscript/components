@@ -23,7 +23,7 @@ export class ShareEventModalComponent implements OnInit {
     constructor(public dialogRef: MatDialogRef<ShareEventModalComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private utilityService: UtilityService) {
-          this.utilityService.addFBSDK();
+
     }
 
     close = () => {
@@ -57,6 +57,8 @@ export class ShareEventModalComponent implements OnInit {
     }
 
     ngOnInit() {
+        setTimeout(() => this.utilityService.addFBSDK(),500);
+
         this.event = this.data.event;
         this.eventURL = 'https://www.townscript.com/e/' + this.event.shortName;
         this.eventName = this.event.name;
