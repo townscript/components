@@ -40,7 +40,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     }
   ];
   @Input() popularCities: any;
-
+  trending: any;
   popularEventsData: any;
   countryCityMap: any;
   city: any;
@@ -84,7 +84,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   getCityFromCityCode = async (code: string): Promise<any> => {
     const res = await this.footerService.getCityFromCityCode(code);
     this.city = res['data'];
-    this.getPopularEvents();
+    //this.getPopularEvents();
   }
 
   getPopularEvents = async (country?: string): Promise<any> => {
@@ -117,8 +117,49 @@ export class TsFooterComponent implements OnInit, OnDestroy {
       });
     }
     this.getPopularCities();
+    this.setTrending();
   }
-
+  setTrending = () => {
+    this.trending = [{
+      'name': 'New Year Parties in Bengaluru',
+      'url': 'https://www.townscript.com/bangalore/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Pune',
+      'url': 'https://www.townscript.com/pune/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Mumbai',
+      'url': 'https://www.townscript.com/mumbai/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Coimbatore',
+      'url': 'https://www.townscript.com/coimbatore/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Thane',
+      'url': 'https://www.townscript.com/in/thane/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Dehradun',
+      'url': 'https://www.townscript.com/dehradun/new-year-party'
+    }, {
+      'name': 'New Year Parties in Indore',
+      'url': 'https://www.townscript.com/indore/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Chennai',
+      'url': 'https://www.townscript.com/chennai/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in Delhi',
+      'url': 'https://www.townscript.com/delhi/new-year-party'
+    },
+    {
+      'name': 'New Year Parties in India',
+      'url': 'https://www.townscript.com/india/new-year-party'
+    }]
+  }
   ngOnDestroy() {
     if (this.subObject != undefined) {
       this.subObject.unsubscribe();
