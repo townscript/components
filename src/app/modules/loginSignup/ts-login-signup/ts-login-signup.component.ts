@@ -202,10 +202,9 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
         if (this.rdurl != undefined) {
             this.rdurl = decodeURIComponent(this.rdurl);
-            let rdurl = this.rdurl.split("?").length > -1 ? this.rdurl.split("?")[0]
-                          + "?" + encodeURIComponent(this.rdurl.substring(this.rdurl.indexOf("?")+1))
-              : this.rdurl;
-            window.open(rdurl, '_self');
+            this.rdurl = this.rdurl.replace("[","%5B");
+            this.rdurl = this.rdurl.replace("]","%5D");
+            window.open(this.rdurl, '_self');
         }
     }
 
