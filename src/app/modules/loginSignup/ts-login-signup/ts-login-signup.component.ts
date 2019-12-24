@@ -201,7 +201,11 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         }, 1400);
 
         if (this.rdurl != undefined) {
-            window.open(encodeURIComponent(this.rdurl), '_self');
+            this.rdurl = decodeURIComponent(this.rdurl);
+            let rdurl = this.rdurl.split("?").length > -1 ? this.rdurl.split("?")[0]
+                          + "?" + encodeURIComponent(this.rdurl.substring(this.rdurl.indexOf("?")+1))
+              : this.rdurl;
+            window.open(rdurl, '_self');
         }
     }
 
