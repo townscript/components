@@ -139,9 +139,9 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         } catch (e) {
             console.log("Exception while parsing api response : " + result);
         }
-        if (newData && newData.isExistingUser && newData.isManualSignup) {
+        if (newData && newData.isExistingUser && newData.isManualSignup && !newData.isTemporaryUser) {
             this.openSignInView();
-        } else if (newData && newData.isExistingUser && !newData.isManualSignup) {
+        } else if (newData && newData.isExistingUser && !newData.isManualSignup && !newData.isTemporaryUser) {
             this.socialLoginMsg = true;
         } else {
             this.openSignUpView();
