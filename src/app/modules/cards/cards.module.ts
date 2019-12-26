@@ -23,7 +23,6 @@ import { MatTooltipModule } from '@angular/material';
         TsCardSkeletonComponent
     ],
     exports: [
-        TsFormsModule,
         TsListingCardComponent,
         ShareEventModalComponent,
         TsCardSkeletonComponent
