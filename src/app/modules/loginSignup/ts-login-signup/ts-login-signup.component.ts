@@ -86,8 +86,12 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             }
         });
         this.activatedRoute.queryParams.subscribe(params => {
-          if(params['rdurl'])
+          if(params['rdurl']){            
             this.rdurl = params['rdurl'];
+            this.rdurl = decodeURIComponent(this.rdurl);
+            this.rdurl = this.rdurl.replace("[","%5B");
+            this.rdurl = this.rdurl.replace("]","%5D");
+          }
         });
     }
 
@@ -201,9 +205,6 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         }, 1400);
 
         if (this.rdurl != undefined) {
-            this.rdurl = decodeURIComponent(this.rdurl);
-            this.rdurl = this.rdurl.replace("[","%5B");
-            this.rdurl = this.rdurl.replace("]","%5D");
             window.open(this.rdurl, '_self');
         }
     }
