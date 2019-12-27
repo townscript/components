@@ -26,7 +26,7 @@
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
                     <span
-                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} }}</span>
+                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} }}</span>
                 </div>
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom"></i>
