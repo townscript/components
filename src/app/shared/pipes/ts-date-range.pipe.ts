@@ -8,7 +8,12 @@ export class RangeDatePipe implements PipeTransform {
 
     days: any = {'SU':'Sun','MO': 'Mon','TU': 'Tue','WE': 'Wed','TH': 'Thu','FR': 'Fri','SA': 'Sat'};
 
-    transform = (rangeDates: any, isRecurrent?: any ,args?: any): any => {
+    transform = (rangeDates: any, eventTimeZone: any, isRecurrent?: any ,args?: any): any => {
+
+        if(!eventTimeZone) {
+            eventTimeZone="Asia/Kolkata";
+        }
+
         if (rangeDates) {
             // for Recurring events
             if(isRecurrent && args['startTime'] && args['recurrenceRule']){
@@ -39,11 +44,12 @@ export class RangeDatePipe implements PipeTransform {
               }
               return  freqLabel + ' | ' + startTime;
             } else {
+              let local = DateTime.local().setZone(eventTimeZone);
               // for other events or fallback
-              const date = rangeDates.map(d => DateTime.fromISO(d).toFormat('dd'));
-              const month = rangeDates.map(d => DateTime.fromISO(d).toFormat('MMM'));
-              const year = rangeDates.map(d => DateTime.fromISO(d).toFormat('yy'));
-              const time = DateTime.fromISO(rangeDates[0]).toFormat('hh:mm a');
+              const date = rangeDates.map(d => DateTime.fromISO(d , { zone: eventTimeZone }).toFormat('dd'));
+              const month = rangeDates.map(d => DateTime.fromISO(d, { zone: eventTimeZone }).toFormat('MMM'));
+              const year = rangeDates.map(d => DateTime.fromISO(d, { zone: eventTimeZone }).toFormat('yy'));
+              const time = DateTime.fromISO(rangeDates[0], { zone: eventTimeZone }).toFormat('hh:mm a');              
 
               const currYear = new Date().getUTCFullYear()% 100;
               if (year[0] !== year[1]) {
