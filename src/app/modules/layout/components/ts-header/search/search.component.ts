@@ -53,11 +53,11 @@ export class SearchComponent implements OnInit {
     }
 
     buildUrlArray = (): void => {
-      if (this.router.url) {
-          this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
-      } else {
-          this.urlArray = ['in'];
-      }
+        if (this.router.url) {
+            this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+        } else {
+            this.urlArray = ['in'];
+        }
     }
 
     callAlgolia = (text) => {
@@ -122,8 +122,9 @@ export class SearchComponent implements OnInit {
 
     navigateToListing = (interest: string) => {
         this.buildUrlArray();
+        const stopWords = ['e', 'o']
         let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
-        if (this.urlArray && this.urlArray.length > 1 && this.urlArray[0] != 'e') {
+        if (this.urlArray && this.urlArray.length > 1 && stopWords.indexOf(this.urlArray[0]) === -1) {
             this.router.navigate([listingUrl + '/' + interest]);
         } else {
             this.router.navigate([this.homeUrl + '/' + interest]);
