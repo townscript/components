@@ -33,6 +33,7 @@ export class SearchComponent implements OnInit {
     placeSearchResults: any;
     searchResults: any;
     activePlace = 'Pune';
+    emptyResult = false;
     cityQuery: string;
     cityQueryChanged: Subject<string> = new Subject<string>();
     activePlaceBackup: string;
@@ -71,6 +72,7 @@ export class SearchComponent implements OnInit {
 
     filterDataForSearchResult = (data) => {
         const results = data.hits;
+        this.emptyResult = data.hits.length === 0;
         const interests = results.filter(ele => {
             return ele.objType === 'keyword' ||
                 ele.objType === 'eventtype' ||

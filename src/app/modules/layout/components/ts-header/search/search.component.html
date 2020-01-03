@@ -6,6 +6,12 @@
             class="text-sm w-full h-full bg-transparent  p-2" type="text"
             placeholder="Search for an Event, Interest or Organizer" />
         <div class="suggestions enter-slide-bottom w-full p-2 absolute" *ngIf="searchResults && searchActive">
+            <ul class="ts-enter text-center my-4" *ngIf="emptyResult">
+                <img class="mx-auto mb-2" width="200"
+                    src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png">
+                <span class="mx-auto block text-sm text-gray-600">No results found</span>
+                <span class="mx-auto block text-xs text-gray-500 mb-4">We couldn’t find what you’re looking for</span>
+            </ul>
             <ul class="ts-enter" *ngIf="searchResults?.interests.length>0">
                 <li class="list-head">
                     INTERESTS
