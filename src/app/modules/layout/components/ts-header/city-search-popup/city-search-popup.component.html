@@ -9,22 +9,24 @@
                     class="w-full bg-transparent text-sm" />
                 <i *ngIf="cityLoading" class="mdi mdi-loading mdi-spin"></i>
             </li>
-            <li matRipple (click)="placeChanged(place);"
+            <div *ngIf="!closeSuggestions">
+              <li matRipple (click)="placeChanged(place);"
                 class="p-2 capitalize cursor-pointer flex items-center truncate"
-                *ngFor="let place of placeSearchResults" *ngIf="!closeSuggestions">
+                *ngFor="let place of placeSearchResults">
                 <i class="mdi mdi-map-marker text-base mr-1 color-blue"></i>
                 <span class="text-sm flex items-end truncate">
-                    <span class="mr-1 whitespace-no-wrap">{{place.name}} </span>
-                    <small class="text-2xs text-gray-600"
-                        *ngIf="place.city && place?.city.length>0 && place?.type!='city'">
-                        {{place.city}},
-                    </small>
-                    <small class="text-2xs text-gray-600"
-                        *ngIf="place.country && place?.country.length>0 && place?.type!='country'">{{place.country}}
-                    </small>
-                    <small class="text-2xs truncate text-gray-600">{{place.secondaryText}}</small>
+                  <span class="mr-1 whitespace-no-wrap">{{place.name}} </span>
+                  <small class="text-2xs text-gray-600"
+                    *ngIf="place.city && place?.city.length>0 && place?.type!='city'">
+                    {{place.city}},
+                  </small>
+                  <small class="text-2xs text-gray-600"
+                    *ngIf="place.country && place?.country.length>0 && place?.type!='country'">{{place.country}}
+                  </small>
+                  <small class="text-2xs truncate text-gray-600">{{place.secondaryText}}</small>
                 </span>
-            </li>
+              </li>
+            </div>
             <ng-container matRipple *ngIf="!placeSearchResults || placeSearchResults.length==0">
                 <li appDataAnalytics eventLabel="location-dropdown-item" clickLocation="" (click)="placeChanged(city);"
                     class="p-2 px-4 cursor-pointer capitalize" *ngFor="let city of popularPlaces">
