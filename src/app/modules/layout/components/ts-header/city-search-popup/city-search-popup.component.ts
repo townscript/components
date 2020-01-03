@@ -98,6 +98,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         if (text != undefined && text.length > 0) {
             this.cityQueryChanged.next(text);
         }
+        this.closeSuggestions = false;
     }
 
     ngAfterViewInit() {
