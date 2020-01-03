@@ -22,6 +22,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
     @Input() popularPlaces: any;
     @Input() closeSuggestions: boolean = false;
+    @Output() closeSuggestionsChange: EventEmitter<boolean> = new EventEmitter();
 
     citySearchActive = true;
     placeSearchResults: any;
@@ -98,7 +99,12 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         if (text != undefined && text.length > 0) {
             this.cityQueryChanged.next(text);
         }
-        this.closeSuggestions = false;
+        this.updateAndEmitCloseCitySuggestion(false);
+    }
+
+    updateAndEmitCloseCitySuggestion = (val: boolean): void => {
+      this.closeSuggestions = val;
+      this.closeSuggestionsChange.emit(this.closeSuggestions);
     }
 
     ngAfterViewInit() {
