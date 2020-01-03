@@ -11,7 +11,7 @@
             </li>
             <li matRipple (click)="placeChanged(place);"
                 class="p-2 capitalize cursor-pointer flex items-center truncate"
-                *ngFor="let place of placeSearchResults">
+                *ngFor="let place of placeSearchResults" *ngIf="!closeSuggestions">
                 <i class="mdi mdi-map-marker text-base mr-1 color-blue"></i>
                 <span class="text-sm flex items-end truncate">
                     <span class="mr-1 whitespace-no-wrap">{{place.name}} </span>

@@ -21,6 +21,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     @Input() cityPopupActive: boolean;
     @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
     @Input() popularPlaces: any;
+    @Input() closeSuggestions: boolean = false;
 
     citySearchActive = true;
     placeSearchResults: any;
