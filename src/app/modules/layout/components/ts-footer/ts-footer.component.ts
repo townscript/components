@@ -45,7 +45,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   countryCityMap: any;
   city: any;
   placeId: string;
-
+  copyrightYear:number;
   myBookingsURL = '/dashboard/mybookings';
   subObject: any;
 
@@ -54,6 +54,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
     private footerService: FooterService,
     private placeService: PlaceService,
     private utilityService: UtilityService) {
+      this.copyrightYear = new Date().getFullYear();
   }
 
   openContactUs = () => {

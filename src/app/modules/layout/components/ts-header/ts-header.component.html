@@ -47,7 +47,7 @@
                     <span class="mr-1 text-gray-700 truncate capitalize">{{activePlace}}</span>
                     <i class="mdi mdi-menu-down color-blue"></i>
                 </div>
-                <app-city-search-popup appDataAnalytics eventLabel="location-dropdown-search" clickLocation=""
+                <app-city-search-popup appDataAnalytics eventLabel="locationDropdownSearch" clickLocation=""
                     [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace" [showArrow]="false"
                     class="popup" *ngIf="cityPopupActive" [popularPlaces]="popularPlaces">
                 </app-city-search-popup>
@@ -63,7 +63,7 @@
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
         <div class="lg:w-1/6 hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
-            <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="create-event" clickLocation=""
+            <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation=""
                 *ngIf="Components.indexOf('createEventBtn')>-1"
                 class="create-btn cursor-pointer flex h-full justify-center items-center">
                 <span class="text-base mr-2">CREATE EVENT</span>
@@ -72,7 +72,7 @@
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
-            <div appDataAnalytics eventLabel="login-signup" clickLocation=""
+            <div appDataAnalytics eventLabel="loginSignup" clickLocation=""
                 class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
                 <span>Login | Signup</span>
