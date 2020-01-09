@@ -15,7 +15,7 @@ export class RangeDatePipe implements PipeTransform {
 
     }
 
-    transform = (rangeDates: any, eventTimeZone: any, isRecurrent?: any ,args?: any): any => {
+    transform = (rangeDates: any, eventTimeZone: any, isRecurrent?: any ,args?: any, hideTime?: boolean): any => {
 
         if(!eventTimeZone) {
             eventTimeZone="Asia/Kolkata";
@@ -63,15 +63,15 @@ export class RangeDatePipe implements PipeTransform {
 
               const currYear = new Date().getUTCFullYear()% 100;
               if (year[0] !== year[1]) {
-                return month[0] + ' ' + date[0] + '\'' + year[0] + ' - ' + month[1] + ' ' + date[1] + '\'' + year[1] + ' | ' + time;
+                return month[0] + ' ' + date[0] + '\'' + year[0] + ' - ' + month[1] + ' ' + date[1] + '\'' + year[1] + (hideTime ? '' :  ' | ' + time);
               } else {
                 const yearSt = (year[0] - currYear) != 0 ? " '"+year[0] : '';
                 if ((date[0] === date[1]) && (month[0] === month[1])) {
-                  return month[0] + ' ' + date[0] + yearSt +' | ' + time;
+                  return month[0] + ' ' + date[0] + yearSt + (hideTime ? '' : ' | ' + time);
                 } else if ((month[0] !== month[1])) {
-                  return month[0] + ' ' + date[0] + yearSt + ' - ' + month[1] + ' ' + date[1] + yearSt + ' | ' + time;
+                  return month[0] + ' ' + date[0] + yearSt + ' - ' + month[1] + ' ' + date[1] + yearSt + (hideTime ? '' : ' | ' + time);
                 } else {
-                  return month[0] + ' ' + date[0] + ' - ' + date[1] + yearSt + ' | ' + time;
+                  return month[0] + ' ' + date[0] + ' - ' + date[1] + yearSt + (hideTime ? '' : ' | ' + time);
                 }
               }
             }

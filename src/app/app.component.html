@@ -8,6 +8,43 @@
         <a id="sign-up" (click)="openDialog('signup')">sign up</a>
         <br>
     </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <div class="flex flex-wrap m-10">
+      <div class="m-2" style="width: 320px">
+          <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+      </div>
+      <div class="m-2" style="width: 320px">
+          <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData2"></ts-listings-event-card>
+      </div>
+    </div>
+
+    <div class="lg:px-48 my-3 mx-3">
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+    </div>
+
+    <div class="lg:px-48 my-3 mx-3 mb-10">
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData2"></ts-listings-event-card>
+    </div>
+
+    <div id="card-container" class=" px-3 md:px-42 flex-wrap mr-2 flex flex-col justify-between">
+        <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+        <span>List</span>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+
+    </div>
+    <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+
+    <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+    <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+    <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+
+    <ts-listings-event-card [type]="'featured'" [eventData]="eventData"></ts-listings-event-card>
+    <ts-listings-event-card [type]="'topic'" [eventData]="topicData"></ts-listings-event-card>
+
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     <div style="width: 360px">
         <ts-listing-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listing-card>
