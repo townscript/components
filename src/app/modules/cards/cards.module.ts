@@ -8,6 +8,7 @@ import { TsListingCardComponent } from './ts-listing-card/ts-listing-card.compon
 import { ShareEventModalComponent } from './ts-listing-card/share-event-modal/share-event-modal.component';
 import { TsCardSkeletonComponent } from './ts-card-skeleton/ts-card-skeleton.component';
 import { MatTooltipModule } from '@angular/material';
+import { TsListingEventCardComponent } from './ts-listings-event-card/ts-listings-event-card.component';
 
 @NgModule({
     imports: [
@@ -20,12 +21,14 @@ import { MatTooltipModule } from '@angular/material';
     declarations: [
         TsListingCardComponent,
         ShareEventModalComponent,
-        TsCardSkeletonComponent
+        TsCardSkeletonComponent,
+        TsListingEventCardComponent
     ],
     exports: [
         TsListingCardComponent,
         ShareEventModalComponent,
-        TsCardSkeletonComponent
+        TsCardSkeletonComponent,
+        TsListingEventCardComponent
     ],
     entryComponents: [
         ShareEventModalComponent
