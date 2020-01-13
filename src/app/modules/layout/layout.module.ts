@@ -12,13 +12,13 @@ import { UserService } from '../../shared/services/user-service';
 import { TsHeaderComponent } from './components/ts-header/ts-header.component';
 import { TsFooterComponent } from './components/ts-footer/ts-footer.component';
 import { SearchComponent } from './components/ts-header/search/search.component';
-import { CitySearchPopupComponent } from './components/ts-header/city-search-popup/city-search-popup.component';
 import { UserMenuComponent } from './components/ts-header/user-menu/user-menu.component';
 import { HeaderService } from './components/ts-header/ts-header.service';
 import { FooterService } from './components/ts-footer/ts-footer.service';
 import { SharedModule } from '../../shared/shared.module';
 import { DataCollectorService } from '../../shared/services/analytics/data-collector.service';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/hamburger-menu.component';
 
 
 @NgModule({
@@ -36,15 +36,15 @@ import { LazyLoadImageModule } from 'ng-lazyload-image';
     TsHeaderComponent,
     TsFooterComponent,
     SearchComponent,
-    CitySearchPopupComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    HamburgerMenuComponent
   ],
   exports: [
     TsHeaderComponent,
     TsFooterComponent,
     SearchComponent,
-    CitySearchPopupComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    HamburgerMenuComponent
   ],
   providers: [
     TimeService,

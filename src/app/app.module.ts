@@ -17,13 +17,15 @@ import { CardsModule } from './modules/cards/cards.module';
 import { PlaceService } from './modules/layout/components/ts-header/place.service';
 import { SharedModule } from './shared/shared.module';
 import { DataCollectorService, initializeDataCollector } from './shared/services/analytics/data-collector.service'
-import { TsLoginSignupModule } from './modules/loginSignup/login-signup.module' 
+import { TsLoginSignupModule } from './modules/loginSignup/login-signup.module'
+import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+
     BrowserModule,
     BrowserAnimationsModule,
     TsFormsModule,
@@ -40,7 +42,7 @@ import { TsLoginSignupModule } from './modules/loginSignup/login-signup.module'
   providers: [PlaceService, DataCollectorService],
   bootstrap: [AppComponent],
   entryComponents: [TsLoginSignupComponent,
-    LoginModalComponent
-  ]
+    LoginModalComponent,
+    CitySelectionModalComponent]
 })
 export class AppModule { }

@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { HeaderService } from '../ts-header.service';
-import { config } from '../../../../../core/app-config';
-import { PlaceService } from '../place.service';
+import { HeaderService } from '../../../modules/layout/components/ts-header/ts-header.service';
+import { config } from '../../../core/app-config';
+import { PlaceService } from '../../../modules/layout/components/ts-header/place.service';
 
 @Component({
     selector: 'app-city-search-popup',
@@ -43,11 +43,11 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     buildUrlArray = (): void => {
-      if (this.router.url) {
-          this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
-      } else {
-          this.urlArray = ['in'];
-      }
+        if (this.router.url) {
+            this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+        } else {
+            this.urlArray = ['in'];
+        }
     }
 
     callSearchCity = (query) => {
@@ -103,8 +103,8 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     updateAndEmitCloseCitySuggestion = (val: boolean): void => {
-      this.closeSuggestions = val;
-      this.closeSuggestionsChange.emit(this.closeSuggestions);
+        this.closeSuggestions = val;
+        this.closeSuggestionsChange.emit(this.closeSuggestions);
     }
 
     ngAfterViewInit() {

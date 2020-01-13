@@ -10,24 +10,34 @@ import { FollowService } from './services/follow.service';
 import { DataAnalyticsDirective } from './directives/analytics/data-analytics.directive';
 import { DataCollectorService } from './services/analytics/data-collector.service';
 import { UtilityService } from './services/utilities.service';
-
+import { SharedService } from './services/shared.service';
+import { CitySelectionModalComponent } from './components/city-selection/city-selection.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CitySearchPopupComponent } from './components/city-search-popup/city-search-popup.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
         RangeDatePipe,
         FollowComponent,
         TextOverflowClampDirective,
-        DataAnalyticsDirective
+        DataAnalyticsDirective,
+        CitySelectionModalComponent,
+        CitySearchPopupComponent
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        MatProgressSpinnerModule,
+        FormsModule
     ],
     exports: [
         FollowComponent,
         RangeDatePipe,
         TextOverflowClampDirective,
-        DataAnalyticsDirective
+        DataAnalyticsDirective,
+        CitySelectionModalComponent,
+        CitySearchPopupComponent
     ],
-    providers: [TimeService, UserService, FollowService, DataCollectorService, UtilityService]
+    providers: [SharedService, TimeService, UserService, FollowService, DataCollectorService, UtilityService]
 })
 export class SharedModule { }

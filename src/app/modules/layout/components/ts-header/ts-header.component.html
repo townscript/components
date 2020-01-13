@@ -32,10 +32,11 @@
         </div>
         <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
-            <!-- <app-hamburger-menu class="mr-3"></app-hamburger-menu> -->
-            <!-- <img class="ts-logo mr-3" src="assets/images/ts-icon.svg" alt="Townscript Event Ticketing Logo"
-                title="Townscript Event Ticketing Logo" /> -->
-            <div *ngIf="backState" (click)="goBack()"
+            <app-hamburger-menu [user]="user" [activePlace]="activePlace" class="mr-3"></app-hamburger-menu>
+            <img *ngIf="Components.indexOf('icon')>-1" appDataAnalytics eventLabel="logo" clickLocation=""
+                (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-logo.svg"
+                alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
+            <!-- <div *ngIf="backState" (click)="goBack()"
                 class="rounded-full flex py-1 px-3 mr-1 justify-center items-center" matRipple>
                 <i class="mdi mdi-arrow-left text-2xl color-blue"></i>
             </div>
@@ -52,7 +53,7 @@
                     class="popup" *ngIf="cityPopupActive" [popularPlaces]="popularPlaces">
                 </app-city-search-popup>
 
-            </div>
+            </div> -->
         </div>
         <div class="lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex">
             <app-search *ngIf="Components.indexOf('eventSearch')>-1" class="w-full"></app-search>
@@ -94,9 +95,9 @@
                 (click)="navigateToMobileSearch()">
                 <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
             </div>
-            <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>
+            <!-- <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>
                 <i class="mdi mdi-account text-2xl  ml-2 color-blue" matRipple (click)="openMyProfileComponent()"></i>
-            </div>
+            </div> -->
         </div>
     </div>
 </nav>
