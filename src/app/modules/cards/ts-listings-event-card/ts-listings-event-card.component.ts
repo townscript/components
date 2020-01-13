@@ -17,7 +17,7 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
 
   @Input() eventData: any;
   @Input() type: any;
-  @Input() gridType: any;
+  @Input() gridType: any = 'grid';
   router: Router = config.router;
 
   homeUrl: any;
