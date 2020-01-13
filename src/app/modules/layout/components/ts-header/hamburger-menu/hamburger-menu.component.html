@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="user-menu mt-3">
-                        <app-user-menu [user]="user" *ngIf="user"></app-user-menu>
+                        <app-user-menu [user]="user" (close)="reloadOnLogout($event)" *ngIf="user"></app-user-menu>
                         <div (click)="openLogin()" matRipple class="flex px-2 items-center justify-between w-full"
                             *ngIf="!user">
                             <div>
