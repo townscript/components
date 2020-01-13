@@ -34,6 +34,11 @@ export class HamburgerMenuComponent implements OnInit {
             });
         }
     }
+    reloadOnLogout = (event): void => {
+        if (event && event['logout']) {
+            window.location.reload();
+        }
+    }
     openCityPopup = () => {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = false;
