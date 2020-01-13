@@ -14,7 +14,7 @@
         <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff"
         (click)="$event.stopPropagation()"></app-follow>
       </div>
-      <div class="share px-2 rounded-full self-end" matRipple (click)="$event.stopPropagation()">
+      <div class="share px-2 rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
         <i appDataAnalytics eventLabel="share" clickLocation="" class="text-white mdi mdi-share-variant text-2xl share"
         (click)="shareEvent($event)"></i>
       </div>
@@ -86,7 +86,7 @@
           <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#683592"
           (click)="$event.stopPropagation()"></app-follow>
         </div>
-        <div class="share rounded-full self-end" matRipple (click)="$event.stopPropagation()">
+        <div class="share rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
           <i appDataAnalytics eventLabel="share" clickLocation="" class="text-primary mdi mdi-share-variant text-2xl share"
           (click)="shareEvent($event)"></i>
         </div>
