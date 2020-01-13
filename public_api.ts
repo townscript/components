@@ -8,6 +8,7 @@ export * from './src/app/shared/services/time.service';
 export * from './src/app/shared/services/user-service';
 export * from './src/app/shared/services/follow.service';
 export * from './src/app/shared/services/utilities.service';
+export * from './src/app/shared/components/city-search-popup/city-search-popup.component';
 export * from './src/app/modules/layout/components/ts-header/place.service';
 export * from './src/app/modules/layout/components/ts-header/ts-header.service';
 
@@ -16,7 +17,7 @@ export * from './src/app/modules/layout/components/ts-footer/ts-footer.component
 export * from './src/app/modules/layout/components/ts-header/ts-header.component';
 export * from './src/app/modules/layout/components/ts-header/user-menu/user-menu.component';
 export * from './src/app/modules/layout/components/ts-header/search/search.component';
-export * from './src/app/modules/layout/components/ts-header/city-search-popup/city-search-popup.component';
+export * from './src/app/modules/layout/components/ts-header/hamburger-menu/hamburger-menu.component';
 
 
 // Login signup module components
@@ -36,6 +37,7 @@ export * from './src/app/modules/cards/ts-listing-card/ts-listing-card.component
 export * from './src/app/shared/components/follow/follow.component';
 export * from './src/app/shared/directives/analytics/data-analytics.directive';
 export * from './src/app/shared/services/analytics/data-collector.service';
+export * from './src/app/shared/components/city-selection/city-selection.component';
 
 export * from './src/app/modules/layout/layout.module';
 export * from './src/app/modules/loginSignup/login-signup.module';

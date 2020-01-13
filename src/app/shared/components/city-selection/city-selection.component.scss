@@ -1,0 +1,31 @@
+.city-selection-popup {
+
+  .transition {
+    transition: 0.2s all;
+  }
+
+  .detect-location {
+    background: #ededed;
+    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
+    &:hover{
+      background: #e1e1e1;
+    }
+  }
+
+  .popular-cities {
+    .image-container{
+      border-radius: 50%;
+      .city-image {
+        height: 100px;
+        background-color: #3782C4;
+        background-size: contain;
+        background-blend-mode: multiply;
+        transition: all ease 0.15s;
+        &:hover{
+          background-color: #6C3B8F;
+        }
+      }
+    }
+  }
+
+}

@@ -38,7 +38,8 @@ export class TsHeaderComponent implements OnInit {
   cityPopupActive = false;
   popularPlaces: any;
 
-  constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
+  constructor(private utilityService: UtilityService, private headerService: HeaderService,
+    private placeService: PlaceService, private dialog: MatDialog, private userService: UserService) {
     this.buildUrlArray();
   }
 
@@ -52,7 +53,7 @@ export class TsHeaderComponent implements OnInit {
 
   @HostListener('document:click', ['$event'])
   clickout = (event) => {
-    if (!this.citySuggestions.nativeElement.contains(event.target)) {
+    if (this.citySuggestions && !this.citySuggestions.nativeElement.contains(event.target)) {
       this.cityPopupActive = false;
     }
     if (!this.userMenuEle.nativeElement.contains(event.target)) {
@@ -137,7 +138,7 @@ export class TsHeaderComponent implements OnInit {
         let data = JSON.parse(<any>res);
         if (data && Object.keys(data).length > 0) {
           this.activePlace = data['currentPlace'];
-          this.activeCity = data['city'].replace(' ','-');
+          this.activeCity = data['city'].replace(' ', '-');
           this.activeCountryCode = data['country'];
           if (this.activeCountryCode != undefined && this.activeCity != undefined) {
             this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();

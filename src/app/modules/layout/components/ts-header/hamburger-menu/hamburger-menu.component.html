@@ -1,0 +1,39 @@
+<nav role="navigation">
+    <div class="ham-container position-relative cursor-pointer">
+        <div class="hamburger position-relative">
+            <!-- <input type="checkbox" /> -->
+            <div class="spans" (click)="active=!active">
+                <span class="block background-blue" [class.active]="active"></span>
+                <span class="block background-blue" [class.active]="active"></span>
+                <span class="block background-blue" [class.active]="active"></span>
+            </div>
+            <div (click)="active=!active" class="overlay fixed bg-black w-full h-full" *ngIf="active"></div>
+            <ul class="menu fixed h-full px-4" [class.active]="active">
+                <div class="">
+                    <img class="ts-logo mr-3" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
+                        title="Townscript Event Ticketing Logo" />
+                    <div (click)="openCityPopup()" matRipple
+                        class="location-section px-2 mt-6 pb-2 border-b border-gray-300 flex items-center">
+                        <i class="mdi mdi-map-marker color-blue text-2xl mr-2"></i>
+                        <div class="flex items-end">
+                            <span
+                                class="mr-1 font-bold text-lg leading-tight text-gray-700 capitalize">{{activePlace}}</span>
+                            <span class="ml-2 color-blue text-xs">Change</span>
+                        </div>
+                    </div>
+                    <div class="user-menu mt-3">
+                        <app-user-menu [user]="user" *ngIf="user"></app-user-menu>
+                        <div (click)="openLogin()" matRipple class="flex px-2 items-center justify-between w-full"
+                            *ngIf="!user">
+                            <div>
+                                <span class="text-lg block text-gray-800">Login/Signup</span>
+                                <span class="text-xs text-gray-700">To personalize your experience!</span>
+                            </div>
+                            <i class="mdi mdi-chevron-right text-4xl color-blue"></i>
+                        </div>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>

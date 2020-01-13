@@ -19,7 +19,6 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
     styleUrls: ['./ts-login-signup.component.scss'],
     encapsulation: ViewEncapsulation.None,
 })
-
 export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
     @Input() mode: any;
@@ -28,7 +27,6 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     @Input() rdurl: any;
     @Input() showSocial: any = true;
     @Output() closeDialog = new EventEmitter();
-
 
     @ViewChild('recaptchaRef', { read: true, static: true })
     recaptchaRef: RecaptchaComponent;
@@ -86,12 +84,12 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             }
         });
         this.activatedRoute.queryParams.subscribe(params => {
-          if(params['rdurl']){            
-            this.rdurl = params['rdurl'];
-            this.rdurl = decodeURIComponent(this.rdurl);
-            this.rdurl = this.rdurl.replace("[","%5B");
-            this.rdurl = this.rdurl.replace("]","%5D");
-          }
+            if (params['rdurl']) {
+                this.rdurl = params['rdurl'];
+                this.rdurl = decodeURIComponent(this.rdurl);
+                this.rdurl = this.rdurl.replace("[", "%5B");
+                this.rdurl = this.rdurl.replace("]", "%5D");
+            }
         });
     }
 
