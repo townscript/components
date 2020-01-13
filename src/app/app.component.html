@@ -18,6 +18,10 @@
       <div class="m-2" style="width: 320px">
           <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData2"></ts-listings-event-card>
       </div>
+      <div class="m-2" style="width: 320px">
+          <ts-card-skeleton  [gridType]="'grid'"></ts-card-skeleton>
+      </div>
+
     </div>
 
     <div class="lg:px-48 my-3 mx-3">
@@ -27,6 +31,11 @@
     <div class="lg:px-48 my-3 mx-3 mb-10">
         <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData2"></ts-listings-event-card>
     </div>
+
+    <div class="lg:px-48 my-3 mx-3 mb-10">
+        <ts-card-skeleton  [gridType]="'list'"></ts-card-skeleton>
+    </div>
+
 
     <div id="card-container" class=" px-3 md:px-42 flex-wrap mr-2 flex flex-col justify-between">
         <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
