@@ -3,17 +3,17 @@
 .card-container{
 
   transition: all 0.2s ease-in;
-  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.1);
 
   &:hover{
     transform: translateY(-2%);
-    box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.129189);
+    box-shadow: 2px 4px 25px rgba(0, 0, 0, 0.2);
   }
 
   .black-gradient{
-    background: -webkit-linear-gradient( 180deg, black 0%, transparent 75%);
-    background: -moz-linear-gradient( 180deg, black 0%,  transparent 75%);
-    background: linear-gradient( 180deg, black 0%, transparent 75%);
+    background: -webkit-linear-gradient( 180deg, black 0%, transparent 95%);
+    background: -moz-linear-gradient( 180deg, black 0%,  transparent 95%);
+    background: linear-gradient( 180deg, black 0%, transparent 95%);
   }
 
 
