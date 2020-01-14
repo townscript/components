@@ -70,6 +70,8 @@ export class CitySelectionModalComponent implements OnInit {
 
   ngOnInit() {
     this.dialogRef.disableClose = true;
+    if(this.data && this.data.countryCode)
+      this.countryCode = this.data.countryCode;
     if (this.data && this.data.cities) {
       this.popularCities = this.data.cities;
       this.showLoader = false;
