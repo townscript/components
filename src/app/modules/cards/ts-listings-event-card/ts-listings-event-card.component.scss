@@ -1,8 +1,12 @@
 @import "./../../../../assets/scss/variables";
 
 ::ng-deep{
+  .event-name{
+    span{
+      width: auto!important;
+    }
+  }
   .list-actions{
-
     @media (min-width: $screen-md-min){
       i{
         font-size: 1.4rem!important;
