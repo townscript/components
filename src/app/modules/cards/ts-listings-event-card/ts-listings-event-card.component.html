@@ -26,7 +26,7 @@
       [defaultImage]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/image-loader.gif'"
       [errorImage]="defaultCardImageUrl"
       [lazyLoad]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl"
-      [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48'"
+      [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48 w-full'"
       [src]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl"/>
   </div>
 
@@ -39,11 +39,7 @@
       <div class="event-name-box text-gray-900 text-base items-baseline flex"
         [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg'">
 
-        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType == 'list'">
-          {{eventData.name}}
-        </div>
-        <!-- Duplicate to reinitialize clamp when view is switched -->
-        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType != 'list'">
+        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2">
           {{eventData.name}}
         </div>
 
@@ -90,7 +86,7 @@
         </div>
         <div class="free" *ngIf="!eventData.minimumTicketPrice">
           <span class="text-primary md:text-lg font-semibold"
-            [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl' : ''">Free</span>
+            [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">Free</span>
         </div>
       </div>
 
