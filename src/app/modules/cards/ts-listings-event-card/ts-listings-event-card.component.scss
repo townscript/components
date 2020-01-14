@@ -11,9 +11,9 @@
   }
 
   .black-gradient{
-    background: -webkit-linear-gradient( 180deg, black 0%, transparent 95%);
-    background: -moz-linear-gradient( 180deg, black 0%,  transparent 95%);
-    background: linear-gradient( 180deg, black 0%, transparent 95%);
+    background: -webkit-linear-gradient( 180deg, rgba(0,0,0,0.7) 0%, transparent 95%);
+    background: -moz-linear-gradient( 180deg, rgba(0,0,0,0.7) 0%,  transparent 95%);
+    background: linear-gradient( 180deg, rgba(0,0,0,0.7) 0%, transparent 95%);
   }
 
 
@@ -36,6 +36,9 @@
 
     .content{
       min-height: 4.5em;
+      .event-name{
+        color: #301C3F;
+      }
       @media (min-width: $screen-sm-max){
         .event-name{
           display: -webkit-box;
@@ -55,7 +58,7 @@
 
     @media (min-width: $screen-md-min) {
       .content{
-        min-height: 6.5em;
+        min-height: 6em;
       }
     }
 
