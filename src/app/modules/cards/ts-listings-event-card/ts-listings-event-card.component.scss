@@ -35,13 +35,15 @@
   .card-body {
 
     .content{
-      min-height: 4.5em;
+      min-height: 4em;
       .event-name{
         color: #301C3F;
       }
       @media (min-width: $screen-sm-max){
         .event-name{
-          display: -webkit-box;
+
+          display: flex;
+          flex-direction: column;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
@@ -52,13 +54,13 @@
 
     @media (min-width: $screen-phone) and (max-width: $screen-sm-max) {
       .content{
-        min-height: 5.5em;
+        min-height: 5em;
       }
     }
 
     @media (min-width: $screen-md-min) {
       .content{
-        min-height: 6em;
+        min-height: 5.75em;
       }
     }
 
