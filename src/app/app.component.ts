@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginModalComponent } from './modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
+import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
 
 @Component({
   selector: 'app-root',
@@ -30,6 +31,15 @@ export class AppComponent implements OnInit {
     dialogConfig.backdropClass = 'mat-dialog-bkg-container';
     this.dialog.open(LoginModalComponent, dialogConfig);
   }
+
+  openCitySelectionPopup = (): void => {
+    this.dialog.open(CitySelectionModalComponent, {
+      width: 'auto',
+      backdropClass: 'mat-dialog-bkg-container',
+    });
+  }
+
+
 
   ngOnInit() {
     this.eventData = {"id":16175,"eventId":157038,"name":"Maruti Suzuki Arena Ahmedabad Comic Con 2020","shortName":"maruti-suzuki-arena-ahmedabad-comic-con-2020-124433","startTime":"2020-02-01T05:30:00+0000","endTime":"2020-02-02T14:30:00+0000","displayName":"Maruti Suzuki Arena Ahmedabad Comic Con 2020","shortDescription":null,"eventTimeZone":"Asia/Calcutta","timeZoneDisplayName":null,"venueLocation":null,"city":"Ahmedabad","latitude":23.0436972,"longitude":72.54031110000005,"coverImageUrl":"//s3.ap-south-1.amazonaws.com/townscript-production/images/5d784ee5-beff-4107-bdeb-edd56cb0505a.jpg","cardImageUrl":"//s3.ap-south-1.amazonaws.com/townscript-production/images/mobile-cover-uploaded/8ab09a05-68aa-4c21-99a5-e16f6c842b35.jpg","publicEvent":true,"live":true,"categoryId":90,"eventTypeId":16,"minimumTicketPrice":599,"minimumTicketPriceCurrency":"INR","organizerIsTrusted":true,"soldOutFlag":false,"reportFlag":false,"imageMetadata":"{\"card\":{\"color\":\"7bc75f\",\"brightness\":\"dark\"},\"cover\":{\"color\":\"7bc75f\",\"brightness\":\"dark\"}}","paid":true,"onlineEvent":false,"organizerId":4489,"pageViews":14,"organizerScore":0,"ticketsSold":234,"roTicketsSold":13.57,"ticketsRemaining":9616,"townscriptIR":0,"score":2.18,"recurrent":false,"keywords":[{"id":141,"topicKeywordName":"party","topicKeywordCode":"party","topicId":150,"weight":2,"popular":null,"topicKeywordPageTitle":null,"topicKeywordPageDescription":null},{"id":177,"topicKeywordName":"culture","topicKeywordCode":"culture","topicId":187,"weight":1,"popular":null,"topicKeywordPageTitle":null,"topicKeywordPageDescription":null},{"id":257,"topicKeywordName":"comic fest","topicKeywordCode":"comic-fest","topicId":187,"weight":2,"popular":null,"topicKeywordPageTitle":null,"topicKeywordPageDescription":null}],"country":"India","countryCode":null,"organizerName":"Comic Con India","recurrenceStartTime":null,"recurrenceEndTime":null,"recurrenceRule":null};

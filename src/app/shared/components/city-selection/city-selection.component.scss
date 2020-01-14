@@ -1,7 +1,16 @@
+@import "./../../../../assets/scss/variables";
+
 .city-selection-popup {
 
   .transition {
     transition: 0.2s all;
+  }
+
+
+  @media (min-width: $screen-md-min) {
+    .city-search{
+      margin-left: 15%;
+    }
   }
 
   .detect-location {
