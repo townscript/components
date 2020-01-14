@@ -1,5 +1,18 @@
 @import "./../../../../assets/scss/variables";
 
+::ng-deep{
+  .list-actions{
+
+    @media (min-width: $screen-md-min){
+      font-size: 1.5rem;
+    }
+    i {
+      font-size: 1.125rem;
+    }
+  }
+
+}
+
 .card-container{
 
   transition: all 0.2s ease-in;

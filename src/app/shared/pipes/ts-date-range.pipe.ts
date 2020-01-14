@@ -52,7 +52,7 @@ export class RangeDatePipe implements PipeTransform {
                   }
                 }
               }
-              return  freqLabel + ' | ' + startTime;
+              return  freqLabel +  (hideTime ?  '' : (' | ' + startTime) );
             } else {
               let local = DateTime.local().setZone(eventTimeZone);
               // for other events or fallback
