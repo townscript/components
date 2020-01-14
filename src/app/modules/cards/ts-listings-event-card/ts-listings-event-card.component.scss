@@ -4,6 +4,10 @@
   .event-name{
     span{
       width: auto!important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      display: inline-block;
     }
   }
   .list-actions{
