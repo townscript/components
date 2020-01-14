@@ -2,7 +2,7 @@
     <div class="suggestions-container">
         <ul>
             <li [class.active]="citySearchActive" class="p-2 capitalize cursor-pointer flex items-center truncate">
-                <i class="mdi mdi-magnify mr-2"></i>
+                <i class="mdi mdi-magnify color-blue mr-2"></i>
                 <input appDataAnalytics eventLabel="locationDropdownSearch" clickLocation="" #cityInput
                     autocomplete="off" id="cityInput" type="text" placeholder="Type here to search..."
                     [(ngModel)]="cityQuery" (ngModelChange)="searchCity($event)" (focus)="citySearchActive=true"

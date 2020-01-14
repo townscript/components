@@ -1,5 +1,12 @@
 @import "./../../../../assets/scss/variables";
 
+::ng-deep {
+  .city-suggestions{
+
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1)!important;
+  }
+}
+
 .city-selection-popup {
 
   .transition {
@@ -15,7 +22,7 @@
 
   .detect-location {
     background: #ededed;
-    box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1)!important;
     &:hover{
       background: #e1e1e1;
     }
