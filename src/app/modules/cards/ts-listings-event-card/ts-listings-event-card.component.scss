@@ -4,6 +4,7 @@
   .event-name{
     span{
       width: auto!important;
+      padding: 0 2px;
     }
   }
   .list-actions{
@@ -62,7 +63,7 @@
         .event-name{
 
           display: flex;
-          flex-direction: column;
+          flex-wrap: wrap;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
