@@ -34,13 +34,19 @@
     [ngClass]="gridType == 'list' ? 'flex-3  pl-3 pt-3 md:pl-5' : 'px-3 py-2 md:px-5'"
     *ngIf="eventData">
 
-    <div class="content w-full"
+    <div class="content w-full fadeIn"
       [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : ''">
       <div class="event-name-box text-gray-900 text-base items-baseline flex"
         [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg'">
-        <div class="font-semibold event-name w-11/12" [clamp]="2">
+
+        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType == 'list'">
           {{eventData.name}}
         </div>
+        <!-- Duplicate to reinitialize clamp when view is switched -->
+        <div class="font-semibold event-name w-11/12 fadeInLeft animation--delay" [clamp]="2" *ngIf="gridType != 'list'">
+          {{eventData.name}}
+        </div>
+
         <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg"
         *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
         matTooltipClass="ts-card-tooltip"></i>
