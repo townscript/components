@@ -37,7 +37,7 @@
     <div class="content w-full"
       [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : ''">
       <div class="event-name-box text-gray-900 text-base items-baseline flex"
-        [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl pb-2 ' : 'lg:text-lg'">
+        [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg'">
         <div class="font-semibold event-name w-11/12" [clamp]="2">
           {{eventData.name}}
         </div>
@@ -45,7 +45,8 @@
         *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
         matTooltipClass="ts-card-tooltip"></i>
       </div>
-      <div class="secondary-details flex flex-wrap items-center justify-start text-xs md:text-sm text-gray-800 pb-2">
+      <div class="secondary-details flex flex-wrap items-center justify-start text-xs md:text-sm text-gray-800 pb-2"
+        [ngClass]="gridType == 'list' ? '' : 'md:pt-1'">
         <div class="date">
           <span class="">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
           </span>
@@ -71,16 +72,16 @@
     <div class="gradient-separator w-full" *ngIf="gridType=='list'"></div>
 
     <div class="footer"
-      [ngClass]="gridType == 'list' ? 'flex-1 flex items-center justify-between pr-3' : ''">
+      [ngClass]="gridType == 'list' ? 'flex-1 flex items-center justify-between pr-3 lg:py-1' : ''">
       <div class="price">
         <div class="paid flex items-baseline" *ngIf="eventData.minimumTicketPrice">
           <div class="min-price">
             <span class="text-primary md:text-lg font-semibold"
-              [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl' : ''">
+              [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">
               {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}}
             </span>
           </div>
-          <span class="text-xs px-1 opacity-75">onwards</span>
+          <span class="text-xs md:text-sm px-1 opacity-75">onwards</span>
         </div>
         <div class="free" *ngIf="!eventData.minimumTicketPrice">
           <span class="text-primary md:text-lg font-semibold"
