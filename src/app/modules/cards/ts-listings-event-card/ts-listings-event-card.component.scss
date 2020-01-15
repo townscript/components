@@ -55,7 +55,7 @@
   .card-body {
 
     .content{
-      min-height: 4em;
+      min-height: 5em;
       .event-name, .secondary-details{
         color: #301C3F;
       }
@@ -74,13 +74,13 @@
 
     @media (min-width: $screen-phone) and (max-width: $screen-sm-max) {
       .content{
-        min-height: 5em;
+        min-height: 5.5em;
       }
     }
 
     @media (min-width: $screen-md-min) {
       .content{
-        min-height: 5.75em;
+        min-height: 5.8em;
       }
     }
 
