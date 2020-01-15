@@ -70,6 +70,9 @@
           text-overflow: ellipsis;
         }
       }
+      .location {
+        text-overflow: ellipsis;
+      }
     }
 
     @media (min-width: $screen-phone) and (max-width: $screen-sm-max) {
