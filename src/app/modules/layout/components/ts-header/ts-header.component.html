@@ -32,7 +32,9 @@
         </div>
         <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
-            <app-hamburger-menu [user]="user" [activePlace]="activePlace" class="mr-3"></app-hamburger-menu>
+            <app-hamburger-menu [user]="user" [countryCode]="activeCountryCode" [activePlace]="activePlace"
+                class="mr-3">
+            </app-hamburger-menu>
             <img *ngIf="Components.indexOf('icon')>-1" appDataAnalytics eventLabel="logo" clickLocation=""
                 (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-logo.svg"
                 alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />

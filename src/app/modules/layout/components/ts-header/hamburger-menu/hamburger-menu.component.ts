@@ -16,6 +16,7 @@ export class HamburgerMenuComponent implements OnInit {
 
     @Input() user: any;
     @Input() activePlace: String;
+    @Input() countryCode: String = 'IN';
     active: boolean;
     constructor(private dialog: MatDialog,
         public datepipe: DatePipe) {
@@ -44,6 +45,7 @@ export class HamburgerMenuComponent implements OnInit {
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+        dialogConfig.data = { 'countryCode': this.countryCode };
         this.dialog.open(CitySelectionModalComponent, dialogConfig);
     }
     ngAfterViewInit() {
