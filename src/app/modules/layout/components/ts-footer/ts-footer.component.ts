@@ -85,7 +85,7 @@ export class TsFooterComponent implements OnInit, OnDestroy {
   getCityFromCityCode = async (code: string): Promise<any> => {
     const res = await this.footerService.getCityFromCityCode(code);
     this.city = res['data'];
-    //this.getPopularEvents();
+    this.getPopularEvents();
   }
 
   getPopularEvents = async (country?: string): Promise<any> => {
