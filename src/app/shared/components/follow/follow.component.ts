@@ -18,7 +18,10 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
     @Input() color = '#683592';
     @Input() followTypeId;
     @Input() followType;
+    @Input() typeName;
     @Output() status: any = new EventEmitter<any>();
+
+    subHeader: string = "Your one stop tool for exploring events";
 
     textCopy: string;
     hovered: boolean;
@@ -73,6 +76,7 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.backdropClass = 'mat-dialog-bkg-container';
+        dialogConfig.data = {'subHeader': this.subHeader, 'source': 'follow'};
         const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(isSignedIn => {
             if (isSignedIn) {

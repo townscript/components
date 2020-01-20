@@ -14,6 +14,7 @@ export class LoginModalComponent implements OnInit {
   subHeader = 'Your one stop tool for organizing events';
   rdurl: string;
   showSocial: boolean;
+  source: string;
 
   constructor(public dialogRef: MatDialogRef<TsLoginSignupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
@@ -31,6 +32,9 @@ export class LoginModalComponent implements OnInit {
     }
     if (this.data != undefined && this.data.showSocial != undefined) {
       this.showSocial = this.data.showSocial;
+    }
+    if (this.data != undefined && this.data.source != undefined) {
+      this.source = this.data.source;
     }
   }
 

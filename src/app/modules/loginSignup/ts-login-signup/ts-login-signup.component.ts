@@ -26,6 +26,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     @Input() defaultSubHeader: any = 'Your one stop tool for organizing events';
     @Input() rdurl: any;
     @Input() showSocial: any = true;
+    @Input() source: any;
     @Output() closeDialog = new EventEmitter();
 
     @ViewChild('recaptchaRef', { read: true, static: true })
@@ -204,6 +205,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
         if (this.rdurl != undefined) {
             window.open(this.rdurl, '_self');
+        } else {
+          console.log(userData);
         }
     }
 
