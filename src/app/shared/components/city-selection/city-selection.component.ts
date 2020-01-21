@@ -51,7 +51,7 @@ export class CitySelectionModalComponent implements OnInit {
       this.loaderText = "Redirecting to " + city.name;
       setTimeout(() => {
         this.close();
-        this.router.navigate([this.countryCode + '/' + city.code], {});
+        this.router.navigate([this.countryCode.toLowerCase() + '/' + city.code.toLowerCase()], {});
       }, 500);
     }
   }
@@ -79,7 +79,7 @@ export class CitySelectionModalComponent implements OnInit {
       this.getCities(this.countryCode);
     }
 
-    this.cookieService.setCookie('cityPopupDisplayed', 'true', 1200, '/');
+    this.cookieService.setCookie('cityPopupDisplayed', 'true', 90, '/');
   }
 
 }
