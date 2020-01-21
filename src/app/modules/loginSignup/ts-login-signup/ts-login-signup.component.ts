@@ -193,6 +193,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
         const userData = { ...retData.userDetails, ...tokenData };
         this.userName = userData.user;
+        const isOrganizer = userData.isOrganizer;
         console.log(this.userName);
         this.userService.updateUser(userData);
         // this.cookieService.setCookie('townscript-user', JSON.stringify(userData), 90);
@@ -203,11 +204,17 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             }
         }, 1400);
 
-        if (this.rdurl != undefined) {
+        // no redirection needed ,in case of follow
+        if (this.source != 'follow') {
+          if(this.rdurl != undefined) {
             window.open(this.rdurl, '_self');
-        } else {
-          console.log(userData);
+          }
+          if(isOrganizer){
+            window.open('/dashboard', '_self');
+          }
         }
+
+
     }
 
     signUp = async (): Promise<any> => {
