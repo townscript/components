@@ -1,111 +1,90 @@
-
 <div class="card-container rounded overflow-hidden relative bg-white" [ngClass]="gridType == 'list' ? 'flex' : ''">
 
-  <div class="card-header absolute top-0 w-full flex items-center justify-between black-gradient py-1 px-3 z-50" *ngIf="gridType == 'grid'">
-    <div class="topic-bubble opacity-0" *ngIf="eventData?.keywords">
-      <a *ngFor="let key of eventData?.keywords| slice:0:1"
-          [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
-          <span class="bubble background-blue px-2 p-1 text-xs rounded-lg text-white uppercase" appDataAnalytics eventLabel="keyword" clickLocation="">
+    <div class="card-header absolute top-0 w-full flex items-center justify-between black-gradient py-1 px-3 z-50" *ngIf="gridType == 'grid'">
+        <div class="topic-bubble opacity-0" *ngIf="eventData?.keywords">
+            <a *ngFor="let key of eventData?.keywords| slice:0:1" [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
+                <span class="bubble background-blue px-2 p-1 text-xs rounded-lg text-white uppercase" appDataAnalytics eventLabel="keyword" clickLocation="">
               {{key.topicKeywordName}}
           </span>
-      </a>
-    </div>
-    <div class="actions flex">
-      <div class="follow self-end px-3">
-        <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff"
-        (click)="$event.stopPropagation()"></app-follow>
-      </div>
-      <div class="share px-2 rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
-        <i appDataAnalytics eventLabel="share" clickLocation="" class="text-white mdi mdi-share-variant text-2xl share"
-        (click)="shareEvent($event)"></i>
-      </div>
-    </div>
-  </div>
-
-  <div class="image-container relative" [ngClass]="gridType == 'list' ? 'flex-2' : ''">
-    <img
-      [defaultImage]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/image-loader.gif'"
-      [errorImage]="defaultCardImageUrl"
-      [lazyLoad]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl"
-      [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48 w-full'"
-      [src]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl"/>
-  </div>
-
-  <div class="card-body overflow-hidden w-full flex flex-wrap flex-col"
-    [ngClass]="gridType == 'list' ? 'flex-3  pl-3 pt-3 md:pl-5' : 'px-3 py-2 md:px-4'"
-    *ngIf="eventData">
-
-    <div class="content w-full fadeIn"
-      [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : ''">
-      <div class="event-name-box text-gray-900 text-base items-baseline flex"
-        [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg'">
-
-        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType != 'list'">
-          {{eventData.name}}
+            </a>
         </div>
-        <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType == 'list'">
-          {{eventData.name}}
+        <div class="actions flex">
+            <div class="follow self-end px-3">
+                <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff" (click)="$event.stopPropagation()"></app-follow>
+            </div>
+            <div class="share px-2 rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
+                <i appDataAnalytics eventLabel="share" clickLocation="" class="text-white mdi mdi-share-variant text-2xl share" (click)="shareEvent($event)"></i>
+            </div>
         </div>
+    </div>
 
-        <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg"
-        *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
-        matTooltipClass="ts-card-tooltip"></i>
-      </div>
-      <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 pb-2 md:pt-1">
-        <div class="date ">
-          <span class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
+    <div class="image-container relative" [ngClass]="gridType == 'list' ? 'flex-2' : ''">
+        <img [alt]="eventData?.name" [defaultImage]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200&blur=90'" [errorImage]="defaultCardImageUrl" [lazyLoad]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200'"
+            [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48 w-full'" />
+    </div>
+
+    <div class="card-body overflow-hidden w-full flex flex-wrap flex-col" [ngClass]="gridType == 'list' ? 'flex-3  pl-3 pt-3 md:pl-5' : 'px-3 py-2 md:px-4'" *ngIf="eventData">
+
+        <div class="content w-full fadeIn" [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : ''">
+            <div class="event-name-box text-gray-900 text-base items-baseline flex" [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg'">
+
+                <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType != 'list'">
+                    {{eventData.name}}
+                </div>
+                <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType == 'list'">
+                    {{eventData.name}}
+                </div>
+
+                <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg" *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above" matTooltipClass="ts-card-tooltip"></i>
+            </div>
+            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 pb-2 md:pt-1">
+                <div class="date ">
+                    <span class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
           </span>
-        </div>
-        <div class="px-2"> | </div>
-        <div class="location overflow-hidden whitespace-no-wrap">
-          <span class="whitespace-no-wrap">{{eventData.city}}</span>
-        </div>
-      </div>
+                </div>
+                <div class="px-2"> | </div>
+                <div class="location overflow-hidden whitespace-no-wrap">
+                    <span class="whitespace-no-wrap">{{eventData.city}}</span>
+                </div>
+            </div>
 
-    </div>
+        </div>
 
-    <div class="hidden md:flex overflow-hidden py-2 w-full keywords-box" *ngIf="gridType=='list'">
-      <a *ngFor="let key of eventData?.keywords| slice:0:3"
-        [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
-        <span appDataAnalytics eventLabel="keyword" clickLocation=""
-          class="pr-2 text-gray-600 font-normal text-xs md:text-sm hover:text-gray-900 hover:underline">
+        <div class="hidden md:flex overflow-hidden py-2 w-full keywords-box" *ngIf="gridType=='list'">
+            <a *ngFor="let key of eventData?.keywords| slice:0:3" [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
+                <span appDataAnalytics eventLabel="keyword" clickLocation="" class="pr-2 text-gray-600 font-normal text-xs md:text-sm hover:text-gray-900 hover:underline">
           #{{key.topicKeywordName}}
         </span>
-      </a>
-    </div>
+            </a>
+        </div>
 
-    <div class="gradient-separator w-full" *ngIf="gridType=='list'"></div>
+        <div class="gradient-separator w-full" *ngIf="gridType=='list'"></div>
 
-    <div class="footer"
-      [ngClass]="gridType == 'list' ? 'flex-1 flex items-center justify-between pr-3 md:pr-5 py-1' : ''">
-      <div class="price">
-        <div class="paid flex items-baseline" *ngIf="eventData.minimumTicketPrice">
-          <div class="min-price">
-            <span class="text-primary md:text-lg font-semibold"
-              [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">
+        <div class="footer" [ngClass]="gridType == 'list' ? 'flex-1 flex items-center justify-between pr-3 md:pr-5 py-1' : ''">
+            <div class="price">
+                <div class="paid flex items-baseline" *ngIf="eventData.minimumTicketPrice">
+                    <div class="min-price">
+                        <span class="text-primary md:text-lg font-semibold" [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">
               {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}}
             </span>
-          </div>
-          <span class="text-xs md:text-sm px-1 opacity-75">onwards</span>
-        </div>
-        <div class="free" *ngIf="!eventData.minimumTicketPrice">
-          <span class="text-primary md:text-lg font-semibold"
-            [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">Free</span>
-        </div>
-      </div>
+                    </div>
+                    <span class="text-xs md:text-sm px-1 opacity-75">onwards</span>
+                </div>
+                <div class="free" *ngIf="!eventData.minimumTicketPrice">
+                    <span class="text-primary md:text-lg font-semibold" [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">Free</span>
+                </div>
+            </div>
 
-      <div class="actions flex list-actions" *ngIf="gridType=='list'">
-        <div class="follow self-end px-2 md:px-3 lg:px-5">
-          <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#683592"
-          (click)="$event.stopPropagation()"></app-follow>
+            <div class="actions flex list-actions" *ngIf="gridType=='list'">
+                <div class="follow self-end px-2 md:px-3 lg:px-5">
+                    <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#683592" (click)="$event.stopPropagation()"></app-follow>
+                </div>
+                <div class="share rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
+                    <i appDataAnalytics eventLabel="share" clickLocation="" class="text-primary mdi mdi-share-variant text-lg md:text-2xl share" (click)="shareEvent($event)"></i>
+                </div>
+            </div>
         </div>
-        <div class="share rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
-          <i appDataAnalytics eventLabel="share" clickLocation="" class="text-primary mdi mdi-share-variant text-lg md:text-2xl share"
-          (click)="shareEvent($event)"></i>
-        </div>
-      </div>
+
     </div>
-
-  </div>
 
 </div>
