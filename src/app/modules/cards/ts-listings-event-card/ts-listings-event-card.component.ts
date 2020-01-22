@@ -35,6 +35,10 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildUrlArray();
+    if (this.eventData.cardImageUrl.indexOf(config.s3Bucket) > -1) {
+      this.eventData.cardImageUrl = config.imgixUrl +
+        this.eventData.cardImageUrl.split(config.s3Bucket)[1];
+    }
     this.subObject = this.placeService.place.subscribe(res => {
       if (this.utilityService.IsJsonString(res)) {
         const data = JSON.parse(<any>res);
@@ -48,9 +52,9 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
 
   buildUrlArray = (): void => {
     if (this.router.url) {
-        this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+      this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
     } else {
-        this.urlArray = ['in'];
+      this.urlArray = ['in'];
     }
   }
 
@@ -73,7 +77,7 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if(this.subObject)
+    if (this.subObject)
       this.subObject.unsubscribe();
   }
 

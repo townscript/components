@@ -6,6 +6,7 @@ export const config: any = {
   s3BaseUrl: '',
   s3Bucket: '',
   token: '',
+  imgixUrl: '',
   algoliaIndexName: '',
   // reCAPTCHA credentials
   CAPTCHA_SITE_KEY: '6LeblCYTAAAAANcBoTHB41G0gBdbRARm-V8_mePB',
