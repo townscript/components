@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, EventEmitter, Output, Input, ViewEncapsulation, OnDestroy, SimpleChanges } from '@angular/core';
 import { config } from '../../../core/app-config';
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { DateTime } from 'luxon';
@@ -54,9 +54,9 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     signUpErrMessage = '';
 
     fbLoginURL = config.baseUrl + 'api/'
-        + 'user/signinwithfacebook' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        + 'user/signinwithfacebook';
     googleLoginURL = config.baseUrl + 'api/'
-        + 'user/signinwithgoogle' + (this.rdurl === undefined ? '' : '?rdurl=' + this.rdurl);
+        + 'user/signinwithgoogle';
     intlInput: any;
     showLoader = false;
     loaderText: any;
@@ -92,6 +92,19 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
                 this.rdurl = this.rdurl.replace("]", "%5D");
             }
         });
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+      if (changes['rdurl']) {
+        this.fbLoginURL = config.baseUrl + 'api/'
+            + 'user/signinwithfacebook' + (this.rdurl == undefined ? '' : '?rdurl=' + this.rdurl);
+        this.googleLoginURL = config.baseUrl + 'api/'
+            + 'user/signinwithgoogle' + (this.rdurl == undefined ? '' : '?rdurl=' + this.rdurl);
+      }
+    }
+
+    ngAfterContentInit() {
+
     }
 
     ngOnDestroy() {
