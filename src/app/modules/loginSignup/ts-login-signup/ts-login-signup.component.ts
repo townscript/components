@@ -208,9 +208,11 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         if (this.source != 'follow') {
           if(this.rdurl != undefined) {
             window.open(this.rdurl, '_self');
+            return;
           }
           if(isOrganizer){
             window.open('/dashboard', '_self');
+            return;
           }
         }
 
