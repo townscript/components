@@ -1,15 +1,14 @@
-<div class="building-image-container">
-
+<div class="building-image-container" *ngIf="showBuilding">
 </div>
 <footer>
   <div class="ts-footer flex p-5 lg:p-8">
-    <div class="section-1 px-5 border-r border-gray-400 w-1/5 mr-5">
+    <div class="section-1 hidden md:block px-5 border-r border-gray-400 w-1/5 mr-5">
       <div class="flex flex-col  justify-between h-full">
-        <div class="ts-logo w-full pr-3">
+        <div class="ts-logo w-full pr-3 mb-3">
           <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
               class="w-full h-auto"
               title="Townscript Event Ticketing Logo" />
-          <span class="ts-footer__copyright text-right pr-2 text-xs text-gray-800 opacity-75">Copyright@{{copyrightYear}}</span>
+          <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}</div>
         </div>
         <div class="organizer-app-links py-3">
           <h5 class="font-semibold text-gray-800  whitespace-no-wrap">Organizer App</h5>
@@ -34,7 +33,7 @@
         </div>
         <div class="social-follow pt-4">
           <h5 class="font-semibold text-gray-800 whitespace-no-wrap">Follow us on</h5>
-          <ul class="social-list flex flex-wrap justify-between pr-5 text-xl mt-3">
+          <ul class="social-list flex flex-wrap justify-between pr-5 text-xl mt-2 -ml-1 -mb-1">
               <li appDataAnalytics eventLabel="socialFb" clickLocation="">
                   <a href="https://www.facebook.com/townscript" target="_blank"><i
                           class="mdi mdi-facebook mr-2"></i></a>
@@ -55,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="section-2 flex flex-col px-5 w-full">
+    <div class="section-2 hidden md:flex flex-col px-5 w-full">
       <div class="link-container flex flex-1 pb-5 overflow-hidden justify-between">
         <div class="learn-more flex flex-col h-full mr-5">
           <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Learn More</h5>
@@ -133,7 +132,7 @@
         <div class="review-corner flex flex-col h-full hidden lg:block">
           <div class="g2crowd">
             <div appDataAnalytics eventLabel="g2Crowd" clickLocation=""
-                class="mixpanel-button">
+                class="mixpanel-button text-center">
                 <a href="https://www.g2crowd.com/products/townscript/reviews" target="_blank">
                     <img [lazyLoad]="'https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png'"
                         alt="G2Crowd Townscript Reviews" width="100">
@@ -154,5 +153,15 @@
         </ul>
       </div>
     </div>
+    <div class="w-full block md:hidden">
+        <div class="flex flex-col justify-center items-center">
+            <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
+            <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span
+                    class="text-purple-300">Event</span>ful life&rdquo;</div>
+            <img class="dance-illustration"
+                [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png'">
+        </div>
+    </div>
   </div>
+
 </footer>
