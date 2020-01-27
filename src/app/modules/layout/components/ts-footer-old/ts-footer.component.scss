@@ -1,0 +1,229 @@
+@import "../../../../../assets/scss/variables";
+footer{
+  background-color: #ebebeb;
+
+  .mybookings{
+    font-size: 13px;
+    color: #683594;
+  }
+
+  &.new-footer{
+    background-color: #F7F7F7;
+    h5, a, .mybookings {
+      color: #3e3e3e;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      margin-bottom: 0;
+    }
+  }
+  li{
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  h5{
+      font-size: 14px!important;
+      font-weight: 600;
+  }
+  li,ul{margin-bottom: 0}
+
+  .content-footer{
+    padding-bottom: 20px;
+  }
+  .m-l-8per{
+      margin-left: 8%;
+  }
+  .brand-footer{
+    //max-width: 1140px;
+    border-color: lighten($ts-primary-color, 50%);
+  }
+  img, .ts-footer__copyright {
+    width: 165px;
+  }
+  .dance-illustration{
+    width: 200px;
+  }
+  .ts-logo{
+    filter: grayscale(100%);
+    opacity: 0.4;
+    @media (max-width: $screen-md-min){
+      img{
+        width: 120px;
+      }
+    }
+    .text-xs{
+      width: 120px;
+      font-size: 0.5em;
+    }
+  }
+  .bookmyshow-logo{
+      width: 140px;
+  }
+  .mixpanel-button{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    a,span{
+        white-space: nowrap;
+        display: block;
+    }
+    img{
+      width: 115px !important;
+    }
+    text-align: center;
+  }
+  .mail-to{
+    font-weight: 600;
+  }
+  h5, a {
+    color: $ts-primary-color;
+    text-decoration: none;
+    margin-bottom: 0;
+  }
+  a {
+    letter-spacing: 0.4px;
+    font: {
+      size: 13px;
+      weight: 400;
+    }
+  }
+  ul {
+    &.social-list{
+      list-style-type: none;
+      padding: 0;
+      margin:0;
+      li{
+        display: inline-block;
+        //float: left;
+        margin-right: 10px;
+        i{
+          transition: 0.2s all;          ;
+          &:hover{
+            color: #111;
+          }
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
+.ts {
+  &-footer {
+    &__copyright {
+      display: block;
+    }
+  }
+}
+@media (min-width: $screen-sm-min){
+.ts {
+
+  &-footer {
+    &__mail {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      line-height: 36px;
+    }
+    .container-fluid{
+      .row{
+        > div{
+          &:first-child{
+            padding-left: 0;
+          }
+          &:nth-child(2){
+            padding: 0;
+          }
+          &:last-child{
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+footer {
+  margin-top: 100px;
+  text-align: left;
+  background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/footer-skyline.png');
+  background-repeat: repeat-x;
+  background-position: left top;
+  .brand-footer{
+    .linear-footer{
+      h5, ul{
+        display: inline-block;
+        margin: 2px 0px;
+        vertical-align: middle;
+        margin-right: 25px;
+      }
+      .list-linear{
+        // @include .clearfix;
+        list-style-type: none;
+        padding: 0;
+        li{
+          float: left;
+          margin-right: 35px;
+        }
+      }
+    }
+  }
+  .ts-logo{
+    filter: none;
+    opacity: 1;
+  }
+  ul {
+    &.social-list{
+      list-style-type: none;
+      padding: 0;
+      li{
+        display: block;
+        float: left;
+        margin-right: 10px;
+      }
+    }
+    &.list-apps{
+      list-style-type: none;
+      padding: 0;
+      li{
+        line-height: 50px;
+        margin: 10px 0px;
+        .store-icon{
+        -webkit-background-size: auto 45px;
+             -o-background-size: auto 45px;
+                background-size: auto 45px;
+        background-image: url('//s3.ap-south-1.amazonaws.com/townscript-common-resources/assets/store.png');
+        background-repeat: no-repeat;
+        display:block;
+        width:150px;
+        text-indent: -9999px;
+        &.google-play-icon{
+          background-position: 0 0;
+        }
+        &.app-store-icon{
+          background-position: -172px 0;
+        }
+        }
+      }
+    }
+    li {
+      line-height: 31px;
+      > a{
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        display: block;
+      }
+    }
+  }
+}
+}
+
+.blog-links{
+  li{
+    line-height: 1.5;
+    a{
+      white-space: normal;
+    }
+  }
+}
