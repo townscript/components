@@ -19,8 +19,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { DataCollectorService } from '../../shared/services/analytics/data-collector.service';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/hamburger-menu.component';
-import { TsFooterComponentOld } from './components/ts-footer-old/ts-footer.component';
-
 
 @NgModule({
   imports: [
@@ -39,7 +37,6 @@ import { TsFooterComponentOld } from './components/ts-footer-old/ts-footer.compo
     SearchComponent,
     UserMenuComponent,
     HamburgerMenuComponent,
-    TsFooterComponentOld
   ],
   exports: [
     TsHeaderComponent,
