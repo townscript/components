@@ -20,7 +20,6 @@ import { DataCollectorService } from '../../shared/services/analytics/data-colle
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/hamburger-menu.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -37,7 +36,7 @@ import { HamburgerMenuComponent } from './components/ts-header/hamburger-menu/ha
     TsFooterComponent,
     SearchComponent,
     UserMenuComponent,
-    HamburgerMenuComponent
+    HamburgerMenuComponent,
   ],
   exports: [
     TsHeaderComponent,
