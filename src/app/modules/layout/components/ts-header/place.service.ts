@@ -26,11 +26,14 @@ export class PlaceService {
                 this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
-                    const data = { 'city': ipInfoData['city'],
-                      'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in',
-                      'currentPlace': ipInfoData['city'] };
-                    if(!this.cookieService.getCookie('location'))
-                      this.updatePlace(data);
+                    const data = {
+                        'city': ipInfoData['city'],
+                        'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in',
+                        'currentPlace': ipInfoData['city']
+                    };
+                    if (!this.cookieService.getCookie('location')) {
+                        this.updatePlace(data);
+                    }
                 });
             }
         }
@@ -50,13 +53,15 @@ export class PlaceService {
             let ipInfoData;
             if (!localData) {
                 console.log('Calling ip info!');
-                const ipInfoJson = await this.getJsonFromIpInfo();
-                ipInfoData = {
-                    'lat': ipInfoJson['loc'].split(',')[0],
-                    'lng': ipInfoJson['loc'].split(',')[1],
-                    'countryCode': ipInfoJson['country'].toLowerCase(),
-                    'city': ipInfoJson['city'].toLowerCase()
-                };
+                const ipInfoJson = await this.getJsonFromIpInfo().catch(err => {
+                    ipInfoData = { 'countryCode': 'in', 'city': 'india' };
+                });
+                if (ipInfoJson) {
+                    ipInfoData = {
+                        'countryCode': ipInfoJson['country'].toLowerCase(),
+                        'city': ipInfoJson['city'].toLowerCase()
+                    };
+                }
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
             } else {
                 if (this.utilityService.IsJsonString(localData)) {
