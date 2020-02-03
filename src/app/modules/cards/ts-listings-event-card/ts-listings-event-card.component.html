@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <div class="image-container relative" [ngClass]="gridType == 'list' ? 'flex-2' : ''">
+    <div class="image-container relative fadeIn" [ngClass]="gridType == 'list' ? 'flex-2' : ''">
         <img [alt]="eventData?.name" [defaultImage]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200&blur=90'" [errorImage]="defaultCardImageUrl" [lazyLoad]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200'"
             [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48 w-full'" />
     </div>

@@ -69,16 +69,16 @@
             <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation=""
                 *ngIf="Components.indexOf('createEventBtn')>-1"
                 class="create-btn cursor-pointer flex h-full justify-center items-center">
-                <span class="text-base mr-2">CREATE EVENT</span>
-                <i class="mdi mdi-ticket text-2xl"></i>
+                <span class="font-semibold mr-2">CREATE EVENT</span>
+                <i class="mdi mdi-ticket text-xl md:text-2xl"></i>
             </a>
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 lg:w-1/6 justify-end hidden sm:hidden md:hidden lg:flex items-center">
             <div appDataAnalytics eventLabel="loginSignup" clickLocation=""
                 class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
-                <i class="mdi mdi-account-circle text-4xl mr-2 color-blue"></i>
-                <span>Login | Signup</span>
+                <i class="mdi mdi-account-circle text-2xl md:text-4xl mr-2 color-blue"></i>
+                <span class="text-gray-800">Login | Signup</span>
             </div>
             <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user" matRipple>
                 <img class="rounded-full mr-2" width="36" [src]="s3BucketUrl+'/images/'+user?.s3imagename" />
@@ -95,7 +95,7 @@
         <div class="sm:w-1/1 ml-auto mr-2 flex  sm:flex md:flex lg:hidden items-center">
             <div *ngIf="Components.indexOf('mobileSearch')>-1" class="rounded-full flex items-center" matRipple
                 (click)="navigateToMobileSearch()">
-                <i class="mdi mdi-magnify text-2xl ml-2 mr-2 color-blue"></i>
+                <i class="mdi mdi-magnify text-xl md:text-2xl ml-2 mr-2 color-blue"></i>
             </div>
             <!-- <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>
                 <i class="mdi mdi-account text-2xl  ml-2 color-blue" matRipple (click)="openMyProfileComponent()"></i>

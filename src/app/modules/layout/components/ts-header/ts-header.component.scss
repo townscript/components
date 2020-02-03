@@ -16,7 +16,7 @@
             .navbar-brand
             {
                 img{
-                    width: 165px;
+                    width: 10.5rem;
                 }
             }
         }
@@ -53,12 +53,12 @@
 }
 @media (min-width: $screen-sm-max){
   .ts-container{
-    padding: 0 80px!important;
+    padding: 0 40px!important;
   }
   .ts-header-new{
-      min-height:68px;
+      min-height:65px;
       .ts-logo{
-        height:35px;
+        height:2rem;
       }
       .view-type{
             i{
@@ -75,7 +75,7 @@
         }
         .create-btn {
             width: 100%;
-            min-width:200px;
+            min-width:12.5rem;
             border-radius: 20.5px;
             color: white;
             white-space: nowrap;

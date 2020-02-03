@@ -77,10 +77,17 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   }
 
   getLocation = () => {
-    if(this.eventData.locality != undefined){
-      return this.eventData.locality + ', ' +this.eventData.city;
+    if(this.eventData != undefined){
+      if(this.eventData.onlineEvent){
+        return 'Online';
+      }
+      if(this.eventData.locality != undefined){
+        return this.eventData.locality + ', ' +this.eventData.city;
+      } else {
+        return this.eventData.city;
+      }
     } else {
-      return this.eventData.city;
+      return '';
     }
   }
 
