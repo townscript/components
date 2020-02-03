@@ -4,7 +4,7 @@
   <div class="ts-footer flex p-5 lg:p-8 lg:pb-10" [ngClass]="showBuilding ? 'lg:pb-10': ''">
     <div class="section-1 hidden md:block px-5 border-r border-gray-400 w-1/5 mr-5">
       <div class="flex flex-col  justify-between h-full">
-        <div class="ts-logo w-full pr-3 mb-2">
+        <div class="ts-logo w-11/12 pr-3 mb-2">
           <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
               class="w-full h-auto"
               title="Townscript Event Ticketing Logo" />
@@ -12,14 +12,14 @@
         </div>
         <div class="my-booking-link w-full py-2">
           <a href="/dashboard/mybookings" target="_blank">
-            <div class="font-semibold text-gray-800 w-full whitespace-no-wrap flex items-center">
+            <div class="font-semibold text-gray-800 text-sm w-full whitespace-no-wrap flex items-center">
               View Your Bookings
-              <i class="ml-1 mdi mdi-open-in-new text-xl"></i>
+              <i class="ml-1 mdi mdi-open-in-new text-lg"></i>
             </div>
           </a>
         </div>
         <div class="organizer-app-links pr-10 py-2">
-          <h5 class="font-semibold text-gray-800  whitespace-no-wrap">Organizer App</h5>
+          <h5 class="font-semibold text-gray-800 text-sm  whitespace-no-wrap">Organizer App</h5>
           <ul class="list-apps flex flex-col mt-1">
               <li appDataAnalytics eventLabel="appAndroid" clickLocation="">
                   <a href="//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN"
@@ -40,8 +40,8 @@
           </ul>
         </div>
         <div class="social-follow pt-2">
-          <h5 class="font-semibold text-gray-800 whitespace-no-wrap">Follow us on</h5>
-          <ul class="social-list flex flex-wrap justify-between pr-4 text-xl mt-2 -ml-1 -mb-1">
+          <h5 class="font-semibold text-gray-800 text-sm whitespace-no-wrap">Follow us on</h5>
+          <ul class="social-list flex flex-wrap justify-between pr-4 text-lg mt-2 -ml-1 -mb-1">
               <li appDataAnalytics eventLabel="socialFb" clickLocation="">
                   <a href="https://www.facebook.com/townscript" target="_blank"><i
                           class="mdi mdi-facebook mr-2"></i></a>
@@ -66,8 +66,8 @@
       <div class="flex flex-col part-1 w-full">
         <div class="link-container w-full flex flex-1 pb-2 overflow-hidden lg:pr-10">
           <div class="w-2/3 flex justify-between pr-3">
-            <div class="learn-more flex flex-col h-full pr-3">
-              <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Learn More</h5>
+            <div class="learn-more flex flex-col h-full pr-3 w-1/3">
+              <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Learn More</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
                 <li appDataAnalytics eventLabel="learnMorePricing" clickLocation=""><a
                   href="/pricing">Pricing</a></li>
@@ -84,8 +84,8 @@
                 </li>
               </ul>
             </div>
-            <div class="ts-links flex flex-col h-full pr-3">
-              <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">About</h5>
+            <div class="ts-links flex flex-col h-full pr-3 w-1/3">
+              <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">About</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
                   <li><a appDataAnalytics eventLabel="aboutUs" clickLocation="" href="/about-us">About us</a>
                   </li>
@@ -103,8 +103,8 @@
                           target="_blank">Sitemap</a></li>
               </ul>
             </div>
-            <div class="organize-links flex flex-col h-full pr-3">
-              <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Organize Events</h5>
+            <div class="organize-links flex flex-col h-full pr-3 w-1/3">
+              <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Organize Events</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
                   <li appDataAnalytics eventLabel="conferences" clickLocation=""><a
                           href="/i/conference-registration">Conferences</a></li>
@@ -123,7 +123,7 @@
             </div>
           </div>
           <div class="popular-search flex flex-col w-1/3 pl-5 lg:pl-8">
-            <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Popular Searches</h5>
+            <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Popular Searches</h5>
             <ul class="list-linear flex flex-col justify-between flex-1">
                 <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
                         href="http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-">
@@ -144,7 +144,7 @@
 
         <div class="flex items-center mt-4 lg:pr-10">
           <div class="popular-cities mt-2 w-2/3 pr-1">
-            <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Popular Cities</h5>
+            <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Popular Cities</h5>
             <ul class="list-linear flex flex-wrap">
               <li appDataAnalytics eventLabel="popularCities" clickLocation=""
               *ngFor="let city of popularCities">
@@ -154,7 +154,7 @@
             </ul>
           </div>
           <div class="compare-us mt-2 w-1/3 pl-5 lg:pl-8">
-            <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Compare Us</h5>
+            <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Compare Us</h5>
             <ul class="list-linear flex flex-wrap">
               <li appDataAnalytics eventLabel="popularCities" clickLocation="">
                 <div class="pr-5"><a href="https://townscript.com/organize/best-eventbrite-alternative">Eventbrite</a>
