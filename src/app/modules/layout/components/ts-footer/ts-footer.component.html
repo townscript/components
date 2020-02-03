@@ -4,21 +4,21 @@
   <div class="ts-footer flex p-5 lg:p-8 lg:pb-10" [ngClass]="showBuilding ? 'lg:pb-10': ''">
     <div class="section-1 hidden md:block px-5 border-r border-gray-400 w-1/5 mr-5">
       <div class="flex flex-col  justify-between h-full">
-        <div class="ts-logo w-11/12 pr-3 mb-3">
+        <div class="ts-logo w-full pr-3 mb-2">
           <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
               class="w-full h-auto"
               title="Townscript Event Ticketing Logo" />
           <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}</div>
         </div>
-        <div class="my-booking-link w-full pt-3">
+        <div class="my-booking-link w-full py-2">
           <a href="/dashboard/mybookings" target="_blank">
-            <div class="font-semibold text-gray-800 w-full whitespace-no-wrap">
+            <div class="font-semibold text-gray-800 w-full whitespace-no-wrap flex items-center">
               View Your Bookings
               <i class="ml-1 mdi mdi-open-in-new text-xl"></i>
             </div>
           </a>
         </div>
-        <div class="organizer-app-links pr-10 py-5">
+        <div class="organizer-app-links pr-10 py-2">
           <h5 class="font-semibold text-gray-800  whitespace-no-wrap">Organizer App</h5>
           <ul class="list-apps flex flex-col mt-1">
               <li appDataAnalytics eventLabel="appAndroid" clickLocation="">
