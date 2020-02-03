@@ -4,11 +4,19 @@
   <div class="ts-footer flex p-5 lg:p-8 lg:pb-10" [ngClass]="showBuilding ? 'lg:pb-10': ''">
     <div class="section-1 hidden md:block px-5 border-r border-gray-400 w-1/5 mr-5">
       <div class="flex flex-col  justify-between h-full">
-        <div class="ts-logo w-full pr-3 mb-3">
+        <div class="ts-logo w-11/12 pr-3 mb-3">
           <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
               class="w-full h-auto"
               title="Townscript Event Ticketing Logo" />
           <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}</div>
+        </div>
+        <div class="my-booking-link w-full pt-3">
+          <a href="/dashboard/mybookings" target="_blank">
+            <div class="font-semibold text-gray-800 w-full whitespace-no-wrap">
+              View Your Bookings
+              <i class="ml-1 mdi mdi-open-in-new text-xl"></i>
+            </div>
+          </a>
         </div>
         <div class="organizer-app-links pr-10 py-5">
           <h5 class="font-semibold text-gray-800  whitespace-no-wrap">Organizer App</h5>
@@ -31,7 +39,7 @@
               </li>
           </ul>
         </div>
-        <div class="social-follow pt-4">
+        <div class="social-follow pt-2">
           <h5 class="font-semibold text-gray-800 whitespace-no-wrap">Follow us on</h5>
           <ul class="social-list flex flex-wrap justify-between pr-4 text-xl mt-2 -ml-1 -mb-1">
               <li appDataAnalytics eventLabel="socialFb" clickLocation="">
@@ -54,7 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="section-2 hidden md:flex px-5 w-full justify-between">
+    <div class="section-2 hidden md:flex px-5 pr-3 w-full justify-between">
       <div class="flex flex-col part-1 w-full">
         <div class="link-container w-full flex flex-1 pb-2 overflow-hidden lg:pr-10">
           <div class="w-2/3 flex justify-between pr-3">
@@ -135,7 +143,7 @@
         </div>
 
         <div class="flex items-center mt-4 lg:pr-10">
-          <div class="popular-cities mt-2 w-2/3 pr-3">
+          <div class="popular-cities mt-2 w-2/3 pr-1">
             <h5 class="font-semibold text-gray-800 pb-3 whitespace-no-wrap">Popular Cities</h5>
             <ul class="list-linear flex flex-wrap">
               <li appDataAnalytics eventLabel="popularCities" clickLocation=""
