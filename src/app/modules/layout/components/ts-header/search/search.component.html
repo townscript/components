@@ -1,6 +1,6 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
     <div #searchResultsEle class="w-2/3 lg:w-full px-2 flex items-center relative left-section">
-        <i class="mdi mdi-magnify text-lg md:text-xl color-blue p-2"></i>
+        <i class="mdi mdi-magnify text-2xl md:text-xl color-blue p-2"></i>
         <input appDataAnalytics eventLabel="search" clickLocation="" [(ngModel)]="searchText"
             (ngModelChange)="search($event)" (focus)="searchActive = true;citySearchActive=false"
             class="text-sm w-full h-full bg-transparent  p-2" type="text"
