@@ -21,7 +21,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     @Input() cityPopupActive: boolean;
     @Output() cityPopupActiveChange: EventEmitter<boolean> = new EventEmitter();
     @Input() popularPlaces: any;
-    @Input() closeSuggestions: boolean = false;
+    @Input() closeSuggestions = false;
     @Output() closeSuggestionsChange: EventEmitter<boolean> = new EventEmitter();
 
     citySearchActive = true;
@@ -44,7 +44,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
 
     buildUrlArray = (): void => {
         if (this.router.url) {
-            this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+            this.urlArray = this.router.url.split('?')[0].replace('/', '').split('/');
         } else {
             this.urlArray = ['in'];
         }
@@ -59,18 +59,21 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     placeChanged = (place) => {
-        let tsType = this.urlArray[2];
-        const tsTypeUrl = tsType && tsType.length > 0 ? '/' + tsType.toLowerCase() : '';
+        const tsType = this.urlArray[2];
+        let tsTypeUrl = '';
+        if (tsType !== 'upcoming-events') {
+            tsTypeUrl = tsType && tsType.length > 0 ? '/' + tsType.toLowerCase() : '';
+        }
+        let finalUrl = '';
         if (place.type === 'country') {
-            this.router.navigate(['/' + place.twoDigitCode.toLowerCase() +
-                '/' + place.country.split(' ').join('-').toLowerCase() + tsTypeUrl], { state: { place: place } });
+            finalUrl = '/' + place.twoDigitCode.toLowerCase() +
+                '/' + place.country.split(' ').join('-').toLowerCase() + tsTypeUrl;
         }
         if (place.type === 'city') {
-            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.cityCode + tsTypeUrl], { state: { place: place } });
+            finalUrl = '/' + place.countryCode.toLowerCase() + '/' + place.cityCode + tsTypeUrl;
         }
         if (place.type === 'locality') {
-            this.router.navigate(['/' + place.countryCode.toLowerCase() + '/' + place.localityCode + '--' + place.cityCode + tsTypeUrl],
-                { state: { place: place } });
+            finalUrl = '/' + place.countryCode.toLowerCase() + ' / ' + place.localityCode + '--' + place.cityCode + tsTypeUrl;
         }
         if (place.type === 'unstructured') {
             const name = place.name.replace(/,/g, '').replace(/ /g, '-');
@@ -78,8 +81,10 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
             if (place.secondaryText) {
                 secondaryText = '--' + place.secondaryText.replace(/,/g, '').replace(/ /g, '-');
             }
-            this.router.navigate(['/s/' + name + secondaryText + tsTypeUrl], { state: { place: place } });
+            finalUrl = '/s/' + name + secondaryText + tsTypeUrl;
         }
+        console.log(finalUrl);
+        this.router.navigate([finalUrl], { state: { place: place } });
         // this.placeService.updatePlace(place.name);
         this.activePlace = place.name;
         this.activePlaceChange.emit(place.name);
