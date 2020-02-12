@@ -73,7 +73,7 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
             finalUrl = '/' + place.countryCode.toLowerCase() + '/' + place.cityCode + tsTypeUrl;
         }
         if (place.type === 'locality') {
-            finalUrl = '/' + place.countryCode.toLowerCase() + ' / ' + place.localityCode + '--' + place.cityCode + tsTypeUrl;
+            finalUrl = '/' + place.countryCode.toLowerCase() + '/' + place.localityCode + '--' + place.cityCode + tsTypeUrl;
         }
         if (place.type === 'unstructured') {
             const name = place.name.replace(/,/g, '').replace(/ /g, '-');
