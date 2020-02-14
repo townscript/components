@@ -1,6 +1,6 @@
 <div class="card-container rounded overflow-hidden relative bg-white" [ngClass]="gridType == 'list' ? 'flex' : ''">
 
-    <div class="card-header absolute top-0 w-full flex items-center justify-between black-gradient py-1 px-3 z-50" *ngIf="gridType == 'grid'">
+    <div class="card-header absolute top-0 w-full flex items-center justify-end black-gradient py-1 px-3 z-50" *ngIf="gridType == 'grid'">
         <div class="topic-bubble" *ngIf="false">
             <a *ngFor="let key of eventData?.keywords| slice:0:1" [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
                 <span class="bubble background-blue px-2 p-1 text-xs rounded-lg text-white uppercase" appDataAnalytics eventLabel="keyword" clickLocation="">
