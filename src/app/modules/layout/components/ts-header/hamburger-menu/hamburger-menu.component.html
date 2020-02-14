@@ -10,7 +10,7 @@
             </div>
             <div (click)="active=!active" class="overlay fixed bg-black w-full h-full" *ngIf="active"></div>
             <ul class="menu fixed h-full px-4" [class.active]="active">
-                <div class="">
+                <li class="">
                     <img class="ts-logo mr-3 px-2" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                         title="Townscript Event Ticketing Logo" />
                     <div (click)="openCityPopup()" matRipple appDataAnalytics eventLabel="location"
@@ -34,7 +34,7 @@
                             <i class="mdi mdi-chevron-right text-4xl color-blue"></i>
                         </div>
                     </div>
-                </div>
+                </li>
             </ul>
         </div>
     </div>

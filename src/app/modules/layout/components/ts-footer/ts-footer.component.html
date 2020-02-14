@@ -1,4 +1,4 @@
-<div class="building-image-container" *ngIf="showBuilding">
+<div class="hidden md:block building-image-container" *ngIf="showBuilding">
 </div>
 <footer>
   <div class="ts-footer flex p-5 lg:p-8 lg:pb-10 bg-white" [ngClass]="showBuilding ? 'lg:pb-12 lg:mb-2': ''">
@@ -11,7 +11,7 @@
           <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}</div>
         </div>
         <div class="my-booking-link w-full py-2" appDataAnalytics eventLabel="bookings" clickLocation="">
-          <a href="/dashboard/mybookings" target="_blank">
+          <a href="/dashboard/mybookings" target="_blank" title="View Your Bookings">
             <div class="font-semibold text-gray-800 text-sm w-full whitespace-no-wrap flex items-center">
               View Your Bookings
               <i class="ml-1 mdi mdi-open-in-new text-lg"></i>
@@ -21,7 +21,7 @@
         <div class="organizer-app-links pr-10 py-2">
           <h5 class="font-semibold text-gray-800 text-sm  whitespace-no-wrap">Organizer App</h5>
           <ul class="list-apps flex mt-1">
-              <div appDataAnalytics eventLabel="appAndroid" clickLocation="">
+              <li appDataAnalytics eventLabel="appAndroid" clickLocation="">
                   <a href="//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN"
                       title="Download on Google play" target="_blank">
                       <div class="google-logo mr-3">
@@ -29,8 +29,8 @@
                         <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/google-play-badge.png" alt="Download on Google Play Store"> -->
                       </div>
                   </a>
-              </div>
-              <div appDataAnalytics eventLabel="appIos" clickLocation="">
+              </li>
+              <li appDataAnalytics eventLabel="appIos" clickLocation="">
                   <a href="//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8"
                       title="Download on App Store" target="_blank">
                       <div class="apple-log">
@@ -38,27 +38,35 @@
                         <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/apple-app-badge.png" alt="Download on App Store"> -->
                       </div>
                   </a>
-              </div>
+              </li>
           </ul>
         </div>
         <div class="social-follow pt-2">
           <h5 class="font-semibold text-gray-800 text-sm whitespace-no-wrap">Follow us on</h5>
           <ul class="social-list flex flex-wrap pr-4 text-xl mt-2 -ml-1 -mb-1">
               <li appDataAnalytics eventLabel="socialFb" clickLocation="">
-                  <a href="https://www.facebook.com/townscript" target="_blank"><i
-                          class="mdi mdi-facebook mr-4"></i></a>
+                  <a href="https://www.facebook.com/townscript" target="_blank"
+                    aria-label="Find Us On Facebook"
+                    title="Facebook">
+                    <i class="mdi mdi-facebook mr-4"></i></a>
               </li>
               <li appDataAnalytics eventLabel="socialTwitter" clickLocation="">
-                  <a href="https://twitter.com/townscript" target="_blank"><i
-                          class="mdi mdi-twitter mr-4"></i></a>
+                  <a href="https://twitter.com/townscript" target="_blank"
+                    aria-label="Find Us On LinkedIn"
+                    title="Twitter">
+                    <i class="mdi mdi-twitter mr-4"></i></a>
               </li>
               <li appDataAnalytics eventLabel="socialInstagram" clickLocation="">
-                  <a href="https://www.instagram.com/townscript/" target="_blank"><i
-                          class="mdi mdi-instagram mr-4"></i></a>
+                  <a href="https://www.instagram.com/townscript/" target="_blank"
+                    aria-label="Find Us On Instagram"
+                    title="Instagram">
+                    <i class="mdi mdi-instagram mr-4"></i></a>
               </li>
               <li appDataAnalytics eventLabel="socialLinkedin" clickLocation="">
-                  <a href="https://www.linkedin.com/company/townscript" target="_blank"><i
-                          class="mdi mdi-linkedin mr-4"></i></a>
+                  <a href="https://www.linkedin.com/company/townscript" target="_blank"
+                    aria-label="Find Us On LinkedIn"
+                    title="LinkedIn">
+                    <i class="mdi mdi-linkedin mr-4"></i></a>
               </li>
           </ul>
         </div>
@@ -186,12 +194,12 @@
       </div>
 
     </div>
-    <div class="w-full block md:hidden">
+    <div class="w-full block md:hidden pb-10">
         <div class="flex flex-col justify-center items-center">
             <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
             <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span
                     class="text-purple-300">Event</span>ful life&rdquo;</div>
-            <img class="dance-illustration"
+            <img class="dance-illustration" alt="Live an Eventful life"
                 [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png'">
         </div>
     </div>
