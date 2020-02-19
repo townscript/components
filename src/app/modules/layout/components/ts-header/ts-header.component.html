@@ -74,7 +74,7 @@
             </a>
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
-            class="position-relative sm:w-1/1 justify-end hidden sm:hidden md:hidden lg:flex items-center pl-6">
+            class="position-relative sm:w-1/1 justify-end hidden sm:hidden md:hidden lg:flex items-center ml-auto">
             <div appDataAnalytics eventLabel="loginSignup" clickLocation=""
                 class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-2xl md:text-4xl mr-2 color-blue"></i>
