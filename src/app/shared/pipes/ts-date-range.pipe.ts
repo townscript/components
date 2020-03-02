@@ -30,6 +30,7 @@ export class RangeDatePipe implements PipeTransform {
 
 
               const startTime = args['startTime'];
+              const endTime = args['endTime'];
               const freq   = args['recurrenceRule'].split(';')[0].split('=')[1];
               let freqLabel = 'Daily';
               //custom date selected
@@ -52,7 +53,7 @@ export class RangeDatePipe implements PipeTransform {
                   }
                 }
               }
-              return  freqLabel +  (hideTime ?  '' : (' | ' + startTime) );
+              return  freqLabel +  (hideTime ?  '' : (' | ' + startTime + (endTime != undefined ? ' to ' + endTime : '' )) );
             } else {
               let local = DateTime.local().setZone(eventTimeZone);
               // for other events or fallback
