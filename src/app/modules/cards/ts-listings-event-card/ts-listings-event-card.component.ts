@@ -18,6 +18,8 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   @Input() eventData: any;
   @Input() type: any;
   @Input() gridType: any = 'grid';
+  @Input() hideFollowShare = false;
+  @Input() theme = 'townscript';
   router: Router = config.router;
 
   homeUrl: any;
@@ -77,12 +79,12 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   }
 
   getLocation = () => {
-    if(this.eventData != undefined){
-      if(this.eventData.onlineEvent){
+    if (this.eventData != undefined) {
+      if (this.eventData.onlineEvent) {
         return 'Online';
       }
-      if(this.eventData.locality != undefined){
-        return this.eventData.locality + ', ' +this.eventData.city;
+      if (this.eventData.locality != undefined) {
+        return this.eventData.locality + ', ' + this.eventData.city;
       } else {
         return this.eventData.city;
       }
