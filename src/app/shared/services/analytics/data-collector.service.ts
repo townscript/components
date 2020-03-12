@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { DataProducer, Configuration } from '@townscript/data-collector';
 import { UserService } from '../user-service';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable()
 export class DataCollectorService {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, @Inject(PLATFORM_ID) private platformId: Object, ) { }
   user: any;
 
   initKinesisDataCollector = (awsAccessKeyId: string, awsSecretAccessKey: string, awsRegion: string, awsKinesisStreamName: string, recordForKinesis: boolean) => {
@@ -34,7 +35,9 @@ export class DataCollectorService {
         } else {
           loggedInUserId = null;
         }
-        DataProducer.callPageView(loggedInUserId);
+        if (isPlatformBrowser(this.platformId)) {
+          DataProducer.callPageView(loggedInUserId);
+        }
       });
     } catch (e) {
       console.log('there was exception in sending data from booking flow' + e);
@@ -51,7 +54,11 @@ export class DataCollectorService {
         } else {
           loggedInUserId = null;
         }
-        DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
+
+        if (isPlatformBrowser(this.platformId)) {
+          DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
+        }
+
       });
     } catch (e) {
       console.log('exception while sending the click stream data from marketplace' + e);
