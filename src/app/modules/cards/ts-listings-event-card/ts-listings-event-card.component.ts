@@ -20,12 +20,12 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   @Input() gridType: any = 'grid';
   @Input() hideFollowShare = false;
   @Input() theme = 'townscript';
+  @Input() hideTime: boolean = true;
   router: Router = config.router;
 
   homeUrl: any;
   subObject: any;
   urlArray: string[];
-  hideTime: boolean = true;
   defaultCardImageUrl = config.s3BaseUrl + 'townscript-common-resources/ListingsStatic/default-card.jpg';
 
   constructor(
