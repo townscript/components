@@ -26,15 +26,15 @@ export class DataCollectorService {
 
   sendPageViewDataToKinesis = () => {
     try {
-      let loggedInUserId: string | null = null;
+      let loggedInUserId;
       this.userService.user.subscribe(data => {
         this.user = data;
         if (this.user && this.user.userId) {
-          loggedInUserId = this.user.userId;
+          loggedInUserId = JSON.stringify(this.user.userId);
+        } else {
+          loggedInUserId = null;
         }
-        if (loggedInUserId) {
-          DataProducer.callPageView(loggedInUserId);
-        }
+        DataProducer.callPageView(loggedInUserId);
       });
     } catch (e) {
       console.log('there was exception in sending data from booking flow' + e);
@@ -43,15 +43,15 @@ export class DataCollectorService {
 
   sendClickDataToKinesis = (eventLabel: string, clickedLocation: string) => {
     try {
-      let loggedInUserId: string | null = null;
+      let loggedInUserId;
       this.userService.user.subscribe(data => {
         this.user = data;
         if (this.user && this.user.userId) {
           loggedInUserId = this.user.userId;
+        } else {
+          loggedInUserId = null;
         }
-        if (loggedInUserId) {
-          DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
-        }
+        DataProducer.callClickEvent(eventLabel, clickedLocation, loggedInUserId);
       });
     } catch (e) {
       console.log('exception while sending the click stream data from marketplace' + e);
