@@ -125,6 +125,7 @@ export class SearchComponent implements OnInit {
     navigateToListing = (interest: string) => {
         if (interest['secondaryTextProperties'] && interest['secondaryTextProperties']['isOnline']) {
             this.router.navigate(['/online']);
+            return;
         }
         this.buildUrlArray();
         const stopWords = ['e', 'o'];
