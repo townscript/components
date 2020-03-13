@@ -123,13 +123,16 @@ export class SearchComponent implements OnInit {
     }
 
     navigateToListing = (interest: string) => {
+        if (interest['secondaryTextProperties'] && interest['secondaryTextProperties']['isOnline']) {
+            this.router.navigate(['/online']);
+        }
         this.buildUrlArray();
-        const stopWords = ['e', 'o']
+        const stopWords = ['e', 'o'];
         let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
         if (this.urlArray && this.urlArray.length > 1 && stopWords.indexOf(this.urlArray[0]) === -1) {
-            this.router.navigate([listingUrl + '/' + interest]);
+            this.router.navigate([listingUrl + '/' + interest['urlCode']]);
         } else {
-            this.router.navigate([this.homeUrl + '/' + interest]);
+            this.router.navigate([this.homeUrl + '/' + interest['urlCode']]);
         }
         this.searchActive = false;
     }
