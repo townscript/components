@@ -1,14 +1,17 @@
 <nav class="ts-header flex align-items-center" *ngIf="source!='marketplace'">
     <div class="container flex align-items-center">
         <div class="navbar-header">
-            <a appDataAnalytics eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center" href="/">
-                <img src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
+            <a appDataAnalytics eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center"
+                href="/">
+                <img src="assets/images/ts-bms-logo.svg" alt="Townscript Event Ticketing Logo"
+                    title="Townscript Event Ticketing Logo" />
             </a>
         </div>
         <div id="navbar" class="nav-right hidden-xs">
             <ul>
                 <li>
-                    <a href="/signup" ts-data-analytics prop-event="click" eventLabel="Get Started" prop-clicked-location="Animated Header">
+                    <a href="/signup" ts-data-analytics prop-event="click" eventLabel="Get Started"
+                        prop-clicked-location="Animated Header">
                         <!-- <ts-button text="Create Event"></ts-button> -->
                     </a>
                 </li>
@@ -17,13 +20,15 @@
     </div>
 </nav>
 
-<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow"
+    *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
                 <img appDataAnalytics eventLabel="logo" clickLocation="" (click)="goToHomePage()"
-                    *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer" src="assets/images/ts-logo.svg"
-                    alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
+                    *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
+                    src="assets/images/ts-bms-logo.svg" alt="Townscript Event Ticketing Logo"
+                    title="Townscript Event Ticketing Logo" />
                 <div class="live  items-center hidden lg:flex border-l-2 ml-4 pl-4 "
                     *ngIf="Components.indexOf('live')>-1">
                     <span class="h-4 w-4 block rounded-full bg-red-500 mr-2 border-2 border-red-300"></span>
@@ -34,10 +39,12 @@
         </div>
         <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
-            <app-hamburger-menu [user]="user" [countryCode]="activeCountryCode" [activePlace]="activePlace" class="mr-3">
+            <app-hamburger-menu [user]="user" [countryCode]="activeCountryCode" [activePlace]="activePlace"
+                class="mr-3">
             </app-hamburger-menu>
-            <img *ngIf="Components.indexOf('icon')>-1" appDataAnalytics eventLabel="logo" clickLocation="" (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo"
-            />
+            <img *ngIf="Components.indexOf('icon')>-1" appDataAnalytics eventLabel="logo" clickLocation=""
+                (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-bms-logo.svg"
+                alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
             <!-- <div *ngIf="backState" (click)="goBack()"
                 class="rounded-full flex py-1 px-3 mr-1 justify-center items-center" matRipple>
                 <i class="mdi mdi-arrow-left text-2xl color-blue"></i>
@@ -66,13 +73,17 @@
             <i class="mdi mdi-calendar-today mr-4"></i> -->
         </div>
         <div class="hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
-            <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation="" *ngIf="Components.indexOf('createEventBtn')>-1" class="create-btn cursor-pointer flex h-full justify-center items-center">
+            <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation=""
+                *ngIf="Components.indexOf('createEventBtn')>-1"
+                class="create-btn cursor-pointer flex h-full justify-center items-center">
                 <span class="font-semibold text-sm tracking-wide leading-loose mr-2">CREATE EVENT</span>
                 <i class="mdi mdi-ticket text-xl md:text-2xl"></i>
             </a>
         </div>
-        <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1" class="position-relative sm:w-1/1 justify-end hidden sm:hidden md:hidden lg:flex items-center ml-auto">
-            <div appDataAnalytics eventLabel="loginSignup" clickLocation="" class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
+        <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
+            class="position-relative sm:w-1/1 justify-end hidden sm:hidden md:hidden lg:flex items-center ml-auto">
+            <div appDataAnalytics eventLabel="loginSignup" clickLocation=""
+                class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
                 <i class="mdi mdi-account-circle text-2xl md:text-4xl mr-2 color-blue"></i>
                 <span class="text-gray-800 whitespace-no-wrap">Login | Signup</span>
             </div>
@@ -89,7 +100,8 @@
 
         <!-- Mobile Menu -->
         <div class="sm:w-1/1 ml-auto flex  sm:flex md:flex lg:hidden items-center">
-            <div *ngIf="Components.indexOf('mobileSearch')>-1" class="rounded-full flex items-center" matRipple (click)="navigateToMobileSearch()">
+            <div *ngIf="Components.indexOf('mobileSearch')>-1" class="rounded-full flex items-center" matRipple
+                (click)="navigateToMobileSearch()">
                 <i class="mdi mdi-magnify text-2xl md:mx-2 color-blue"></i>
             </div>
             <!-- <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>

@@ -5,10 +5,10 @@
     <div class="section-1 hidden md:block px-5 border-r border-gray-400 w-1/5 mr-5">
       <div class="flex flex-col  justify-between h-full">
         <div class="ts-logo w-11/12 pr-3 mb-2">
-          <img [lazyLoad]="'assets/images/ts-logoBMS.png'" alt="Townscript Event Ticketing Logo"
-              class="w-full h-auto"
-              title="Townscript Event Ticketing Logo" />
-          <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}</div>
+          <img [lazyLoad]="'assets/images/ts-bms-logo.svg'" alt="Townscript Event Ticketing Logo" class="w-full h-auto"
+            title="Townscript Event Ticketing Logo" />
+          <div class="ts-footer__copyright text-right pr-2 text-xs text-gray-700 opacity-75">Copyright@{{copyrightYear}}
+          </div>
         </div>
         <div class="my-booking-link w-full py-2" appDataAnalytics eventLabel="bookings" clickLocation="">
           <a href="/dashboard/mybookings" target="_blank" title="View Your Bookings">
@@ -21,53 +21,48 @@
         <div class="organizer-app-links pr-10 py-2">
           <h5 class="font-semibold text-gray-800 text-sm  whitespace-no-wrap">Organizer App</h5>
           <ul class="list-apps flex mt-1">
-              <li appDataAnalytics eventLabel="appAndroid" clickLocation="">
-                  <a href="//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN"
-                      title="Download on Google play" target="_blank">
-                      <div class="google-logo mr-3">
-                        <i class="text-2xl mdi mdi-google-play"></i>
-                        <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/google-play-badge.png" alt="Download on Google Play Store"> -->
-                      </div>
-                  </a>
-              </li>
-              <li appDataAnalytics eventLabel="appIos" clickLocation="">
-                  <a href="//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8"
-                      title="Download on App Store" target="_blank">
-                      <div class="apple-log">
-                        <i class="text-2xl mdi mdi-apple"></i>
-                        <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/apple-app-badge.png" alt="Download on App Store"> -->
-                      </div>
-                  </a>
-              </li>
+            <li appDataAnalytics eventLabel="appAndroid" clickLocation="">
+              <a href="//play.google.com/store/apps/details?id=com.dyulok.android.organizerapp&hl=en_IN"
+                title="Download on Google play" target="_blank">
+                <div class="google-logo mr-3">
+                  <i class="text-2xl mdi mdi-google-play"></i>
+                  <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/google-play-badge.png" alt="Download on Google Play Store"> -->
+                </div>
+              </a>
+            </li>
+            <li appDataAnalytics eventLabel="appIos" clickLocation="">
+              <a href="//itunes.apple.com/in/app/townscript-event-manager/id1441088900?mt=8"
+                title="Download on App Store" target="_blank">
+                <div class="apple-log">
+                  <i class="text-2xl mdi mdi-apple"></i>
+                  <!-- <img src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/Marketplace/footer/apple-app-badge.png" alt="Download on App Store"> -->
+                </div>
+              </a>
+            </li>
           </ul>
         </div>
         <div class="social-follow pt-2">
           <h5 class="font-semibold text-gray-800 text-sm whitespace-no-wrap">Follow us on</h5>
           <ul class="social-list flex flex-wrap pr-4 text-xl mt-2 -ml-1 -mb-1">
-              <li appDataAnalytics eventLabel="socialFb" clickLocation="">
-                  <a href="https://www.facebook.com/townscript" target="_blank"
-                    aria-label="Find Us On Facebook"
-                    title="Facebook">
-                    <i class="mdi mdi-facebook mr-4"></i></a>
-              </li>
-              <li appDataAnalytics eventLabel="socialTwitter" clickLocation="">
-                  <a href="https://twitter.com/townscript" target="_blank"
-                    aria-label="Find Us On LinkedIn"
-                    title="Twitter">
-                    <i class="mdi mdi-twitter mr-4"></i></a>
-              </li>
-              <li appDataAnalytics eventLabel="socialInstagram" clickLocation="">
-                  <a href="https://www.instagram.com/townscript/" target="_blank"
-                    aria-label="Find Us On Instagram"
-                    title="Instagram">
-                    <i class="mdi mdi-instagram mr-4"></i></a>
-              </li>
-              <li appDataAnalytics eventLabel="socialLinkedin" clickLocation="">
-                  <a href="https://www.linkedin.com/company/townscript" target="_blank"
-                    aria-label="Find Us On LinkedIn"
-                    title="LinkedIn">
-                    <i class="mdi mdi-linkedin mr-4"></i></a>
-              </li>
+            <li appDataAnalytics eventLabel="socialFb" clickLocation="">
+              <a href="https://www.facebook.com/townscript" target="_blank" aria-label="Find Us On Facebook"
+                title="Facebook">
+                <i class="mdi mdi-facebook mr-4"></i></a>
+            </li>
+            <li appDataAnalytics eventLabel="socialTwitter" clickLocation="">
+              <a href="https://twitter.com/townscript" target="_blank" aria-label="Find Us On LinkedIn" title="Twitter">
+                <i class="mdi mdi-twitter mr-4"></i></a>
+            </li>
+            <li appDataAnalytics eventLabel="socialInstagram" clickLocation="">
+              <a href="https://www.instagram.com/townscript/" target="_blank" aria-label="Find Us On Instagram"
+                title="Instagram">
+                <i class="mdi mdi-instagram mr-4"></i></a>
+            </li>
+            <li appDataAnalytics eventLabel="socialLinkedin" clickLocation="">
+              <a href="https://www.linkedin.com/company/townscript" target="_blank" aria-label="Find Us On LinkedIn"
+                title="LinkedIn">
+                <i class="mdi mdi-linkedin mr-4"></i></a>
+            </li>
           </ul>
         </div>
       </div>
@@ -79,75 +74,74 @@
             <div class="learn-more flex flex-col h-full pr-3 w-1/3">
               <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Learn More</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
-                <li appDataAnalytics eventLabel="learnMorePricing" clickLocation=""><a
-                  href="/pricing">Pricing</a></li>
+                <li appDataAnalytics eventLabel="learnMorePricing" clickLocation=""><a href="/pricing">Pricing</a></li>
                 <li><a href="/how-it-works" ts-data-analytics prop-event="click" eventLabel="How It Works"
-                  prop-clicked-location="Footer">How it works</a></li>
+                    prop-clicked-location="Footer">How it works</a></li>
                 <li appDataAnalytics eventLabel="learnMorePolicies" clickLocation=""><a
-                  href="/terms-and-conditions">Policies</a></li>
+                    href="/terms-and-conditions">Policies</a></li>
                 <li appDataAnalytics eventLabel="learnMorePrivacy" clickLocation=""><a
-                  href="/privacy-policy">Privacy</a></li>
-                <li appDataAnalytics eventLabel="learnMoreApi" clickLocation=""><a
-                  href="//townscript-api.readme.io/" target="_blank">APIs for Developers</a></li>
+                    href="/privacy-policy">Privacy</a></li>
+                <li appDataAnalytics eventLabel="learnMoreApi" clickLocation=""><a href="//townscript-api.readme.io/"
+                    target="_blank">APIs for Developers</a></li>
                 <li appDataAnalytics eventLabel="learnMoreSupport" clickLocation=""><a
-                  href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a>
+                    href="http://support.townscript.com/support/home" target="_blank">Support / FAQs</a>
                 </li>
               </ul>
             </div>
             <div class="ts-links flex flex-col h-full pr-3 w-1/3">
               <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">About</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
-                  <li><a appDataAnalytics eventLabel="aboutUs" clickLocation="" href="/about-us">About us</a>
-                  </li>
-                  <li><a appDataAnalytics eventLabel="contactUs" clickLocation="" href="/contact-us">Contact
-                          us</a></li>
-                  <!-- <li><a href="#">Career</a></li> -->
-                  <!-- <li><a href="#">Media</a></li> -->
-                  <li><a appDataAnalytics eventLabel="blog" clickLocation=""
-                          href="http://blog.townscript.com" target="_blank">Blog</a></li>
-                  <li><a appDataAnalytics eventLabel="eventMagazine" clickLocation=""
-                          href="http://eventmagazine.townscript.com/" target="_blank">Event Magazine</a></li>
-                  <li><a appDataAnalytics eventLabel="productDiary" clickLocation=""
-                          href="https://productblog.townscript.com/" target="_blank">Product Diary</a></li>
-                  <li><a appDataAnalytics eventLabel="sitemap" clickLocation="" href="/sitemap"
-                          target="_blank">Sitemap</a></li>
+                <li><a appDataAnalytics eventLabel="aboutUs" clickLocation="" href="/about-us">About us</a>
+                </li>
+                <li><a appDataAnalytics eventLabel="contactUs" clickLocation="" href="/contact-us">Contact
+                    us</a></li>
+                <!-- <li><a href="#">Career</a></li> -->
+                <!-- <li><a href="#">Media</a></li> -->
+                <li><a appDataAnalytics eventLabel="blog" clickLocation="" href="http://blog.townscript.com"
+                    target="_blank">Blog</a></li>
+                <li><a appDataAnalytics eventLabel="eventMagazine" clickLocation=""
+                    href="http://eventmagazine.townscript.com/" target="_blank">Event Magazine</a></li>
+                <li><a appDataAnalytics eventLabel="productDiary" clickLocation=""
+                    href="https://productblog.townscript.com/" target="_blank">Product Diary</a></li>
+                <li><a appDataAnalytics eventLabel="sitemap" clickLocation="" href="/sitemap"
+                    target="_blank">Sitemap</a></li>
               </ul>
             </div>
             <div class="organize-links flex flex-col h-full pr-3 w-1/3">
               <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Organize Events</h5>
               <ul class="list-linear flex flex-col justify-between flex-1">
-                  <li appDataAnalytics eventLabel="conferences" clickLocation=""><a
-                          href="/i/conference-registration">Conferences</a></li>
-                  <li appDataAnalytics eventLabel="workshopTrainings" clickLocation=""><a
-                          href="/i/workshops-and-trainings">Workshops and Trainings</a></li>
-                  <li appDataAnalytics eventLabel="sportsFitness" clickLocation=""><a
-                          href="/i/marathon-cycling-trips-treks-registration">Sports and Fitness Events</a></li>
-                  <li appDataAnalytics eventLabel="entertainment" clickLocation=""><a
-                          href="/i/entertainment-events-ticketing">Entertainment Events</a></li>
-                  <li appDataAnalytics eventLabel="meetupReunions" clickLocation=""><a
-                          href="/i/meetup-registration">Meetups and Reunions</a></li>
-                  <li appDataAnalytics eventLabel="treksTrips" clickLocation=""><a
-                          href="/i/treks-trips-registration">Treks and Trips</a></li>
-                  <!-- <li><a href="/i/fundraising-crowdfunding">Fundraisings</a></li> -->
+                <li appDataAnalytics eventLabel="conferences" clickLocation=""><a
+                    href="/i/conference-registration">Conferences</a></li>
+                <li appDataAnalytics eventLabel="workshopTrainings" clickLocation=""><a
+                    href="/i/workshops-and-trainings">Workshops and Trainings</a></li>
+                <li appDataAnalytics eventLabel="sportsFitness" clickLocation=""><a
+                    href="/i/marathon-cycling-trips-treks-registration">Sports and Fitness Events</a></li>
+                <li appDataAnalytics eventLabel="entertainment" clickLocation=""><a
+                    href="/i/entertainment-events-ticketing">Entertainment Events</a></li>
+                <li appDataAnalytics eventLabel="meetupReunions" clickLocation=""><a
+                    href="/i/meetup-registration">Meetups and Reunions</a></li>
+                <li appDataAnalytics eventLabel="treksTrips" clickLocation=""><a
+                    href="/i/treks-trips-registration">Treks and Trips</a></li>
+                <!-- <li><a href="/i/fundraising-crowdfunding">Fundraisings</a></li> -->
               </ul>
             </div>
           </div>
           <div class="popular-search flex flex-col w-1/3 pl-5 lg:pl-8">
             <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Popular Searches</h5>
             <ul class="list-linear flex flex-col justify-between flex-1">
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-">
-                        Countries supported by Townscript</a></li>
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="/i/sell-event-tickets-online">Sell Event Tickets Online</a></li>
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="/i/event-management-software">Event Management Software</a></li>
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="/i/event-registration-software">Event Registration Software</a></li>
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="/i/conference-management-system">Conference management System</a></li>
-                <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
-                        href="/i/event-planning-software">Event Planning Software</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="http://support.townscript.com/support/solutions/articles/1000265220-list-of-countries-supported-by-townscript-">
+                  Countries supported by Townscript</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="/i/sell-event-tickets-online">Sell Event Tickets Online</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="/i/event-management-software">Event Management Software</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="/i/event-registration-software">Event Registration Software</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="/i/conference-management-system">Conference management System</a></li>
+              <li appDataAnalytics eventLabel="popularSearches" clickLocation=""><a
+                  href="/i/event-planning-software">Event Planning Software</a></li>
             </ul>
           </div>
         </div>
@@ -156,8 +150,7 @@
           <div class="popular-cities mt-2 w-2/3 pr-1">
             <h5 class="font-semibold text-gray-800 text-sm pb-3 whitespace-no-wrap">Popular Cities</h5>
             <ul class="list-linear flex flex-wrap">
-              <li appDataAnalytics eventLabel="popularCities" clickLocation=""
-              *ngFor="let city of popularCities">
+              <li appDataAnalytics eventLabel="popularCities" clickLocation="" *ngFor="let city of popularCities">
                 <div class="pr-5"><a href="/{{city.countryCode + '/' + city.name | lowercase}}">{{city.name}}</a>
                 </div>
               </li>
@@ -171,7 +164,8 @@
                 </div>
               </li>
               <li appDataAnalytics eventLabel="popularCities" clickLocation="">
-                <div class="pr-10"><a href="https://www.townscript.com/organize/peatix-alternative-why-townscript-is-better-than-peatix">Peatrix</a>
+                <div class="pr-10"><a
+                    href="https://www.townscript.com/organize/peatix-alternative-why-townscript-is-better-than-peatix">Peatrix</a>
                 </div>
               </li>
             </ul>
@@ -182,26 +176,26 @@
 
       <div class="review-corner flex-col h-full hidden lg:flex items-center">
         <div class="g2crowd">
-          <div appDataAnalytics eventLabel="g2Crowd" clickLocation=""
-              class="mixpanel-button text-center">
-              <a href="https://www.g2crowd.com/products/townscript/reviews" target="_blank" title="G2Crowd Townscript Reviews">
-                  <img [lazyLoad]="'https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png'"
-                      alt="G2Crowd Townscript Reviews" width="100">
-                  <div class="whitespace-no-wrap">101 Reviews</div>
-              </a>
+          <div appDataAnalytics eventLabel="g2Crowd" clickLocation="" class="mixpanel-button text-center">
+            <a href="https://www.g2crowd.com/products/townscript/reviews" target="_blank"
+              title="G2Crowd Townscript Reviews">
+              <img [lazyLoad]="'https://s3-ap-southeast-1.amazonaws.com/common-resources/assets/g2badge.png'"
+                alt="G2Crowd Townscript Reviews" width="100">
+              <div class="whitespace-no-wrap">101 Reviews</div>
+            </a>
           </div>
         </div>
       </div>
 
     </div>
     <div class="w-full block md:hidden pb-10">
-        <div class="flex flex-col justify-center items-center">
-            <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
-            <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span
-                    class="text-purple-300">Event</span>ful life&rdquo;</div>
-            <img class="dance-illustration" alt="Live an Eventful life"
-                [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png'">
-        </div>
+      <div class="flex flex-col justify-center items-center">
+        <div class="text-3xl text-gray-400 px-5 pr-32 mr-5">&ldquo;Live an</div>
+        <div class="text-4xl text-gray-400 font-semibold -mt-3 px-5 pl-12"><span class="text-purple-300">Event</span>ful
+          life&rdquo;</div>
+        <img class="dance-illustration" alt="Live an Eventful life"
+          [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ts-illustrations/partying_2.png'">
+      </div>
     </div>
   </div>
 
