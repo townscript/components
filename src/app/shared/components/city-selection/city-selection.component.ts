@@ -51,7 +51,7 @@ export class CitySelectionModalComponent implements OnInit {
       this.loaderText = "Redirecting to " + city.name;
       setTimeout(() => {
         this.close();
-        this.router.navigate([this.countryCode.toLowerCase() + '/' + city.code.toLowerCase()], {});
+        this.router.navigate([city.countryCode.toLowerCase() + '/' + city.code.toLowerCase()], {});
       }, 500);
     }
   }
