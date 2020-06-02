@@ -3,10 +3,10 @@
     <div [style.background-color]="hovered && type=='button' ? color : 'transparent'"
         [style.border-color]="type=='button' ? color : 'transparent'" [class.rounded-full]="type=='button'"
         class="text-sm flex items-center justify-around antialiased font-bold border-purple-800"
-        [style.color]="hovered && type=='button'?'white':color" [ngClass]="{'py-2 px-4 border-2':type=='button'}">
-        <span  *ngIf="type=='button'">{{text}}</span>
-        <i class="mdi mdi-heart-outline text-base antialiased" [class.text-2xl]="type=='icon'" *ngIf="!followed"></i>
+        [style.color]="hovered && type=='button'?'white':color" [ngClass]="isSleak ? {'px-4 border-2':type=='button'}:{'py-2 px-4 border-2':type=='button'}">
+        <span  *ngIf="type=='button'" [ngClass]="isSleak ? 'uppercase': 'capitalize'">{{text}}</span>
+        <i class="mdi mdi-heart-outline text-base antialiased" [class.text-2xl]="type=='icon'" *ngIf="!followed && !isSleak"></i>
         <i class="mdi mdi-heart text-base antialiased followed-heart" [class.text-2xl]="type=='icon'"
-            *ngIf="followed"></i>
+            *ngIf="followed && !isSleak"></i>
     </div>
 </div>

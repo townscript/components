@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { TimeService } from '../../../../../shared/services/time.service';
@@ -25,7 +25,8 @@ export class SearchComponent implements OnInit {
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
 
     algoliaIndexName = config.algoliaIndexName;
-    searchText: string;
+    searchText: string = "";
+    typedSearchText: string = "";
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive = false;
     citySearchActive = false;
@@ -47,7 +48,7 @@ export class SearchComponent implements OnInit {
 
     constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
-            debounceTime(300)).subscribe(text => this.callAlgolia(text));
+            debounceTime(300)).subscribe(text => this.fetchSuggestions(text));
         this.client = algoliasearch('AT5UB8FMSR', 'c7e946f5b740ef035bd824f69dcc1612');
         this.index = this.client.initIndex(this.algoliaIndexName);
         this.buildUrlArray();
@@ -68,6 +69,31 @@ export class SearchComponent implements OnInit {
         }).then((data) => {
             this.filterDataForSearchResult(data);
         });
+    }
+
+    fetchSuggestions = (text) => {
+        this.headerService.getSuggestions(text).then((data) => {
+            this.searchResults = data.data;
+        });
+    }
+
+    chooseSuggestion = (text) => {
+        this.typedSearchText = this.searchText;
+        this.searchText = text;
+        this.goToSearchResultsPage();
+    }
+
+    goToSearchResultsPage = () => {
+        var encodedSearchText = this.searchText.replace(' ','-');
+        var encodedCurrentPlace = this.activePlace.replace(' ','-');
+        var queryParams = {};
+        if(this.activePlace) {
+            queryParams['currentplace'] = encodedCurrentPlace;
+        } 
+        if(encodedSearchText) {
+            queryParams['searchtext'] = encodedSearchText;
+        }
+        this.router.navigate(['/search'],{ queryParams: queryParams});
     }
 
     filterDataForSearchResult = (data) => {
@@ -175,6 +201,7 @@ export class SearchComponent implements OnInit {
                     if (data && data['country'] && data['city']) {
                         this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
                     }
+                    
                 }
             }
         });

@@ -5,42 +5,29 @@
         border-radius: 2px;
         transition: all ease 0.3s;
         .left-section{
-            background-color: $gray--light;
+            background-color: white;
             border-radius: 4px;
             //border-right: 1px solid rgba(151, 151, 151, 0.3);
             input{
                 transition: all ease 0.3s;
                 &:focus{
-                    background: $gray--lighter;
-                }   
+                    background: white;
+                }                  
+            }
+            &:hover {
+                box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
             }
             .suggestions{
                 top: 100%;
                 left: 0;
-                background: $gray--lighter;
+                background: white;
                 border-top: 1px solid rgba(151, 151, 151, 0.4);
                 ul{
-                    margin: 2% 0;
                     li{
-                        color: #636363;
                         transition: all ease 0.15s;
-                        &.list-head{
-                            font-size: 10px;
-                            color: #636363;
-                            border:none;
-                            font-weight: normal;
-                            &:hover{
-                                background: $gray--lighter;
-                            }
-                        }
-                        border-bottom: 1px solid rgba(151, 151, 151, 0.25);
-                        .avatar{
-                            border-radius: 50%;
-                            height:41px;
-                            width:41px;
-                        }
                         &:hover{
                             background: $gray--light;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -50,7 +37,7 @@
             transition: all ease 0.3s;
             max-width: 33.33%;
             &.active{
-                background: $gray--lighter;
+                background: white;
                 box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);   
             }
             .popup{
@@ -62,12 +49,15 @@
         }
         &.active{
             .left-section{
-                background: $gray--lighter;
-            box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+                background: white;
+                box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
             }
             .suggestions{
                 box-shadow: 0 11px 15px 0 rgba(0, 0, 0, 0.15);
             }
         }
     }
+}
+::placeholder {
+    font-size: small;
 }
