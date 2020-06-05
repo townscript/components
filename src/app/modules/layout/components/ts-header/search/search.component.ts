@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
@@ -93,7 +93,14 @@ export class SearchComponent implements OnInit {
         if(encodedSearchText) {
             queryParams['searchtext'] = encodedSearchText;
         }
-        this.router.navigate(['/search'],{ queryParams: queryParams});
+        const navigationExtras : NavigationExtras = {
+            state : {
+                typedText : this.typedSearchText,
+                suggestions: this.searchResults
+            },
+            queryParams : queryParams
+        };
+        this.router.navigate(['/search'], navigationExtras);
     }
 
     filterDataForSearchResult = (data) => {
