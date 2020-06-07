@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
@@ -23,9 +23,9 @@ export class SearchComponent implements OnInit {
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
-
+    @Input()searchText: string = "";
     algoliaIndexName = config.algoliaIndexName;
-    searchText: string = "";
+    // searchText: string = "";
     typedSearchText: string = "";
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive = false;
@@ -45,6 +45,7 @@ export class SearchComponent implements OnInit {
     urlArray;
     host = config.baseUrl;
     popularPlaces: any;
+    intentSelected: boolean = false;
 
     constructor(private utilityService: UtilityService, private headerService: HeaderService, private placeService: PlaceService, private timeService: TimeService, public datepipe: DatePipe) {
         this.searchTextChanged.pipe(
@@ -72,6 +73,7 @@ export class SearchComponent implements OnInit {
     }
 
     fetchSuggestions = (text) => {
+        this.intentSelected = false;
         this.headerService.getSuggestions(text).then((data) => {
             this.searchResults = data.data;
         });
@@ -84,8 +86,9 @@ export class SearchComponent implements OnInit {
     }
 
     goToSearchResultsPage = () => {
-        var encodedSearchText = this.searchText.replace(' ','-');
-        var encodedCurrentPlace = this.activePlace.replace(' ','-');
+        this.intentSelected = true;
+        var encodedSearchText = this.searchText.replace(/ +/g,'-');
+        var encodedCurrentPlace = this.activePlace.replace(/ +/g,'-')
         var queryParams = {};
         if(this.activePlace) {
             queryParams['currentplace'] = encodedCurrentPlace;

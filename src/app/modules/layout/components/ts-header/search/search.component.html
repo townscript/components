@@ -4,7 +4,7 @@
         <input appDataAnalytics eventLabel="search" clickLocation="" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;citySearchActive=false" class="w-full h-full bg-transparent  p-2" type="text" placeholder="Search for an Event, Interest or Organizer"
             aria-label="Search for an Event, Interest or Organizer" />
         <i *ngIf="searchText && searchText.length > 0" class="mdi mdi-arrow-right-bold text-2xl md:text-xl color-blue p-2" (click)="chooseSuggestion(searchText)"></i>
-        <div class="suggestions enter-slide-bottom w-full absolute" *ngIf="searchResults && searchActive">
+        <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive">
             <ul class="ts-enter fadeIn" *ngIf="searchResults.length>0">
                 <li class="flex flex-row"
                     *ngFor="let searchedItem of searchResults">
