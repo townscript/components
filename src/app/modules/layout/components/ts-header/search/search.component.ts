@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, ViewChildren, QueryList } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
@@ -10,6 +10,8 @@ import { config } from '../../../../../core/app-config';
 import { PlaceService } from '../place.service';
 import { HeaderService } from '../ts-header.service';
 import { UtilityService } from '../../../../../shared/services/utilities.service';
+import { ListKeyManager } from '@angular/cdk/a11y';
+import { SearchSuggestionComponent } from '../search-suggestion/search-suggestion.component';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -23,9 +25,11 @@ export class SearchComponent implements OnInit {
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
+    @ViewChildren(SearchSuggestionComponent) listItems!: QueryList<SearchSuggestionComponent>;
     @Input()searchText: string = "";
     algoliaIndexName = config.algoliaIndexName;
     // searchText: string = "";
+    keyboardEventsManager: ListKeyManager<any>;
     typedSearchText: string = "";
     searchTextChanged: Subject<string> = new Subject<string>();
     searchActive = false;
@@ -76,6 +80,23 @@ export class SearchComponent implements OnInit {
         this.intentSelected = false;
         this.headerService.getSuggestions(text).then((data) => {
             this.searchResults = data.data;
+            this.keyboardEventsManager = new ListKeyManager<any>(this.listItems);
+            this.initKeyManagerHandlers();
+        });
+    }
+
+    suggestionSelected = (event) => {
+        this.chooseSuggestion(event.suggestion);
+    }
+
+    initKeyManagerHandlers() {
+        this.keyboardEventsManager
+            .change
+            .subscribe((activeIndex) => {
+            this.listItems.map((item, index) => {
+                item.setActive(activeIndex === index);
+                return item;
+            });
         });
     }
 
@@ -184,6 +205,24 @@ export class SearchComponent implements OnInit {
             this.searchTextChanged.next(text);
         }
     }
+
+    handleKeydown(event: KeyboardEvent) {
+        event.stopImmediatePropagation();
+        if (this.keyboardEventsManager) {
+            if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+                this.keyboardEventsManager.onKeydown(event);
+                return false;
+            } else if (event.key === "Enter") {
+                if(this.keyboardEventsManager.activeItem) {
+                    this.keyboardEventsManager.activeItem.selectItem();
+                } else {
+                    this.chooseSuggestion(this.typedSearchText);
+                }
+                return false;
+            }
+        }
+    }
+
     getPopularPlaces = async () => {
         this.placeService.place.subscribe(async (res) => {
             if (res) {
