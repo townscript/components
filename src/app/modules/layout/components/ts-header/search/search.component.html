@@ -6,7 +6,7 @@
         <i *ngIf="searchText && searchText.length > 0" class="mdi cursor-pointer mdi-close text-2xl md:text-xl color-blue p-2" (click)="this.searchText = '';"></i>
         <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive">
             <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults" [item]="searchedItem" [searchText]="searchText"
-            (itemSelected)="suggestionSelected($event)" (click)="suggestionSelected($event)"></app-search-suggestion>
+            (itemSelected)="suggestionSelected(searchedItem)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
             <div class="no-result flex flex-col text-center p-10 fadeIn"
                 *ngIf="searchResults == undefined || searchResults.length == 0">
                 <img alt="No Results Found" class="mb-2"
