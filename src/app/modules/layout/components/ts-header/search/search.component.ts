@@ -216,7 +216,7 @@ export class SearchComponent implements OnInit {
                 if(this.keyboardEventsManager.activeItem) {
                     this.keyboardEventsManager.activeItem.selectItem();
                 } else {
-                    this.chooseSuggestion(this.typedSearchText);
+                    this.chooseSuggestion(this.searchText);
                 }
                 return false;
             }
