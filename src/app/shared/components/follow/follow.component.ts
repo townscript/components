@@ -19,6 +19,7 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
     @Input() followTypeId;
     @Input() followType;
     @Input() typeName;
+    @Input() isSleak = false;
     @Output() status: any = new EventEmitter<any>();
 
     subHeader: string = "Your one stop tool for exploring events";

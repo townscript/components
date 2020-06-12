@@ -1,75 +1,19 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
     <div #searchResultsEle class="w-2/3 lg:w-full px-2 flex items-center relative left-section">
         <i class="mdi mdi-magnify text-2xl md:text-xl color-blue p-2"></i>
-        <input appDataAnalytics eventLabel="search" clickLocation="" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;citySearchActive=false" class="text-sm w-full h-full bg-transparent  p-2" type="text" placeholder="Search for an Event, Interest or Organizer"
+        <input appDataAnalytics eventLabel="search" clickLocation="" (keyup)="handleKeydown($event)" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;citySearchActive=false" class="w-full h-full bg-transparent  p-2" type="text" placeholder="Search for an Event, Interest or Organizer"
             aria-label="Search for an Event, Interest or Organizer" />
-        <div class="suggestions enter-slide-bottom w-full p-2 absolute" *ngIf="searchResults && searchActive">
-            <ul class="ts-enter text-center my-4" *ngIf="emptyResult">
-                <img class="mx-auto mb-2" width="200" src="https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png">
-                <span class="mx-auto block text-sm text-gray-600">No results found</span>
-                <span class="mx-auto block text-xs text-gray-500 mb-4">We couldn’t find what you’re looking for</span>
-            </ul>
-            <ul class="ts-enter" *ngIf="searchResults?.interests.length>0">
-                <li class="list-head">
-                    INTERESTS
-                </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" (click)="navigateToListing(interest)" *ngFor="let interest of searchResults.interests">
-                    <div class="flex items-center">
-                        <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ interest.imageUrl +')'">
-                        </div>
-                        <div>
-                            <span class="mb-1 block">{{interest.name | titlecase}} </span>
-                            <div class="flex items-center" *ngIf="interest.location">
-                                <i class="mdi mdi-map-marker color-blue"></i>
-                                <small class="capitalize">{{interest.location}}</small>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <ul class="ts-enter" *ngIf="searchResults?.events.length>0">
-                <li class="list-head">
-                    EVENTS
-                </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let event of searchResults.events" (click)="navigateToEventPage(event.urlCode)">
-                    <div class="flex items-center">
-                        <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ event.imageUrl +')'"></div>
-                        <div>
-                            <span class="mb-1 block">{{event.name | titlecase}} </span>
-                            <div class="flex items-center">
-                                <div class="flex items-center" *ngIf="event.location">
-                                    <i class="mdi mdi-map-marker color-blue"></i>
-                                    <small>{{event.location}}</small>
-                                </div>
-                                <div class="flex items-center ml-2" *ngIf="event?.secondaryTextProperties?.startTime">
-                                    <i class="mdi mdi-calendar-today color-blue mr-1"></i>
-                                    <small>{{event.secondaryTextProperties.startTime}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <ul class="ts-enter" *ngIf="searchResults?.organizers.length>0">
-                <li class="list-head">
-                    ORGANIZERS
-                </li>
-                <li class="p-2 text-xs font-bold cursor-pointer" *ngFor="let organizer of searchResults.organizers">
-                    <a [href]="host+'o/'+organizer.urlCode">
-                        <div class="flex items-center">
-                            <div class="avatar mr-3 bg-cover" [style.backgroundImage]="'url('+ organizer.imageUrl +')'">
-                            </div>
-                            <div>
-                                <span class="mb-1 block">{{organizer.name | titlecase}} </span>
-                                <div class="flex items-center" *ngIf="organizer.location">
-                                    <i class="mdi mdi-map-marker color-blue"></i>
-                                    <small>{{organizer.location}}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+        <i *ngIf="searchText && searchText.length > 0" class="mdi cursor-pointer mdi-close text-2xl md:text-xl color-blue p-2" (click)="this.searchText = '';"></i>
+        <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive">
+            <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults" [item]="searchedItem" [searchText]="searchText"
+            (itemSelected)="suggestionSelected($event)" (click)="suggestionSelected($event)"></app-search-suggestion>
+            <div class="no-result flex flex-col text-center p-10 fadeIn"
+                *ngIf="searchResults == undefined || searchResults.length == 0">
+                <img alt="No Results Found" class="mb-2"
+                    [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png'" />
+                <label class="text-gray-600 text-sm">No Results found</label>
+                <span class="text-gray-500 text-xs">We couldn’t find what you’re looking for</span>
+            </div>
         </div>
     </div>
     <div appDataAnalytics eventLabel="location" clickLocation="" #citySuggestions class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container" [class.active]="cityPopupActive" (click)="cityPopupActive = true">

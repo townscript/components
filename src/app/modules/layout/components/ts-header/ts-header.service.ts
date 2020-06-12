@@ -7,12 +7,16 @@ export class HeaderService {
 
     baseUrl: string = config.baseUrl;
     apiServerUrl: string = this.baseUrl + 'api/';
+    listingsServerUrl: string = this.baseUrl + 'listings/';
     constructor(private http: HttpClient) {
     }
     getplaceSearchResults = (query) => {
-        return this.http.get(this.baseUrl + 'listings/place/autocomplete?query=' + query);
+        return this.http.get(this.listingsServerUrl + 'place/autocomplete?query=' + query);
     }
     getPopularCities(countryCode) {
-        return this.http.get(this.baseUrl + 'listings/city/popular/' + countryCode).toPromise();
+        return this.http.get(this.listingsServerUrl + 'city/popular/' + countryCode).toPromise();
+    }
+    async getSuggestions(searchText: string): Promise<any> {
+        return await this.http.get(this.listingsServerUrl + 'tsElasticSearch/suggestions/search?search-for-text='+searchText).toPromise();
     }
 }
