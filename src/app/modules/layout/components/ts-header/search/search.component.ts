@@ -12,6 +12,7 @@ import { HeaderService } from '../ts-header.service';
 import { UtilityService } from '../../../../../shared/services/utilities.service';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { SearchSuggestionComponent } from '../search-suggestion/search-suggestion.component';
+import { EventEmitter } from 'protractor';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -28,7 +29,6 @@ export class SearchComponent implements OnInit {
     @ViewChild('searchTextInputEle', { static : false }) searchTextInputEle: ElementRef;
     @ViewChildren(SearchSuggestionComponent) listItems!: QueryList<SearchSuggestionComponent>;
     @Input()searchText: string = '';
-    @Output() searchIntent: string = '';
     algoliaIndexName = config.algoliaIndexName;
     // searchText: string = "";
     keyboardEventsManager: ListKeyManager<any>;

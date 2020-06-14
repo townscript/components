@@ -7,10 +7,12 @@
         <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive && searchText !== ''">
             <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults; let i = index" [item]="searchedItem" [searchText]="searchText"
             (itemSelected)="suggestionSelected(searchedItem)" (mouseenter)="hoverOnSuggestion(i)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
-            <div class="no-result flex flex-col text-center p-10 fadeIn"
+            <div class="no-result flex flex-col text-center p-4 fadeIn"
                 *ngIf="searchResults == undefined || searchResults.length == 0">
-                <img alt="No Results Found" class="mb-2"
+                <div class="px-10">
+                    <img alt="No Results Found" class="w-full mb-2"
                     [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png'" />
+                </div>
                 <label class="text-gray-600 text-sm">No Results found</label>
                 <span class="text-gray-500 text-xs">We couldn’t find what you’re looking for</span>
             </div>

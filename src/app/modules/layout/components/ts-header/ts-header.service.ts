@@ -21,8 +21,6 @@ export class HeaderService {
     }
 
     async postSuggestions(searchText: string): Promise<any> {
-        const par: Object = new Object();
-        par['search-intent'] = searchText;
         return await this.http.post(this.listingsServerUrl + '/tsElasticSearch/suggestions/add?search-intent=' + searchText, null, {}).toPromise();
     }
 }
