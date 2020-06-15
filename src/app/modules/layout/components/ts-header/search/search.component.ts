@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, ViewChildren, QueryList, Output } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
@@ -12,6 +12,7 @@ import { HeaderService } from '../ts-header.service';
 import { UtilityService } from '../../../../../shared/services/utilities.service';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { SearchSuggestionComponent } from '../search-suggestion/search-suggestion.component';
+import { EventEmitter } from 'protractor';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -25,8 +26,9 @@ export class SearchComponent implements OnInit {
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
+    @ViewChild('searchTextInputEle', { static : false }) searchTextInputEle: ElementRef;
     @ViewChildren(SearchSuggestionComponent) listItems!: QueryList<SearchSuggestionComponent>;
-    @Input()searchText: string = "";
+    @Input()searchText: string = '';
     algoliaIndexName = config.algoliaIndexName;
     // searchText: string = "";
     keyboardEventsManager: ListKeyManager<any>;
@@ -89,24 +91,43 @@ export class SearchComponent implements OnInit {
         this.chooseSuggestion(event.suggestion);
     }
 
-    initKeyManagerHandlers() {
+    initKeyManagerHandlers = () => {
         this.keyboardEventsManager
             .change
             .subscribe((activeIndex) => {
             this.listItems.map((item, index) => {
                 item.setActive(activeIndex === index);
+                // if(item.isActive == true && index !== activeIndex) {
+                //     item.setActive(false);
+                // }
                 return item;
             });
         });
     }
 
+    hoverOnSuggestion = (indexOfItemhoveredOn) => {
+        console.log(indexOfItemhoveredOn);
+        this.searchActive = true;
+        var activeItem = this.keyboardEventsManager.activeItem;
+        if(activeItem)activeItem.setActive(false);
+        this.keyboardEventsManager.setActiveItem(indexOfItemhoveredOn);
+        this.keyboardEventsManager.activeItem.setActive(true);
+    }
+
     chooseSuggestion = (text) => {
         this.typedSearchText = this.searchText;
         this.searchText = text;
+        this.addOrUpdateTSSuggestions();
         this.goToSearchResultsPage();
     }
 
+    addOrUpdateTSSuggestions = () => {
+        this.headerService.postSuggestions(this.searchText);
+    }
+
+
     goToSearchResultsPage = () => {
+        this.searchActive = false;
         this.intentSelected = true;
         var encodedSearchText = this.searchText.replace(/ +/g,'-');
         var encodedCurrentPlace = this.activePlace.replace(/ +/g,'-')
@@ -207,7 +228,7 @@ export class SearchComponent implements OnInit {
     }
 
     handleKeydown(event: KeyboardEvent) {
-        event.stopImmediatePropagation();
+        this.searchActive = true;
         if (this.keyboardEventsManager) {
             if (event.key === "ArrowDown" || event.key === "ArrowUp") {
                 this.keyboardEventsManager.onKeydown(event);

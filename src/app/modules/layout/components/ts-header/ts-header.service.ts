@@ -19,4 +19,8 @@ export class HeaderService {
     async getSuggestions(searchText: string): Promise<any> {
         return await this.http.get(this.listingsServerUrl + 'tsElasticSearch/suggestions/search?search-for-text='+searchText).toPromise();
     }
+
+    async postSuggestions(searchText: string): Promise<any> {
+        return await this.http.post(this.listingsServerUrl + '/tsElasticSearch/suggestions/add?search-intent=' + searchText, null, {}).toPromise();
+    }
 }
