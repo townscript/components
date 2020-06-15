@@ -37,7 +37,7 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.buildUrlArray();
-    if (this.eventData.cardImageUrl.indexOf(config.s3Bucket) > -1) {
+    if (this.eventData.cardImageUrl && this.eventData.cardImageUrl.indexOf(config.s3Bucket) > -1) {
       this.eventData.cardImageUrl = config.imgixUrl +
         this.eventData.cardImageUrl.split(config.s3Bucket)[1];
     }
