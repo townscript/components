@@ -1,6 +1,6 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
     <div #searchResultsEle class="w-2/3 lg:w-full px-2 flex items-center relative left-section">
-        <i class="mdi mdi-magnify text-2xl md:text-xl color-blue p-2"></i>
+        <i class="mdi mdi-magnify text-2xl md:text-xl color-blue p-2 cursor-pointer" (click)="chooseSuggestion(this.searchText)"></i>
         <input appDataAnalytics eventLabel="search" clickLocation="" (keyup)="handleKeydown($event)" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;" class="w-full h-full bg-transparent  p-2" type="text" placeholder="Search for an Event, Interest or Organizer"
             aria-label="Search for an Event, Interest or Organizer" />
         <i *ngIf="searchText && searchText.length > 0" class="mdi cursor-pointer mdi-close text-2xl md:text-xl color-blue p-2" (click)="this.searchText = '';"></i>
@@ -9,12 +9,12 @@
             (itemSelected)="suggestionSelected(searchedItem)" (mouseenter)="hoverOnSuggestion(i)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
             <div class="no-result flex flex-col text-center p-4 fadeIn"
                 *ngIf="searchResults == undefined || searchResults.length == 0">
-                <div class="px-10">
-                    <img alt="No Results Found" class="w-full mb-2"
-                    [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png'" />
+                <img alt="No Results Found" class="m-auto w-40 pt-4 mb-2"
+                [lazyLoad]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/calendar-min.png'" />
+                <div class="flex flex-col">
+                    <label class="text-gray-600 font-bold">No results found</label>
+                    <span class="text-gray-600 text-sm pb-10">We couldn’t find what you’re looking for</span>
                 </div>
-                <label class="text-gray-600 text-sm">No Results found</label>
-                <span class="text-gray-500 text-xs">We couldn’t find what you’re looking for</span>
             </div>
         </div>
     </div>

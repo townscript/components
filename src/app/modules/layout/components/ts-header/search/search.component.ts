@@ -115,6 +115,7 @@ export class SearchComponent implements OnInit {
     }
 
     chooseSuggestion = (text) => {
+        if(!this.searchText)return;
         this.typedSearchText = this.searchText;
         this.searchText = text;
         this.addOrUpdateTSSuggestions();
