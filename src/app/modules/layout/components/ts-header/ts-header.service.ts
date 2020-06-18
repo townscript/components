@@ -17,7 +17,7 @@ export class HeaderService {
         return this.http.get(this.listingsServerUrl + 'city/popular/' + countryCode).toPromise();
     }
     async getSuggestions(searchText: string): Promise<any> {
-        return await this.http.get(this.listingsServerUrl + 'tsElasticSearch/suggestions/search?search-for-text='+searchText).toPromise();
+        return await this.http.get(this.listingsServerUrl + 'tsElasticSearch/suggestions/search?search-for-text='+encodeURIComponent(searchText)).toPromise();
     }
 
     async postSuggestions(searchText: string): Promise<any> {
