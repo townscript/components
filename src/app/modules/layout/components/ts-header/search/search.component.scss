@@ -5,17 +5,14 @@
         border-radius: 2px;
         transition: all ease 0.3s;
         .left-section{
-            background-color: white;
+            background-color: $gray--light;
             border-radius: 4px;
+            &:focus{
+                background: white;
+            }
             //border-right: 1px solid rgba(151, 151, 151, 0.3);
             input{
-                transition: all ease 0.3s;
-                &:focus{
-                    background: white;
-                }                  
-            }
-            &:hover {
-                box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+                transition: all ease 0.3s;                 
             }
             .suggestions{
                 top: 100%;
