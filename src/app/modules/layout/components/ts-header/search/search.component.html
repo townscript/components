@@ -4,7 +4,7 @@
         <input appDataAnalytics eventLabel="search" clickLocation="" (keyup)="handleKeydown($event)" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;" class="font-normal text-gray-800 w-full h-full bg-transparent  p-2" type="text" placeholder="Search for events, interests or activities"
             aria-label="Search for events, interests or activities" />
         <i *ngIf="searchText && searchText.length > 0" class="mdi cursor-pointer mdi-close text-2xl md:text-xl color-blue p-2" (click)="this.searchText = '';"></i>
-        <div class="py-2 suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive && searchText !== ''">
+        <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive && searchText !== ''">
             <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults; let i = index" [item]="searchedItem" [searchText]="searchText"
             (itemSelected)="suggestionSelected(searchedItem)" (mouseenter)="hoverOnSuggestion(i)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
             <!-- <div class="no-result flex flex-col text-center p-4 fadeIn"
