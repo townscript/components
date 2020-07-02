@@ -134,10 +134,10 @@ export class SearchComponent implements OnInit {
         var encodedCurrentPlace = this.activePlace.replace(/ +/g,'-')
         var queryParams = {};
         if(this.activePlace) {
-            queryParams['place'] = encodedCurrentPlace;
+            queryParams['currentplace'] = encodedCurrentPlace;
         } 
         if(encodedSearchText) {
-            queryParams['q'] = encodedSearchText;
+            queryParams['searchtext'] = encodedSearchText;
         }
         const navigationExtras : NavigationExtras = {
             state : {
