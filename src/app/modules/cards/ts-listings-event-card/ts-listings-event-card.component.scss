@@ -93,6 +93,16 @@
       background: linear-gradient(90deg,rgba(151,151,151,0.01) 0%,#c8c8c8 100%);
       opacity: 0.6;
     }
+
+    .online {
+      border-color: #BBBBBB;
+      &__indicator{
+        background-color: #EB5757;
+      }
+      &__text{
+        color: #4B4B4B;
+      }
+    }
   }
 
 }

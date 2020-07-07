@@ -13,15 +13,21 @@
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
     <div class="flex flex-wrap m-10">
-      <div class="m-2" style="width: 320px">
-          <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
-      </div>
-      <div class="m-2" style="width: 320px">
-          <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData2"></ts-listings-event-card>
-      </div>
-      <div class="m-2" style="width: 320px">
-          <ts-card-skeleton  [gridType]="'grid'"></ts-card-skeleton>
-      </div>
+        <div class="m-2" style="width: 320px">
+            <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData">
+            </ts-listings-event-card>
+        </div>
+        <div class="m-2" style="width: 320px">
+            <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData2">
+            </ts-listings-event-card>
+        </div>
+        <div class="m-2" style="width: 320px">
+            <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="onlineEvent">
+            </ts-listings-event-card>
+        </div>
+        <div class="m-2" style="width: 320px">
+            <ts-card-skeleton [gridType]="'grid'"></ts-card-skeleton>
+        </div>
 
     </div>
 
@@ -32,11 +38,16 @@
     </div>
 
     <div class="lg:px-48 my-3 mx-3 mb-10">
-        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData2"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData2">
+        </ts-listings-event-card>
+    </div>
+    <div class="lg:px-48 my-3 mx-3 mb-10">
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="onlineEvent">
+        </ts-listings-event-card>
     </div>
 
     <div class="lg:px-48 my-3 mx-3 mb-10">
-        <ts-card-skeleton  [gridType]="'list'"></ts-card-skeleton>
+        <ts-card-skeleton [gridType]="'list'"></ts-card-skeleton>
     </div>
 
 
@@ -81,7 +92,7 @@
     <ts-listing-card [type]="'featured'" [eventData]="eventData"></ts-listing-card>
     <ts-listing-card [type]="'topic'" [eventData]="topicData"></ts-listing-card>
     <ts-card-skeleton></ts-card-skeleton>
-    <app-follow  [followTypeId]="1039" [followType]="'USER'" [isSleak]="true" color="#553c9a"></app-follow>
+    <app-follow [followTypeId]="1039" [followType]="'USER'" [isSleak]="true" color="#553c9a"></app-follow>
 
     <app-follow [text]="'something'" [followType]="'TOPIC'" [followTypeId]="2">
     </app-follow>
