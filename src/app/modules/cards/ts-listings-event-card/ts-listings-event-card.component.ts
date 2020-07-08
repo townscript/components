@@ -7,7 +7,7 @@ import { config } from '../../../core/app-config';
 import { Router } from '@angular/router';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
 import { DateTime } from 'luxon';
-import { TimeService } from '@base/shared/services/time.service';
+import { TimeService } from '../../../shared/services/time.service';
 
 @Component({
   selector: 'ts-listings-event-card',
@@ -28,6 +28,7 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   // following date is to show countdown
   eventStartDate: Date;
   startingSoon: boolean;
+  nowLive = 0;
 
   homeUrl: any;
   subObject: any;

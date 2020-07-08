@@ -29,7 +29,7 @@ export * from './src/app/modules/loginSignup/ts-login-signup/ts-login-signup.ser
 // Card module components
 export * from './src/app/shared/pipes/ts-date-range.pipe';
 export * from './src/app/shared/pipes/text-overflow.directive';
-export * from './src/app/modules/cards/ts-listing-card/share-event-modal/share-event-modal.component';
+export * from './src/app/modules/cards/ts-listings-event-card/share-event-modal/share-event-modal.component';
 export * from './src/app/modules/cards/ts-card-skeleton/ts-card-skeleton.component';
 export * from './src/app/modules/cards/ts-listing-card/ts-listing-card.component';
 
@@ -43,4 +43,3 @@ export * from './src/app/modules/layout/layout.module';
 export * from './src/app/modules/loginSignup/login-signup.module';
 export * from './src/app/modules/cards/cards.module';
 export * from './src/app/shared/shared.module';
-
