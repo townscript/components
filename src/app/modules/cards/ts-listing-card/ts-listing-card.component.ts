@@ -1,17 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { take } from 'rxjs/operators';
-import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
 import { BrowserService } from '../../../core/browser.service';
 import { config } from '../../../core/app-config';
 import { PlaceService } from '../../layout/components/ts-header/place.service';
 import { UtilityService } from '../../../shared/services/utilities.service';
+import { ShareEventModalComponent } from '../ts-listings-event-card/share-event-modal/share-event-modal.component';
 
-@Component({
-  selector: 'ts-listing-card',
-  templateUrl: './ts-listing-card.component.html',
-  styleUrls: ['./ts-listing-card.component.scss']
-})
+// @Component({
+//   selector: 'ts-listing-card',
+//   templateUrl: './ts-listing-card.component.html',
+//   styleUrls: ['./ts-listing-card.component.scss']
+// })
 export class TsListingCardComponent implements OnInit {
 
   @Input() eventData;
@@ -31,14 +31,14 @@ export class TsListingCardComponent implements OnInit {
     public dialog: MatDialog,
     private browser: BrowserService,
     private placeService: PlaceService) {
-      this.buildUrlArray();
+    this.buildUrlArray();
   }
 
   buildUrlArray = (): void => {
     if (this.router.url) {
-        this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+      this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
     } else {
-        this.urlArray = ['in'];
+      this.urlArray = ['in'];
     }
   }
 

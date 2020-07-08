@@ -5,7 +5,7 @@ import { PlaceService } from '../../layout/components/ts-header/place.service';
 import { UtilityService } from '../../../shared/services/utilities.service';
 import { config } from '../../../core/app-config';
 import { Router } from '@angular/router';
-import { ShareEventModalComponent } from '../ts-listing-card/share-event-modal/share-event-modal.component';
+import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
 
 @Component({
   selector: 'ts-listings-event-card',

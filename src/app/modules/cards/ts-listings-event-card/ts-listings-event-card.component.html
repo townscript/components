@@ -48,17 +48,27 @@
                 <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg" *ngIf="eventData?.organizerIsTrusted"
                     matTooltip="VERIFIED" matTooltipPosition="above" matTooltipClass="ts-card-tooltip"></i>
             </div>
-            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 pb-2 md:pt-1"
+            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mb-2 mt-1"
                 [class.text-sm]="theme=='bms'">
-                <div class="date ">
-                    <span
-                        class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
-                    </span>
-                </div>
-                <div class="px-2"> | </div>
-                <div class="location overflow-hidden whitespace-no-wrap">
-                    <span class="whitespace-no-wrap">{{getLocation()}}</span>
-                </div>
+                <ng-container *ngIf="!eventData.onlineEvent || !1">
+                    <div class="date">
+                        <span
+                            class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
+                        </span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!eventData.onlineEvent">
+                    <div class="px-2"> | </div>
+                    <div class="location overflow-hidden whitespace-no-wrap">
+                        <span class="whitespace-no-wrap">{{getLocation()}}</span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="eventData.onlineEvent && 1">
+                    <div class="starting-in">
+                        <span>Starting in </span>
+                        <span class="font-bold text-red-600 tracking-wide">50 mins 10 secs</span>
+                    </div>
+                </ng-container>
             </div>
 
         </div>
