@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { LoginModalComponent } from './modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-root',
@@ -54,7 +55,9 @@ export class AppComponent implements OnInit {
       "id": 58690, "eventId": 213720, "name": "Run Cycle Run - Virtual Duathlon", "shortName": "run-cycle-run", "startTime": "2020-07-12T00:30:00+0000", "endTime": "2020-07-12T15:30:00+0000", "displayName": "Run Cycle Run - Virtual Duathlon", "shortDescription": "RCR- Run Cycle Run \"Virtual Duathlon\"", "eventTimeZone": "Asia/Calcutta", "timeZoneDisplayName": null, "venueLocation": null, "city": "NA", "latitude": null, "longitude": null, "coverImageUrl": "//s3.ap-south-1.amazonaws.com/townscript-production/images/73e2c7de-7c00-4d68-aa20-70c2d29a87e4.jpg", "cardImageUrl": "//s3.ap-south-1.amazonaws.com/townscript-production/images/mobile-cover-uploaded/be9bf25f-8c39-48b3-aba9-aa3c6b6c2e73.jpg", "publicEvent": true, "live": true, "categoryId": 95, "eventTypeId": 15, "minimumTicketPrice": 149.0, "minimumTicketPriceCurrency": "INR", "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false, "imageMetadata": "{\"card\":{\"color\":\"250c44\",\"brightness\":\"dark\"},\"cover\":{\"color\":\"250c44\",\"brightness\":\"dark\"}}", "paid": true, "onlineEvent": true, "organizerId": 1988875, "pageViews": 819, "organizerScore": 0.0, "ticketsSold": 99, "roTicketsSold": 12.86, "ticketsRemaining": 21898, "townscriptIR": 0, "score": 2.53, "recurrent": false, "keywords": [{ "id": 148, "topicKeywordName": "cycling", "topicKeywordCode": "cycling", "topicId": 158, "weight": 2, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null },
       { "id": 215, "topicKeywordName": "running", "topicKeywordCode": "running", "topicId": 154, "weight": 1, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }, { "id": 521, "topicKeywordName": "virtual runs", "topicKeywordCode": "virtual-runs", "topicId": 279, "weight": 1, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }], "country": null, "countryCode": null, "organizerName": "Townscript Originals", "recurrenceStartTime": null, "recurrenceEndTime": null, "recurrenceRule": null, "locality": null, "vendorId": null, "virtualEvent": false, "organizerCountryCode": "IN"
     };
-
+    const now = new Date();
+    now.setTime(now.getTime() + (15 * 1000));
+    this.onlineEvent.startTime = now.toISOString();
 
     this.topicData = {
       cardImageUrl: 'https://s3.ap-south-1.amazonaws.com/townscript-common-resources/category/748x220/marathon1.jpg',

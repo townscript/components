@@ -15,6 +15,7 @@ import { CitySelectionModalComponent } from './components/city-selection/city-se
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CitySearchPopupComponent } from './components/city-search-popup/city-search-popup.component';
 import { FormsModule } from '@angular/forms';
+import { CountDownComponent } from './components/count-down/count-down.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { FormsModule } from '@angular/forms';
         TextOverflowClampDirective,
         DataAnalyticsDirective,
         CitySelectionModalComponent,
-        CitySearchPopupComponent
+        CitySearchPopupComponent,
+        CountDownComponent
     ],
     imports: [
         CommonModule,
@@ -36,7 +38,8 @@ import { FormsModule } from '@angular/forms';
         TextOverflowClampDirective,
         DataAnalyticsDirective,
         CitySelectionModalComponent,
-        CitySearchPopupComponent
+        CitySearchPopupComponent,
+        CountDownComponent
     ],
     providers: [SharedService, TimeService, UserService, FollowService, DataCollectorService, UtilityService]
 })

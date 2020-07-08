@@ -30,4 +30,10 @@ export class TimeService {
             + dif + pad(tzo / 60)
             + pad(tzo % 60);
     }
+
+    dateTimeWithinHours = (date: Date, hours: number): boolean => {
+        const compareDate = Date.now() + (hours * 60 * 60 * 1000);
+        const dateTime = date.getTime();
+        return compareDate > dateTime && dateTime > Date.now();
+    }
 }

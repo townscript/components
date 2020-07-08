@@ -6,6 +6,8 @@ import { UtilityService } from '../../../shared/services/utilities.service';
 import { config } from '../../../core/app-config';
 import { Router } from '@angular/router';
 import { ShareEventModalComponent } from './share-event-modal/share-event-modal.component';
+import { DateTime } from 'luxon';
+import { TimeService } from '@base/shared/services/time.service';
 
 @Component({
   selector: 'ts-listings-event-card',
@@ -23,6 +25,10 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   @Input() hideTime: boolean = true;
   router: Router = config.router;
 
+  // following date is to show countdown
+  eventStartDate: Date;
+  startingSoon: boolean;
+
   homeUrl: any;
   subObject: any;
   urlArray: string[];
@@ -32,7 +38,8 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
     public utilityService: UtilityService,
     public dialog: MatDialog,
     private browser: BrowserService,
-    private placeService: PlaceService) {
+    private placeService: PlaceService,
+    private readonly timeService: TimeService) {
   }
 
   ngOnInit() {
@@ -49,6 +56,10 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
         }
       }
     });
+    if (this.eventData.onlineEvent) {
+      this.eventStartDate = DateTime.fromISO(this.eventData.startTime).toJSDate();
+      this.startingSoon = this.timeService.dateTimeWithinHours(this.eventStartDate, 10);
+    }
   }
 
 

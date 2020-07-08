@@ -50,7 +50,7 @@
             </div>
             <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mb-2 mt-1"
                 [class.text-sm]="theme=='bms'">
-                <ng-container *ngIf="!eventData.onlineEvent || !1">
+                <ng-container *ngIf="!eventData.onlineEvent || !startingSoon">
                     <div class="date">
                         <span
                             class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} : hideTime }}
@@ -63,11 +63,15 @@
                         <span class="whitespace-no-wrap">{{getLocation()}}</span>
                     </div>
                 </ng-container>
-                <ng-container *ngIf="eventData.onlineEvent && 1">
-                    <div class="starting-in">
+                <ng-container *ngIf="eventData.onlineEvent && startingSoon">
+                    <div class="starting-in" *ngIf="!nowLive">
                         <span>Starting in </span>
-                        <span class="font-bold text-red-600 tracking-wide">50 mins 10 secs</span>
+                        <ts-countdown class="font-bold tracking-wide" [date]="eventStartDate" (reached)="nowLive = 1">
+                        </ts-countdown>
                     </div>
+                    <span *ngIf="nowLive" class="ts-enter live-now font-bold uppercase">
+                        Live Now
+                    </span>
                 </ng-container>
             </div>
 
