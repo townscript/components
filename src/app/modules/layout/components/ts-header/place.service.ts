@@ -23,7 +23,7 @@ export class PlaceService {
             const location = this.cookieService.getCookie('location');
             console.log('got location from cookie' + location);
             if (location != null && location.length > 0 && this.utilityService.IsJsonString(location)) {
-                this.updatePlace(JSON.parse(location));
+                //this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
                     const data = {
@@ -49,7 +49,12 @@ export class PlaceService {
 
     async getLocationFromIpInfo() {
         if (isPlatformBrowser(this.platformId)) {
-            const localData = localStorage.getItem('ipinfo_data');
+            const ipInfoCookieData = this.cookieService.getCookie('ipInfoData');
+            let localData = localStorage.getItem('ipinfo_data');
+            if (ipInfoCookieData && !localData) {
+                localData = ipInfoCookieData;
+                localStorage.setItem('ipinfo_data', ipInfoCookieData);
+            }
             let ipInfoData;
             if (!localData) {
                 console.log('Calling ip info!');
@@ -63,6 +68,7 @@ export class PlaceService {
                     };
                 }
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
+                this.callMaxMindTest();
             } else {
                 if (this.utilityService.IsJsonString(localData)) {
                     ipInfoData = JSON.parse(localData);
@@ -74,5 +80,9 @@ export class PlaceService {
 
     getJsonFromIpInfo() {
         return this.http.get('//ipinfo.io/json?token=' + config.IPINFO_ACCESS_TOKEN + '').toPromise();
+    }
+
+    callMaxMindTest() {
+        return this.http.get('https://nqjmyz4jvh.execute-api.ap-south-1.amazonaws.com/countryISOCode').toPromise();
     }
 }
