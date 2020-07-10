@@ -23,7 +23,7 @@ export class PlaceService {
             const location = this.cookieService.getCookie('location');
             console.log('got location from cookie' + location);
             if (location != null && location.length > 0 && this.utilityService.IsJsonString(location)) {
-                //this.updatePlace(JSON.parse(location));
+                this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
                     const data = {
@@ -32,6 +32,7 @@ export class PlaceService {
                         'currentPlace': ipInfoData['city']
                     };
                     if (!this.cookieService.getCookie('location')) {
+                        this.setLocationCookie(data);
                         this.updatePlace(data);
                     }
                 });
@@ -39,13 +40,17 @@ export class PlaceService {
         }
     }
 
-    updatePlace(data): void {
+    setLocationCookie(data): void {
         console.log('updating place in components with ');
         console.log(data);
         data = JSON.stringify(data);
         this.cookieService.setCookie('location', data, 100, '/');
+    }
+
+    updatePlace(data): void {
         this.currentPlace$.next(data);
     }
+
 
     async getLocationFromIpInfo() {
         if (isPlatformBrowser(this.platformId)) {
