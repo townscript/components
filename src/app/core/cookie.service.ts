@@ -24,6 +24,7 @@ export class CookieService {
   }
 
   public deleteCookie = (name: string): void => {
+    console.log('delete cookie called for ' + name);
     this.setCookie(name, '', -1, '/');
   }
 
@@ -34,6 +35,8 @@ export class CookieService {
       const expires: string = 'expires=' + d.toUTCString();
       const host = '.' + window.location.host.split('.').splice(1).join('.');
       document.cookie = name + '=' + value + '; ' + expires + (path.length > 0 ? '; path=' + path : '') + ';domain=' + host;
+      console.log('updated cookie after location setting is ' + document.cookie + ' for input values name ' + name + ' value '
+        + value + ' expiry ' + expireDays + ' path ' + path);
     }
   }
 
