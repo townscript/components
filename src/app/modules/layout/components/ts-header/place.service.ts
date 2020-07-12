@@ -57,7 +57,7 @@ export class PlaceService {
             let ipInfoCookieData = this.cookieService.getCookie('ipInfoData');
             let localData = localStorage.getItem('ipinfo_data');
             if (ipInfoCookieData && !localData) {
-                console.log('ipinfo cookie set before localstorage data setting ' + ipInfoCookieData);
+                console.log('ipinfo1 cookie set before localstorage data setting ' + ipInfoCookieData);
                 ipInfoCookieData = decodeURIComponent(ipInfoCookieData);
                 localData = ipInfoCookieData;
                 localStorage.setItem('ipinfo_data', ipInfoCookieData);
