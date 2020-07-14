@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   eventData: any;
   eventData2: any;
   onlineEvent: any;
+  recurringEvent: any;
   topicData: any;
 
   openDialog(type) {
@@ -54,6 +55,57 @@ export class AppComponent implements OnInit {
     this.onlineEvent = {
       "id": 58690, "eventId": 213720, "name": "Run Cycle Run - Virtual Duathlon", "shortName": "run-cycle-run", "startTime": "2020-07-12T00:30:00+0000", "endTime": "2020-07-12T15:30:00+0000", "displayName": "Run Cycle Run - Virtual Duathlon", "shortDescription": "RCR- Run Cycle Run \"Virtual Duathlon\"", "eventTimeZone": "Asia/Calcutta", "timeZoneDisplayName": null, "venueLocation": null, "city": "NA", "latitude": null, "longitude": null, "coverImageUrl": "//s3.ap-south-1.amazonaws.com/townscript-production/images/73e2c7de-7c00-4d68-aa20-70c2d29a87e4.jpg", "cardImageUrl": "//s3.ap-south-1.amazonaws.com/townscript-production/images/mobile-cover-uploaded/be9bf25f-8c39-48b3-aba9-aa3c6b6c2e73.jpg", "publicEvent": true, "live": true, "categoryId": 95, "eventTypeId": 15, "minimumTicketPrice": 149.0, "minimumTicketPriceCurrency": "INR", "organizerIsTrusted": true, "soldOutFlag": false, "reportFlag": false, "imageMetadata": "{\"card\":{\"color\":\"250c44\",\"brightness\":\"dark\"},\"cover\":{\"color\":\"250c44\",\"brightness\":\"dark\"}}", "paid": true, "onlineEvent": true, "organizerId": 1988875, "pageViews": 819, "organizerScore": 0.0, "ticketsSold": 99, "roTicketsSold": 12.86, "ticketsRemaining": 21898, "townscriptIR": 0, "score": 2.53, "recurrent": false, "keywords": [{ "id": 148, "topicKeywordName": "cycling", "topicKeywordCode": "cycling", "topicId": 158, "weight": 2, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null },
       { "id": 215, "topicKeywordName": "running", "topicKeywordCode": "running", "topicId": 154, "weight": 1, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }, { "id": 521, "topicKeywordName": "virtual runs", "topicKeywordCode": "virtual-runs", "topicId": 279, "weight": 1, "popular": null, "topicKeywordPageTitle": null, "topicKeywordPageDescription": null }], "country": null, "countryCode": null, "organizerName": "Townscript Originals", "recurrenceStartTime": null, "recurrenceEndTime": null, "recurrenceRule": null, "locality": null, "vendorId": null, "virtualEvent": false, "organizerCountryCode": "IN"
+    };
+
+    this.recurringEvent = {
+      "id": 1614,
+      "eventId": 89244,
+      "name": "Turf 6.0",
+      "shortName": "turf-60-420204",
+      "startTime": "2020-07-08T12:30:00+0000",
+      "endTime": "2020-07-31T13:30:00+0000",
+      "displayName": "turf 6.0",
+      "shortDescription": null,
+      "eventTimeZone": "Asia/Calcutta",
+      "timeZoneDisplayName": null,
+      "venueLocation": null,
+      "city": "NA",
+      "latitude": null,
+      "longitude": null,
+      "coverImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/large/default-city.jpg",
+      "cardImageUrl": "https://s3.ap-south-1.amazonaws.com/townscript-common-resources/city-banners/mobile/default-city.jpg",
+      "publicEvent": true,
+      "live": true,
+      "categoryId": null,
+      "eventTypeId": 17,
+      "minimumTicketPrice": null,
+      "minimumTicketPriceCurrency": null,
+      "organizerIsTrusted": true,
+      "soldOutFlag": false,
+      "reportFlag": false,
+      "imageMetadata": "{\"card\":{\"color\":\"425832\",\"brightness\":\"dark\"},\"cover\":{\"color\":\"374827\",\"brightness\":\"dark\"}}",
+      "paid": false,
+      "onlineEvent": true,
+      "organizerId": 798,
+      "pageViews": 2,
+      "organizerScore": 0.0,
+      "ticketsSold": 3,
+      "roTicketsSold": 0.14,
+      "ticketsRemaining": 297,
+      "townscriptIR": 0,
+      "score": 1.59,
+      "recurrent": true,
+      "keywords": null,
+      "country": null,
+      "countryCode": null,
+      "organizerName": "Minaz abc",
+      "recurrenceStartTime": "05:30 PM",
+      "recurrenceEndTime": "08:30 PM",
+      "recurrenceRule": "RRULE:FREQ=DAILY;INTERVAL=1",
+      "locality": null,
+      "vendorId": 1,
+      "virtualEvent": false,
+      "organizerCountryCode": "IN"
     };
     const now = new Date();
     now.setTime(now.getTime() + (15 * 1000));
