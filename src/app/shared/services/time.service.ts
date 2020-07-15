@@ -44,7 +44,7 @@ export class TimeService {
         const dtstart = DateTime.fromFormat(`${ddMMyyyyDate} ${recTime}`, 'dd-MM-yyyy hh:mm a').toJSDate();
 
         const rrule = rrulestr(rruleString, { 'dtstart': dtstart });
-        const recDates = rrule.between(dtstart, endDate).filter(date => date > new Date());
+        const recDates = rrule.between(dtstart, endDate, true).filter(date => date > new Date());
         return recDates.length > 0 ? recDates[0] : startDate;
     }
 }
