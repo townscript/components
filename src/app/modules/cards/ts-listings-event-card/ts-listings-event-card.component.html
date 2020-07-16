@@ -88,7 +88,7 @@
             <div class="online flex items-center border px-2 rounded-full mr-5 md:ml-auto"
                 *ngIf="eventData.onlineEvent">
                 <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
-                <span class="online__text text-xs tracking-widest font-bold uppercase">Online</span>
+                <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
             </div>
         </div>
 
@@ -115,7 +115,7 @@
             <div class="online flex items-center border px-2 rounded-full"
                 *ngIf="gridType=='grid' && eventData.onlineEvent">
                 <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
-                <span class="online__text text-xs tracking-widest font-bold uppercase">Online</span>
+                <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
             </div>
 
             <div class="actions flex list-actions" *ngIf="gridType=='list'">
