@@ -21,12 +21,10 @@ export class PlaceService {
         this.documentIsAccessible = isPlatformBrowser(this.platformId);
         if (this.documentIsAccessible) {
             const location = this.cookieService.getCookie('location');
-            console.log('got location from cookie' + location);
             if (location != null && location.length > 0 && this.utilityService.IsJsonString(location)) {
                 this.updatePlace(JSON.parse(location));
             } else {
                 this.getLocationFromIpInfo().then(ipInfoData => {
-                    console.log('returned value from get location for ipinfo is ' + ipInfoData);
                     const data = {
                         'city': ipInfoData['city'],
                         'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in',
@@ -41,10 +39,7 @@ export class PlaceService {
     }
 
     updatePlace(data): void {
-        console.log('updating place in components with ');
-        console.log(data);
         data = JSON.stringify(data);
-        console.log(' strigified data setting in cookie for location is ' + data);
         this.cookieService.setCookie('location', data, 100, '/');
         this.currentPlace$.next(data);
     }
@@ -55,20 +50,16 @@ export class PlaceService {
             let ipInfoCookieData = this.cookieService.getCookie('ipInfoData');
             let localData = localStorage.getItem('ipinfo_data');
             if (ipInfoCookieData && !localData) {
-                console.log('ipinfo2 cookie set before localstorage data setting ' + ipInfoCookieData);
                 ipInfoCookieData = decodeURIComponent(ipInfoCookieData);
-                console.log('decoded value is ' + ipInfoCookieData);
                 const jsonIpInfoCookie = JSON.parse(ipInfoCookieData);
                 const localDataJson = { 'countryCode': '', 'city': '' };
                 localDataJson.countryCode = jsonIpInfoCookie.country;
                 localDataJson.city = jsonIpInfoCookie.city;
                 localData = JSON.stringify(localDataJson);
-                console.log('localdata after complete parsing is ' + localData);
                 localStorage.setItem('ipinfo_data', localData);
             }
             let ipInfoData;
             if (!localData) {
-                console.log('Calling ip info!');
                 const ipInfoJson = await this.getJsonFromIpInfo().catch(err => {
                     ipInfoData = { 'countryCode': 'in', 'city': 'india' };
                 });
@@ -95,8 +86,8 @@ export class PlaceService {
 
     callMaxMindTest() {
         this.http.get('https://nqjmyz4jvh.execute-api.ap-south-1.amazonaws.com/countryISOCode').subscribe(
-            data => console.log('successful maxmind invocation from place service'),
-            error => console.log('failed invocation for maxmind from place service')
+            data => { },
+            error => { }
         );
     }
 }
