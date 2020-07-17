@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DateTime } from 'luxon';
+import { rrulestr } from 'rrule';
 
 @Injectable()
 export class TimeService {
@@ -35,5 +36,15 @@ export class TimeService {
         const compareDate = Date.now() + (hours * 60 * 60 * 1000);
         const dateTime = date.getTime();
         return compareDate > dateTime && dateTime > Date.now();
+    }
+
+    nextOccurenceFromRRule = (startDate: Date, endDate: Date, rruleString: string, recTime: string): Date => {
+
+        const ddMMyyyyDate = DateTime.fromJSDate(startDate).toFormat('dd-MM-yyyy');
+        const dtstart = DateTime.fromFormat(`${ddMMyyyyDate} ${recTime}`, 'dd-MM-yyyy hh:mm a').toJSDate();
+
+        const rrule = rrulestr(rruleString, { 'dtstart': dtstart });
+        const recDates = rrule.between(dtstart, endDate, true).filter(date => date > new Date());
+        return recDates.length > 0 ? recDates[0] : startDate;
     }
 }

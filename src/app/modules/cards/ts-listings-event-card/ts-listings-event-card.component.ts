@@ -59,6 +59,11 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
     });
     if (this.eventData.onlineEvent) {
       this.eventStartDate = DateTime.fromISO(this.eventData.startTime).toJSDate();
+      if (this.eventData.recurrent) {
+        this.eventStartDate = this.timeService.nextOccurenceFromRRule(this.eventStartDate,
+          DateTime.fromISO(this.eventData.endTime).toJSDate(),
+          this.eventData.recurrenceRule, this.eventData.recurrenceStartTime);
+      }
       this.startingSoon = this.timeService.dateTimeWithinHours(this.eventStartDate, 10);
     }
   }
