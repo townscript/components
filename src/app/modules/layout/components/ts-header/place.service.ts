@@ -70,7 +70,6 @@ export class PlaceService {
                     };
                 }
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
-                this.callMaxMindTest();
             } else {
                 if (this.utilityService.IsJsonString(localData)) {
                     ipInfoData = JSON.parse(localData);
@@ -82,12 +81,5 @@ export class PlaceService {
 
     getJsonFromIpInfo() {
         return this.http.get('//ipinfo.io/json?token=' + config.IPINFO_ACCESS_TOKEN + '').toPromise();
-    }
-
-    callMaxMindTest() {
-        this.http.get('https://nqjmyz4jvh.execute-api.ap-south-1.amazonaws.com/countryISOCode').subscribe(
-            data => { },
-            error => { }
-        );
     }
 }
