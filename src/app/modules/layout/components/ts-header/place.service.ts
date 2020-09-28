@@ -52,25 +52,27 @@ export class PlaceService {
             if (ipInfoCookieData && !localData) {
                 ipInfoCookieData = decodeURIComponent(ipInfoCookieData);
                 const jsonIpInfoCookie = JSON.parse(ipInfoCookieData);
-                const localDataJson = { 'countryCode': '', 'city': '' };
+                const localDataJson = { 'countryCode': '', 'city': '', ip: '', 'country': '' };
                 localDataJson.countryCode = jsonIpInfoCookie.country;
+                localDataJson.country = jsonIpInfoCookie.country;
                 localDataJson.city = jsonIpInfoCookie.city;
+                localDataJson.ip = jsonIpInfoCookie.ip;
                 localData = JSON.stringify(localDataJson);
                 localStorage.setItem('ipinfo_data', localData);
             }
             let ipInfoData;
             if (!localData) {
                 const ipInfoJson = await this.getJsonFromIpInfo().catch(err => {
-                    ipInfoData = { 'countryCode': 'in', 'city': 'india' };
+                    ipInfoData = { 'countryCode': 'in', 'city': 'india', 'country': 'in' };
                 });
                 if (ipInfoJson) {
                     ipInfoData = {
-                        'countryCode': ipInfoJson['country'].toLowerCase(),
-                        'city': ipInfoJson['city'].toLowerCase()
+                        'countryCode': ipInfoJson['countryCode'].toLowerCase(),
+                        'ip': ipInfoJson['ip'],
+                        'country': ipInfoJson['countryCode'].toLowerCase()
                     };
                 }
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));
-                this.callMaxMindTest();
             } else {
                 if (this.utilityService.IsJsonString(localData)) {
                     ipInfoData = JSON.parse(localData);
@@ -81,13 +83,7 @@ export class PlaceService {
     }
 
     getJsonFromIpInfo() {
-        return this.http.get('//ipinfo.io/json?token=' + config.IPINFO_ACCESS_TOKEN + '').toPromise();
-    }
-
-    callMaxMindTest() {
-        this.http.get('https://nqjmyz4jvh.execute-api.ap-south-1.amazonaws.com/countryISOCode').subscribe(
-            data => { },
-            error => { }
-        );
+        return this.http.get('https://96ooltknqg.execute-api.ap-south-1.amazonaws.com/countryfromip')
+            .toPromise();
     }
 }
