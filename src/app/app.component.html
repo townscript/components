@@ -14,7 +14,7 @@
 
     <div class="flex flex-wrap m-10">
         <div class="m-2" style="width: 320px">
-            <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData">
+            <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData" [cfData]="goalData">
             </ts-listings-event-card>
         </div>
         <div class="m-2" style="width: 320px">
@@ -38,7 +38,8 @@
     <app-follow></app-follow>
 
     <div class="lg:px-48 my-3 mx-3">
-        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData" [cfData]="goalData">
+        </ts-listings-event-card>
     </div>
 
     <div class="lg:px-48 my-3 mx-3 mb-10">
@@ -62,9 +63,11 @@
     <div id="card-container" class=" px-3 md:px-42 flex-wrap mr-2 flex flex-col justify-between">
         <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
         <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
-        <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData" [cfData]="goalData">
+        </ts-listings-event-card>
         <span>List</span>
-        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData"></ts-listings-event-card>
+        <ts-listings-event-card [type]="'regular'" [gridType]="'list'" [eventData]="eventData" [cfData]="goalData">
+        </ts-listings-event-card>
 
     </div>
     <ts-listings-event-card [type]="'regular'" [gridType]="'grid'" [eventData]="eventData"></ts-listings-event-card>

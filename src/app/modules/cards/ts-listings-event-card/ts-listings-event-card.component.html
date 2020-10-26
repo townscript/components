@@ -11,6 +11,12 @@
                 </span>
             </a>
         </div>
+        <div class="topic-bubble mr-auto" *ngIf="cfData">
+            <span class="bubble px-2 p-1 text-xs rounded-full font-bold tracking-widest text-white uppercase"
+                appDataAnalytics eventLabel="keyword" clickLocation="">
+                Crowdfunding
+            </span>
+        </div>
         <div class="actions flex">
             <div class="follow self-end px-3">
                 <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff"
@@ -86,15 +92,21 @@
                 </span>
             </a>
             <div class="online flex items-center border px-2 rounded-full mr-5 md:ml-auto"
-                *ngIf="eventData.onlineEvent">
+                *ngIf="eventData.onlineEvent && !cfData">
                 <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
                 <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
+            </div>
+            <div class="flex items-center px-2 rounded-full bg-gray-100 text-sm mr-5 md:ml-auto"
+                *ngIf="!eventData.onlineEvent && cfData && cfData.crowdFundedGoalStatus === 'REACHED'">
+                <span>🎉</span>
+                <span class="text-gray-700">Goal Reached</span>
             </div>
         </div>
 
         <div class="gradient-separator w-full" *ngIf="gridType=='list'"></div>
 
         <div class="flex items-center justify-between footer"
+            *ngIf="!cfData || !(cfData.crowdFundedGoalStatus === 'IN_PROGESS')"
             [ngClass]="gridType == 'list' ? 'flex-1 pr-3 md:pr-5 py-1' : ''">
             <div class="price">
                 <div class="paid flex items-baseline" *ngIf="eventData.minimumTicketPrice">
@@ -113,9 +125,15 @@
             </div>
 
             <div class="online flex items-center border px-2 rounded-full"
-                *ngIf="gridType=='grid' && eventData.onlineEvent">
+                *ngIf="gridType=='grid' && eventData.onlineEvent && !cfData">
                 <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
                 <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
+            </div>
+
+            <div class="flex items-center px-2 rounded-full bg-gray-100 text-sm"
+                *ngIf="gridType=='grid' && !eventData.onlineEvent && cfData && cfData.crowdFundedGoalStatus === 'REACHED'">
+                <span>🎉</span>
+                <span class="text-gray-700">Goal Reached</span>
             </div>
 
             <div class="actions flex list-actions" *ngIf="gridType=='list'">
@@ -127,6 +145,25 @@
                     <i appDataAnalytics eventLabel="share" clickLocation=""
                         class="text-primary mdi mdi-share-variant text-lg md:text-2xl share"
                         (click)="shareEvent($event)"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer flex items-baseline" *ngIf="cfData && cfData.crowdFundedGoalStatus === 'IN_PROGESS'">
+            <div class="" [hidden]="cfData && cfData.goalAmountReached === 0">
+                <span class="font-bold text-primary">{{cfData.goalPercentageReached}}%</span>
+                <span class="text-sm"> goal reached</span>
+            </div>
+            <div class="" [hidden]="cfData && cfData.goalAmountReached > 0">
+                <span class="font-bold text-primary">
+                    {{cfData.goalAmount | currency:cfData.goalCurrency : 'symbol':'1.0-0'}}
+                </span>
+                <span class="text-sm"> target</span>
+            </div>
+            <div class="h-2 flex-1 ml-4 rounded-full bg-gray-400 goal-progress"
+                [ngClass]="{'mr-4 my-4': gridType == 'list'}">
+                <div class="w-0 h-2 rounded-full bg-green-500 goal-progress__mark"
+                    [style.width]="cfData.goalPercentageReached > 1 ? cfData.goalPercentageReached+'%' : '1%'">
                 </div>
             </div>
         </div>

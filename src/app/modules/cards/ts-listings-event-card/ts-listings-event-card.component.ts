@@ -23,6 +23,7 @@ export class TsListingEventCardComponent implements OnInit, OnDestroy {
   @Input() hideFollowShare = false;
   @Input() theme = 'townscript';
   @Input() hideTime: boolean = true;
+  @Input() cfData?: any;
   router: Router = config.router;
 
   // following date is to show countdown

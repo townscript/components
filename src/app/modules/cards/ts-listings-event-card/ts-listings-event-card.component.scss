@@ -36,6 +36,9 @@
     background: linear-gradient( 180deg, rgba(0,0,0,0.7) 0%, transparent 95%);
   }
 
+  .bubble{
+    background-color: rgba(55, 130, 196, 0.78);;
+  }
 
   .flex-2{
     flex: 2;
@@ -104,6 +107,14 @@
       }
       &__text{
         color: #4B4B4B;
+      }
+    }
+    .goal-progress{
+      &, &__mark{
+          height: 6px;
+      }
+      &__mark{
+          transition: width .5s linear;
       }
     }
     ts-countdown, .live-now {
