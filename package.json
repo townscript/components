@@ -1,6 +1,6 @@
 {
   "name": "@townscript/components",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0",
