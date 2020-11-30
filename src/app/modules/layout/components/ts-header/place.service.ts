@@ -28,7 +28,8 @@ export class PlaceService {
                     const data = {
                         'city': ipInfoData['city'],
                         'country': ipInfoData['countryCode'] ? ipInfoData['countryCode'].toLowerCase() : 'in',
-                        'currentPlace': ipInfoData['city']
+                        'currentPlace': ipInfoData['city'],
+                        'countryName': ipInfoData['countryName']
                     };
                     if (!this.cookieService.getCookie('location')) {
                         this.updatePlace(data);
@@ -52,9 +53,10 @@ export class PlaceService {
             if (ipInfoCookieData && !localData) {
                 ipInfoCookieData = decodeURIComponent(ipInfoCookieData);
                 const jsonIpInfoCookie = JSON.parse(ipInfoCookieData);
-                const localDataJson = { 'countryCode': '', 'city': '', ip: '', 'country': '' };
+                const localDataJson = { 'countryCode': '', 'city': '', ip: '', 'country': '', 'countryName': '' };
                 localDataJson.countryCode = jsonIpInfoCookie.country;
                 localDataJson.country = jsonIpInfoCookie.country;
+                localDataJson.countryName = jsonIpInfoCookie.countryName;
                 localDataJson.city = jsonIpInfoCookie.city;
                 localDataJson.ip = jsonIpInfoCookie.ip;
                 localData = JSON.stringify(localDataJson);
@@ -63,13 +65,14 @@ export class PlaceService {
             let ipInfoData;
             if (!localData) {
                 const ipInfoJson = await this.getJsonFromIpInfo().catch(err => {
-                    ipInfoData = { 'countryCode': 'in', 'city': 'india', 'country': 'in' };
+                    ipInfoData = { 'countryCode': 'in', 'city': 'india', 'country': 'in', 'countryName': 'India' };
                 });
                 if (ipInfoJson) {
                     ipInfoData = {
                         'countryCode': ipInfoJson['countryCode'].toLowerCase(),
                         'ip': ipInfoJson['ip'],
-                        'country': ipInfoJson['countryCode'].toLowerCase()
+                        'country': ipInfoJson['countryCode'].toLowerCase(),
+                        'countryName': ipInfoJson['countryName'].toLowerCase()
                     };
                 }
                 localStorage.setItem('ipinfo_data', JSON.stringify(ipInfoData));

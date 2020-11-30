@@ -26,9 +26,9 @@ export class SearchComponent implements OnInit {
     @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
     @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
     @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
-    @ViewChild('searchTextInputEle', { static : false }) searchTextInputEle: ElementRef;
+    @ViewChild('searchTextInputEle', { static: false }) searchTextInputEle: ElementRef;
     @ViewChildren(SearchSuggestionComponent) listItems!: QueryList<SearchSuggestionComponent>;
-    @Input()searchText: string = '';
+    @Input() searchText: string = '';
     algoliaIndexName = config.algoliaIndexName;
     // searchText: string = "";
     keyboardEventsManager: ListKeyManager<any>;
@@ -95,27 +95,27 @@ export class SearchComponent implements OnInit {
         this.keyboardEventsManager
             .change
             .subscribe((activeIndex) => {
-            this.listItems.map((item, index) => {
-                item.setActive(activeIndex === index);
-                // if(item.isActive == true && index !== activeIndex) {
-                //     item.setActive(false);
-                // }
-                return item;
+                this.listItems.map((item, index) => {
+                    item.setActive(activeIndex === index);
+                    // if(item.isActive == true && index !== activeIndex) {
+                    //     item.setActive(false);
+                    // }
+                    return item;
+                });
             });
-        });
     }
 
     hoverOnSuggestion = (indexOfItemhoveredOn) => {
         console.log(indexOfItemhoveredOn);
         this.searchActive = true;
         var activeItem = this.keyboardEventsManager.activeItem;
-        if(activeItem)activeItem.setActive(false);
+        if (activeItem) activeItem.setActive(false);
         this.keyboardEventsManager.setActiveItem(indexOfItemhoveredOn);
         this.keyboardEventsManager.activeItem.setActive(true);
     }
 
     chooseSuggestion = (text) => {
-        if(!this.searchText)return;
+        if (!this.searchText) return;
         this.typedSearchText = this.searchText;
         this.searchText = text;
         this.addOrUpdateTSSuggestions();
@@ -130,21 +130,21 @@ export class SearchComponent implements OnInit {
     goToSearchResultsPage = () => {
         this.searchActive = false;
         this.intentSelected = true;
-        var encodedSearchText = this.searchText.replace(/ +/g,'-');
-        var encodedCurrentPlace = this.activePlace.replace(/ +/g,'-')
+        var encodedSearchText = this.searchText.replace(/ +/g, '-');
+        var encodedCurrentPlace = this.activePlace.replace(/ +/g, '-')
         var queryParams = {};
-        if(this.activePlace) {
+        if (this.activePlace) {
             queryParams['place'] = encodedCurrentPlace;
-        } 
-        if(encodedSearchText) {
+        }
+        if (encodedSearchText) {
             queryParams['q'] = encodedSearchText;
         }
-        const navigationExtras : NavigationExtras = {
-            state : {
-                typedText : this.typedSearchText,
+        const navigationExtras: NavigationExtras = {
+            state: {
+                typedText: this.typedSearchText,
                 suggestions: this.searchResults
             },
-            queryParams : queryParams
+            queryParams: queryParams
         };
         this.router.navigate(['/search'], navigationExtras);
     }
@@ -235,7 +235,7 @@ export class SearchComponent implements OnInit {
                 this.keyboardEventsManager.onKeydown(event);
                 return false;
             } else if (event.key === "Enter") {
-                if(this.keyboardEventsManager.activeItem) {
+                if (this.keyboardEventsManager.activeItem) {
                     this.keyboardEventsManager.activeItem.selectItem();
                 } else {
                     this.chooseSuggestion(this.searchText);
@@ -268,11 +268,13 @@ export class SearchComponent implements OnInit {
                     const data = JSON.parse(<any>res);
                     if (data['currentPlace'] != undefined) {
                         this.activePlace = data['currentPlace'];
+                    } else if (data['countryName'] !== undefined) {
+                        this.activePlace = data['countryName'];
                     }
                     if (data && data['country'] && data['city']) {
                         this.homeUrl = ('/' + data['country'] + '/' + data['city']).toLowerCase();
                     }
-                    
+
                 }
             }
         });
