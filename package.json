@@ -33,7 +33,7 @@
     "intl-tel-input": "^16.0.2",
     "luxon": "^1.17.2",
     "ng-lazyload-image": "7.0.1",
-    "ng-recaptcha": "^4.3.0",
+    "ng-recaptcha": "^5.0.0",
     "rrule": "2.6.4",
     "rxjs": "~6.6.3",
     "tailwindcss": "^1.0.5",
