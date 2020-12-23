@@ -23,8 +23,8 @@ export class TsHeaderComponent implements OnInit {
   @Input() source = 'marketplace';
   @Input() shadow = true;
   @Input() searchText = '';
-  @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
-  @ViewChild('userMenuEle', { static: false }) userMenuEle: ElementRef;
+  @ViewChild('citySuggestions') citySuggestions: ElementRef;
+  @ViewChild('userMenuEle') userMenuEle: ElementRef;
 
   user: any;
   router = config.router;

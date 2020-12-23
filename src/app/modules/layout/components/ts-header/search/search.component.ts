@@ -23,10 +23,10 @@ const algoliasearch = algoliaSearchImported;
 })
 export class SearchComponent implements OnInit {
 
-    @ViewChild('cityInput', { static: false }) cityInput: ElementRef;
-    @ViewChild('citySuggestions', { static: false }) citySuggestions: ElementRef;
-    @ViewChild('searchResultsEle', { static: false }) searchResultsEle: ElementRef;
-    @ViewChild('searchTextInputEle', { static: false }) searchTextInputEle: ElementRef;
+    @ViewChild('cityInput') cityInput: ElementRef;
+    @ViewChild('citySuggestions') citySuggestions: ElementRef;
+    @ViewChild('searchResultsEle') searchResultsEle: ElementRef;
+    @ViewChild('searchTextInputEle') searchTextInputEle: ElementRef;
     @ViewChildren(SearchSuggestionComponent) listItems!: QueryList<SearchSuggestionComponent>;
     @Input() searchText: string = '';
     algoliaIndexName = config.algoliaIndexName;
