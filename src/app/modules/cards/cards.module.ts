@@ -6,7 +6,7 @@ import { BrowserService } from '../../core/browser.service';
 import { SharedModule } from '../../shared/shared.module';
 // import { TsListingCardComponent } from './ts-listing-card/ts-listing-card.component';
 import { TsCardSkeletonComponent } from './ts-card-skeleton/ts-card-skeleton.component';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TsListingEventCardComponent } from './ts-listings-event-card/ts-listings-event-card.component';
 import { ShareEventModalComponent } from './ts-listings-event-card/share-event-modal/share-event-modal.component';
 

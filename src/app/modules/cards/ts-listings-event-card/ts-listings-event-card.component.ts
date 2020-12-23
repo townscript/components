@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { BrowserService } from '../../../core/browser.service';
 import { PlaceService } from '../../layout/components/ts-header/place.service';
 import { UtilityService } from '../../../shared/services/utilities.service';

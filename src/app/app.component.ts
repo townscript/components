@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginModalComponent } from './modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
 import { DateTime } from 'luxon';
