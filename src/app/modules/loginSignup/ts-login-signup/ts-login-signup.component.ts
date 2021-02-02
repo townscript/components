@@ -91,6 +91,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
                 this.rdurl = this.rdurl.replace("[", "%5B");
                 this.rdurl = this.rdurl.replace("]", "%5D");
             }
+            this.checkIfRdUrlIsLegit();
         });
     }
 
@@ -100,6 +101,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             + 'user/signinwithfacebook' + (this.rdurl == undefined ? '' : '?rdurl=' + this.rdurl);
         this.googleLoginURL = config.baseUrl + 'api/'
             + 'user/signinwithgoogle' + (this.rdurl == undefined ? '' : '?rdurl=' + this.rdurl);
+        this.checkIfRdUrlIsLegit();
       }
     }
 
@@ -215,7 +217,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
             if (this.mode === 'dialog') {
                 this.close(true);
             }
-            
+
             // no redirection needed ,in case of follow
             if (this.source != 'follow') {
               if(this.rdurl != undefined) {
@@ -388,5 +390,20 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         const pwdInput = <HTMLInputElement>document.getElementById('user-pwd');
         pwdInput.type = this.showPassword ? 'text' : 'password';
     }
+
+
+    checkIfRdUrlIsLegit = (): any => {
+      if(this.isPathAbsolute(this.rdurl)){
+        let url = new URL(this.rdurl);
+        if(url.host.indexOf("townscript.com") == -1){
+          this.rdurl = '/';
+        }
+      }
+    }
+
+    isPathAbsolute = (path): boolean => {
+      return /^(?:\/|[a-z]+:\/\/)/.test(path);
+    }
+
 
 }
