@@ -14,6 +14,7 @@ export class UserMenuComponent implements OnInit {
     @Input() panelOpen1 = true;
     @Input() panelOpen2 = true;
     @Input() user: any;
+    @Input() showMobilePopup = false;
     @Output() close = new EventEmitter();
 
     host = config.baseUrl;

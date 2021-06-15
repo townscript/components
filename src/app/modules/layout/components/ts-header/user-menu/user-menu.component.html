@@ -24,28 +24,28 @@
             </ts-panel-header>
             <ts-panel-body [open]="panelOpen1">
                 <div class="text-sm text-gray-800">
-                    <a [href]="host+'dashboard/v2/events'">
+                    <a [href]="host+'dashboard/v2/events' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="manage" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
                             <i class="mdi mdi-calendar-today mr-2 color-blue text-xl"></i>
                             Manage Events
                         </div>
                     </a>
-                    <a [href]="host+'dashboard/v2/billing'">
+                    <a [href]="host+'dashboard/v2/billing' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="billings" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
                             <i class="mdi mdi-cash mr-2 color-blue text-xl"></i>
                             Billing
                         </div>
                     </a>
-                    <a [href]="host+'dashboard/reports'">
+                    <a [href]="host+'dashboard/reports' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="reports" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
                             <i class="mdi mdi-chart-line mr-2 color-blue text-xl"></i>
                             Reports
                         </div>
                     </a>
-                    <a [href]="host+'dashboard/promo'">
+                    <a [href]="host+'dashboard/promo' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="promo" clickLocation="" matRipple
                             class="px-1 py-1 pb-2 flex items-center border-b border-gray-300">
                             <i class="mdi mdi-bullhorn mr-2 color-blue text-xl"></i>
