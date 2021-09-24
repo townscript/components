@@ -21,7 +21,6 @@ export class TsHeaderComponent implements OnInit {
 
   @Input() backState = false;
   @Input() source = 'marketplace';
-  @Input() shadow = true;
   @Input() searchText = '';
   @ViewChild('citySuggestions') citySuggestions: ElementRef;
   @ViewChild('userMenuEle') userMenuEle: ElementRef;

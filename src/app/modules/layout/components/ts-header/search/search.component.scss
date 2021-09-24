@@ -2,11 +2,8 @@
 @media (min-width: $screen-sm-max){
     .search-container{
         height: 42px;
-        border-radius: 2px;
         transition: all ease 0.3s;
         .left-section{
-            background-color: $gray--light;
-            border-radius: 4px;
             &:focus{
                 background: white;
             }
@@ -15,10 +12,9 @@
                 transition: all ease 0.3s;                 
             }
             .suggestions{
-                top: 100%;
+                top: 120%;
                 left: 0;
                 background: white;
-                border-top: 1px solid rgba(151, 151, 151, 0.4);
                 ul{
                     li{
                         transition: all ease 0.15s;
@@ -34,12 +30,12 @@
             transition: all ease 0.3s;
             max-width: 33.33%;
             &.active{
-                background: white;
-                box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);   
+                // background: white;
+                // box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);   
             }
             .popup{
                 position: absolute;
-                top: 135%;
+                top: 120%;
                 width: 135%;
                 left: -34%;
             }
@@ -47,10 +43,10 @@
         &.active{
             .left-section{
                 background: white;
-                box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+                // box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
             }
             .suggestions{
-                box-shadow: 0 11px 15px 0 rgba(0, 0, 0, 0.15);
+                box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
             }
         }
     }

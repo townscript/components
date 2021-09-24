@@ -19,7 +19,7 @@
                     <span class="text-gray-700">
                         Organizing Events
                     </span>
-                    <i class="mdi mdi-chevron-down text-2xl color-blue" [class.rotate-180]="panelOpen1"></i>
+                    <i class="mdi mdi-chevron-down text-2xl text-primary" [class.rotate-180]="panelOpen1"></i>
                 </div>
             </ts-panel-header>
             <ts-panel-body [open]="panelOpen1">
@@ -27,28 +27,28 @@
                     <a [href]="host+'dashboard/v2/events' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="manage" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
-                            <i class="mdi mdi-calendar-today mr-2 color-blue text-xl"></i>
+                            <i class="mdi mdi-calendar-today mr-2 text-primary text-xl"></i>
                             Manage Events
                         </div>
                     </a>
                     <a [href]="host+'dashboard/v2/billing' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="billings" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
-                            <i class="mdi mdi-cash mr-2 color-blue text-xl"></i>
+                            <i class="mdi mdi-cash mr-2 text-primary text-xl"></i>
                             Billing
                         </div>
                     </a>
                     <a [href]="host+'dashboard/reports' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="reports" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
-                            <i class="mdi mdi-chart-line mr-2 color-blue text-xl"></i>
+                            <i class="mdi mdi-chart-line mr-2 text-primary text-xl"></i>
                             Reports
                         </div>
                     </a>
                     <a [href]="host+'dashboard/promo' + (showMobilePopup?'?showMobileMessage=true':'')">
                         <div appDataAnalytics eventLabel="promo" clickLocation="" matRipple
                             class="px-1 py-1 pb-2 flex items-center border-b border-gray-300">
-                            <i class="mdi mdi-bullhorn mr-2 color-blue text-xl"></i>
+                            <i class="mdi mdi-bullhorn mr-2 text-primary text-xl"></i>
                             Promotions
                         </div>
                     </a>
@@ -63,7 +63,7 @@
                     <span class="text-gray-700">
                         Attending Events
                     </span>
-                    <i class="mdi mdi-chevron-down text-2xl color-blue" [class.rotate-180]="panelOpen2"></i>
+                    <i class="mdi mdi-chevron-down text-2xl text-primary" [class.rotate-180]="panelOpen2"></i>
                 </div>
             </ts-panel-header>
             <ts-panel-body [open]="panelOpen2">
@@ -71,14 +71,14 @@
                     <a [href]="host+'dashboard/mybookings'">
                         <div appDataAnalytics eventLabel="bookings" clickLocation="" matRipple
                             class="px-1 py-1 flex items-center">
-                            <i class="mdi mdi-ticket-account mr-2 color-blue text-xl"></i>
+                            <i class="mdi mdi-ticket-account mr-2 text-primary text-xl"></i>
                             My Bookings
                         </div>
                     </a>
                     <a [href]="host+'dashboard/following'">
                         <div appDataAnalytics eventLabel="following" clickLocation="" matRipple
                             class="px-1 py-1 pb-2 flex items-center border-b border-gray-300">
-                            <i class="mdi mdi-heart mr-2 color-blue text-xl "></i>
+                            <i class="mdi mdi-heart mr-2 text-primary text-xl "></i>
                             Following
                         </div>
                     </a>
@@ -90,7 +90,7 @@
             <span class="text-gray-700">
                 Logout
             </span>
-            <i class="mdi mdi-logout-variant text-2xl color-blue"></i>
+            <i class="mdi mdi-logout-variant text-2xl text-primary"></i>
         </div>
     </div>
 </div>

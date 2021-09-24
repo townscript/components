@@ -20,8 +20,7 @@
     </div>
 </nav>
 
-<nav class="ts-header-new max-w-full w-screen fixed flex items-center" [class.shadow]="shadow"
-    *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen fixed flex items-center" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
@@ -65,7 +64,8 @@
             </div> -->
         </div>
         <div class="lg:w-5/12 ml-3 hidden sm:hidden md:hidden lg:flex">
-            <app-search [searchText]="searchText" *ngIf="Components.indexOf('eventSearch')>-1" class="w-full"></app-search>
+            <app-search [searchText]="searchText" *ngIf="Components.indexOf('eventSearch')>-1" class="w-full">
+            </app-search>
         </div>
         <div class="invisible sm:w-1/4 lg:w-1/12 flex items-center ml-6 view-type text-xl color-blue">
             <!-- <i class="active text-xl mdi mdi-book-open mr-4"></i>
@@ -76,23 +76,23 @@
             <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation=""
                 *ngIf="Components.indexOf('createEventBtn')>-1"
                 class="create-btn cursor-pointer flex h-full justify-center items-center">
-                <span class="font-semibold text-sm tracking-wide leading-loose mr-2">CREATE EVENT</span>
-                <i class="mdi mdi-ticket text-xl md:text-2xl"></i>
+                <i class="mdi mdi-ticket text-xl md:text-2xl mr-2"></i>
+                <span class="font-semibold text-sm tracking-wide leading-loose">CREATE EVENT</span>
             </a>
         </div>
         <div #userMenuEle *ngIf="Components.indexOf('userMenu')>-1"
             class="position-relative sm:w-1/1 justify-end hidden sm:hidden md:hidden lg:flex items-center ml-auto">
             <div appDataAnalytics eventLabel="loginSignup" clickLocation=""
                 class="flex items-center cursor-pointer px-2" (click)="openLogin()" *ngIf="!user" matRipple>
-                <i class="mdi mdi-account-circle text-2xl md:text-4xl mr-2 color-blue"></i>
+                <i class="mdi mdi-account-circle text-2xl md:text-4xl mr-2 text-primary"></i>
                 <span class="text-gray-800 whitespace-no-wrap">Login | Signup</span>
             </div>
             <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user" matRipple>
                 <img class="rounded-full mr-2" width="36" [src]="s3BucketUrl+'/images/'+user?.s3imagename" />
-                <i class="mdi mdi-chevron-down text-xl text-gray-700" [class.rotate-180]="userMenu"></i>
+                <!-- <i class="mdi mdi-chevron-down text-xl text-gray-700" [class.rotate-180]="userMenu"></i> -->
                 <!-- <span>{{user.user}}</span> -->
             </div>
-            <div class="user-menu position-absolute shadow-md px-2 enter-slide-bottom" *ngIf="userMenu">
+            <div class="user-menu position-absolute rounded-lg px-2 enter-slide-bottom" *ngIf="userMenu">
                 <app-user-menu [user]="user" (close)="closeMyProfile($event)"></app-user-menu>
             </div>
             <!-- <ts-button text="Login | Signup" class="text-base"></ts-button> -->
@@ -102,7 +102,7 @@
         <div class="sm:w-1/1 ml-auto flex  sm:flex md:flex lg:hidden items-center">
             <div *ngIf="Components.indexOf('mobileSearch')>-1" class="rounded-full flex items-center" matRipple
                 (click)="navigateToMobileSearch()">
-                <i class="mdi mdi-magnify text-2xl md:mx-2 color-blue"></i>
+                <i class="mdi mdi-magnify text-2xl md:mx-2 text-primary"></i>
             </div>
             <!-- <div *ngIf="Components.indexOf('mobileProfile')>-1" class="rounded-full flex items-center" matRipple>
                 <i class="mdi mdi-account text-2xl  ml-2 color-blue" matRipple (click)="openMyProfileComponent()"></i>
@@ -110,6 +110,6 @@
         </div>
     </div>
 </nav>
-<nav class="ts-header-new max-w-full w-screen flex items-center" [class.shadow]="shadow" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen flex items-center" *ngIf="source=='marketplace'">
 
 </nav>

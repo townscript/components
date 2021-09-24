@@ -1,12 +1,22 @@
 <div class="w-full lg:flex search-container relative" [class.active]="searchActive">
-    <div #searchResultsEle class="w-2/3 lg:w-full px-2 flex items-center relative left-section">
-        <i class="mdi mdi-magnify text-2xl md:text-xl color-blue p-2 cursor-pointer" (click)="chooseSuggestion(this.searchText)"></i>
-        <input appDataAnalytics eventLabel="search" clickLocation="" (keyup)="handleKeydown($event)" [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;" class="font-normal text-gray-800 w-full h-full bg-transparent  p-2" type="text" placeholder="Search for events, interests or activities"
+    <div #searchResultsEle
+        class="w-2/3 lg:w-full px-2 flex items-center relative left-section border border-gray-600 rounded-full">
+        <i class="mdi mdi-magnify text-2xl md:text-xl text-primary p-2 cursor-pointer"
+            (click)="chooseSuggestion(this.searchText)"></i>
+        <input appDataAnalytics eventLabel="search" clickLocation="" (keyup)="handleKeydown($event)"
+            [(ngModel)]="searchText" (ngModelChange)="search($event)" (focus)="searchActive = true;"
+            class="font-normal text-gray-800 w-full h-full bg-transparent  p-2" type="text"
+            placeholder="Search for events, interests or activities"
             aria-label="Search for events, interests or activities" />
-        <i *ngIf="searchText && searchText.length > 0" class="mdi cursor-pointer mdi-close text-2xl md:text-xl color-blue p-2" (click)="this.searchText = '';"></i>
-        <div class="suggestions enter-slide-bottom w-full absolute" [ngClass]="intentSelected?'visibility: hidden':''" *ngIf="searchResults && searchActive && searchText !== ''">
-            <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults; let i = index" [item]="searchedItem" [searchText]="searchText"
-            (itemSelected)="suggestionSelected(searchedItem)" (mouseenter)="hoverOnSuggestion(i)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
+        <i *ngIf="searchText && searchText.length > 0"
+            class="mdi cursor-pointer mdi-close text-2xl md:text-xl text-primary p-2"
+            (click)="this.searchText = '';"></i>
+        <div class="suggestions rounded-lg py-2 enter-slide-bottom w-full absolute"
+            [ngClass]="intentSelected?'visibility: hidden':''"
+            *ngIf="searchResults && searchActive && searchText !== ''">
+            <app-search-suggestion class="cursor-pointer" *ngFor="let searchedItem of searchResults; let i = index"
+                [item]="searchedItem" [searchText]="searchText" (itemSelected)="suggestionSelected(searchedItem)"
+                (mouseenter)="hoverOnSuggestion(i)" (click)="suggestionSelected(searchedItem)"></app-search-suggestion>
             <!-- <div class="no-result flex flex-col text-center p-4 fadeIn"
                 *ngIf="searchResults == undefined || searchResults.length == 0">
                 <img alt="No Results Found" class="m-auto w-40 pt-4 mb-2"
@@ -18,13 +28,16 @@
             </div> -->
         </div>
     </div>
-    <div appDataAnalytics eventLabel="location" clickLocation="" #citySuggestions class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container" [class.active]="cityPopupActive" (click)="cityPopupActive = true">
+    <div appDataAnalytics eventLabel="location" clickLocation="" #citySuggestions
+        class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container"
+        [class.active]="cityPopupActive" (click)="cityPopupActive = true">
         <div class="flex items-center w-10/12 mr-2 " [title]=" activePlace">
-            <i class="mdi mdi-map-marker text-lg md:text-xl color-blue"></i>
+            <i class="mdi mdi-map-marker text-lg md:text-xl text-primary"></i>
             <span class="truncate capitalize text-gray-800">{{activePlace}}</span>
         </div>
-        <i class="mdi mdi-chevron-down text-lg md:text-xl"></i>
-        <app-city-search-popup [popularPlaces]="popularPlaces" class="popup" [(cityPopupActive)]="cityPopupActive" [(activePlace)]="activePlace" *ngIf="cityPopupActive">
+        <i class="mdi mdi-menu-down text-xl md:text-2xl"></i>
+        <app-city-search-popup [popularPlaces]="popularPlaces" class="popup" [(cityPopupActive)]="cityPopupActive"
+            [(activePlace)]="activePlace" [showArrow]="false" *ngIf="cityPopupActive">
         </app-city-search-popup>
     </div>
 </div>
