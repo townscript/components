@@ -45,11 +45,11 @@
     </div>
 
     <div class="card-body overflow-hidden w-full flex flex-wrap flex-col"
-        [ngClass]="gridType == 'list' ? 'flex-3  pl-3 pt-3 md:pl-5' : 'px-4 pb-4 md:px-5 md:pb-5'" *ngIf="eventData">
+        [ngClass]="gridType == 'list' ? 'flex-3 pl-4 md:pl-5' : 'px-4 pb-4 md:px-5 md:pb-5'" *ngIf="eventData">
 
-        <div class="content w-full fadeIn" [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : ''">
+        <div class="content w-full fadeIn" [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : 'my-3 md:my-4'">
             <div class="event-name-box text-gray-900 text-base items-baseline flex"
-                [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl ' : 'lg:text-lg mt-3 md:mt-4'">
+                [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl mt-3 md:mt-4' : 'lg:text-lg'">
 
                 <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType != 'list'">
                     {{eventData.name}}
@@ -61,7 +61,7 @@
                 <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg" *ngIf="eventData?.organizerIsTrusted"
                     matTooltip="VERIFIED" matTooltipPosition="above" matTooltipClass="ts-card-tooltip"></i>
             </div>
-            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mt-2 md:mt-3 mb-3 md:mb-4"
+            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mt-2 md:mt-3"
                 [class.text-sm]="theme=='bms'">
                 <ng-container *ngIf="!eventData.onlineEvent || !startingSoon">
                     <div class="date">
@@ -92,7 +92,7 @@
 
         </div>
 
-        <div class="flex items-center overflow-hidden py-2 w-full keywords-box" *ngIf="gridType=='list'">
+        <div class="flex items-center overflow-hidden my-3 md:my-4 w-full keywords-box" *ngIf="gridType=='list'">
             <a *ngFor="let key of eventData?.keywords| slice:0:3" class="hidden md:block"
                 [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
                 <span appDataAnalytics eventLabel="keyword" clickLocation=""
