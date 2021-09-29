@@ -20,7 +20,7 @@
     </div>
 </nav>
 
-<nav class="ts-header-new max-w-full w-screen fixed flex items-center" *ngIf="source=='marketplace'">
+<nav class="ts-header-new max-w-full w-screen sticky flex items-center" *ngIf="source=='marketplace'">
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
@@ -75,7 +75,7 @@
         <div class="hidden sm:hidden md:hidden h-full lg:flex items-center pr-8">
             <a [href]="host + 'dashboard/create-event'" appDataAnalytics eventLabel="createEvent" clickLocation=""
                 *ngIf="Components.indexOf('createEventBtn')>-1"
-                class="create-btn cursor-pointer flex h-full justify-center items-center">
+                class="btn-cta create-btn cursor-pointer flex h-full justify-center items-center">
                 <i class="mdi mdi-ticket text-xl md:text-2xl mr-2"></i>
                 <span class="font-semibold text-sm tracking-wide leading-loose">CREATE EVENT</span>
             </a>
@@ -110,6 +110,5 @@
         </div>
     </div>
 </nav>
-<nav class="ts-header-new max-w-full w-screen flex items-center" *ngIf="source=='marketplace'">
-
-</nav>
+<!-- <nav class="ts-header-new max-w-full w-screen flex items-center" *ngIf="source=='marketplace'">
+</nav> -->

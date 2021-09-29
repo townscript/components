@@ -15,7 +15,8 @@
     <div class="py-5 text-gray-700 text-sm" *ngIf="loaderText">{{loaderText}}</div>
   </div>
 
-  <div class="view-body my-5 md:m-5" *ngIf="!showLoader" [ngClass]="popularCities && popularCities.length > 0 ? '' : 'md:pb-40'">
+  <div class="view-body my-5 md:m-5" *ngIf="!showLoader"
+    [ngClass]="popularCities && popularCities.length > 0 ? '' : 'md:pb-40'">
     <div class="flex justify-center search-container relative z-50 fadeIn">
       <div class="relative flex flex-auto md:block md:flex-none w-full md:w-2/5 city-search z-50">
         <app-city-search-popup (activePlaceChange)="close()" [(closeSuggestions)]="closeSuggestions"
@@ -26,12 +27,13 @@
       <div matRipple
         class="fadeIn animation-delay transition detect-location rounded-sm flex ml-1 px-2 items-center cursor-pointer py-2 flex-none"
         (click)="detectLocation()">
-        <i class="mdi mdi-crosshairs-gps px-1 color-blue"></i>
+        <i class="mdi mdi-crosshairs-gps px-1 text-primary"></i>
         <div class="text-gray-800 text-xs md:text-sm">Detect Location</div>
       </div>
     </div>
 
-    <div class="popular-cities my-5 fadeIn animation-delay relative z-10" *ngIf="popularCities && popularCities.length > 0">
+    <div class="popular-cities my-5 fadeIn animation-delay relative z-10"
+      *ngIf="popularCities && popularCities.length > 0">
       <div class="text-lg md:text-xl lg:text-2xl font-semibold md:text-center py-5 text-gray-800">Popular Cities in
         {{popularCities[0].country}}</div>
       <div class="city-list flex flex-wrap justify-between md:justify-around">

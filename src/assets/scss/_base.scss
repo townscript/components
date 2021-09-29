@@ -24,6 +24,17 @@ input:focus{
 .bg-primary-lightest{
   background-color: $ts-primary-color--lightest;
 }
+
+.bg-primary-gradient {
+  background: linear-gradient(120deg, #DFD9FF -12.73%, rgba(255, 255, 255, 0.1) 79.62%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: -999;
+  height: 100%;
+}
+
 .cursor-pointer{
   cursor: pointer;
 }
@@ -57,6 +68,18 @@ input:focus{
   background: #fff;
 }
 
+.btn-cta {
+  color: white;
+  background: $ts-primary-color;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: all ease 0.1s;
+  &:hover, &:focus, &:active{
+    box-shadow: 0 2px 4px 0 $ts-primary-color;
+    background-color: $ts-primary-color--dark;
+    transform:translateY(-2px);
+  }
+}
 
 .mat-dialog-bkg-container {
   background: #414243;

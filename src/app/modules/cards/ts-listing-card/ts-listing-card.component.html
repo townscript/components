@@ -25,8 +25,10 @@
             <div class="md:flex text-xs md:flex-wrap" [ngClass]="gridType=='list' ? '' : 'flex flex-wrap'">
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
-                    <span
-                        class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange: eventData.eventTimeZone : eventData.recurrent: {'startTime': eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule': eventData.recurrenceRule} }}</span>
+                    <span class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange:
+                        eventData.eventTimeZone : eventData.recurrent: {'startTime':
+                        eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule':
+                        eventData.recurrenceRule} }}</span>
                 </div>
                 <div class="mr-2 flex items-center">
                     <i class="mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom"></i>
@@ -60,7 +62,7 @@
         <div class="h-10 relative bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"
             *ngIf="eventData">
             <div class="text-sm flex items-center z-50">
-                <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#553c9a"
+                <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#563DE1"
                     (click)="$event.stopPropagation()"></app-follow>
                 <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
                 <div class="px-2 rounded-full" matRipple (click)="$event.stopPropagation()">

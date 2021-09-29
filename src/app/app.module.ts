@@ -19,13 +19,14 @@ import { SharedModule } from './shared/shared.module';
 import { DataCollectorService, initializeDataCollector } from './shared/services/analytics/data-collector.service'
 import { TsLoginSignupModule } from './modules/loginSignup/login-signup.module'
 import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-
+    RouterModule.forRoot([]),
     BrowserModule,
     BrowserAnimationsModule,
     TsFormsModule,
