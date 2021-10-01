@@ -21,6 +21,7 @@
 </nav>
 
 <nav class="ts-header-new max-w-full w-screen sticky flex items-center" *ngIf="source=='marketplace'">
+    <div class="backdrop"></div>
     <div class="ts-container flex items-center w-full">
         <div class="hidden md:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
@@ -89,7 +90,7 @@
             </div>
             <div class="flex items-center cursor-pointer" (click)="userMenu=!userMenu" *ngIf="user" matRipple>
                 <img class="rounded-full mr-2" width="36" [src]="s3BucketUrl+'/images/'+user?.s3imagename" />
-                <!-- <i class="mdi mdi-chevron-down text-xl text-gray-700" [class.rotate-180]="userMenu"></i> -->
+                <i class="mdi mdi-chevron-down text-xl text-gray-700" [class.rotate-180]="userMenu"></i>
                 <!-- <span>{{user.user}}</span> -->
             </div>
             <div class="user-menu position-absolute rounded-lg px-2 enter-slide-bottom" *ngIf="userMenu">

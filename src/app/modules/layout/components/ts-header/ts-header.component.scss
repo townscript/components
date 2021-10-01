@@ -31,9 +31,15 @@
 .ts-header-new{
     min-height:56px;
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: saturate(100%) blur(50px);
     top:0;
     z-index: 1000;
+    .backdrop {
+        backdrop-filter: saturate(100%) blur(50px);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
     .ts-logo{
         // width:146px;
         // min-width:146px;
