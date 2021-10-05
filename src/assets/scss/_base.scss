@@ -55,6 +55,14 @@ input:focus{
   &-right {
     left: 100%;
   }
+  &-hcenter {
+      left: 50%;
+      transform: translateX(-50%);
+  }
+  &-vcenter {
+      top: 50%;
+      transform: translateY(-50%);
+  }
 }
 .ts-notification-success{
   background: white;
