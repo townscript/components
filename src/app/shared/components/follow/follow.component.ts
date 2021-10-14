@@ -15,7 +15,7 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
     @Input() text = 'Follow';
     @Input() followedText = 'Following';
     @Input() type = 'button';
-    @Input() color = '#683592';
+    @Input() color = '#563DE1';
     @Input() followTypeId;
     @Input() followType;
     @Input() typeName;
@@ -77,7 +77,7 @@ export class FollowComponent implements OnInit, OnChanges, OnDestroy {
         dialogConfig.disableClose = false;
         dialogConfig.autoFocus = true;
         dialogConfig.backdropClass = 'mat-dialog-bkg-container';
-        dialogConfig.data = {'subHeader': this.subHeader, 'source': 'follow'};
+        dialogConfig.data = { 'subHeader': this.subHeader, 'source': 'follow' };
         const dialogRef = this.dialog.open(LoginModalComponent, dialogConfig);
         dialogRef.afterClosed().subscribe(isSignedIn => {
             if (isSignedIn) {
