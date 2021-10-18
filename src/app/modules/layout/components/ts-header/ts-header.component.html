@@ -3,7 +3,7 @@
         <div class="navbar-header">
             <a appDataAnalytics eventLabel="logo" clickLocation="" class="navbar-brand flex align-items-center"
                 href="/">
-                <img src="assets/images/ts-bms-logo.svg" alt="Townscript Event Ticketing Logo"
+                <img src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
                     title="Townscript Event Ticketing Logo" />
             </a>
         </div>
@@ -26,9 +26,8 @@
         <div class="hidden md:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
                 <img appDataAnalytics eventLabel="logo" clickLocation="" (click)="goToHomePage()"
-                    *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer"
-                    src="assets/images/ts-bms-logo.svg" alt="Townscript Event Ticketing Logo"
-                    title="Townscript Event Ticketing Logo" />
+                    *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer" src="assets/images/ts-logo.svg"
+                    alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
                 <div class="live  items-center hidden lg:flex border-l-2 ml-4 pl-4 "
                     *ngIf="Components.indexOf('live')>-1">
                     <span class="h-4 w-4 block rounded-full bg-red-500 mr-2 border-2 border-red-300"></span>
@@ -43,7 +42,7 @@
                 class="mr-3">
             </app-hamburger-menu>
             <img *ngIf="Components.indexOf('icon')>-1" appDataAnalytics eventLabel="logo" clickLocation=""
-                (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-bms-logo.svg"
+                (click)="goToHomePage()" class="ts-logo mr-3 fixed ml-8" src="assets/images/ts-logo.svg"
                 alt="Townscript Event Ticketing Logo" title="Townscript Event Ticketing Logo" />
             <!-- <div *ngIf="backState" (click)="goBack()"
                 class="rounded-full flex py-1 px-3 mr-1 justify-center items-center" matRipple>
