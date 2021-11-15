@@ -23,7 +23,7 @@
 <nav class="ts-header-new max-w-full w-screen fixed flex items-center" *ngIf="source=='marketplace'">
     <div class="backdrop"></div>
     <div class="ts-container flex items-center w-full">
-        <div class="hidden md:block pr-10">
+        <div class="hidden lg:block pr-10">
             <a [href]="homePageUrl" class="flex items-center">
                 <img appDataAnalytics eventLabel="logo" clickLocation="" (click)="goToHomePage()"
                     *ngIf="Components.indexOf('icon')>-1" class="ts-logo cursor-pointer" src="assets/images/ts-logo.svg"
@@ -36,7 +36,7 @@
                 </div>
             </a>
         </div>
-        <div class="sm:w-1/4 max-50 flex md:hidden lg:hidden items-center">
+        <div class="sm:w-1/4 max-50 flex lg:hidden items-center">
             <!-- <i class="mdi mdi-menu mr-3 text-3xl color-blue"></i> -->
             <app-hamburger-menu [user]="user" [countryCode]="activeCountryCode" [activePlace]="activePlace"
                 class="mr-3">
