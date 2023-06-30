@@ -138,15 +138,14 @@ export class TsHeaderComponent implements OnInit {
         const data = JSON.parse(res as any);
         if (data && Object.keys(data).length > 0) {
           this.activePlace = data['currentPlace'];
-          // this.activeCity = data['city'].replace(' ', '-');
-          // if (this.activeCountryCode != undefined && this.activeCity != undefined) {
-          //   this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
-          // }
-
           this.activeCountryCode = data['country'];
-          if (this.activeCountryCode !== undefined) {
-            this.homePageUrl = `/${this.activeCountryCode.toLowerCase()}/online`;
+          this.activeCity = data['city'].replace(' ', '-');
+          if (this.activeCountryCode != undefined && this.activeCity != undefined) {
+            this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
           }
+          // if (this.activeCountryCode !== undefined) {
+          //   this.homePageUrl = `/${this.activeCountryCode.toLowerCase()}/online`;
+          // }
         }
       }
     });
