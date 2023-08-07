@@ -1,0 +1,83 @@
+<div class="listing-container cursor-pointer overflow-hidden"
+    [ngClass]="gridType=='list' ? 'rounded  my-4 mx-auto  flex' :'bg-white lg:flex lg:flex-col my-1 rounded w-full'">
+    <div class="relative flex-none overflow-hidden text-center event-image"
+        [ngClass]="gridType=='list' ? 'h-auto w-4/12 lg:w-2/5 bg-center' : ' h-48 lg:h-auto lg:w-3/5 lg:w-full md:w-full p-24 sm:w-full '"
+        [defaultImage]="'https://townscript-common-resources.s3.ap-south-1.amazonaws.com/ListingsStatic/image-loader.gif'"
+        [errorImage]="defaultCardImageUrl" [style.background-size]="gridType=='list'?'cover':'100% 100%'"
+        [lazyLoad]="eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl">
+        <i class="top-0 right-0 pt-2 pr-2 text-white absolute mdi mdi-checkbox-marked-circle ml-1 pt-1 text-lg"
+            *ngIf="eventData?.organizerIsTrusted" matTooltip="VERIFIED" matTooltipPosition="above"
+            matTooltipClass="ts-card-tooltip"></i>
+    </div>
+    <div class="flex flex-col justify-between leading-normal listing-container--content overflow-hidden" [ngClass]="gridType=='list' ?' w-8/12  md:w-full'
+                     : ' w-full'">
+        <div class="px-2 md:px-4 pt-3 pb-1">
+            <div class="flex flex-row justify-between align-items-center">
+                <span *ngIf="urgencyMessage " class="text-md bg-orange-500 rounded text-md px-2 mr-2">Featured</span>
+                <span *ngIf="urgencyMessage" class="text-xs text-red-400">Booked 20 times in the last 24 hrs</span>
+                <span *ngIf="urgencyMessage" class="bg-white rounded-l-full px-2">
+                    <i class="material-icons align-bottom pr-1 hidden">remove_red_eye</i>
+                    <strong class="text-xs">12 Viewing right now</strong>
+                </span>
+            </div>
+            <div class="font-303030 capitalize text-base md:text-lg mb-1" [clamp]="2">{{eventData.name | titlecase}}
+            </div>
+            <div class="md:flex text-xs md:flex-wrap" [ngClass]="gridType=='list' ? '' : 'flex flex-wrap'">
+                <div class="mr-2 flex items-center">
+                    <i class="mdi mdi-calendar-today text-base md:text-xl pr-1  align-bottom"></i>
+                    <span class="text-gray-700 font-bold">{{[eventData.startTime, eventData.endTime] | dateRange:
+                        eventData.eventTimeZone : eventData.recurrent: {'startTime':
+                        eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule':
+                        eventData.recurrenceRule} }}</span>
+                </div>
+                <div class="mr-2 flex items-center">
+                    <i class="mdi mdi-map-marker pr-1 text-base md:text-xl  align-bottom"></i>
+                    <span class="text-gray-700 font-bold">{{eventData.city}}</span>
+                </div>
+                <div *ngIf="goingCounter" class="mr-2">
+                    <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
+                    <span class="font-323E48 font-bold">700</span>
+                </div>
+            </div>
+            <!-- <div *ngIf="featuredCard" class="text-sm">Heres goes some 2 line data which describes about the event.</div> -->
+            <div class="py-2 pr-2 flex justify-between">
+                <div *ngIf="moreIcons" id="set-of-icons" class="flex">
+                    <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
+                    <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
+                    <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
+                    <i class="material-icons pr-1  align-bottom text-purple-900">supervisor_account</i>
+                </div>
+                <div class="overflow-hidden"
+                    [ngClass]="gridType=='list' ? 'hidden md:flex md:flex-wrap' : 'flex flex-wrap'">
+                    <a *ngFor="let key of eventData?.keywords| slice:0:3"
+                        [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
+                        <span appDataAnalytics eventLabel="keyword" clickLocation=""
+                            class="pr-2 text-gray-600 font-normal text-sm sm:text-xs hover:text-gray-900 hover:underline">
+                            #{{key.topicKeywordName}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="h-10 relative bottom-purple-bar border-t border-gray-300 flex items-center justify-between py-2 px-4 sm:rounded-b-lg lg:rounded-none"
+            *ngIf="eventData">
+            <div class="text-sm flex items-center z-50">
+                <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#563DE1"
+                    (click)="$event.stopPropagation()"></app-follow>
+                <!-- <i class="mdi mdi-heart-outline text-2xl mr-2"></i> -->
+                <div class="px-2 rounded-full" matRipple (click)="$event.stopPropagation()">
+                    <i appDataAnalytics eventLabel="share" clickLocation="" class="mdi mdi-share-variant text-2xl share"
+                        (click)="shareEvent($event)"></i>
+                </div>
+            </div>
+            <div class="flex items-center z-50">
+                <span class="align-text-bottom price-container font-323E48 text-base font-semibold"
+                    *ngIf="eventData.minimumTicketPrice">
+                    {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency : 'symbol':'1.0-0'}}
+                    <span class="hidden md:inline text-sm font-normal">onwards</span></span>
+                <span *ngIf="!eventData.minimumTicketPrice ">Free</span>
+                <i class="mdi mdi-arrow-right text-2xl ml-2"></i>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 {
-  "entry": "./src/styles.scss",
+  "entry": "./src/styles-out.scss",
+  "ignoredImports": "scss/functions",
   "dest": "dist/components-theme.scss"
 }

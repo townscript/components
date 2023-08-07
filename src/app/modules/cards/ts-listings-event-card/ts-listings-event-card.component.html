@@ -1,0 +1,183 @@
+<div class="card-container rounded-lg overflow-hidden relative bg-white" [ngClass]="gridType == 'list' ? 'flex' : ''">
+
+    <div class="card-header absolute top-0 w-full flex items-center justify-end black-gradient py-1 px-3 z-50"
+        *ngIf="gridType == 'grid' && !hideFollowShare">
+        <div class="topic-bubble opacity-0" *ngIf="false">
+            <a *ngFor="let key of eventData?.keywords| slice:0:1"
+                [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
+                <span class="bubble background-blue px-2 p-1 text-xs rounded-lg text-white uppercase" appDataAnalytics
+                    eventLabel="keyword" clickLocation="">
+                    {{key.topicKeywordName}}
+                </span>
+            </a>
+        </div>
+        <div class="topic-bubble mr-auto" *ngIf="cfData">
+            <span class="bubble px-2 p-1 text-xs rounded-full font-bold tracking-widest text-white uppercase">
+                Crowdfunding
+            </span>
+        </div>
+        <div class="actions flex">
+            <div class="follow self-end px-3">
+                <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff"
+                    (click)="$event.stopPropagation()"></app-follow>
+            </div>
+            <div class="share px-2 rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
+                <i appDataAnalytics eventLabel="share" clickLocation=""
+                    class="text-white mdi mdi-share-variant text-2xl share" (click)="shareEvent($event)"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-header absolute top-0 py-2 px-3 z-50" *ngIf="gridType == 'list' && cfData">
+        <div class="topic-bubble mr-auto">
+            <span class="bubble px-2 p-1 text-xs rounded-full font-bold tracking-widest text-white uppercase">
+                Crowdfunding
+            </span>
+        </div>
+    </div>
+
+    <div class="image-container relative fadeIn" [ngClass]="gridType == 'list' ? 'flex-2' : ''">
+        <img [alt]="eventData?.name"
+            [defaultImage]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200&blur=90'"
+            [errorImage]="defaultCardImageUrl"
+            [lazyLoad]="(eventData.cardImageUrl ? eventData.cardImageUrl : defaultCardImageUrl)+'?auto=compress,format&w=375&h=200'"
+            [ngClass]="gridType == 'list' ? 'absolute w-full h-full' : 'h-48 w-full'" />
+    </div>
+
+    <div class="card-body overflow-hidden w-full flex flex-wrap flex-col"
+        [ngClass]="gridType == 'list' ? 'flex-3 pl-4 md:pl-5' : 'px-4 pb-4 md:px-5 md:pb-5'" *ngIf="eventData">
+
+        <div class="content w-full fadeIn" [ngClass]="gridType == 'list' ? 'pr-3 md:pr-5' : 'my-3 md:my-4'">
+            <div class="event-name-box text-gray-900 text-base items-baseline flex"
+                [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-xl mt-3 md:mt-4' : 'lg:text-lg'">
+
+                <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType != 'list'">
+                    {{eventData.name}}
+                </div>
+                <div class="font-semibold event-name w-11/12 fadeIn" [clamp]="2" *ngIf="gridType == 'list'">
+                    {{eventData.name}}
+                </div>
+
+                <i class="mdi mdi-check-decagram text-primary px-1 md:text-lg" *ngIf="eventData?.organizerIsTrusted"
+                    matTooltip="VERIFIED" matTooltipPosition="above" matTooltipClass="ts-card-tooltip"></i>
+            </div>
+            <div class="secondary-details fadeIn animation-delay flex items-center justify-start text-xs md:text-sm text-gray-800 mt-2 md:mt-3"
+                [class.text-sm]="theme=='bms'">
+                <ng-container *ngIf="!eventData.onlineEvent || !startingSoon">
+                    <div class="date">
+                        <span class="whitespace-no-wrap">{{[eventData.startTime, eventData.endTime] | dateRange:
+                            eventData.eventTimeZone : eventData.recurrent: {'startTime':
+                            eventData.recurrenceStartTime,'endTime': eventData.recurrenceEndTime,'recurrenceRule':
+                            eventData.recurrenceRule} : hideTime }}
+                        </span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!eventData.onlineEvent">
+                    <div class="px-2"> | </div>
+                    <div class="location overflow-hidden whitespace-no-wrap">
+                        <span class="whitespace-no-wrap">{{getLocation()}}</span>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="eventData.onlineEvent && startingSoon">
+                    <div class="starting-in" *ngIf="!nowLive">
+                        <span>Starting in </span>
+                        <ts-countdown class="font-bold tracking-wide" [date]="eventStartDate" (reached)="nowLive = 1">
+                        </ts-countdown>
+                    </div>
+                    <span *ngIf="nowLive" class="ts-enter live-now font-bold uppercase">
+                        Live Now
+                    </span>
+                </ng-container>
+            </div>
+
+        </div>
+
+        <div class="flex items-center overflow-hidden my-3 md:my-4 w-full keywords-box" *ngIf="gridType=='list'">
+            <a *ngFor="let key of eventData?.keywords| slice:0:3" class="hidden md:block"
+                [href]="urlArray && urlArray.length > 1 ? urlArray[0] + '/' + urlArray[1]  + '/' + key.topicKeywordCode : homeUrl + '/' + key.topicKeywordCode">
+                <span appDataAnalytics eventLabel="keyword" clickLocation=""
+                    class="pr-2 text-gray-600 font-normal text-xs md:text-sm hover:text-gray-900 hover:underline">
+                    #{{key.topicKeywordName}}
+                </span>
+            </a>
+            <div class="online flex items-center border px-2 rounded-full mr-5 md:ml-auto"
+                *ngIf="eventData.onlineEvent && !cfData">
+                <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
+                <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
+            </div>
+            <div class="flex items-center px-2 rounded-full bg-gray-100 text-sm mr-5 md:ml-auto"
+                *ngIf="!eventData.onlineEvent && cfData && cfData.crowdFundedGoalStatus === 'REACHED'">
+                <span>🎉</span>
+                <span class="text-gray-700">Goal Reached</span>
+            </div>
+        </div>
+
+        <div class="gradient-separator w-full" *ngIf="gridType=='list'"></div>
+
+        <div class="flex items-center justify-between footer"
+            *ngIf="!cfData || !(cfData.crowdFundedGoalStatus === 'IN_PROGESS')"
+            [ngClass]="gridType == 'list' ? 'flex-1 pr-3 md:pr-5 py-1' : ''">
+            <div class="price">
+                <div class="paid flex items-baseline" *ngIf="eventData.minimumTicketPrice">
+                    <div class="min-price">
+                        <span class="md:text-lg font-semibold" [class.text-primary]="theme=='townscript'"
+                            [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">
+                            {{eventData.minimumTicketPrice | currency:eventData.minimumTicketPriceCurrency :
+                            'symbol':'1.0-0'}}
+                        </span>
+                    </div>
+                    <span class="text-xs md:text-sm px-1 opacity-75">onwards</span>
+                </div>
+                <div class="free" *ngIf="!eventData.minimumTicketPrice">
+                    <span class="text-primary md:text-lg font-semibold"
+                        [ngClass]="gridType == 'list' ? 'text-sm md:text-base lg:text-lg' : ''">Free</span>
+                </div>
+            </div>
+
+            <div class="online flex items-center border px-2 rounded-full"
+                *ngIf="gridType=='grid' && eventData.onlineEvent && !cfData">
+                <span class="online__indicator w-2 h-2 rounded-full mr-1"></span>
+                <span class="online__text text-xs md:text-sm tracking-widest font-bold uppercase">Online</span>
+            </div>
+
+            <div class="flex items-center px-2 rounded-full bg-gray-100 text-sm"
+                *ngIf="gridType=='grid' && !eventData.onlineEvent && cfData && cfData.crowdFundedGoalStatus === 'REACHED'">
+                <span>🎉</span>
+                <span class="text-gray-700">Goal Reached</span>
+            </div>
+
+            <div class="actions flex list-actions" *ngIf="gridType=='list'">
+                <div class="follow self-end px-2 md:px-3 lg:px-5">
+                    <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#563DE1"
+                        (click)="$event.stopPropagation()"></app-follow>
+                </div>
+                <div class="share rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
+                    <i appDataAnalytics eventLabel="share" clickLocation=""
+                        class="text-primary mdi mdi-share-variant text-lg md:text-2xl share"
+                        (click)="shareEvent($event)"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer flex items-baseline" *ngIf="cfData && cfData.crowdFundedGoalStatus === 'IN_PROGESS'">
+            <div class="" [hidden]="cfData && cfData.goalAmountReached === 0">
+                <span class="font-bold text-primary">{{cfData.goalPercentageReached}}%</span>
+                <span class="text-sm"> goal reached</span>
+            </div>
+            <div class="" [hidden]="cfData && cfData.goalAmountReached > 0">
+                <span class="font-bold text-primary">
+                    {{cfData.goalAmount | currency:cfData.goalCurrency : 'symbol':'1.0-0'}}
+                </span>
+                <span class="text-sm"> target</span>
+            </div>
+            <div class="h-2 flex-1 ml-4 rounded-full bg-gray-400 goal-progress"
+                [ngClass]="{'mr-4 my-4': gridType == 'list'}">
+                <div class="w-0 h-2 rounded-full bg-green-500 goal-progress__mark"
+                    [style.width]="cfData.goalPercentageReached > 1 ? cfData.goalPercentageReached+'%' : '1%'">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

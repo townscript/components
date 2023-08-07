@@ -1,0 +1,43 @@
+<nav role="navigation">
+    <div class="ham-container position-relative cursor-pointer">
+        <div class="hamburger position-relative">
+            <!-- <input type="checkbox" /> -->
+            <div class="spans" (click)="active=!active" appDataAnalytics eventLabel="toggle"
+                clickLocation="hamburgerMenu">
+                <span class="block bg-primary" [class.active]="active"></span>
+                <span class="block bg-primary" [class.active]="active"></span>
+                <span class="block bg-primary" [class.active]="active"></span>
+            </div>
+            <div (click)="active=!active" class="overlay fixed bg-black w-full h-full" *ngIf="active"></div>
+            <ul class="menu fixed h-full px-4" [class.active]="active">
+                <li class="">
+                    <img class="ts-logo mr-3 px-2" src="assets/images/ts-logo.svg" alt="Townscript Event Ticketing Logo"
+                        title="Townscript Event Ticketing Logo" />
+                    <div (click)="openCityPopup()" matRipple appDataAnalytics eventLabel="location"
+                        clickLocation="hamburgerMenu"
+                        class="location-section px-2 mt-6 pb-2 border-b border-gray-300 flex items-center">
+                        <i class="mdi text-primary text-2xl mr-2"
+                            [ngClass]="urlArray[1] === 'online' ? 'mdi-earth' : 'mdi-map-marker'"></i>
+                        <div class="flex items-end">
+                            <span class="mr-1 font-bold text-lg leading-tight text-gray-700 capitalize">{{urlArray[1]
+                                === 'online' ? 'Online' : activePlace}}</span>
+                            <span class="ml-2 text-primary font-bold text-xs">Change</span>
+                        </div>
+                    </div>
+                    <div class="user-menu mt-3">
+                        <app-user-menu [user]="user" [showMobilePopup]="true" (close)="reloadOnLogout($event)"
+                            *ngIf="user"></app-user-menu>
+                        <div (click)="openLogin()" matRipple class="flex px-2 items-center justify-between w-full"
+                            *ngIf="!user" appDataAnalytics eventLabel="loginSignup" clickLocation="hamburgerMenu">
+                            <div>
+                                <span class="text-lg block text-gray-800">Login/Signup</span>
+                                <span class="text-xs text-gray-700">To personalize your experience!</span>
+                            </div>
+                            <i class="mdi mdi-chevron-right text-4xl text-primary"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

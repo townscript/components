@@ -1,0 +1,125 @@
+@import "./../../../../assets/scss/variables";
+
+::ng-deep{
+  .event-name{
+    span{
+      width: auto!important;
+      padding-right: 2px;
+    }
+  }
+  .list-actions{
+    @media (min-width: $screen-md-min){
+      i{
+        font-size: 1.4rem!important;
+      }
+    }
+    i {
+      font-size: 1.3rem;
+    }
+  }
+
+}
+
+.card-container{
+  z-index: 0;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.1);
+
+  &:hover{
+    transform: translateY(-2%);
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .black-gradient{
+    background: -webkit-linear-gradient( 180deg, rgba(0,0,0,0.7) 0%, transparent 95%);
+    background: -moz-linear-gradient( 180deg, rgba(0,0,0,0.7) 0%,  transparent 95%);
+    background: linear-gradient( 180deg, rgba(0,0,0,0.7) 0%, transparent 95%);
+  }
+
+  .bubble{
+    background-color: rgba(55, 130, 196, 0.78);;
+  }
+
+  .flex-2{
+    flex: 2;
+  }
+
+  .flex-3{
+    flex: 3;
+  }
+
+  .share{
+    transition: all ease 0.15s;
+    &:hover{
+      transform: scale(1.1);
+    }
+  }
+
+  .card-body {
+
+    .content{
+      min-height: 5em;
+      .event-name, .secondary-details{
+        color: #301C3F;
+        display: flex;
+        flex-wrap: wrap;
+      }
+      @media (min-width: $screen-sm-max){
+        .event-name{
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width:19rem !important;
+        }
+      }
+      .location {
+        text-overflow: ellipsis;
+      }
+    }
+
+    @media (min-width: $screen-phone) and (max-width: $screen-sm-max) {
+      .content{
+        min-height: 5.5em;
+      }
+    }
+
+    @media (min-width: $screen-md-min) {
+      .content{
+        min-height: 5.8em;
+      }
+    }
+
+    .gradient-separator{
+      height: 1px;
+      background: -webkit-linear-gradient(90deg,rgba(151,151,151,0.01) 0%,#c8c8c8 100%);
+      background: -moz-linear-gradient(90deg,rgba(151,151,151,0.01) 0%,#c8c8c8 100%);
+      background: linear-gradient(90deg,rgba(151,151,151,0.01) 0%,#c8c8c8 100%);
+      opacity: 0.6;
+    }
+
+    .online {
+      border-color: #BBBBBB;
+      &__indicator{
+        background-color: #EB5757;
+        height: 8px;
+        width: 8px;
+      }
+      &__text{
+        color: #4B4B4B;
+      }
+    }
+    .goal-progress{
+      &, &__mark{
+          height: 6px;
+      }
+      &__mark{
+          transition: width .5s linear;
+      }
+    }
+    ts-countdown, .live-now {
+      color: #EB5757;
+    }
+  }
+
+}

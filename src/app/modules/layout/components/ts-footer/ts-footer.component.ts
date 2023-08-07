@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FooterService } from './ts-footer.service';
 
 @Component({
   selector: 'ts-footer',
@@ -7,36 +8,24 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TsFooterComponent implements OnInit {
 
-  city: any;
-  placeId: any;
+  @Input() popularCities: any;
+  @Input() showBuilding: boolean = true;
 
+  copyrightYear:number;
 
-  @Input("source") source: any = "landingPages";
+  constructor(private footerService: FooterService) {
 
-  @Input("popularEvents") popularEvents: any = [];
-
-  @Input("recentBlogs") recentBlogs: any = [];
-
-  @Input("popularReads") popularReads: any = [];
-
-  popularEventsData: any;
-  countryCityMap: any;
-
-  constructor() {
   }
 
-  openContactUs = () => {
-    window.open('/contact-us');
-  };
-
-  openMyBooking = () => {
-    window.open('/signin?rdurl=/dashboard/mybookings', '_self');
-  };
+  getPopularCities = async (): Promise<any> => {
+    const data = await this.footerService.getAllPopularCities();
+    this.popularCities = data['data'];
+  }
 
   ngOnInit() {
-    if (this.source == "landingPages") {
-
+    this.copyrightYear = new Date().getFullYear();
+    if(this.popularCities == undefined){      
+      this.getPopularCities();
     }
   }
-
 }

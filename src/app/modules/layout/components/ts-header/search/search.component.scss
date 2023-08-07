@@ -1,0 +1,56 @@
+@import "../../../../.././../assets/scss/variables";
+@media (min-width: $screen-sm-max){
+    .search-container{
+        height: 42px;
+        transition: all ease 0.3s;
+        .left-section{
+            &:focus{
+                background: white;
+            }
+            //border-right: 1px solid rgba(151, 151, 151, 0.3);
+            input{
+                transition: all ease 0.3s;                 
+            }
+            .suggestions{
+                top: 120%;
+                left: 0;
+                background: white;
+                ul{
+                    li{
+                        transition: all ease 0.15s;
+                        &:hover{
+                            background: $gray--light;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+        .city-search-container{
+            transition: all ease 0.3s;
+            max-width: 33.33%;
+            &.active{
+                // background: white;
+                // box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);   
+            }
+            .popup{
+                position: absolute;
+                top: 120%;
+                width: 135%;
+                left: -34%;
+            }
+        }
+        &.active{
+            .left-section{
+                background: white;
+                // box-shadow:  0 5px 10px 0 rgba(0, 0, 0, 0.15);
+            }
+            .suggestions{
+                box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.25);
+            }
+        }
+    }
+}
+::placeholder {
+    font-size: small;
+}

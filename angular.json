@@ -10,13 +10,14 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/components",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -27,12 +28,22 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
+              "node_modules/intl-tel-input/build/js/utils.js"
+            ]
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -54,7 +65,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "components:build"
+            "browserTarget": "components:build",
+            "proxyConfig": "src/proxy.conf.js"
           },
           "configurations": {
             "production": {
@@ -130,5 +142,8 @@
       }
     }
   },
-  "defaultProject": "components"
+  "defaultProject": "components",
+  "cli": {
+    "analytics": "5e022a0f-3e7e-46cc-bb6c-510e1c9e6369"
+  }
 }

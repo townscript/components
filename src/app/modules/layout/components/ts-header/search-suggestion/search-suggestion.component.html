@@ -1,0 +1,12 @@
+<div class="list-item flex flex-row cursor-pointer" [ngClass]="isActive? 'activeItem':''">
+    <div>
+        <i matRipple class="px-4 text-xl mdi mdi-magnify text-gray-600 md:text-xl align-middle"></i>
+    </div>
+    <div class="flex-grow self-center truncate" *ngIf="item.suggestion.includes(searchText)">
+        <span class="font-normal text-gray-800">{{searchText}}</span>
+        <span class="font-semibold">{{item.suggestion.replace(searchText,"")}}</span>
+    </div>
+    <div class="flex-grow self-center truncate" *ngIf="!item.suggestion.includes(searchText)">
+        <span class="font-normal text-gray-800">{{item.suggestion}}</span>                                
+    </div>
+</div>
