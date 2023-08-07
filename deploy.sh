@@ -10,7 +10,7 @@ build_and_push()
     #rm -rf ../components-lib/lib/*
     cd ../components-lib/ && for i in `ls | grep -v ".git"` ; do rm -rf $i; done;
     echo "Building..."
-    cd ../components/ && npm run build && sudo cp -r dist/* ../components-lib/
+    cd ../components/ && npm run build && cp -r dist/* ../components-lib/
     cd ../components-lib/ && git add . && git commit -m "$commit" && git push -u origin master
     echo "Your Commit id is : "
     cat .git/refs/heads/master

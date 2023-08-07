@@ -16,10 +16,11 @@
                     <div (click)="openCityPopup()" matRipple appDataAnalytics eventLabel="location"
                         clickLocation="hamburgerMenu"
                         class="location-section px-2 mt-6 pb-2 border-b border-gray-300 flex items-center">
-                        <i class="mdi mdi-map-marker text-primary text-2xl mr-2"></i>
+                        <i class="mdi text-primary text-2xl mr-2"
+                            [ngClass]="urlArray[1] === 'online' ? 'mdi-earth' : 'mdi-map-marker'"></i>
                         <div class="flex items-end">
-                            <span
-                                class="mr-1 font-bold text-lg leading-tight text-gray-700 capitalize">{{activePlace}}</span>
+                            <span class="mr-1 font-bold text-lg leading-tight text-gray-700 capitalize">{{urlArray[1]
+                                === 'online' ? 'Online' : activePlace}}</span>
                             <span class="ml-2 text-primary font-bold text-xs">Change</span>
                         </div>
                     </div>

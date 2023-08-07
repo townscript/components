@@ -139,13 +139,12 @@ export class TsHeaderComponent implements OnInit {
         if (data && Object.keys(data).length > 0) {
           this.activePlace = data['currentPlace'];
           this.activeCountryCode = data['country'];
-          this.activeCity = data['city'].replace(' ', '-');
+          this.activeCity = data['city']?.replace(' ', '-');
           if (this.activeCountryCode != undefined && this.activeCity != undefined) {
             this.homePageUrl = '/' + this.activeCountryCode.toLowerCase() + '/' + this.activeCity.toLowerCase();
+          } else if (this.activeCountryCode !== undefined) {
+            this.homePageUrl = `/${this.activeCountryCode.toLowerCase()}/online`;
           }
-          // if (this.activeCountryCode !== undefined) {
-          //   this.homePageUrl = `/${this.activeCountryCode.toLowerCase()}/online`;
-          // }
         }
       }
     });

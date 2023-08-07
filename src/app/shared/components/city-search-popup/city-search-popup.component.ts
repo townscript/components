@@ -58,6 +58,12 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
         });
     }
 
+    placeChangedToOnline = () => {
+        const finalUrl = `/${this.urlArray[0]}/online`;
+        console.log(finalUrl);
+        window.location.href = finalUrl;
+    }
+
     placeChanged = (place) => {
         const tsType = this.urlArray[2];
         let tsTypeUrl = '';

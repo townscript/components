@@ -5,8 +5,8 @@
                 class="p-2 rounded-t-lg capitalize cursor-pointer flex items-center truncate">
                 <i class="mdi mdi-magnify text-primary mr-2 text-base"></i>
                 <input appDataAnalytics eventLabel="locationDropdownSearch" clickLocation="" #cityInput
-                    autocomplete="off" id="cityInput" type="text" placeholder="Search for city or area..."
-                    [(ngModel)]="cityQuery" (ngModelChange)="searchCity($event)" (focus)="citySearchActive=true"
+                    autocomplete="off" id="cityInput" type="text" placeholder="Browse events..." [(ngModel)]="cityQuery"
+                    (ngModelChange)="searchCity($event)" (focus)="citySearchActive=true"
                     class="w-full bg-transparent text-sm" />
                 <i *ngIf="cityLoading" class="mdi mdi-loading mdi-spin"></i>
             </li>
@@ -29,6 +29,11 @@
                 </li>
             </div>
             <ng-container matRipple *ngIf="!placeSearchResults || placeSearchResults.length==0">
+                <li appDataAnalytics eventLabel="locationDropdownItem" clickLocation=""
+                    (click)="placeChangedToOnline();" class="border-b p-2 cursor-pointer capitalize">
+                    <i class="mdi mdi-earth text-base mr-1 text-primary"></i>
+                    <span class="text-gray-800 capitalize text-sm">Online</span>
+                </li>
                 <li appDataAnalytics eventLabel="locationDropdownItem" clickLocation="" (click)="placeChanged(city);"
                     class="p-2 cursor-pointer capitalize" *ngFor="let city of popularPlaces">
                     <i class="mdi mdi-map-marker text-base mr-1 text-primary"></i>

@@ -5,6 +5,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material/dialog';
 import { LoginModalComponent } from '../../../../../modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { UserService } from '../../../../../shared/services/user-service';
 import { CitySelectionModalComponent } from '../../../../../shared/components/city-selection/city-selection.component';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,10 +18,19 @@ export class HamburgerMenuComponent implements OnInit {
     @Input() user: any;
     @Input() activePlace: String;
     @Input() countryCode: String = 'IN';
+    urlArray: string[] = [];
     active: boolean;
     constructor(private dialog: MatDialog,
-        public datepipe: DatePipe) {
+        public datepipe: DatePipe, private readonly router: Router) {
+        this.buildUrlArray();
+    }
 
+    buildUrlArray = (): void => {
+        if (this.router.url) {
+            this.urlArray = this.router.url.split("?")[0].replace('/', '').split('/');
+        } else {
+            this.urlArray = ['in'];
+        }
     }
 
     openLogin = (callback?): void => {

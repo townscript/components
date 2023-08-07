@@ -31,9 +31,10 @@
     <div appDataAnalytics eventLabel="location" clickLocation="" #citySuggestions
         class="w-auto flex items-center py-2  px-4 cursor-pointer relative city-search-container"
         [class.active]="cityPopupActive" (click)="cityPopupActive = true">
-        <div class="flex items-center w-10/12 mr-2 " [title]=" activePlace">
-            <i class="mdi mdi-map-marker text-lg md:text-xl text-primary"></i>
-            <span class="truncate capitalize text-gray-800">{{activePlace}}</span>
+        <div class="flex items-center w-10/12 mr-2 " [title]="urlArray[1] === 'online' ? 'Online' : activePlace">
+            <i class="mdi text-lg md:text-xl text-primary"
+                [ngClass]="urlArray[1] === 'online' ? 'mdi-earth' : 'mdi-map-marker'"></i>
+            <span class="truncate capitalize text-gray-800">{{urlArray[1] === 'online' ? 'Online' : activePlace}}</span>
         </div>
         <i class="mdi mdi-menu-down text-xl md:text-2xl"></i>
         <app-city-search-popup [popularPlaces]="popularPlaces" class="popup" [(cityPopupActive)]="cityPopupActive"

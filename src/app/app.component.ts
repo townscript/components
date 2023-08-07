@@ -3,6 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LoginModalComponent } from './modules/loginSignup/ts-login-signup/login-modal/login-modal.component';
 import { CitySelectionModalComponent } from './shared/components/city-selection/city-selection.component';
 import { DateTime } from 'luxon';
+import { Router } from '@angular/router';
+import { config } from './core/app-config';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,9 @@ export class AppComponent implements OnInit {
   title = 'components';
 
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog, private readonly router: Router) {
+    config.router = this.router;
+  }
   goalData: any;
   eventData: any;
   eventData2: any;

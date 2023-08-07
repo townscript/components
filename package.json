@@ -1,12 +1,12 @@
 {
   "name": "@townscript/components",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --aot --host 0.0.0.0",
     "build": "npm run packagr",
-    "deploy": "sudo sh deploy.sh",
-    "localdeploy": "rm -r /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/* && cp -r ./dist/* /Users/sidharthkumar/Desktop/townscript/projects/marketplace/node_modules/@townscript/components/",
+    "deploy": "sh deploy.sh",
+    "localdeploy": "rm -r /home/townscript/workspace/Marketplace/node_modules/@townscript/components/* && cp -r ./dist/* /home/townscript/workspace/Marketplace/node_modules/@townscript/components/",
     "postbuild": "scss-bundle -c scss-bundle.config.json",
     "test": "ng test",
     "lint": "ng lint",

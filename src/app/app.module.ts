@@ -26,7 +26,9 @@ import { RouterModule } from '@angular/router';
     AppComponent
   ],
   imports: [
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([
+      { path: '**', component: AppComponent }
+    ]),
     BrowserModule,
     BrowserAnimationsModule,
     TsFormsModule,

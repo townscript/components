@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, ViewChildren, QueryList, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, HostListener, Input, ViewChildren, QueryList } from '@angular/core';
 import * as algoliaSearchImported from 'algoliasearch';
 import { DatePipe } from '@angular/common';
 import { Router, NavigationExtras } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 import { TimeService } from '../../../../../shared/services/time.service';
@@ -12,7 +12,6 @@ import { HeaderService } from '../ts-header.service';
 import { UtilityService } from '../../../../../shared/services/utilities.service';
 import { ListKeyManager } from '@angular/cdk/a11y';
 import { SearchSuggestionComponent } from '../search-suggestion/search-suggestion.component';
-import { EventEmitter } from 'protractor';
 
 const algoliasearch = algoliaSearchImported;
 
@@ -48,7 +47,7 @@ export class SearchComponent implements OnInit {
     index: any;
     homeUrl: string;
     router: Router = config.router;
-    urlArray;
+    urlArray: string[] = [];
     host = config.baseUrl;
     popularPlaces: any;
     intentSelected: boolean = false;
@@ -199,22 +198,6 @@ export class SearchComponent implements OnInit {
         if (this.searchResultsEle && !this.searchResultsEle.nativeElement.contains(event.target)) {
             this.searchActive = false;
         }
-    }
-
-    navigateToListing = (interest: string) => {
-        if (interest['secondaryTextProperties'] && interest['secondaryTextProperties']['isOnline']) {
-            this.router.navigate(['/online']);
-            return;
-        }
-        this.buildUrlArray();
-        const stopWords = ['e', 'o'];
-        let listingUrl = this.urlArray[0] + '/' + this.urlArray[1];
-        if (this.urlArray && this.urlArray.length > 1 && stopWords.indexOf(this.urlArray[0]) === -1) {
-            this.router.navigate([listingUrl + '/' + interest['urlCode']]);
-        } else {
-            this.router.navigate([this.homeUrl + '/' + interest['urlCode']]);
-        }
-        this.searchActive = false;
     }
 
     navigateToEventPage = (eventCode: string) => {
