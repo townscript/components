@@ -246,6 +246,7 @@ export class SearchComponent implements OnInit {
     ngOnInit() {
         this.getPopularPlaces();
         this.placeService.place.subscribe(res => {
+            this.buildUrlArray();
             if (res) {
                 if (this.utilityService.IsJsonString(res)) {
                     const data = JSON.parse(<any>res);
