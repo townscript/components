@@ -59,9 +59,18 @@ export class CitySearchPopupComponent implements OnInit, AfterViewInit {
     }
 
     placeChangedToOnline = () => {
-        const finalUrl = `/${this.urlArray[0]}/online`;
+        const tsType = this.urlArray[2];
+        let tsTypeUrl = '';
+        if (tsType !== 'upcoming-events') {
+            tsTypeUrl = tsType && tsType.length > 0 ? '/' + tsType.toLowerCase() : '';
+        }
+        const finalUrl = `/${this.urlArray[0]}/online${tsTypeUrl}`;
         console.log(finalUrl);
-        window.location.href = finalUrl;
+        this.router.navigate([finalUrl], { state: { place: { twoDigitCode: this.urlArray[0] } } });
+        this.activePlace = 'Online';
+        this.activePlaceChange.emit('Online');
+        this.cityPopupActive = false;
+        this.cityPopupActiveChange.emit(false);
     }
 
     placeChanged = (place) => {
