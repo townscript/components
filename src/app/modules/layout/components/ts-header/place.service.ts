@@ -89,4 +89,8 @@ export class PlaceService {
         return this.http.get('https://96ooltknqg.execute-api.ap-south-1.amazonaws.com/countryfromip')
             .toPromise();
     }
+
+    getCurrentValue() {
+        return JSON.parse(this.currentPlace$.value as string);
+    }
 }
