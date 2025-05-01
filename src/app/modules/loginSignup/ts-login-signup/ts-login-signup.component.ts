@@ -77,6 +77,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+        console.log('Initial rdurl value:', this.rdurl);
         this.initForm();
         this.subObject = this.placeService.place.subscribe((res: any) => {
             if (this.utilityService.IsJsonString(res)) {
@@ -91,6 +92,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
                 this.rdurl = this.rdurl.replace("[", "%5B");
                 this.rdurl = this.rdurl.replace("]", "%5D");
             }
+            console.log('rdurl value after processing:', this.rdurl);
             this.checkIfRdUrlIsLegit();
         });
     }
@@ -399,6 +401,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
           this.rdurl = '/';
         }
       }
+      console.log('rdurl value after check:', this.rdurl);
     }
 
     isPathAbsolute = (path): boolean => {

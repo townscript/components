@@ -43,6 +43,7 @@ export class TsLoginSignupService {
 
   resendVerificationCode = (rdurl: string, emailId: string) => {
     const formData = new FormData();
+    console.log('final rdurl', rdurl);
     formData.append('rdurl', rdurl);
     formData.append('emailid', emailId);
     return this.http.post(this.apiServerUrl + 'user/resendverificationcode',
