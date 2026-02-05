@@ -15,16 +15,6 @@ export class RangeDatePipe implements PipeTransform {
 
     }
 
-    private getOrdinalSuffix(day: number): string {
-        if (day > 3 && day < 21) return 'th';
-        switch (day % 10) {
-            case 1:  return "st";
-            case 2:  return "nd";
-            case 3:  return "rd";
-            default: return "th";
-        }
-    }
-
     transform = (rangeDates: any, eventTimeZone: any, isRecurrent?: any ,args?: any, hideTime?: boolean): any => {
 
         if(!eventTimeZone) {
@@ -38,61 +28,35 @@ export class RangeDatePipe implements PipeTransform {
             // for Recurring events
             if(isRecurrent && args['startTime'] && args['recurrenceRule']){
 
+
               const startTime = args['startTime'];
               const endTime = args['endTime'];
-              const freq = args['recurrenceRule'].split(';')[0].split('=')[1];
-              
-              // For DAILY frequency, show "Daily | time" format
-              if(freq.toLowerCase() === 'daily'){
-                if (hideTime) {
-                  return 'Daily';
-                } else {
-                  return `Daily | ${startTime}`;
-                }
-              }
-              
-              // For WEEKLY and RDATE cases, show "Day Date, Time onwards | Multiple dates" format
-              let startDate = rangeDates && rangeDates.length > 0 ? rangeDates[0] : null;
-              if (startDate) {
-                const startDateTime = DateTime.fromISO(startDate, { zone: eventTimeZone });
-                const dayName = startDateTime.toFormat('ccc'); // Short day name like 'Sat'
-                const dayNumber = startDateTime.toFormat('d'); // Day number like '10'
-                const dayOrdinal = this.getOrdinalSuffix(parseInt(dayNumber)); // Convert to '10th'
-                const timezoneAbbr = startDateTime.toFormat('ZZZZ'); // Timezone abbreviation like 'IST'
-                
-                if (hideTime) {
-                  return `${dayName} ${dayNumber}${dayOrdinal} | Multiple Dates`;
-                } else {
-                  return `${dayName} ${dayNumber}${dayOrdinal}, ${startTime} (${timezoneAbbr}) onwards | Multiple Dates`;
-                }
+              const freq   = args['recurrenceRule'].split(';')[0].split('=')[1];
+              let freqLabel = 'Daily';
+              //custom date selected
+              if(args['recurrenceRule'].indexOf("RDATE") > -1){
+                freqLabel = 'Multiple Dates';
               } else {
-                // Fallback to original logic if no start date
-                let freqLabel = 'Daily';
-                //custom date selected
-                if(args['recurrenceRule'].indexOf("RDATE") > -1){
-                  freqLabel = 'Multiple Dates';
-                } else {
-                  // predefined R Rule
-                  if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
-                    let byDays = args['recurrenceRule'].split(';')[2].split('=')[1].split(',');
-                    if(byDays.length > 2){
-                      freqLabel = 'Multiple Dates';
-                    } else {
-                      freqLabel = 'Every ';
-                      for(let index = 0;index < byDays.length; index++){
-                        freqLabel += this.days[byDays[index]];
-                        if(index < (byDays.length - 1)){
-                          freqLabel += ', ';
-                        }
+                // predefined R Rule
+                if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
+                  let byDays = args['recurrenceRule'].split(';')[2].split('=')[1].split(',');
+                  if(byDays.length > 2){
+                    freqLabel = 'Multiple Dates';
+                  } else {
+                    freqLabel = 'Every ';
+                    for(let index = 0;index < byDays.length; index++){
+                      freqLabel += this.days[byDays[index]];
+                      if(index < (byDays.length - 1)){
+                        freqLabel += ', ';
                       }
                     }
                   }
                 }
-                
-                return  (hideTime || (endTime == undefined) ?  freqLabel : '' )
-                  + (!hideTime && endTime == undefined ? ' | ' : '')
-                  + (hideTime ?  '' : ( startTime + (endTime != undefined ? ' to ' + endTime : '' )) );
               }
+              
+              return  (hideTime || (endTime == undefined) ?  freqLabel : '' )
+                + (!hideTime && endTime == undefined ? ' | ' : '')
+                + (hideTime ?  '' : ( startTime + (endTime != undefined ? ' to ' + endTime : '' )) );
 
             } else {
               let local = DateTime.local().setZone(eventTimeZone);
