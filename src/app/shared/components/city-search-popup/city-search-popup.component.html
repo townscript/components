@@ -11,7 +11,7 @@
                 <i *ngIf="cityLoading" class="mdi mdi-loading mdi-spin"></i>
             </div>
         </div>
-        <ul class="mb-1 cities-grid">
+        <ul class="mb-1 cities-grid" [ngClass]="{'single-column': cityQuery && cityQuery.length}">
             <div *ngIf="!closeSuggestions">
                 <li matRipple (click)="placeChanged(place);"
                     class="p-2 capitalize cursor-pointer flex items-center truncate"
