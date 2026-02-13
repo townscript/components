@@ -7,15 +7,23 @@
     .mdi-spin::before{
         animation-duration: 0.5s;
     }
-    ul {
+    .search-input-container {
+        width: 50%;
+        div.active {
+            background: $gray--light;
+        }
+    }
+    .cities-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0;
-        li:first-child {
-            grid-column: 1 / -1;
+        margin-top: 0;
+        padding-top: 0;
+        .online-item {
+            grid-column: 1;
         }
     }
-    li:hover, li.active{
+    li:hover, li.active, .search-input-container div:hover{
         background: $gray--light;
     }
     &.arrow{
