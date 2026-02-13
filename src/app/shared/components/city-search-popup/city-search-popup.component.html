@@ -12,7 +12,7 @@
             </div>
         </div>
         <ul class="mb-1 cities-grid" [ngClass]="{'single-column': cityQuery && cityQuery.trim().length}">
-            <div *ngIf="!closeSuggestions">
+            <div *ngIf="!closeSuggestions && cityQuery && cityQuery.trim().length">
                 <li matRipple (click)="placeChanged(place);"
                     class="p-2 capitalize cursor-pointer flex items-center truncate"
                     *ngFor="let place of placeSearchResults">
@@ -30,7 +30,7 @@
                     </span>
                 </li>
             </div>
-            <ng-container matRipple *ngIf="!placeSearchResults || placeSearchResults.length==0">
+            <ng-container matRipple *ngIf="(!placeSearchResults || placeSearchResults.length==0) && (!cityQuery || !cityQuery.trim().length)">
                 <li appDataAnalytics eventLabel="locationDropdownItem" clickLocation=""
                     (click)="placeChangedToOnline();" class="border-b p-2 cursor-pointer capitalize online-item">
                     <i class="mdi mdi-earth text-base mr-1 text-primary"></i>
