@@ -32,31 +32,29 @@ export class RangeDatePipe implements PipeTransform {
               const startTime = args['startTime'];
               const endTime = args['endTime'];
               const freq   = args['recurrenceRule'].split(';')[0].split('=')[1];
-              let freqLabel = 'Daily';
-              //custom date selected
-              if(args['recurrenceRule'].indexOf("RDATE") > -1){
-                freqLabel = 'Multiple Dates';
+              
+              // Handle daily events with existing logic
+              if(freq.toLowerCase() === 'daily') {
+                let freqLabel = 'Daily';
+                return  (hideTime || (endTime == undefined) ?  freqLabel : '' )
+                  + (!hideTime && endTime == undefined ? ' | ' : '')
+                  + (hideTime ?  '' : ( startTime + (endTime != undefined ? ' to ' + endTime : '' )) );
               } else {
-                // predefined R Rule
-                if(freq.toLowerCase() == 'Weekly'.toLowerCase()){
-                  let byDays = args['recurrenceRule'].split(';')[2].split('=')[1].split(',');
-                  if(byDays.length > 2){
-                    freqLabel = 'Multiple Dates';
-                  } else {
-                    freqLabel = 'Every ';
-                    for(let index = 0;index < byDays.length; index++){
-                      freqLabel += this.days[byDays[index]];
-                      if(index < (byDays.length - 1)){
-                        freqLabel += ', ';
-                      }
-                    }
-                  }
+                // For all other recurring events (weekly, monthly, etc.)
+                if(rangeDates && rangeDates.length > 0) {
+                  const startDate = DateTime.fromISO(rangeDates[0], { zone: eventTimeZone });
+                  const dayName = startDate.toFormat('ccc'); // Sat
+                  const dateWithOrdinal = startDate.toFormat('do'); // 10th  
+                  const time = startDate.toFormat('hh:mm a'); // 05:00 PM
+                  
+                  // Get timezone abbreviation
+                  let timezoneAbbr = startDate.offsetNameShort;
+                  
+                  return `${dayName} ${dateWithOrdinal}, ${time} (${timezoneAbbr}) onwards | Multiple Dates`;
+                } else {
+                  return 'Multiple Dates';
                 }
               }
-              
-              return  (hideTime || (endTime == undefined) ?  freqLabel : '' )
-                + (!hideTime && endTime == undefined ? ' | ' : '')
-                + (hideTime ?  '' : ( startTime + (endTime != undefined ? ' to ' + endTime : '' )) );
 
             } else {
               let local = DateTime.local().setZone(eventTimeZone);
