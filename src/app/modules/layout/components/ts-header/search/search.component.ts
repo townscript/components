@@ -234,7 +234,7 @@ export class SearchComponent implements OnInit {
                 if (this.utilityService.IsJsonString(res)) {
                     const country = JSON.parse(<any>res)['country'];
                     const data = await this.headerService.getPopularCities(country || this.urlArray[0]);
-                    this.popularPlaces = data['data'].slice(0, 6).map(ele => {
+                    this.popularPlaces = data['data'].slice(0, 12).map(ele => {
                         ele.type = 'city';
                         ele.cityCode = ele.code;
                         return ele;
