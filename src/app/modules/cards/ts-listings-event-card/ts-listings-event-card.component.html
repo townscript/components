@@ -17,10 +17,10 @@
             </span>
         </div>
         <div class="actions flex">
-            <div class="follow self-end px-3">
+            <!-- <div class="follow self-end px-3">
                 <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#fff"
                     (click)="$event.stopPropagation()"></app-follow>
-            </div>
+            </div> -->
             <div class="share px-2 rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
                 <i appDataAnalytics eventLabel="share" clickLocation=""
                     class="text-white mdi mdi-share-variant text-2xl share" (click)="shareEvent($event)"></i>
@@ -148,8 +148,8 @@
 
             <div class="actions flex list-actions" *ngIf="gridType=='list'">
                 <div class="follow self-end px-2 md:px-3 lg:px-5">
-                    <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#563DE1"
-                        (click)="$event.stopPropagation()"></app-follow>
+                    <!-- <app-follow type="icon" [followTypeId]="eventData.eventId" [followType]="'EVENT'" color="#563DE1"
+                        (click)="$event.stopPropagation()"></app-follow> -->
                 </div>
                 <div class="share rounded-full self-end cursor-pointer" matRipple (click)="$event.stopPropagation()">
                     <i appDataAnalytics eventLabel="share" clickLocation=""
