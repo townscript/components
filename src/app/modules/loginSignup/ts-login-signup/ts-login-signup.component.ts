@@ -52,6 +52,8 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
     signInErrMessage = '';
     resetPwdLinkSent = false;
     signUpErrMessage = '';
+    registrationClosedMsg = false;
+    readonly registrationClosedMessage = 'New account registration is closed. Townhall services are being discontinued.';
 
     fbLoginURL = config.baseUrl + 'api/'
         + 'user/signinwithfacebook';
@@ -90,6 +92,9 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
                 this.rdurl = decodeURIComponent(this.rdurl);
                 this.rdurl = this.rdurl.replace("[", "%5B");
                 this.rdurl = this.rdurl.replace("]", "%5D");
+            }
+            if (params['error'] === 'registration-closed') {
+                this.registrationClosedMsg = true;
             }
             this.checkIfRdUrlIsLegit();
         });
@@ -133,6 +138,7 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
 
     clearErrors = (): void => {
         this.socialLoginMsg = '';
+        this.registrationClosedMsg = false;
     }
 
     resolve = (captchaResponse: string): void => {
@@ -162,10 +168,9 @@ export class TsLoginSignupComponent implements OnInit, OnDestroy {
         } else if (newData && newData.isExistingUser && !newData.isManualSignup && !newData.isTemporaryUser) {
             this.socialLoginMsg = true;
         } else {
-            this.openSignUpView();
-            this.initializeTelInput = setTimeout(() => {
-                this.initializeIntlTelInput();
-            }, 200);
+            // no real account exists for this email (or it's only a temp/shadow account) ->
+            // registration is closed, don't send them into the sign-up form
+            this.registrationClosedMsg = true;
         }
     }
 

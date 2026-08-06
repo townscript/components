@@ -56,6 +56,9 @@
               <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="socialLoginMsg">
                 It seems you have signed up using Social Login.
               </p>
+              <p class="text-xs text-red-500 -mt-3 mb-2" *ngIf="registrationClosedMsg">
+                {{registrationClosedMessage}}
+              </p>
               <p class="text-xs text-red-500 -mt-3 mb-2"
                 *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">
                 Email Id is required
